@@ -1,0 +1,46 @@
+%% Require:
+% xparse
+
+\NewDocumentEnvironment{subalign}{g}{%
+	\subequations%
+		\IfValueT{#1}{\label{#1}}%
+		\allowdisplaybreaks%
+		\align%
+	}{%
+		\endalign%
+	\endsubequations%
+}%
+\NewDocumentEnvironment{subgather}{g}{%
+	\subequations%
+		\IfValueT{#1}{\label{#1}}%
+		\allowdisplaybreaks%
+		\gather%
+	}{%
+		\endgather%
+	\endsubequations%
+}%
+\NewDocumentEnvironment{equations}{g}{%
+	\equation%
+		\IfValueT{#1}{\label{#1}}%
+		\allowdisplaybreaks%
+		\aligned%
+	}{%
+		\endaligned%
+	\endequation%
+}
+
+\NewDocumentEnvironment{proposition}{m}{%
+	\noindent\textbf{Proposition:} {\itshape #1}
+	
+	\noindent\textbf{Proof:}\itshape
+}{
+
+	\noindent\bsquare
+}
+
+\NewDocumentEnvironment{example}{}{%
+	\noindent\textbf{Example:}
+}{
+
+	\noindent\bsquare
+}

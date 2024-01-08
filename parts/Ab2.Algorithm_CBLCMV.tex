@@ -1,0 +1,35 @@
+\begin{minipage}{0.8\linewidth}
+\begin{algorithm}[H]
+\caption{CB-LCMV beamformer algorithm}\label{alg:CBLCMV_beamformer}
+\begin{algorithmic} 
+\Require \\%
+    $\Mx{1} ~,~ \Mx{2}' ~,~ \Mx{2}'' ~,~ \My{1} ~,~ \My{2}$ \Comment{Array sizes} \\%
+    $\bvd{\t_1;\lcmv} ~,~ \cdots ~,~ \bvd{\t_N;\lcmv} ~,~ N$ \Comment{LCMV nulls} \\%
+    $\bvd{\x} ~,~ \bvd{\y}$ \Comment{Steering vectors} \\%
+    $\Corr{\bvy} ~,~ \bvG$ \Comment{Coherence matrices} \\%
+    $\beta$ \Comment{CB parameter}
+\Ensure \\%
+    $\bvh$ \Comment{Full-array beamformer}
+\Procedure%
+\LineComment{LCMV beamformer}
+    \State $\bvd{\lcmv} \att \bvd{\x}[0:\Mx{1}] \kp \bvd{\y}[0:\My{1}]$
+    \State $\bv{C} \att [\bvd{\lcmv}~\bvd{\t_1;\lcmv} ~ \cdots ~ \bvd{\t_N;\lcmv}]$
+    \State $\bv{q} \att [1] + [0] * N$; $\bv{q} \att \tr{\bv{q}}$
+    \State $\bvh{\lcmv} \att \inv{\Corr{\bvy}} \bv{C} \inv{\pts{ \he{\bv{C}} \inv{\Corr{\bvy}} \bv{C} }} \bv{q}$ \Comment{\cref{eq:solution_lcmv_Corry}}
+\LineComment{CB beamformer}
+    \State $\bvd{\cb} \att \bvd{\y}[0:\My{2}]$
+    \State $\bvh{\cb} \att [0] * \My{2}$; $\bvh{\cb} \att \tr{\bvh{\cb}}$
+    \For{$0 \leq m < \My{2}$}
+        \State $\bvh{\cb}[m] \att \mathrm{calcCB}(m, \Mx{2}, \beta)$ \Comment{$\mathrm{calcCB}()$ is as in \cref{eq:calcCB}}
+    \EndFor
+    \State $\bvh{\cb} \att \bvh{\cb} / \sum \bvh{\cb}$
+\LineComment{SD and DS beamformers}
+    \State $\bvd{\sd} \att \bvd{\x}[0:\Mx{2}']$
+    \State $\bvd{\ds} \att \bvd{\x}[0:\Mx{2}'']$
+    \State $\bvh{\sd} \att \frac{ \inv{\bvG} \bvd }{ \he{\bvd} \inv{\bvG} \bvd }$ \Comment{\cref{eq:solution_sd}}
+    \State $\bvh{\ds} \att \frac{\bvd}{\Mx{2}''}$\Comment{\cref{eq:solution_ds}}
+\LineComment{Full-array beamformer}
+    \State{$\bvh \att \mathrm{RCKP}(\bvh{\lcmv},\bvh{\sd},\bvh{\ds},\bvh{\cb}~;~\My{1},1,1,\My{2})$}\Comment{\cref{alg:RCKP_beamformer}}
+\end{algorithmic}
+\end{algorithm}
+\end{minipage}

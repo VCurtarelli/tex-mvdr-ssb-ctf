@@ -1,0 +1,45 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+\begin{subfigure}{\linewidth}
+\centering
+\tikzsetnextfilename{fnbw_lineplot}
+	\begin{tikzpicture}
+		\begin{lineplot}{$\tB$ (dB)}[legend to name={fnbw_legend}, ymin=0, yticklabel={$\pgfmathprintnumber{\tick}\dg$}]
+			%% FNBW plot			
+			\draw[thin, gray] ({rel axis cs:0,0}|-{axis cs:0,20}) -- ({rel axis cs:1,0}|-{axis cs:0,20});
+			\addplot [style=resA]
+			table [col sep=comma, y=val] {figures/results/resA_PA_fnbw.csv};
+			%
+			\addplot [style=resB]
+			table [col sep=comma, y=val] {figures/results/resB_PA_fnbw.csv};
+			%
+			\addplot [style=resC]
+			table [col sep=comma, y=val] {figures/results/resC_PA_fnbw.csv};
+			%
+			\addplot [style=resD]
+			table [col sep=comma, y=val] {figures/results/resD_PA_fnbw.csv};
+			%
+			\addplot [style=resE]
+			table [col sep=comma, y=val] {figures/results/resE_PA_fnbw.csv};
+			%
+			\addplot [style=resF]
+			table [col sep=comma, y=val] {figures/results/resF_PA_fnbw.csv};
+			%
+%			\addplot [style=resG]
+%			table [col sep=comma, y=val] {figures/results/resG_PA_fnbw.csv};
+%			%
+			\addlegendentry{$\bvh{\text{A}}$};
+			\addlegendentry{$\bvh{\text{B}}$};
+			\addlegendentry{$\bvh{\text{C}}$};
+			\addlegendentry{$\bvh{\text{D}}$};
+			\addlegendentry{$\bvh{\text{E}}$};
+			\addlegendentry{$\bvh{\text{F}}$};
+%			\addlegendentry{$\bvh{\text{G}}$};
+		\end{lineplot}
+	\end{tikzpicture}
+	\caption{}
+	\label{subfig:fnbw_lineplot}
+\end{subfigure}

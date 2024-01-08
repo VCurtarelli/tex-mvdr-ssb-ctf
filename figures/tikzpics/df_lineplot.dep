@@ -1,0 +1,6 @@
+figures/tikzpics/df_lineplot.pdf: figures/results/resA_PA_df.csv
+figures/tikzpics/df_lineplot.pdf: figures/results/resB_PA_df.csv
+figures/tikzpics/df_lineplot.pdf: figures/results/resC_PA_df.csv
+figures/tikzpics/df_lineplot.pdf: figures/results/resD_PA_df.csv
+figures/tikzpics/df_lineplot.pdf: figures/results/resE_PA_df.csv
+figures/tikzpics/df_lineplot.pdf: figures/results/resF_PA_df.csv

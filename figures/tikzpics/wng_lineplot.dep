@@ -1,0 +1,6 @@
+figures/tikzpics/wng_lineplot.pdf: figures/results/resA_PA_wng.csv
+figures/tikzpics/wng_lineplot.pdf: figures/results/resB_PA_wng.csv
+figures/tikzpics/wng_lineplot.pdf: figures/results/resC_PA_wng.csv
+figures/tikzpics/wng_lineplot.pdf: figures/results/resD_PA_wng.csv
+figures/tikzpics/wng_lineplot.pdf: figures/results/resE_PA_wng.csv
+figures/tikzpics/wng_lineplot.pdf: figures/results/resF_PA_wng.csv

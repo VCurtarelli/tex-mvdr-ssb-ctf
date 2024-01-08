@@ -1,0 +1,111 @@
+%% Requires:
+% xparse
+
+\let\mrm\mathrm
+\def\mtimes{\mathbin{\scalebox{0.7}{$\times$}}}
+\NewDocumentCommand{\sz}{s m m}{%
+	\IfBooleanTF{#1}{%
+		\bts{{#2} \mtimes {#3}}%
+	}{%
+		{#2} \mtimes {#3}%
+	}%
+}
+
+\NewDocumentCommand{\el}{m g O{m} o}{%
+	\bts{#1}_{%
+        \IfValueTF{#4}{%
+            (#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}})%
+        }{%
+            #3\IfValueT{#2}{_{#2}}%
+        }        
+    }
+}
+
+\DeclareMathOperator{\Dst}{D}
+\DeclareDocumentCommand{\dst}{m}{%
+    \Dst\pts{#1}%
+}
+
+\let\Exp\exp
+\DeclareDocumentCommand{\exp}{s m}{%
+    \IfBooleanTF{#1}{%
+        \Exp\cts{#2}%
+    }{%
+        e^{#2}%
+    }%
+}
+
+\DeclareMathOperator{\Trace}{tr}
+\DeclareDocumentCommand{\trace}{m}{%
+    \Trace\pts{#1}%
+}
+\let\Tr\trace
+
+%%%
+\let\rharpoon\rightharpoonaccent
+\newcommand{\rlharpoon}[1]{\accentset{\rightleftharpoons}{#1}}
+\MakeSymbol{\Vect}{\DeclareMathOperator{\Vect}{vec}}
+\DeclareDocumentCommand{\vect}{m}{%
+    \mathcal{V}\pts{#1}%
+}
+\DeclareMathOperator{\iVect}{ivec}
+\DeclareDocumentCommand{\ivect}{m m}{%
+    \inv{\mathcal{V}}\pts{#2;\,#1}%
+}
+
+\let\Sinc\relax
+\DeclareMathOperator{\Sinc}{sinc}
+\DeclareDocumentCommand{\sinc}{m}{%
+    \Sinc\pts{#1}%
+}
+
+\DeclareMathOperator{\Vconv}{vconv}
+\DeclareDocumentCommand{\vconv}{m}{%
+	\Vconv\pts{#1}%
+}
+
+\makeatletter
+\DeclareMathOperator{\@beam}{\mathcal{B}}
+\DeclareMathOperator{\@wng}{\mathcal{W}}
+\DeclareMathOperator{\@df}{\mathcal{D}}
+\MakeSymbol{\@dsdi}{\upsilon_{\mrm{d}}}
+\DeclareDocumentCommand{\beam}{ g }{%
+    \@beam\IfValueT{#1}{\pts{#1}}%
+}
+\DeclareDocumentCommand{\wng}{ g }{%
+    \@wng\IfValueT{#1}{\pts{#1}}%
+}
+\DeclareDocumentCommand{\dsdi}{ g }{%
+    \@dsdi\IfValueT{#1}{\pts{#1}}%
+}
+\DeclareDocumentCommand{\df}{ g }{%
+    \@df\IfValueT{#1}{\pts{#1}}%
+}
+\makeatother
+
+\DeclareMathOperator{\lcmv}{LCMV}
+\DeclareMathOperator{\cb}{CB}
+\DeclareMathOperator{\sd}{SD}
+\DeclareMathOperator{\ds}{DS}
+\DeclareMathOperator{\mvdr}{MVDR}
+
+\NewDocumentCommand{\idiv}{}{\mathbin{//}}
+\DeclareDocumentCommand{\mod}{}{\mathbin{\%}}
+%% Minimization
+\DeclareMathOperator*{\ArgMin}{argmin}
+\def\st{~~\text{s.t.}~~}
+\NewDocumentCommand{\argmin}{m m g}{%
+    \ArgMin_{#2}#1\IfValueT{#3}{\st#3}%
+}
+
+\DeclareDocumentCommand{\cei}{s m m}{%
+	\IfBooleanTF{#1}{%
+		\genfrac{}{}{0pt}{}{#3}{#2}%
+	}{%
+		\genfrac{}{}{0pt}{}{#2}{#3}%
+	}%
+}
+
+\NewDocumentCommand{\expec}{m}{%
+    \mathsf{E}\bts{#1}%
+}

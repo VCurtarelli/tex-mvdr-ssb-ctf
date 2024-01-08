@@ -1,0 +1,46 @@
+\section{Proof of CKP beamforming for URAs}
+% \setlength{\parindent}{0pt}
+\label{app:RCKP_proof}
+We assume a rectangular uniform sensor array of size $\sz{\Mx}{\My}$ with a steering vector $\bvd$, and two subarrays of sizes $\sz{\Mx{1}}{\My{1}}$ and $\sz{\Mx{2}}{\My{2}}$ with steering vectors $\bvd{1}$ and $\bvd{2}$, such that $\Mx{1} + \Mx{2} -1 = \Mx$ and $\My{1} + \My{2} -1 = \My$. We define
+\begin{subalign}
+	\bvh[t] & = \bvh{1} \kp \bvh{2} \eqc \\
+	\bvd[t] & = \bvd{1} \kp \bvd{2} \eqp
+\end{subalign}
+From this, it easily follows that
+\begin{equation}
+	\he{\bvh[t]} \bvd[t] = \pts{ \he{\bvh{1}} \bvd{1} } \pts{ \he{\bvh{2}} \bvd{2} } \eqp
+\end{equation}
+Expanding both,
+\begin{equation}
+	\label{eq:app:expanding}
+	\he{\bvh} \bvd = \pts{\sum_{m_1=0}^{M_1-1} h_1^*[m_1] d[m_1]} \pts{\sum_{m_2=0}^{M_2-1} h_2^*[m_2] d[m_2]} \eqp
+\end{equation}
+We define $\bvH{1} = \ivect{\My{1}}{\bvh{1}}$ as the inverse vectorization of $\bvh{1}$, and similarly  $\bvD= \ivect{\My}{\bvd}$ is the inverse vectorization of $\bvd$, and $\bvH{2}= \ivect{\My{2}}{\bvh{2}}$ is the inverse vectorization of $\bvh{2}$. Using the inverse vectorization on the sum over $m_1$ we have
+\begin{equation}
+	 \sum_{m_1=0}^{M_1-1}h_1^*[m_1] d[m_1]
+	 = \sum_{m_{1,\x}=0}^{\Mx{1}-1} \sum_{m_{1,\y}=0}^{\My{1}-1} H_1^*[m_{1,\x},m_{1,\y}] D[m_{1,\x},m_{1,\y}] \eqp
+\end{equation}
+We also use that $D[m_{1,\x},m_{1,\y}] = d_{\x}[m_{1,\x}] d_{\y}[m_{1,\y}]$, by definition of the steering vector. Applying a similar process to the sum over $m_2$ from \eqref{eq:app:expanding},
+\begin{equations}
+	\he{\bvh[t]} \bvd[t] = & \pts{\sum_{\cei*{m_{1,\x}=0}{m_{1,\y}=0}}^{\cei{\Mx{1}-1}{\My{1}-1}} H_1^*[m_{1,\x},m_{1,\y}] d_{\x}[m_{1,\x}] d_{\y}[m_{1,\y}]} \\
+	&\times  \pts{\sum_{\cei*{m_{2,\x}=0}{m_{2,\y}=0}}^{\cei{\Mx{2}-1}{\My{2}-1}} H_1^*[m_{2,\x},m_{2,\y}] d_{\x}[m_{2,\x}] d_{\y}[m_{2,\y}]} \eqc
+\end{equations}
+By applying the Cauchy product \cite{hamahata_arithmetic_2020} on the second sum twice,
+\begin{equations}
+	\he{\bvh[t]} \bvd[t] = & \sum_{\cei*{m_{\x}=0}{m_{\y}=0}}^{\cei{\Mx{1}+\Mx{2}-2}{\My{1}+\My{2}-2}} \sum_{\cei*{n_{\x}=k_{1,\x}}{n_{\y}=k_{1,\y}}}^{\cei{k_{2,\x}}{k_{2,\y}}} \pts{H_1^*[n_{\x},n_{\y}] d_{\x}[n_{\x}] d_{\y}[n_{\y}]} \\
+	&\times  \pts{H_2^*[m_{\x}-n_{\x},m_{\y}-n_{\y}] d_{\x}[m_{\x}-n_{\x}] d_{\y}[m_{\y}-n_{\y}]} \\
+	= & \sum_{\cei*{m_{\x}=0}{m_{\y}=0}}^{\cei{\Mx-1}{\My-1}} \sum_{\cei*{n_{\x}=k_{1,\x}}{n_{\y}=k_{1,\y}}}^{\cei{k_{2,\x}}{k_{2,\y}}} \pts{H_1^*[n_{\x},n_{\y}] H_2^*[m_{\x}-n_{\x},m_{\y}-n_{\y}]} \\
+	& \times  \pts{ d_{\x}[n_{\x}] d_{\y}[n_{\y}] d_{\x}[m_{\x}-n_{\x}] d_{\y}[m_{\y}-n_{\y}]}  \eqp \\
+\end{equations}
+By definition of steering vectors, $d_{\x}[a]d_{\x}[b] = d_{\x}[a+b]$ (also for $d_{\y}$), and therefore the $d$ term becomes $d_{\x}[m_{\x}] d_{\y}[m_{\y}] = {D}[m_{\x},m_{\y}]$. By noting that the sum over $\bvH{1}$ and $\bvH{2}$ is the 2-D convolution between them (at the element $[m_{\x},m_{\y}]$), and with this defining $\bvH = \bvH_1 \bconv \bvH_2$ (where $\bconv$ denotes the 2-D convolution), then
+\begin{equation}
+	\he{\bvh[t]} \bvd[t] = \sum_{\cei*{m_{\x}=0}{m_{\y}=0}}^{\cei{\Mx-1}{\My-1}} {H}^*[m_{\x},m_{\y}] {D}[m_{\x},m_{\y}] \eqp
+\end{equation}
+Finally, by vectorizing $\bvH$ and $\bvD$ into $\bvh$ and $\bvd$,
+\begin{equations}
+	\he{\bvh[t]} \bvd[t]
+	& = \sum_{\cei*{m_{\x}=0}{m_{\y}=0}}^{\cei{\Mx-1}{\My-1}} {h}^*[M_{\y}m_{\x} + m_{\y}] {d}[M_{\y}m_{\x} + m_{\y}] \\
+	& = \sum_{m=0}^{M-1} {h}^*[m] {d}[m] \\
+	& = \he{\bvh} \bvd \eqc
+\end{equations}
+which concludes the proof.
