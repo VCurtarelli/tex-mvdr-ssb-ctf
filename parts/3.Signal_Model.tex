@@ -1,31 +1,30 @@
 \section{Signal and Array Model}
 \label{sec:signal_model}
 
-Let there be a sensor array without any specific shape, which is comprised of $M$ sensors, within a reverberant environment. In this setting there also are a desired and an interfering sources (name $x[n]$ and $v[n]$), and also uncorrelated noise, $r_m[n]$ (at each sensor $m$).
+Let there be a generic sensor array, comprised of $M$ sensors, within a reverberant environment. In this setting there also are a desired and an interfering sources (namely $x[n]$ and $v[n]$), and also uncorrelated noise $r_m[n]$ (at each sensor $m$). We assume that the sources are spatially stationary, and don't move over time.
 
-We denote $h_m[n]$ as the room impulse response, between the desired signal (at source) and the $m$-th sensor. We similarly define $g_m[n]$ for the interfering signal at source. From this, we write $y_m[n]$ as the observed signal at the $m$-th sensor as
+We denote $h_m[n]$ as the room impulse response between the desired signal (at source) and the $m$-th sensor. We similarly define $g_m[n]$ for the interfering signal at source. From this, we write $y_m[n]$ as the observed signal at the $m$-th sensor as
 \begin{equation}
 	\label{eq:sec3:time_model_basic}
 	y_m[n] = h_m[n] \ast x[n] + g_m[n] \ast v[n] + r_m[n]
 \end{equation}
 
-We let $m'$ be the reference sensor's index (without compromise, $m' = 1$). We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, such that
+We let $m'$ be the reference sensor's index and, without compromise, set $m'=1$. We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, define such that
 \begin{equation}
 	b_m[n] \ast x_1[n] = h_m[n] \ast x[n]
 \end{equation}
-and we similarly define $c_m[n]$ such that $c_m[n] \ast v_1[n] = g_m[n] \ast v[n]$. Therefore, \cref{eq:sec3:time_model_basic} becomes
+We similarly define $c_m[n]$ such that $c_m[n] \ast v_1[n] = g_m[n] \ast v[n]$. Therefore, \cref{eq:sec3:time_model_basic} becomes
 \begin{equation}
 	\label{eq:sec3:time_model_relative}
 	y_m[n] = b_m[n] \ast x_1[n] + c_m[n] \ast v_1[n] + r_m[n]
 \end{equation}
 
-We can use a time-frequency transform (in here the STFT or the SSBT, as exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to turn \cref{eq:sec3:time_model_relative} into
+We can use a time-frequency transform (here the STFT or the SSBT\footnote{Although the SSBT doesn't hold the convolution theorem, we will assume it does for the purpose of the formulation.}, exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to turn \cref{eq:sec3:time_model_relative} into
 \begin{equation}
 	\label{eq:sec3:time-freq_model_conv}
 	Y_m[l,k] = B_m[l,k] \ast X_1[l,k] + C_m[l,k] \ast V_1[l,k] + R_m[l,k]
 \end{equation}
-
-where $Y_m[l,k]$ is the transform of $y_m[n]$ (resp. $B_m[l,k]$, $X_1[l,k]$, $C_m[l,k]$, $V_1[l,k]$ and $R_m[l,k]$); $l$ is the window index, and $k$ the bin index, with $0 \leq k \leq K-1$; and the convolution is in the window-index axis.
+where $Y_m[l,k]$ is the transform of $y_m[n]$ (resp. all other signals); $l$ is the window index, and $k$ the bin index, with $0 \leq k \leq K-1$; and the convolution is in the window-index axis.
 
 Assuming that $B_m[l,k]$ is a finite (possibly truncated) response with $L_B$ windows, then
 \begin{equation}
@@ -36,7 +35,7 @@ in which
 	\bvb{m}[k] & = \tr{\tup{ B_m[0,k] , B_m[1,k] , , B_m[L_B-1,k] }} \\
 	\bvx{1}[l,k] & = \tr{\tup{ B_m[l,k] , B_m[l-1,k] , , B_m[l-L_B+1,k] }}
 \end{subalign}
-and similarly we define $\bvc{m}[k]$ and $\bvv{1}[l,k]$. Note that $\bvb{m}[k]$ doesn't depend on the index $l$, since the system is time-invariant. With this, \cref{eq:sec3:time-freq_model_conv} becomes
+and in the same way we define $\bvc{m}[k]$ and $\bvv{1}[l,k]$. Note that $\bvb{m}[k]$ doesn't depend on the index $l$, since the system is time-invariant and we assume the sources to be spatially stationary. With this, \cref{eq:sec3:time-freq_model_conv} becomes
 \begin{equation}
 	\label{eq:sec3:time-freq_model_mult1}
 	Y_m[l,k] = \tr{\bvb{m}}[k] \bvx{1}[l,k] + \tr{\bvc{m}}[k] \bvv{1}[l,k] + R_m[l,k]
@@ -53,13 +52,13 @@ where
 and similarly for the other variables. In this situation, $\bvB[k]$ and $\bvC[k]$ are $\sz{L_B}{M}$ and $\sz{L_C}{M}$ matrices respectively; $\bvx{1}[l,k]$ and $\bvv{1}[l,k]$ are $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
 
 \subsection{Reverb-aware formulation}
-We define $\Delta$ as the window-index in which $b_1[n]$ starts, and assume that $b_1[n]$ starts at the start of a window of the transform\footnote{This can be easily achieved by left zero-padding all $b_m[n]$ appropriately.}. We assume that the first window of $\bvB[k]$ is the desired part of speech, and the rest is an undesired component, which is only reverberation.
+We define $\Delta$ as the window-index in which $b_1[n]$ starts, and therefore the $\Delta$-th window of $\bvB[k]$ is the desired part of speech, and the rest is an undesired component, comprised only of reverberation.
 
 With this, we write
 \begin{equation}
 	\tr{\bvB}[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \bvp{B,l'}[k] X_1[l-l',k]
 \end{equation}
-where $\bvd{x}[k]$ is the $k$-th row of $\bvB[k]$, and $\bvp{B,l'}[k]$ is the $l'$-th row of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\tr{\bvB}[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired speech frequency response.
+where $\bvd{x}[k]$ is the $k$-th row of $\bvB[k]$, and $\bvp{B,l'}[k]$ is the $l'$-th row of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\tr{\bvB}[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
 
 We define $\bvp{C,l''}$ similarly, such that
 \begin{equation}
@@ -75,7 +74,7 @@ with $\bvw[l,k]$ being the undesired signal (undesired speech components + inter
 	\bvw[l,k] = \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \bvp{B,l'}[k] X_1[l-l',k] + \sum_{l''=0}^{L_C-1}\bvp{C,l''}[k] V_1[l-l'',k] + \bvr[l,k]
 \end{equation}
 
-It is important to take into account the delay between sensors and the length of the window (in seconds). If the time it takes for the desired signal to go from the reference to the farthest sensor is longer than the length of the window, more than one window will need to be considered desired speech. Assuming that the farthest sensor is a distance $\delta$ from the reference, then this isn't a problem as long as $\frac{\delta}{c} < \frac{K}{f_s}$.
+We must consider the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the distance to the farthest sensor, $c$ is the speed of sound, $K$ is the window length, and $f_s$ is the sampling frequency.
 
 \subsection{MVDR beamformer}
 
@@ -85,7 +84,7 @@ We use a linear time-invariant filter $\bvf[l,k]$ to estimate the desired signal
 	& = \he{\bvf}[l,k] \bvy[l,k] \\
 	& \approx X_1[l,k]
 \end{equations}
-It is important to note that this filter is time-invariant within the window, but it may change over time depending on the signal.
+with $\he{\cdot}$ being the transposed-complex-conjugate operator. It is important to note that this filter is time-invariant within the window, but it may change over time depending on the signal.
 
 In order to minimize the undesired signal $\bvw[l,k]$, we will use an MVDR beamformer \cite{erdogan_improved_2016}, whose formulation is
 \begin{equation}
@@ -109,7 +108,38 @@ The solution to \cref{eq:sec3:minimization_problem_mvdr} is given by
 
 Note that, even though overlapping windows are used when windowing the signal for the time-frequency transform, for simplicity we assume that $X_1[l_1,k]$ is independent of $X_1[l_2,k]$.
 
+\subsection{Beamformer metrics}
 
+Considering the problem, the metrics of most interest are the gain in signal-to-noise ratio (SNR) and the desired signal distortion index (DSDI), both of these being given by
+\begin{equation}
+	\text{gSNR}[l,k] = \frac{\var{V_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{ \he{\bvf}[l,k] \Corr{\bvv}[l,k] \bvf[l,k] }
+\end{equation}
+\begin{equation}
+	\dsdi[l,k] = \abs{\he{\bvf}[l,k] \bvd{x}[k] - 1}^2
+\end{equation}
+
+We can also define the window-averaged gSNR and DSDI as
+\begin{equation}
+	\text{gSNR}[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Y-1} \text{gSNR}[l,k]
+\end{equation}
+\begin{equation}
+	\dsdi[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Y-1} \dsdi[l,k]
+\end{equation}
+with $L_Z$ being the number of windows of $Z[l,k]$.
+%The beampattern $\beam$, as a function of the beamformer $\bvh$ and the direction $\t$ (through the steering vector $\bvd{\t}$) is given by
+%\begin{equation}
+%    \beam{\bvh,\bvd{\t}} = \he{\bvh} \bvd{\t} \eqp
+%\end{equation}
+%
+%Given the desired-signal steering vector $\bvd$, the white noise gain (WNG), desired signal distortion index (DSDI), and directivity factor (DF) are, respectively
+%\begin{subgather}
+%	\wng{\bvh,\bvd} = \frac{ \abs{ \he{\bvh}\bvd }^2 }{ \he{\bvh}\bvh } \eqc \\
+%	\dsdi{\bvh,\bvd} = \abs{ \he{\bvh} \bvd - 1 }^2 \eqc \\
+%	\df{\bvh,\bvd} = \frac{ \abs{ \he{\bvh} \bvd }^2 }{ \he{\bvh} \bv{\Gamma} \bvh } \label{subeq:def_df} \eqc
+%\end{subgather}
+%where $\bv{\Gamma}(\w)$ is the spherical isotropic noise field coherence matrix \cite{habets_generating_2007}. Using the DSDI, the distortionless constraint can also be written as $\dsdi{\bvh,\bvd} = 0$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Let $S$ be a uniform rectangular array (URA) of sensors over the ${\x}-{\y}$ plane in an anechoic environment with desired and undesired sources. The URA comprises $\Mx$ sensors spaced $\dx$ apart along the $\x$-axis and $\My$ sensors spaced $\dy$ apart along the $\y$-axis, resulting in a total of $M = \Mx\My$ sensors. Assume a source in the far-field on the same plane as the sensor array (that is, with elevation $\phi = 0\dg$), impinging on it from an azimuth angle $\t$. As it is unusual, in speech enhancement, for the desired and undesired sources to have the same azimuth, differing only by elevation, we assume the elevation to be $0\dg$. This constraint can be easily removed without affecting the mathematical framework developed.
 %
 %Let $\bvD(\w,\t)$ denote the steering matrix of size $\sz{\Mx}{\My}$ with elements $\{m_x,m_y\}$ given by

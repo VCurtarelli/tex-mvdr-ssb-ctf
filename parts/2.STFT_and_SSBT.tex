@@ -7,22 +7,23 @@ Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite
 \begin{equation}
 	X_{\F}[l,k] = \sum_{n=0}^{K-1} w[n] x[n - l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K}}
 \end{equation}
-where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Therefore, exploring different possibilities for such an operation can lead to interesting results.
+where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Thus, exploring different possibilities for such an operation can be useful and lead to interesting results.
 
-The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, in which the frequency values are cleverly used such that its spectrum is real-valued. The SSB transform of $x[n]$ is defined as
+The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, in which the frequency values are cleverly calculated such that its spectrum is real-valued, without loss of information. The SSB transform of $x[n]$ is defined as
 \begin{equation}
+	\label{eq:sec2:def_ssbt_xn}
 	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{L-1} w[n] x[n-l\cdot O] e^{\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}
 
 Assuming that $x[n]$ is real-valued, one advantage of using the STFT is that we only need to work with $\floor{\frac{K+1}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT needs to use all $K$ possible bins to correctly capture all information of $x[n]$, however it is real-valued.
 
-It is possible to define the SSBT using the STFT (assuming all $K$ bins are available), such that
+From \cref{eq:sec2:def_ssbt_xn} it's easy to see that
 \begin{equations}
 	\label{eq:sec2:equivalence_stft_ssbt}
 	X_{\S}[l,k]
 	& = \Sqrt{2} \real{X_{\F}[l,k] e^{\j\frac{3\pi}{4}}} \\
 	& = - \real{X_{\F}[l,k]} + \imag{X_{\F}[l,k]}
 \end{equations}
-which will prove itself to be a very useful formulation.
+assuming that all $K$ bins of the STFT are available.
 
-It is possible to show that, unlike with the STFT, the convolution theorem doesn't hold when using the SSBT. That is, if $y[n] = h[n] \ast x[n]$, then $Y_{\F}[l,k] = H_{\F}[l,k] \ast X_{\F}[l,k]$, but $Y_{\S}[l,k] \neq H_{\S}[l,k] \ast X_{\S}[l,k]$. Nonetheless, as long as any result is first converted into the STFT domain (through \cref{eq:sec2:equivalence_stft_ssbt}) before being used, it can still be employed to estimate the matrices and signals.
+It is possible to show that, unlike with the STFT, the convolution theorem does not hold when employing the SSBT. In other words, if $y[n] = h[n] \ast x[n]$, then $Y_{\F}[l,k] = H_{\F}[l,k] \ast X_{\F}[l,k]$, but $Y_{\S}[l,k] \neq H_{\S}[l,k] \ast X_{\S}[l,k]$. Nonetheless, by first converting any result into the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the obtained values for estimating matrices and signals.

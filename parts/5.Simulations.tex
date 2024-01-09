@@ -2,23 +2,25 @@
 \section{Simulations}
 \label{sec:results}
 
-In the simulations\footnote{The code for the simulations can be found in \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we will use a sampling frequency $f_s = 16\si{\kilo\hertz}$. The sensor array is assumed an uniform linear array of 10 sensors, with an intersensor distance of $2\si{\cm}$. All RIR's were generated using Habets' room impulse generator \cite{habets_rir-generator}. Signals used were from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
+In the simulations\footnote{The simulation code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. The sensor array consists of a uniform linear array with 10 sensors spaced at $2\si{\cm}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
 
-The room's dimensions are $4\m\times6\m\times3\m$, with a reverberation time of $0.11\si{\second}$. The desired source is located at $(2\m,~1\m,~1\m)$, and its signal is a male voice (SMARD, \texttt{50\_male\_speech\_english\_ch8\_OmniPower4296.flac}).
+The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.11\si{\second}$. The desired source is located at $(2\m,~1\m,~1\m)$, it being a male voice (SMARD, \texttt{50\_male\_speech\_english\_ch8\_OmniPower4296.flac}).
+%
+The interfering source, simulating an open door, is located simultaneously at $(0.5\m,~5\m,~[0.3:0.3:2.7]\m)$, with a babble sound signal (LINSE database, \texttt{babble.mat}). The noise signal is white Gaussian noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). All signals were resampled to the desired frequency.
 
-The interfering source is located (simultaneously) at $(0.5\m,~5\m,~[0.3:0.3:2.7]\m)$, emulating an open door, with its signal being a babble sound (LINSE database, \texttt{babble.mat}). The noise signal is a WGN noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). All signals were resampled to the desired sampling frequency. The sensor array is assumed to be an uniform linear array, positioned at $(2\m,~[4.02:0.02:4.2]\m,~1\m)$, whose sensors are assumed to be omnidirectional and with flat frequency response.
+The uniform linear sensor array is positioned at $(2\m,~[4.02:0.02:4.2]\m,~1\m)$, with omnidirectional sensors of flat frequency response. The input SNR between desired and interfering signals is $5\dB$, and between desired and noise signals is $30\dB$. Filters are calculated every 25 windows, considering the previous 25 windows to calculate correlation matrices.
 
-We have that the input SNR between desired and interfering signals is of $5\dB$, and the SNR between desired and noise signals is of $30\dB$. The filters were calculated every 25 windows, and consider the previous 25 windows, in order to calculate the correlation matrices.
+We compare filters obtained through the STFT and SSBT transforms. T-SSBT will denote the beamformer obtained via the true-distortionless MVDR from \cref{sec:true_mvdr_ssbt}, and N-SSBT uses \cref{eq:sec3:solution_mvdr_beamformer} to (naively) calculate the SSBT beamformer. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue.
 
-We will compare the filters obtained through the STFT and SSBT transforms, with T-SSBT denoting the beamformer obtained via the true-distortionless MVDR derived in \cref{sec:true_mvdr_ssbt}, and N-SSBT the naïve approach, in which one would simply use \cref{eq:sec3:solution_mvdr_beamformer} to calculate the SSBT beamformer. The performance analysis was done only on the STFT domain. In all lineplots, the STFT is presented in red, the N-SSBT in green, and the T-SSBT in blue.
+%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Results}
 
-In this scenario, we assume that the analysis (and synthesis) windows have 32 samples. \Cref{fig:lineplot_gain_32} shows the window-wise averaged gain in SNR, and \cref{fig:heatmap_gain_32} the gain in SNR for each window (with the windows being represented by the time started, in seconds), for all methods. In \cref{fig:lineplot_dsdi_32} we have the DSDI for all three methods, window-averaged.
+In this scenario, we assume that the analysis windows have 32 samples. \cref{fig:heatmap_gain_32} shows the gain in SNR for each window (with the windows being represented by the time started, in seconds), and \cref{fig:lineplot_gain_32} the window-wise averaged gain in SNR, for all methods. In \cref{fig:lineplot_dsdi_32} we have the DSDI for all three methods, window-averaged.
 
-Although it isn't as clear from the per-window results of \cref{fig:heatmap_gain_32}, \cref{fig:lineplot_gain_32} shows us that both beamformers obtained from the SSBT led to a better enhancement of the signal, in terms of the output SNR, with the N-SSBT beamformer having a better performance over (almost) all spectrum, and the T-SSBT beamformer being better for lower frequencies, tying with the STFT for higher ones.
+Although it isn't as clear from the per-window results of \cref{fig:heatmap_gain_32}, \cref{fig:lineplot_gain_32} clearly shows that both SSBT beamformers had a better (at most equal) performance than the STFT one, with the N-SSBT beamformer having a better performance over (almost) all spectrum, and the T-SSBT beamformer being better for lower frequencies, tying with the STFT for higher ones.
 
-Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensure a distortionless response for the desired signal, a feature that wasn't achieved by the N-SSBT beamformer. This is wholly expected, since the later was naively designed with the MVDR in mind, and wasn't fully planned to achieve a distortionless behavior in the STFT (and therefore the time) domain, while the T-SSBT took this into account on its derivation. 
+Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensure a distortionless response for the desired signal, a feature that wasn't achieved by the N-SSBT beamformer. This was wholly expected, since the later was naively designed with the MVDR in mind, and wasn't fully planned to achieve a distortionless behavior in the STFT (and therefore the time) domain, while the T-SSBT took this into account on its derivation.
 
 \input{figures/io_input/aux_data_32.tex}
 
@@ -51,7 +53,7 @@ Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensur
 
 In this simulation, we changed the number of samples per window from 32 to 64, keeping everything else the same.
 
-In here, from \cref{fig:lineplot_gain_64,fig:heatmap_gain_64} we see a similar result to that which was obtained previously, with the N-SSBT beamformer having a better performance overall, but causing some distortion in the desired signal; while the T-SSBT beamformer has a slightly better performance than the one obtained through the STFT, while also having a distortionless behavior, as is seen in \cref{fig:lineplot_dsdi_64}.
+In here, from \cref{fig:lineplot_gain_64,fig:heatmap_gain_64} we see a similar result to that which was obtained previously, with the N-SSBT beamformer having a better performance overall but causing some distortion in the desired signal; and the T-SSBT beamformer having a slightly better performance STFT one while also having a distortionless behavior, as is seen in \cref{fig:lineplot_dsdi_64}.
 
 \input{figures/io_input/aux_data_64.tex}
 

@@ -1,25 +1,24 @@
 \section{True-MVDR with the SSB Transform}
 \label{sec:true_mvdr_ssbt}
 
-In the formulation exposed previously, all signals and matrices are within the same domain. That is, in \cref{eq:sec3:minimization_problem_mvdr} we have that the distortionless constraint is built such that the beamformer doesn't cause distortion only on the SSBT domain. However, as was explained at the end of \cref{sec:stft_and_ssbt}, since the filtering can't be done in the SSBT domain, the beamformer must be converted into the STFT domain (through \cref{eq:sec2:equivalence_stft_ssbt}) before being applied to the signal. To correctly construct a beamformer that properly fulfills the distortionless constraint, this conversion should be taken into account.
+In the previous formulation, all signals and matrices operate within the same domain. In \cref{eq:sec3:minimization_problem_mvdr}, the distortionless constraint is designed to ensure that the SSBT beamformer avoids causing distortion exclusively within the SSBT domain. However, as explained towards the end of \cref{sec:stft_and_ssbt}, due to the inherent limitations of filtering in the SSBT domain, the beamformer must undergo conversion into the STFT domain (via \cref{eq:sec2:equivalence_stft_ssbt}) before filtering. To construct a beamformer that correctly adheres to the distortionless constraint, it is essential to consider this conversion step.
 
-Given the signal $x[n]$, its STFT $X_{\F}[l,k]$ (with $\floor{\frac{K+1}{2}+1}$ bins), and its SSBT $X_{\S}[l,k]$ (with $K$ bins), from \cref{eq:sec2:equivalence_stft_ssbt} it is possible to show that\footnote{This equation (as well as the derivations going forward) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. However, in those cases $X_{\F}[l,k] = X_{\S}[l,k]$, and the "naïve" SSBT beamformer works.}
+Given the signal $x[n]$, its STFT $X_{\F}[l,k]$ (with $\floor{\frac{K+1}{2}+1}$ bins), and its SSBT $X_{\S}[l,k]$ (with $K$ bins), from \cref{eq:sec2:equivalence_stft_ssbt} it is possible to show\footnote{This equation (as well as the derivations going forward) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. Though in those cases $X_{\F}[l,k] = X_{\S}[l,k]$, and the "naive" SSBT beamformer works.} that
 \begin{equation}
 	\label{eq:sec4:equivalence_ssbt_stft}
 	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
 \end{equation}
 
-From this, we propose a framework in which we consider both bins $k$ and $K-k$ simultaneously in the SSBT, given that they aren't independent. We thus define $\bvy'[l,k]$ as
+From this, we propose a framework in which we consider both bins $k$ and $K-k$ simultaneously in the SSBT beamformer. We thus define $\bvy'[l,k]$ as
 \begin{equation}
 	\bvy'[l,k] = \vtup{ {\bvy[l,k]} , {\bvy[l, K-k]} }\SubSize{2M}{1}
 \end{equation}
-We similarly define $\bvv'[l,k]$, from which we define $\Corr{\bvv'}[l,k]$ as its correlation matrix. Under this idea, our filter $\bvf'[l,k]$ is a $\sz{2M}{1}$ vector, from which we can extract the SSBT beamformer $\bvf[l,k]$ through
+We similarly define $\bvv'[l,k]$, from which we define $\Corr{\bvv'}[l,k]$ as its correlation matrix. Under this idea, our filter $\bvf'[l,k]$ is a $\sz{2M}{1}$ vector, with the first $M$ values being for the $k$-th bin, and the last $M$ values for the $[K-k]$-th bin. With \cref{eq:sec4:equivalence_ssbt_stft} it is easy to see that
 \begin{equation}
-	\bvf'[l,k] = \vtup{ {\bvf[l,k]} , {\bvf[l, K-k]} }\SubSize{2M}{1}
+	\label{eq:sec4:conversion_beamformer_ssbt_to_stft}
+	\bvfh_{\F}[l,k] = \bvAh \bvf'[l,k]
 \end{equation}
-with $\bvf[l,k]$ being the beamformer for the $k$-th bin, and $\bvf[l,K-k]$ for the $[K-k]$-th bin.
-
-Defining $\bvAh$ as
+where $\bvAh$ is
 \begin{equation}
 	\bvAh = \begin{bmatrix}
 		\frac{e^{\j\frac{3\pi}{4}}}{\Sqrt{2}} & 0 & \cdots & 0  & \frac{e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}} & 0 & \cdots & 0\\
@@ -28,18 +27,12 @@ Defining $\bvAh$ as
 		0 & 0 & \cdots & \frac{e^{\j\frac{3\pi}{4}}}{\Sqrt{2}} & 0 & 0 & \cdots & \frac{e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
 	\end{bmatrix}\SubSize{M}{2M}
 \end{equation}
-then with \cref{eq:sec4:equivalence_ssbt_stft} it is easy to see that
+with $\bvfh_{\F}[l,k]$ being the STFT-equivalent beamformer for $\bvf[l,k]$. From this, it is easy to see that the distortionless constraint for the STFT, within the SSBT domain, is
 \begin{equation}
-	\label{eq:sec4:conversion_beamformer_ssbt_to_stft}
-	\bvfh_{\F}[l,k] = \bvAh \bvf'[l,k]
+	\label{eq:sec4:distortionless_constraint_in_ssbt}
+	\he{\bvf'}[l,k] \bvD{x}[k] = 1
 \end{equation}
-with $\bvfh_{\F}[l,k]$ being the obtained beamformer, converted into the STFT domain. From this, the distortionless constraint for the STFT domain can be written for the SSBT domain as
-\begin{equations}
-	\he{\bvfh_{\F}}[l,k] \bvd{\F;x}[k] & = 1 \\
-	\he{\bvf'}[l,k] \he{\bvAh} \bvd{\F;x}[k] & = 1 \\
-	\he{\bvf'}[l,k] \bvD{x}[k] & = 1
-\end{equations}
-where $\bvd{\F;x}[l,k]$ is the desired speech frequency response in the STFT domain; and
+where $\bvd{\F;x}[l,k]$ is the desired-speech frequency response in the STFT domain; and
 \begin{equation}
 	\bvD{x}[k] = \he{\bvAh} \bvd{\F;x}[k]
 \end{equation}
@@ -51,16 +44,14 @@ In this scheme, our minimization problem becomes
 \end{equation}
 
 \subsection{Real-valued SSBT true-MVDR beamformer}
-Given that $\bvD{x}$ is a complex-valued matrix, the solution to \cref{eq:true-mvdr_ssbt_beamformer} will generally be complex as well, which defeats the purpose of using the SSBT, given that its spectrum is real-valued. Thus, another restriction must be added in order to ensure this desired behavior.
-
-From the distortionless constraint of \cref{eq:true-mvdr_ssbt_beamformer}, we trivially have that
+As $\bvD{x}$ is a complex-valued matrix, the solution to \cref{eq:true-mvdr_ssbt_beamformer} tends to be complex, contradicting the purpose of utilizing the SSBT. To preserve this desired behavior, an additional constraint is necessary. Forcing $\bvf'[l,k]$ to be real (which will turn all $\he{\cdot}$ into $\tr{\cdot}$, pure transpose), from the distortionless constraint of \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
 \begin{subalign}
-	\he{\bvf'}[l,k] \real{\bvD{x}[k]} & = 1 \\
-	\he{\bvf'}[l,k] \imag{\bvD{x}[k]} & = 0	
+	\tr{\bvf'}[l,k] \real{\bvD{x}[k]} & = 1 \\
+	\tr{\bvf'}[l,k] \imag{\bvD{x}[k]} & = 0	
 \end{subalign}
 which can be put in matricial form,
 \begin{equation}
-	\he{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
+	\tr{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
 \end{equation}
 with
 \begin{subgather}
@@ -71,15 +62,11 @@ with
 From this, the minimization problem becomes
 \begin{equation}
 	\label{eq:true-mvdr_real-ssbt_beamformer}
-	\bvf'^\star[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvv'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
+	\bvf'^\star[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvv'}[l,k] \bvf'[l,k]~\text{s.t.}~\tr{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
 \end{equation}
 whose formulation is the same as the linearly-constrained minimum variance (LCMV) \cite{habets_application_2009} beamformer, and therefore its solution is
 \begin{equation}
-	\bvf'^\star[l,k] = \inv{\Corr{\bvv'}}[l,k] \bvQ{x}[k] \inv{\pts{ \he{\bvQ{x}}[k] \inv{\Corr{\bvv'}}[k] \bvQ{x}[k] }} \bvi
-\end{equation}
-
-Since all matrices involved in the calculation of this beamformer are now real-valued, then it is trivial that
-\begin{equation}
 	\bvf'^\star_{\mvdr}[l,k] = \inv{\Corr{\bvv'}}[l,k] \bvQ{x}[k] \inv{\pts{ \tr{\bvQ{x}}[k] \inv{\Corr{\bvv'}}[k] \bvQ{x}[k] }} \bvi
 \end{equation}
-and, using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\hat{\bvf}_{\F}^\star[l,k]$, in the STFT domain.
+
+Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\hat{\bvf}_{\F}^\star[l,k]$, in the STFT domain.
