@@ -11,58 +11,6 @@
 \tikzexternalize
 \tikzsetexternalprefix{figures/tikzpics/}
 
-\NewDocumentEnvironment{polar}{}{
-	\begin{polaraxis}[
-		%BEGIN_FOLD
-		xtick = {
-			0,
-			30,
-			60,
-			90,
-			120,
-			150,
-			180,
-			210,
-			240,
-			270,
-			300,
-			330
-		},
-		xticklabels = {
-			$0\dg$,
-			$30\dg$,
-			$60\dg$,
-			$90\dg$,
-			$120\dg$,
-			$150\dg$,
-			$\PM180\dg$,
-			$-150\dg$,
-			$-120\dg$,
-			$-90\dg$,
-			$-60\dg$,
-			$-30\dg$
-		},
-		ymax=0, ymin=\ymin,
-		rotate=-90,
-		width=0.75\linewidth,
-		height=0.75\linewidth,
-		x dir=reverse,
-		xticklabel style={anchor=-\tick-90},
-		y coord trafo/.code=\pgfmathparse{##1-\ymin},
-		y coord inv trafo/.code=\pgfmathparse{##1\ymin},
-		yticklabel={$\pgfmathprintnumber{\tick}\dB$},
-		yticklabel style={anchor=west, xshift=\Yaxisshift+1ex},
-		y axis line style={yshift=\Yaxisshift},
-		ytick style={yshift=\Yaxisshift},
-		ytick align=outside,
-		ytick = {0, -20, ..., \ymin},
-		ylabel={$\abs{\beam}$ (dB)},
-		ylabel style={xshift=\Yaxisshift, yshift=0.16\linewidth},
-		%END_FOLD
-	]
-}{
-	\end{polaraxis}
-}
 %END_FOLD
 
 %BEGIN_FOLD
@@ -91,7 +39,7 @@
 			point meta max=15,
 		},
 		width=1.15\linewidth,
-		height=0.8\linewidth,
+		height=0.7\linewidth,
 		point meta min= -0.1,
 		point meta max=15.1,
 		mesh/cols=#1,

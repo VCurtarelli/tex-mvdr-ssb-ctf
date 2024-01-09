@@ -1,47 +1,81 @@
-\input{figures/results/data_defs.tex}
+\input{figures/io_input/colors_6.tex}
+\section{Simulations}
+\label{sec:results}
 
-\section{Experimental Results}
-\label{sec:simulations}
+In the simulations\footnote{The code for the simulations can be found in \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we will use a sampling frequency $f_s = 16\si{\kilo\hertz}$. The sensor array is assumed an uniform linear array of 10 sensors, with an intersensor distance of $2\si{\cm}$. All RIR's were generated using Habets' room impulse generator \cite{habets-rir-generator}. Signals used were from the SMARD \cite{smard-db} and LINSE \cite{linse-db} databases.
 
-In this section, we present simulations\footnote{The code used for these simulations is available at \url{https://github.com/VCurtarelli/py-cb-lcmv-rect}.} performed to verify the proposed method implementation and compare its performance to those constructed from the existing methods. We test different combinations of the number of sensors for each subarray, as established in \cref{tab:combinations_sizes}. The table presents the dimensions for each subarray, for the full-array of sensors, and the virtual number of sensors being employed. [A, B] are obtained through the RCKP, [C, D] through the LCKP, and [E, F] through the KP + LCKP, with the KP and LCKP methods being as defined in \cref{ssec:kp_beamformers}. [A, C, E] utilize the SD and DS beamformers, while [B, D, F] ``disable" them in favor of the CB beamformer. For [E, F], the LCMV beamformer is more spaced out.
+The room's dimensions are $4\m\times6\m\times3\m$, with a reverberation time of $0.11\si{\second}$. The desired source is located at $(2\m,~1\m,~1\m)$, and its signal is a male voice (SMARD, \texttt{50\_male\_speech\_english\_ch8\_OmniPower4296.flac}).
 
-\begin{table}[h]
-\centering
-\begin{tabular}{llllllll}
-	\toprule
-	Cond. & LCMV & SD & DS & CB && FA & $M'$\\\midrule
-	A & $\sz{2}{2}$ & $\sz{2}{1}$ & $\sz{2}{1}$ & $\sz{1}{8}$ && $\sz{4}{9}$ & $128$ \\
-	B & $\sz{2}{2}$ & $\sz{1}{1}$ & $\sz{1}{1}$ & $\sz{1}{17}$ && $\sz{2}{18}$ & $68$  \\
-	C & $\sz{1}{4}$ & $\sz{1}{2}$ & $\sz{1}{2}$ & $\sz{1}{31}$ && $\sz{1}{36}$ & $496$ \\
-	D & $\sz{1}{4}$ & $\sz{1}{1}$ & $\sz{1}{1}$ & $\sz{1}{33}$ && $\sz{1}{36}$ & $132$ \\
-	E & $\sz{2}{2}$ & $\sz{2}{1}$ & $\sz{2}{1}$ & $\sz{1}{3}$  && $\sz{6}{6}$  & $48$  \\
-	F & $\sz{2}{2}$ & $\sz{1}{1}$ & $\sz{1}{1}$ & $\sz{1}{9}$ && $\sz{2}{18}$ & $36$  \\
-	\bottomrule
-\end{tabular}
-\caption{Number of sensors for each subarray, dimension of the full-array (FA), and size of the virtual array for each simulation.}
-\label{tab:combinations_sizes}
-\end{table}
+The interfering source is located (simultaneously) at $(0.5\m,~5\m,~[0.3:0.3:2.7]\m)$, emulating an open door, with its signal being a babble sound (LINSE database, \texttt{babble.mat}). The noise signal is a WGN noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). All signals were resampled to the desired sampling frequency. The sensor array is assumed to be an uniform linear array, positioned at $(2\m,~[4.02:0.02:4.2]\m,~1\m)$, whose sensors are assumed to be omnidirectional and with flat frequency response.
 
-\input{figures/1a.beam_heatmap.tex}
+We have that the input SNR between desired and interfering signals is of $5\dB$, and the SNR between desired and noise signals is of $30\dB$. The filters were calculated every 25 windows, and consider the previous 25 windows, in order to calculate the correlation matrices.
 
-In all situations, $S$ has a total of $M = 36$ sensors. The sensors are assumed to be ideal omnidirectional sensors with plain frequency response over the spectrum. The intersensor distances are $\dx = 0.5\cm$ and $\dy = 3.0\cm$. We  assume that $\td = 0\dg$ and $\tB = 40\dg$. Since the LCMV has $4$ sensors, we will use $3$ interfering sources (for all situations), with directions $\t_i \in [-90\dg, 60\dg, 130\dg]$, each with $\var{\bvv_i}=1$, and also assume $\bvv'$ to be uncorrelated Gaussian white noise with unit variance (that is, $\Corr{\bvv'}$ is the identity matrix). The variance of the desired signal is $\var{X}=\expec{\abs{X}^2} = 5$. The simulations are performed for the range $f \in[4, 8]\kilo\Hz$. This range was chosen to satisfy the conditions from \eref{long_window-based_2019}{eq29} for condition [A].
+We will compare the filters obtained through the STFT and SSBT transforms, with T-SSBT denoting the beamformer obtained via the true-distortionless MVDR derived in \cref{sec:true_mvdr_ssbt}, and N-SSBT the naïve approach, in which one would simply use \cref{eq:sec3:solution_mvdr_beamformer} to calculate the SSBT beamformer. The performance analysis was done only on the STFT domain. In all lineplots, the STFT is presented in red, the N-SSBT in green, and the T-SSBT in blue.
 
-\Cref{fig:beam_heatmap,,subfig:fnbw_lineplot,,subfig:wng_lineplot,,subfig:df_lineplot} show the simulation results for $\beam$, measured\footnote{$\tB$ was measured as the first angle in which $\beam{\bvh, \bvd{\tB/2}} \leq 0.05$.} $\tB$, $\wng$ and $\df$, respectively. All methods managed to achieve the nulls in the desired directions from the LCMV. Observing Fig.~\ref{subfig:fnbw_lineplot}, all but [E] were capable of maintaining a reasonable beamwidth across all frequencies, with [E] not being able to maintain  the beamwidth because of too few sensors in the CB beamformer. The ``naïve" combination of KP and LCKP [E, F] leads to worse performance for all metrics; thus, their results are not further compared.
+\subsection{Results}
 
-\begin{figure}[!t]
-\centering
-    \input{figures/2a.fnbw_lineplot.tex}
-    \input{figures/2b.wng_lineplot.tex}
-    \input{figures/2c.df_lineplot.tex}
-    %
-    \tikzsetnextfilename{fnbw_lineplot_legend}
-    \ref*{fnbw_legend}
-    \caption{\textbf{(a)} FNBW, \textbf{(b)} WNG,  and \textbf{(c)} DF, for the beamformers designed with with the parameters in Table~\ref{tab:combinations_sizes}.}
-    \label{fig:wng_df_lineplots}
+In this scenario, we assume that the analysis (and synthesis) windows have 32 samples. \Cref{fig:lineplot_gain_32} shows the window-wise averaged gain in SNR, and \cref{fig:heatmap_gain_32} the gain in SNR for each window (with the windows being represented by the time started, in seconds), for all methods. In \cref{fig:lineplot_dsdi_32} we have the DSDI for all three methods, window-averaged.
+
+Although it isn't as clear from the per-window results of \cref{fig:heatmap_gain_32}, \cref{fig:lineplot_gain_32} shows us that both beamformers obtained from the SSBT led to a better enhancement of the signal, in terms of the output SNR, with the N-SSBT beamformer having a better performance over (almost) all spectrum, and the T-SSBT beamformer being better for lower frequencies, tying with the STFT for higher ones.
+
+Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensure a distortionless response for the desired signal, a feature that wasn't achieved by the N-SSBT beamformer. This is wholly expected, since the later was naively designed with the MVDR in mind, and wasn't fully planned to achieve a distortionless behavior in the STFT (and therefore the time) domain, while the T-SSBT took this into account on its derivation. 
+
+\input{figures/io_input/aux_data_32.tex}
+
+\begin{figure}[H]
+	\centering
+	\input{figures/32.heatmap_gain.tex}
+	
+	\tikzsetnextfilename{heatmap_gain_32}%
+	\vspace*{0.4em}
+	\ref*{heatmap_SSBT_32}
+	\caption{Per-window SNR gain.}
+	\label{fig:heatmap_gain_32}
 \end{figure}
 
-Both methods (RCKP and LCKP) led to very akin results for $\tB$, even though the LCKP simulations [C, D] had much more sensors in the CB beamformer than the RCKP ones [A, B]. This indicates that increasing the CB array size does not result in a better performance in either FNBW or directivity. However, from Fig.~\ref{fig:beam_heatmap}, it is seen that it generates a more focused beam. Both the RCKP and LCKP had similar WNG results of around $10\dB$. The proposed method (especially [A]) leads to a better performance in terms of DF for all frequencies compared to the LCKP. The LCKP is marginally better for WNG in lower frequencies and does not suffer from performance loss at approximately $6.4\kilo\Hz$, caused by using rectangular arrays.
+\begin{figure}[H]
+\centering
+\input{figures/32.lineplot_gain.tex}
+\caption{Window-average SNR gain.}
+\label{fig:lineplot_gain_32}
+\end{figure}
 
-Comparing [A] and [B], the former has better results for both WNG and DF, while both have a similar result in maintaining a constant $\tB$. This is a direct result of using the SD and DS beamformers in [A], and although [A] has less than half the number of sensors in the CB beamformer than [B], the FNBWs are  similar. The beampattern of [B] is more focused than that of [A], but this does not cause a better performance in either beamwidth or directivity.
+\begin{figure}[H]
+	\centering
+	\input{figures/32.lineplot_dsdi.tex}
+	\caption{Window-average DSDI.}
+	\label{fig:lineplot_dsdi_32}
+\end{figure}
+%
+\subsection{Results - 64 samples/window}
 
-Comparing [C] and [D], both lead to almost identical results for all metrics. This can also be seen by comparing Figs.~\ref{subfig:beam_heatmap_resC} and \ref{subfig:beam_heatmap_resD}, where their beampatterns are almost indistinguishable. This indicates that the SD and DS beamformers are obfuscated by the CB in [C, D], caused by the CB beamformer having too many sensors compared to the other beamformers.
+In this simulation, we changed the number of samples per window from 32 to 64, keeping everything else the same.
+
+In here, from \cref{fig:lineplot_gain_64,fig:heatmap_gain_64} we see a similar result to that which was obtained previously, with the N-SSBT beamformer having a better performance overall, but causing some distortion in the desired signal; while the T-SSBT beamformer has a slightly better performance than the one obtained through the STFT, while also having a distortionless behavior, as is seen in \cref{fig:lineplot_dsdi_64}.
+
+\input{figures/io_input/aux_data_64.tex}
+
+\begin{figure}[H]
+	\centering
+	\input{figures/64.heatmap_gain.tex}
+	
+	\tikzsetnextfilename{heatmap_gain_64}%
+	\vspace*{0.4em}
+	\ref*{heatmap_SSBT_64}
+	\caption{Per-window SNR gain.}
+	\label{fig:heatmap_gain_64}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\input{figures/64.lineplot_gain.tex}
+\caption{Window-average SNR gain.}
+\label{fig:lineplot_gain_64}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\input{figures/64.lineplot_dsdi.tex}
+	\caption{Window-average DSDI.}
+	\label{fig:lineplot_dsdi_64}
+\end{figure}

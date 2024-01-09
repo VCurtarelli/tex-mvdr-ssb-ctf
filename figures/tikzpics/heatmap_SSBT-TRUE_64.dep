@@ -1,0 +1,1 @@
+figures/tikzpics/heatmap_SSBT-TRUE_64.pdf: figures/io_input/SSBT-TRUE/gain_SINR_lk_SSBT-TRUE_64.csv

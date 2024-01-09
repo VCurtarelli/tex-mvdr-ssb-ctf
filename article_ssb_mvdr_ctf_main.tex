@@ -69,7 +69,8 @@
 \usepackage{array}
 %\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
-\usepackage{stfloats}
+\usepackage{amsfonts}
+\DeclareMathAlphabet{\mathnfrak}{U}{esstixfrak}{m}{n}
 % \usepackage{cite}
 %\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 %% updated with editorial comments 8/9/2021
@@ -82,7 +83,7 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{On the Single-Sideband Transform for MVDR Filter-Banks}
+\Title{{\smaller[4][DRAFT]} On the Single-Sideband Transform for MVDR Beamformers}
 
 % MDPI internal command: Title for citation in the left column
 \TitleCitation{On the Single-Sideband Transform for MVDR Filter Banks}
@@ -123,7 +124,9 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
 % Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{\lipsum[1]}
+\abstract{%
+	\lipsum[1]%
+}
 
 % Keywords
 \keyword{Single-sideband transform; MVDR beamformer; Filter banks; Array signal processing; Signal enhancement.} 
@@ -148,6 +151,10 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 %
 \input{parts/4.True_MVDR_SSBT.tex}
 %
+\input{parts/5.Simulations.tex}
+%
+\input{parts/6.Conclusion.tex}
+%
 %\input{parts/3.Conv_Beamformers.tex}
 %%
 %\input{parts/4.RCKP_Beamformer.tex}
@@ -168,7 +175,7 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 
 \funding{This research was supported by the Pazy Research Foundation, and the Israel Science Foundation (grant no. 1449/23).}
 
-\dataavailability{The source-code for the simulations developed here is available at \url{https://github.com/VCurtarelli/py-cb-lcmv-rect}.} %%TODO: Source-code availability
+\dataavailability{The source-code for the simulations developed here is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.} %%TODO: Source-code availability
 
 \conflictsofinterest{The authors declare no conflict of interest.} 
 
