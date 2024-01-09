@@ -124,7 +124,7 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 
 % Abstract (Do not insert blank lines, i.e. \\) 
 \abstract{%
-	\lipsum[1]%
+This paper investigates the application of the Single-Sideband Transform (SSBT) for constructing a Minimum-Variance Distortionless-Response (MVDR) beamformer in the context of the convolutive transfer function (CTF) model for short-time transforms. Our study aims to optimize the utilization of SSBT by examining its characteristics and traits. We address a reverberant scenario with multiple sources of contamination, aiming to minimize both undesired sources and reverberation in the output. Through simulations reflecting real-life scenarios, we demonstrate that employing the SSBT -- both in a naive and a refined approach -- results in superior signal enhancement. The refined approach not only enhances the signal but also ensures the desired distortionless behavior when compared to using only the Short-Time Fourier Transform (STFT).
 }
 
 % Keywords
@@ -170,9 +170,9 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided. The following statements should be used ``Conceptualization, X.X. and Y.Y.; methodology, X.X.; software, X.X.; validation, X.X., Y.Y. and Z.Z.; formal analysis, X.X.; investigation, X.X.; resources, X.X.; data curation, X.X.; writing---original draft preparation, X.X.; writing---review and editing, X.X.; visualization, X.X.; supervision, X.X.; project administration, X.X.; funding acquisition, Y.Y. All authors have read and agreed to the published version of the manuscript.'', please turn to the  \href{http://img.mdpi.org/data/contributor-role-instruction.pdf}{CRediT taxonomy} for the term explanation. Authorship must be limited to those who have contributed substantially to the work~reported.} %TODO: Contributions
-\authorcontributions{Conceptualization, I. Cohen and V. Curtarelli; Methodology, V. Curtarelli; Software, V. Curtarelli; Writing---original draft: V. Curtarelli; Writing---review and editing, I. Cohen and V. Curtarelli; Supervision, V. Curtarelli. All authors have read and agreed to the published version of the manuscript.}
+\authorcontributions{Conceptualization, I. Cohen and V. Curtarelli; Methodology, V. Curtarelli; Software, V. Curtarelli; Writing---original draft: V. Curtarelli; Writing---review and editing, I. Cohen and V. Curtarelli; Supervision, V. Curtarelli. All authors have read and agreed to the published version of the manuscript.} %TODO: Fix contributions.
 
-\funding{This research was supported by the Pazy Research Foundation, and the Israel Science Foundation (grant no. 1449/23).}
+\funding{This research was supported by the Pazy Research Foundation, and the Israel Science Foundation (grant no. 1449/23).} %TODO: Fix funding.
 
 \dataavailability{The source-code for the simulations developed here is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.} %%TODO: Source-code availability
 
@@ -193,12 +193,12 @@ LCMV & Linearly-Constrained Minimum-Variance
 \end{tabular}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Optional
-\appendixtitles{yes} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
-\appendixstart
-\appendix
-\renewcommand{\thealgorithm}{\arabic{algorithm}}
+%\appendixtitles{yes} % Leave argument "no" if all appendix headings stay EMPTY (then no dot is printed after "Appendix A"). If the appendix sections contain a heading then change the argument to "yes".
+%\appendixstart
+%\appendix
+%\renewcommand{\thealgorithm}{\arabic{algorithm}}
 %
 %\input{parts/Aa.2D_Convolusion.tex}
 %%
@@ -206,7 +206,7 @@ LCMV & Linearly-Constrained Minimum-Variance
 
 \reftitle{References}
 %\UseRawInputEncoding
-\bibliography{setup/d0.references.bib,setup/d1.ext_references.bib}
+\bibliography{setup/d0.references.bib,setup/d1.ext_references.bib} %TODO: Increase references?
 
 % If authors have biography, please use the format below
 %\section*{Short Biography of Authors}

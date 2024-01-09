@@ -75,6 +75,8 @@ with $\bvw[l,k]$ being the undesired signal (undesired speech components + inter
 	\bvw[l,k] = \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \bvp{B,l'}[k] X_1[l-l',k] + \sum_{l''=0}^{L_C-1}\bvp{C,l''}[k] V_1[l-l'',k] + \bvr[l,k]
 \end{equation}
 
+It is important to take into account the delay between sensors and the length of the window (in seconds). If the time it takes for the desired signal to go from the reference to the farthest sensor is longer than the length of the window, more than one window will need to be considered desired speech. Assuming that the farthest sensor is a distance $\delta$ from the reference, then this isn't a problem as long as $\frac{\delta}{c} < \frac{K}{f_s}$.
+
 \subsection{MVDR beamformer}
 
 We use a linear time-invariant filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
