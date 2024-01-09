@@ -7,7 +7,7 @@
 \let\ABD\AtBeginDocument
 \let\nfrac\nicefrac
 \NewDocumentCommand{\MakeSymbol}{m m}{
-    \ABD{\DeclareDocumentCommand{#1}{}{#2}}
+	\ABD{\DeclareDocumentCommand{#1}{}{#2}}
 }
 %% Formating
 \setlength{\parskip}{1em}
@@ -19,4 +19,28 @@
 }
 \DeclareDocumentCommand{\tocite}{m m}{%
 	{\todo{\cite{#1} / #2}}%
+}
+
+\NewDocumentCommand{\real}{m}{%
+	\Re\cts{#1}%
+}
+\NewDocumentCommand{\imag}{m}{%
+	\Im\cts{#1}%
+}
+
+\DeclareDocumentCommand{\re}{}{%
+	\symbb{R}%
+}
+\DeclareDocumentCommand{\im}{}{%
+	\symbb{I}%
+}
+
+\DeclareMathOperator{\Sign}{sgn}
+\NewDocumentCommand{\sgn}{m}{\Sign\pts{#1}}
+
+\DeclareDocumentCommand{\ceil}{m}{%
+	\left\lceil #1 \right\rceil
+}
+\DeclareDocumentCommand{\floor}{m}{%
+	\left\lfloor #1 \right\rfloor
 }

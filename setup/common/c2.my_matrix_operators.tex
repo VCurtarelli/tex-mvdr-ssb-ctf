@@ -58,3 +58,8 @@
 \newcommand{\domyminus}[2]{%
 	\scalebox{0.7}[1]{$#1\,\mathsf{-}$}
 }%
+
+\DeclareMathOperator{\Trace}{tr}
+\NewDocumentCommand{\trace}{m}{%
+\Trace\pts{#1}%
+}

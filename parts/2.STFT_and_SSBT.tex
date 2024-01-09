@@ -1,0 +1,29 @@
+\section{Single-Sideband Transform}
+
+Although the most traditionally used time-frequency transform is the Short-time Fourier Transform (STFT) \cite{stft}, it isn't the only one possible. Also, note that in the derivation detailed previously no mention was made to a specific time-frequency transform. Therefore, exploring different possibilities for such an operator can lead to interesting results.
+
+The single-sideband transform (SSBT) \cite{ssbt} is one such alternative, in which the frequency values are cleverly utilized such that they are all real-valued.
+
+Given a time-domain signal $x[n]$, its STFT-domain transform is given by
+\begin{equation}
+	X_{\F}[l,k] = \sum_{n=0}^{K-1} w[n] x[n - l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K}}
+\end{equation}
+where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$.
+
+The SSBT is defined very similarly, as
+\begin{equation}
+	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{L-1} w[n] x[n-l\cdot O] e^{\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
+\end{equation}
+
+Assuming a that $x[n]$ is real-valued, one advantage of using the STFT is that we only need to work with $\ceil{\frac{K+1}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT needs to use all $K$ possible bins to correctly capture all information of $x[n]$, however it is real-valued.
+
+It is possible to define the SSBT using the STFT (assuming all $K$ bins are available), such that
+\begin{equation}
+	\label{eq:sec3:equivalence_stft_ssbt}
+	X_{\S}[l,k] = \Sqrt{2} \real{X_{\F}[l,k] e^{\j\frac{3\pi}{4}}}
+\end{equation}
+which is a very useful formulation.
+
+It is possible to show that, unlike with the STFT, the convolution theorem doesn't hold when using the SSBT. That is, if $y[n] = h[n] \ast x[n]$, then $Y_{\F}[l,k] = H_{\F}[l,k] \ast X_{\F}[l,k]$, but $Y_{\S}[l,k] \neq H_{\S}[l,k] \ast X_{\S}[l,k]$.
+
+However, it can still be used to estimate the matrices necessary for calculating the desired beamformer, and then the beamformer obtained is converted into the STFT domain (through \cref{eq:sec3:equivalence_stft_ssbt}) to then be used to filter the observed signal.

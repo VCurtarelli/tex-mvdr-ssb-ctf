@@ -2,14 +2,7 @@
 % xparse
 
 %% Sensor array symbols
-\MakeSymbol{\x}{\mathsf{x}}
-\MakeSymbol{\y}{\mathsf{y}}
 \MakeSymbol{\w}{\omega}
-\MakeSymbol{\t}{\theta}
-\MakeSymbol{\td}{\theta_{\mrm{d}}}
-\MakeSymbol{\tB}{\theta_{\mrm{B}}}
-\MakeSymbol{\Nu}{\mathcal{V}}
-\MakeSymbol{\rn}{\mathrm{rn}}
 
 \makeatletter
 % BEGIN_FOLD
@@ -36,28 +29,6 @@
     \@OneIdx{M}{#1}[,]{\y}
 }
 
-\DeclareDocumentCommand{\P}{g O{m}}{
-    \@OneIdx{P}{#1}{#2}
-}
-\DeclareDocumentCommand{\S}{g O{m}}{
-    \@OneIdx{S}{#1}{#2}
-}
-\DeclareDocumentCommand{\R}{g O{m}}{
-    \@OneIdx{r}{#1}{#2}
-} 
-\DeclareDocumentCommand{\p}{g O{m}}{
-    \@OneIdx{\psi}{#1}{#2}
-}
-\DeclareDocumentCommand{\D}{g O{m}}{
-    \@OneIdx{D}{#1}{#2}
-}
-\DeclareDocumentCommand{\T}{g O{m}}{
-    \@OneIdx{T}{#1}{#2}
-}
-\LetLtxMacro{\d}{\udot}
-\DeclareDocumentCommand{\d}{g O{m}}{
-    \@OneIdx{d}{#1}{#2}
-}
 % END_FOLD
 \makeatother
 
@@ -89,28 +60,42 @@
 \makeatother
 % END_FOLD
 
-\newbv*{L}
-\newbv*{P}
-\newbv*{A}
-\newbv{d}
-\newbv{D}
-\newbv{a}
-\newbv{h}
-\newbv{H}
-\newbv{y}
-\newbv{x}
-\newbv{v}
-\newbv{I}
-\newbv{w}
-\newbv{G}
-\newbv{u}
-\let\Id\bvI
+\newbv*{b}
+\newbv*{x}
+\newbv*{c}
+\newbv*{v}
+\newbv*{y}
+\newbv*{B}
+\newbv*{C}
+\newbv*{r}
+\newbv*{d}
+\newbv*{p}
+\newbv*{w}
+\newbv*{f}
+\newbv*{I}
+\let\id\bvI
+%\newbv[Ga]{\Gamma}
+%\newbv{I}
+%\let\id\bvI
+%\newbv{i}
+%\newbv{u}
+%\newbv*{H}
+%\newbv*{B}
+%\newbv*{G}
+%\newbv*{y}
+%\newbv*{r}
+%\newbv*{z}
+%\newbv*{f}
+%\newbv*{d}
+%\newbv*{w}
+%\newbv*{C}
+%\newbv*{p}
+%\newbv*{q}
+%\newbv*{F}
+%\newbv*{P}
+%\newbv*{A}
+%\newbv*{D}
+%\newbv*{Q}
 % \def\bvL{*************}
-%% Mathematical symbols
-\NewDocumentCommand{\var}{m}{
-    \phi_{#1}
-}
-\NewDocumentCommand{\Corr}{m}{
-    \bv{\Phi}_{#1}
-}
 
+\def\mvdr{\text{mvdr}}

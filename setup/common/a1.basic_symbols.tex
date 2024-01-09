@@ -34,19 +34,19 @@
 \MakeSymbol{\eqsc}{\text{;}}
 \MakeSymbol{\dd}{\mathrm{d}}
 
-\makeatletter
-\NewDocumentCommand{\SI}{m}{%
-    \text{#1}%
-}
-\NewDocumentCommand{\MakeSI}{m G{#1}}{%
-    \ABD{\@namedef{#1}{\SI{#2}}}
-}
-\makeatother
-\MakeSI{cm}
-\MakeSI{cm}
-\MakeSI{dB}
-\MakeSI{Hz}
-\MakeSI{kilo}{k}
+%\makeatletter
+%\NewDocumentCommand{\SI}{m}{%
+%    \text{#1}%
+%}
+%\NewDocumentCommand{\MakeSI}{m G{#1}}{%
+%    \ABD{\@namedef{#1}{\SI{#2}}}
+%}
+%\makeatother
+%\MakeSI{cm}
+%\MakeSI{cm}
+%\MakeSI{dB}
+%\MakeSI{Hz}
+%\MakeSI{kilo}{k}
 
 
 \MakeSymbol{\defas}{%
@@ -76,3 +76,7 @@
 }
 
 \MakeSymbol{\bsquare}{\fcolorbox{black}{black}{\null}}
+
+\NewDocumentCommand{\vs}{}{%
+	\textit{vs}
+}

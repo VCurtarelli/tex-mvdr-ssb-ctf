@@ -82,10 +82,10 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{Constant-Beamwidth LCMV Beamformer with Rectangular Arrays}
+\Title{On the Single-Sideband Transform for MVDR Filter-Banks}
 
 % MDPI internal command: Title for citation in the left column
-\TitleCitation{Constant-Beamwidth LCMV Beamformer with Rectangular Arrays}
+\TitleCitation{On the Single-Sideband Transform for MVDR Filter Banks}
 
 % Author Orchid ID: enter ID or remove command
 \newcommand{\orcidauthorA}{0009-0009-3996-5452} % Add \orcidA{} behind the author's name
@@ -98,7 +98,7 @@
 \newcommand\autBfn{I.}
 
 % Authors, for the paper (add full first names)
-\Author{\autAFN{} \autALN $^{1,\ast}$\orcidA{}, \autBFN{} \autBLN $^{2}$\orcidB{}}
+\Author{\autAFN{} \autALN $^{1,\ast}$\orcidA{}, \autBFN{} \autBLN $^{1}$\orcidB{}}
 
 %\longauthorlist{yes}
 
@@ -111,12 +111,11 @@
 
 % Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
 \address{%\\
-$^{1}$ \quad Graduate Program in Electrical Engineering, Universidade Federal de Santa Catarina, Florianópolis, SC, Brasil; vitor.curtarelli@gmail.com\\
-$^{2}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineering, Technion--Israel Institute of Technology, Technion City, Haifa 3200003, Israel; icohen@ee.technion.ac.il
+$^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineering, Technion--Israel Institute of Technology, Technion City, Haifa 3200003, Israel
 }
 
 % Contact information of the corresponding author
-\corres{Correspondence: vitor.curtarelli@gmail.com%; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)%
+\corres{Correspondence: vitor.c@campus.technion.ac.il%; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)%
 }
 
 % Current address and/or shared authorship
@@ -124,10 +123,10 @@ $^{2}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 % The commands \thirdnote{} till \eighthnote{} are available for further notes
 
 % Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{This paper presents a novel approach utilizing uniform rectangular arrays to design a constant-beamwidth (CB) linearly constrained minimum variance (LCMV) beamformer which also improves white noise gain and directivity. By employing a generalization of the convolutional Kronecker product beamforming technique, we decompose the physical array into virtual subarrays, each tailored to achieve a specific desired feature, and subsequently synthesize the original array's beamformer. Through simulations, we demonstrate that the proposed approach successfully achieves the desired beamforming characteristics while maintaining favorable levels of white noise gain and directivity. Comparative analysis against existing methods from the literature reveals that the proposed method performs better than existing methods.}
+\abstract{\lipsum[1]}
 
 % Keywords
-\keyword{LCMV beamformer; constant-beamwidth beamforming; Kronecker product beamformer; array signal processing; rectangular sensor arrays.} 
+\keyword{Single-sideband transform; MVDR beamformer; Filter banks; Array signal processing; Signal enhancement.} 
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
@@ -143,16 +142,20 @@ $^{2}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 
 \input{parts/1.Introduction.tex}
 %
-\input{parts/2.Signal_Model.tex}
+\input{parts/2.STFT_and_SSBT.tex}
 %
-\input{parts/3.Conv_Beamformers.tex}
+\input{parts/3.Signal_Model.tex}
 %
-\input{parts/4.RCKP_Beamformer.tex}
-%
-\input{parts/5.Simulations.tex}
-%
-\input{parts/6.Conclusion.tex}
+%\input{parts/3.Conv_Beamformers.tex}
+%%
+%\input{parts/4.RCKP_Beamformer.tex}
+%%
+%\input{parts/5.Simulations.tex}
+%%
+%\input{parts/6.Conclusion.tex}
 
+
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% optional
 %\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
@@ -174,20 +177,20 @@ The following abbreviations are used in this manuscript:
 \noindent 
 \begin{tabular}{@{}ll} %%TODO: Abbreviations used
 CB & Constant-beamwidth \\
-CKP & Convolutional KP \\
-DF & Directivity factor \\
-DS & Delay-and-sum \\
-DSDI & Desired signal distortion index \\
-FNBW & First-null beamwidth \\
-KP & Kronecker product \\
-LCKP & Linear CKP \\
-LCMV & Linearly constrained minimum variance \\
-MVDR & Minimum variance distortionless response \\
-RCKP & Rectangular CKP \\
-SD & Superdirective \\
-ULA & Uniform linear array \\
-URA & Uniform rectangular array \\
-WNG & White noise gain 
+%CKP & Convolutional KP \\
+%DF & Directivity factor \\
+%DS & Delay-and-sum \\
+%DSDI & Desired signal distortion index \\
+%FNBW & First-null beamwidth \\
+%KP & Kronecker product \\
+%LCKP & Linear CKP \\
+%LCMV & Linearly constrained minimum variance \\
+%MVDR & Minimum variance distortionless response \\
+%RCKP & Rectangular CKP \\
+%SD & Superdirective \\
+%ULA & Uniform linear array \\
+%URA & Uniform rectangular array \\
+%WNG & White noise gain 
 \end{tabular}
 }
 
@@ -198,9 +201,9 @@ WNG & White noise gain
 \appendix
 \renewcommand{\thealgorithm}{\arabic{algorithm}}
 %
-\input{parts/Aa.2D_Convolusion.tex}
-%
-\input{parts/Ab.Algorithms.tex}
+%\input{parts/Aa.2D_Convolusion.tex}
+%%
+%\input{parts/Ab.Algorithms.tex}
 
 \reftitle{References}
 \bibliography{setup/d0.references.bib,setup/d1.ext_references.bib}

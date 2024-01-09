@@ -1,7 +1,7 @@
 %% Requires:
 % xparse
 
-\let\mrm\mathrm
+\let\mrm\symup
 \def\mtimes{\mathbin{\scalebox{0.7}{$\times$}}}
 \NewDocumentCommand{\sz}{s m m}{%
 	\IfBooleanTF{#1}{%
@@ -13,99 +13,59 @@
 
 \NewDocumentCommand{\el}{m g O{m} o}{%
 	\bts{#1}_{%
-        \IfValueTF{#4}{%
-            (#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}})%
-        }{%
-            #3\IfValueT{#2}{_{#2}}%
-        }        
-    }
+		\IfValueTF{#4}{%
+			(#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}})%
+		}{%
+			#3\IfValueT{#2}{_{#2}}%
+		}        
+	}
 }
 
-\DeclareMathOperator{\Dst}{D}
-\DeclareDocumentCommand{\dst}{m}{%
-    \Dst\pts{#1}%
+\NewDocumentCommand{\FT}{m O{(\w)}}{%
+	\mathcal{F}\cts{#1}#2%
+}
+\NewDocumentCommand{\IFT}{m O{(t)}}{%
+	\mathcal{F}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\F}{}{%
+	\mathcal{F}
+}
+%
+\NewDocumentCommand{\RFT}{m O{(\w)}}{%
+	\mathcal{S}\cts{#1}#2%
+}
+\NewDocumentCommand{\IRFT}{m O{(t)}}{%
+	\mathcal{S}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\S}{}{%
+	\mathcal{S}
 }
 
-\let\Exp\exp
-\DeclareDocumentCommand{\exp}{s m}{%
-    \IfBooleanTF{#1}{%
-        \Exp\cts{#2}%
-    }{%
-        e^{#2}%
-    }%
+\NewDocumentCommand{\STFT}{m O{[l,k]}}{%
+	\symbb{F}\cts{#1}#2%
+}
+\NewDocumentCommand{\ISTFT}{m O{[n]}}{%
+	\symbb{F}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\sF}{}{%
+	\symbb{F}
+}
+%
+\NewDocumentCommand{\SSBT}{m O{[l,k]}}{%
+	\symbb{S}\cts{#1}#2%
+}
+\NewDocumentCommand{\ISSBT}{m O{[n]}}{%
+	\symbb{S}^{-1}\cts{#1}#2%
+}
+\DeclareDocumentCommand{\sS}{}{%
+	\symbb{S}
 }
 
-\DeclareMathOperator{\Trace}{tr}
-\DeclareDocumentCommand{\trace}{m}{%
-    \Trace\pts{#1}%
-}
-\let\Tr\trace
 
-%%%
-\let\rharpoon\rightharpoonaccent
-\newcommand{\rlharpoon}[1]{\accentset{\rightleftharpoons}{#1}}
-\MakeSymbol{\Vect}{\DeclareMathOperator{\Vect}{vec}}
-\DeclareDocumentCommand{\vect}{m}{%
-    \mathcal{V}\pts{#1}%
+%% Mathematical symbols
+\NewDocumentCommand{\var}{m}{
+	\phi_{#1}
 }
-\DeclareMathOperator{\iVect}{ivec}
-\DeclareDocumentCommand{\ivect}{m m}{%
-    \inv{\mathcal{V}}\pts{#2;\,#1}%
-}
-
-\let\Sinc\relax
-\DeclareMathOperator{\Sinc}{sinc}
-\DeclareDocumentCommand{\sinc}{m}{%
-    \Sinc\pts{#1}%
-}
-
-\DeclareMathOperator{\Vconv}{vconv}
-\DeclareDocumentCommand{\vconv}{m}{%
-	\Vconv\pts{#1}%
-}
-
-\makeatletter
-\DeclareMathOperator{\@beam}{\mathcal{B}}
-\DeclareMathOperator{\@wng}{\mathcal{W}}
-\DeclareMathOperator{\@df}{\mathcal{D}}
-\MakeSymbol{\@dsdi}{\upsilon_{\mrm{d}}}
-\DeclareDocumentCommand{\beam}{ g }{%
-    \@beam\IfValueT{#1}{\pts{#1}}%
-}
-\DeclareDocumentCommand{\wng}{ g }{%
-    \@wng\IfValueT{#1}{\pts{#1}}%
-}
-\DeclareDocumentCommand{\dsdi}{ g }{%
-    \@dsdi\IfValueT{#1}{\pts{#1}}%
-}
-\DeclareDocumentCommand{\df}{ g }{%
-    \@df\IfValueT{#1}{\pts{#1}}%
-}
-\makeatother
-
-\DeclareMathOperator{\lcmv}{LCMV}
-\DeclareMathOperator{\cb}{CB}
-\DeclareMathOperator{\sd}{SD}
-\DeclareMathOperator{\ds}{DS}
-\DeclareMathOperator{\mvdr}{MVDR}
-
-\NewDocumentCommand{\idiv}{}{\mathbin{//}}
-\DeclareDocumentCommand{\mod}{}{\mathbin{\%}}
-%% Minimization
-\DeclareMathOperator*{\ArgMin}{argmin}
-\def\st{~~\text{s.t.}~~}
-\NewDocumentCommand{\argmin}{m m g}{%
-    \ArgMin_{#2}#1\IfValueT{#3}{\st#3}%
-}
-
-\DeclareDocumentCommand{\cei}{s m m}{%
-	\IfBooleanTF{#1}{%
-		\genfrac{}{}{0pt}{}{#3}{#2}%
-	}{%
-		\genfrac{}{}{0pt}{}{#2}{#3}%
-	}%
-}
-
-\NewDocumentCommand{\expec}{m}{%
-    \mathsf{E}\bts{#1}%
+\NewDocumentCommand{\Corr}{m}{
+	\bv{\Phi}_{#1}
 }
