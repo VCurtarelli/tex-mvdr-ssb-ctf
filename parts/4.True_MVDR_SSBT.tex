@@ -73,13 +73,13 @@ From this, the minimization problem becomes
 	\label{eq:true-mvdr_real-ssbt_beamformer}
 	\bvf'^\star[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvv'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
 \end{equation}
-whose formulation is the same as the LCMV beamformer, and therefore its solution is
+whose formulation is the same as the linearly-constrained minimum variance (LCMV) \cite{habets_application_2009} beamformer, and therefore its solution is
 \begin{equation}
 	\bvf'^\star[l,k] = \inv{\Corr{\bvv'}}[l,k] \bvQ{x}[k] \inv{\pts{ \he{\bvQ{x}}[k] \inv{\Corr{\bvv'}}[k] \bvQ{x}[k] }} \bvi
 \end{equation}
 
 Since all matrices involved in the calculation of this beamformer are now real-valued, then it is trivial that
 \begin{equation}
-	\bvf'^\star[l,k] = \inv{\Corr{\bvv'}}[l,k] \bvQ{x}[k] \inv{\pts{ \tr{\bvQ{x}}[k] \inv{\Corr{\bvv'}}[k] \bvQ{x}[k] }} \bvi
+	\bvf'^\star_{\mvdr}[l,k] = \inv{\Corr{\bvv'}}[l,k] \bvQ{x}[k] \inv{\pts{ \tr{\bvQ{x}}[k] \inv{\Corr{\bvv'}}[k] \bvQ{x}[k] }} \bvi
 \end{equation}
 and, using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\hat{\bvf}_{\F}^\star[l,k]$, in the STFT domain.

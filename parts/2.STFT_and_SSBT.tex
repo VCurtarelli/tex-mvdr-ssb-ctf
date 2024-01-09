@@ -1,15 +1,15 @@
 \section{STFT and Single-Sideband Transform}
 \label{sec:stft_and_ssbt}
 
-When studying signals and systems, often frequency and time-frequency transforms are used in order to change the signal domain \cite{freq-domain-analysis}, allowing the exploitation of different patterns and informations that are inherent to the signal.
+When studying signals and systems, often frequency and time-frequency transforms are used in order to change the signal domain \cite{demuth_frequency_1977}, allowing the exploitation of different patterns and informations that are inherent to the signal.
 
-Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{stft} is given by
+Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microphone_2021} is given by
 \begin{equation}
 	X_{\F}[l,k] = \sum_{n=0}^{K-1} w[n] x[n - l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K}}
 \end{equation}
 where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Therefore, exploring different possibilities for such an operation can lead to interesting results.
 
-The Single-Sideband Transform (SSBT) \cite{ssbt} is one such alternative, in which the frequency values are cleverly used such that its spectrum is real-valued. The SSB transform of $x[n]$ is defined as
+The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, in which the frequency values are cleverly used such that its spectrum is real-valued. The SSB transform of $x[n]$ is defined as
 \begin{equation}
 	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{L-1} w[n] x[n-l\cdot O] e^{\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}

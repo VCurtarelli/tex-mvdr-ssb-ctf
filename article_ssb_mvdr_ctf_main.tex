@@ -69,13 +69,12 @@
 \usepackage{array}
 %\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
 \usepackage{textcomp}
-\usepackage{amsfonts}
-\DeclareMathAlphabet{\mathnfrak}{U}{esstixfrak}{m}{n}
+
 % \usepackage{cite}
 %\hyphenation{op-tical net-works semi-conduc-tor IEEE-Xplore}
 %% updated with editorial comments 8/9/2021
 
-\input{setup/a1.setup.tex}
+\input{setup/a0.setup.tex}
 
 %=================================================================
 % Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
@@ -185,21 +184,12 @@ The following abbreviations are used in this manuscript:
 
 \noindent 
 \begin{tabular}{@{}ll} %%TODO: Abbreviations used
-CB & Constant-beamwidth \\
-%CKP & Convolutional KP \\
-%DF & Directivity factor \\
-%DS & Delay-and-sum \\
-%DSDI & Desired signal distortion index \\
-%FNBW & First-null beamwidth \\
-%KP & Kronecker product \\
-%LCKP & Linear CKP \\
-%LCMV & Linearly constrained minimum variance \\
-%MVDR & Minimum variance distortionless response \\
-%RCKP & Rectangular CKP \\
-%SD & Superdirective \\
-%ULA & Uniform linear array \\
-%URA & Uniform rectangular array \\
-%WNG & White noise gain 
+%CB & Constant-beamwidth \\
+STFT & Short-Time Fourier Transform \\
+SSBT & Single-Sideband Transform \\
+CTF & Convolutive Transfer Function \\
+MVDR & Minimum-Variance Distortionless-Response \\
+LCMV & Linearly-Constrained Minimum-Variance
 \end{tabular}
 }
 
@@ -215,6 +205,7 @@ CB & Constant-beamwidth \\
 %\input{parts/Ab.Algorithms.tex}
 
 \reftitle{References}
+%\UseRawInputEncoding
 \bibliography{setup/d0.references.bib,setup/d1.ext_references.bib}
 
 % If authors have biography, please use the format below

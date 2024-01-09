@@ -19,7 +19,7 @@ and we similarly define $c_m[n]$ such that $c_m[n] \ast v_1[n] = g_m[n] \ast v[n
 	y_m[n] = b_m[n] \ast x_1[n] + c_m[n] \ast v_1[n] + r_m[n]
 \end{equation}
 
-We can use a time-frequency transform (in here the STFT or the SSBT, as exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{ctf_model} to turn \cref{eq:sec3:time_model_relative} into
+We can use a time-frequency transform (in here the STFT or the SSBT, as exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to turn \cref{eq:sec3:time_model_relative} into
 \begin{equation}
 	\label{eq:sec3:time-freq_model_conv}
 	Y_m[l,k] = B_m[l,k] \ast X_1[l,k] + C_m[l,k] \ast V_1[l,k] + R_m[l,k]
@@ -77,14 +77,15 @@ with $\bvw[l,k]$ being the undesired signal (undesired speech components + inter
 
 \subsection{MVDR beamformer}
 
-We use an LTI filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
+We use a linear time-invariant filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
 \begin{equations}
 	Z[l,k]
 	& = \he{\bvf}[l,k] \bvy[l,k] \\
 	& \approx X_1[l,k]
 \end{equations}
+It is important to note that this filter is time-invariant within the window, but it may change over time depending on the signal.
 
-In order to minimize the undesired signal $\bvw[l,k]$, we will use an MVDR beamformer \cite{mvdr-beamformer}, whose formulation is
+In order to minimize the undesired signal $\bvw[l,k]$, we will use an MVDR beamformer \cite{erdogan_improved_2016}, whose formulation is
 \begin{equation}
 	\label{eq:sec3:minimization_problem_mvdr}
 	\bvf^{\star}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvw}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvd{x}[k] = 1
