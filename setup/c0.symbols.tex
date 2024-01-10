@@ -15,20 +15,6 @@
 \NewDocumentCommand{\@FourIdx}{m m m m m m}{
     #1_{\IfValueT{#2}{#2;}(#3\IfValueT{#2}{_{#2}},#4\IfValueT{#2}{_{#2}});(#5\IfValueT{#2}{_{#2}},#6\IfValueT{#2}{_{#2}})}
 }
-
-\NewDocumentCommand{\dx}{g}{
-    \@OneIdx{\delta}{#1}{\x}
-}
-\NewDocumentCommand{\dy}{g}{
-    \@OneIdx{\delta}{#1}{\y}
-}
-\NewDocumentCommand{\Mx}{g}{
-    \@OneIdx{M}{#1}[,]{\x}
-}
-\NewDocumentCommand{\My}{g}{
-    \@OneIdx{M}{#1}[,]{\y}
-}
-
 % END_FOLD
 \makeatother
 
@@ -70,6 +56,7 @@
 \newbv*{r}
 \newbv*{d}
 \newbv*{p}
+\newbv*{q}
 \newbv*{w}
 \newbv*{f}
 \newbv*{I}

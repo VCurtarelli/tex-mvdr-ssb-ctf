@@ -2,25 +2,21 @@
 \section{Simulations}
 \label{sec:results}
 
-In the simulations\footnote{The simulation code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. The sensor array consists of a uniform linear array with 10 sensors spaced at $2\si{\cm}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
+In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. The sensor array consists of a uniform linear array with 10 sensors spaced at $2\si{\cm}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
 
 The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.11\si{\second}$. The desired source is located at $(2\m,~1\m,~1\m)$, it being a male voice (SMARD, \texttt{50\_male\_speech\_english\_ch8\_OmniPower4296.flac}).
 %
 The interfering source, simulating an open door, is located simultaneously at $(0.5\m,~5\m,~[0.3:0.3:2.7]\m)$, with a babble sound signal (LINSE database, \texttt{babble.mat}). The noise signal is white Gaussian noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). All signals were resampled to the desired frequency.
 
-The uniform linear sensor array is positioned at $(2\m,~[4.02:0.02:4.2]\m,~1\m)$, with omnidirectional sensors of flat frequency response. The input SNR between desired and interfering signals is $5\dB$, and between desired and noise signals is $30\dB$. Filters are calculated every 25 windows, considering the previous 25 windows to calculate correlation matrices.
+The sensor array is positioned at $(2\m,~[4.02:0.02:4.2]\m,~1\m)$, with omnidirectional sensors of flat frequency response. The input SNR between desired and interfering signals is $5\dB$, and between desired and noise signals is $30\dB$. Filters are calculated every 25 windows, considering the previous 25 windows to calculate correlation matrices.
 
-We compare filters obtained through the STFT and SSBT transforms. T-SSBT will denote the beamformer obtained via the true-distortionless MVDR from \cref{sec:true_mvdr_ssbt}, and N-SSBT uses \cref{eq:sec3:solution_mvdr_beamformer} to (naively) calculate the SSBT beamformer. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue.
+We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_mvdr_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MVDR from \cref{sec:true_mvdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue.
 
 %%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Results}
 
 In this scenario, we assume that the analysis windows have 32 samples. \cref{fig:heatmap_gain_32} shows the gain in SNR for each window (with the windows being represented by the time started, in seconds), and \cref{fig:lineplot_gain_32} the window-wise averaged gain in SNR, for all methods. In \cref{fig:lineplot_dsdi_32} we have the DSDI for all three methods, window-averaged.
-
-Although it isn't as clear from the per-window results of \cref{fig:heatmap_gain_32}, \cref{fig:lineplot_gain_32} clearly shows that both SSBT beamformers had a better (at most equal) performance than the STFT one, with the N-SSBT beamformer having a better performance over (almost) all spectrum, and the T-SSBT beamformer being better for lower frequencies, tying with the STFT for higher ones.
-
-Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensure a distortionless response for the desired signal, a feature that wasn't achieved by the N-SSBT beamformer. This was wholly expected, since the later was naively designed with the MVDR in mind, and wasn't fully planned to achieve a distortionless behavior in the STFT (and therefore the time) domain, while the T-SSBT took this into account on its derivation.
 
 \input{figures/io_input/aux_data_32.tex}
 
@@ -31,23 +27,27 @@ Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensur
 	\tikzsetnextfilename{heatmap_gain_32}%
 	\vspace*{0.4em}
 	\ref*{heatmap_SSBT_32}
-	\caption{Per-window SNR gain.}
+	\caption{Per-window SNR gain for 32 samples/window.}
 	\label{fig:heatmap_gain_32}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \input{figures/32.lineplot_gain.tex}
-\caption{Window-average SNR gain.}
+\caption{Window-average SNR gain for 32 samples/window.}
 \label{fig:lineplot_gain_32}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\input{figures/32.lineplot_dsdi.tex}
-	\caption{Window-average DSDI.}
+	\caption{Window-average DSDI for 32 samples/window.}
 	\label{fig:lineplot_dsdi_32}
 \end{figure}
+
+Although it isn't as clear from the per-window results of \cref{fig:heatmap_gain_32}, \cref{fig:lineplot_gain_32} clearly shows that both SSBT beamformers had a better (at most equal) performance than the STFT one, with the N-SSBT beamformer having a better performance over (almost) all spectrum, and the T-SSBT beamformer being better for lower frequencies, tying with the STFT for higher ones.
+
+Also, \cref{fig:lineplot_dsdi_32} shows that the T-SSBT filter was able to ensure a distortionless response for the desired signal, a feature that wasn't achieved by the N-SSBT beamformer. This was wholly expected, since the later was naively designed with the MVDR in mind, and wasn't fully planned to achieve a distortionless behavior in the STFT (and therefore the time) domain, while the T-SSBT took this into account on its derivation.
 %
 \subsection{Results - 64 samples/window}
 
@@ -64,20 +64,20 @@ In here, from \cref{fig:lineplot_gain_64,fig:heatmap_gain_64} we see a similar r
 	\tikzsetnextfilename{heatmap_gain_64}%
 	\vspace*{0.4em}
 	\ref*{heatmap_SSBT_64}
-	\caption{Per-window SNR gain.}
+	\caption{Per-window SNR gain for 64 samples/window.}
 	\label{fig:heatmap_gain_64}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \input{figures/64.lineplot_gain.tex}
-\caption{Window-average SNR gain.}
+\caption{Window-average SNR gain for 64 samples/window.}
 \label{fig:lineplot_gain_64}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\input{figures/64.lineplot_dsdi.tex}
-	\caption{Window-average DSDI.}
+	\caption{Window-average DSDI for 64 samples/window.}
 	\label{fig:lineplot_dsdi_64}
 \end{figure}
