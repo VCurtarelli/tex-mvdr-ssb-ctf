@@ -1,3 +1,0 @@
-figures/tikzpics/gain_lineplot_32.pdf: figures/io_input/STFT/gain_SINR_k_STFT_32.csv
-figures/tikzpics/gain_lineplot_32.pdf: figures/io_input/SSBT/gain_SINR_k_SSBT_32.csv
-figures/tikzpics/gain_lineplot_32.pdf: figures/io_input/SSBT-TRUE/gain_SINR_k_SSBT-TRUE_32.csv

@@ -16,7 +16,7 @@ win which $\Re{(\cdot)}$ and $\Im{(\cdot)}$ represent the real and imaginary com
 It is easy to see that
 \begin{equation}
     \label{eq:appA:equiv_stft_ssbt}
-    X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
+    X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
 \end{equation}
 As stated before, this formulation isn't valid for $k=0$ and $k = \nicefrac{K}{2}$ if $K$ is even, but in these cases $X_{\F}[l,k] = X_{\S}[l,k]$.
 
@@ -41,8 +41,8 @@ Applying \cref{eq:appA:equiv_ssbt_stft} in \cref{subeq:appA:mtf_ssbt}, and knowi
 Passing this through \cref{eq:appA:equiv_stft_ssbt},
 \begin{equations}{eq:appA:expansion_Yf_ssbt}
     Y_{\F}'[l,k] =
-        & - \xfr[l,k] \hfr[l,k] + \j \xfr[l,k] \hfr[l,k] \\
-        & + \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
+        & - \xfr[l,k] \hfr[l,k] - \j \xfr[l,k] \hfr[l,k] \\
+        & - \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
 \end{equations}
 where $Y_{\F}'[l,k]$ is the STFT-equivalent of $Y_{\S}[l,k]$.
 
@@ -53,4 +53,4 @@ Expanding \cref{subeq:appA:mtf_stft} in terms of real and imaginary components,
         & + \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
 \end{equations}
 
-Comparing \cref{eq:appA:expansion_Yf_ssbt} and \cref{eq:appA:expansion_Yf_stft}, it is trivial to see that $Y_{\F}'[l,k] \neq Y_{\F}[l,k]$. This proves that the SSBT doesn't appropriately models the convolution, and therefore the convolution theorem doesn't hold when applying this transform.
+Comparing \cref{eq:appA:expansion_Yf_ssbt} and \cref{eq:appA:expansion_Yf_stft}, trivially $Y_{\F}'[l,k] \neq Y_{\F}[l,k]$. This proves that the SSBT doesn't appropriately models the convolution, and therefore the convolution theorem doesn't hold when applying this transform.
