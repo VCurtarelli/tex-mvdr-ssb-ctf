@@ -26,7 +26,7 @@ From \cref{eq:sec2:def_ssbt_xn} it's easy to see that
 \end{equations}
 assuming that all $K$ bins of the STFT are available.
 
-One disadvantage with the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}). In other words, if $y[n] = h[n] \ast x[n]$, then with the STFT we can approximate $Y_{\F}[l,k] = H_{\F}[l,k] \ast X_{\F}[l,k]$, but $Y_{\S}[l,k] \neq H_{\S}[l,k] \ast X_{\S}[l,k]$, not even as an approximation. Nonetheless, by first converting any result into the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the obtained values for estimating matrices and signals.
+One disadvantage with the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by first converting any result in the SSBT domain to the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the obtained values for estimating matrices and signals.
 
 %TODO: Add appendix convolution theorem STFT.
 %TODO: Rewrite last paragraph to correct it.

@@ -9,7 +9,7 @@ We denote $h_m[n]$ as the room impulse response between the desired source and t
 	y_m[n] = h_m[n] \ast x[n] + g_m[n] \ast v[n] + r_m[n]
 \end{equation}
 
-We let $m'$ be the reference sensor's index and, without compromise, set $m'=1$. We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, define such that
+We let $m'$ be the reference sensor's index, for simplicity assume $m'=1$. We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, define such that
 \begin{equation}
 	b_m[n] \ast x_1[n] = h_m[n] \ast x[n]
 \end{equation}
