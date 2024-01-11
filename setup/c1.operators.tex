@@ -63,10 +63,15 @@
 
 
 %% Mathematical symbols
-\NewDocumentCommand{\var}{m}{
-	\phi_{#1}
+\NewDocumentCommand{\var}{m}{%
+	\phi_{#1}%
 }
-\NewDocumentCommand{\Corr}{m}{
-	\bv{\Phi}_{#1}
+\NewDocumentCommand{\Corr}{m}{%
+	\bv{\Phi}_{#1}%
 }
-\NewDocumentCommand{\dsdi}{}{\upsilon}
+\NewDocumentCommand{\dsdi}{}{%
+	\upsilon%
+}
+\NewDocumentCommand{\snr}{}{%
+	\text{SNR}%
+}

@@ -7,7 +7,7 @@
 %\centering
 \tikzsetnextfilename{gain_lineplot_32}
 \begin{tikzpicture}
-	\begin{lineplot}{Gain (dB)}[ymin=0, ymax=18]
+	\begin{lineplot}{Gain (dB)}[ymin=-0.5, ymax=15]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/gain_SINR_k_STFT_32.csv};
 		
