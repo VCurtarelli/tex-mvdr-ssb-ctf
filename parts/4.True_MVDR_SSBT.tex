@@ -1,4 +1,4 @@
-\section{True-MVDR with the SSB Transform}
+\section{True-MVDR with the Single-Sideband Transform}
 \label{sec:true_mvdr_ssbt}
 
 When using the previous formulation with the SSBT, the distortionless constraint (in \cref{eq:sec3:minimization_problem_mvdr}) ensures that the beamformer avoids causing distortion exclusively within the SSBT domain. However, as explained towards the end of \cref{sec:stft_and_ssbt}, the SSBT beamformer must undergo conversion into the STFT domain (via \cref{eq:sec2:equivalence_stft_ssbt}) before filtering due to the transform's limitations. To construct an SSBT beamformer that correctly adheres to the distortionless constraint, it is essential to consider this conversion step.
@@ -43,8 +43,8 @@ In this scheme, our minimization problem becomes
 	\bvf'^\star[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvD{x}[k] = 1
 \end{equation}
 
-\subsection{Real-valued SSBT true-MVDR beamformer}
-Although $\Corr{\bvw'}[l,k]$ is a matrix with real entries, $\bvD{x}$'s entries are complex, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT. To preserve this desired behavior, an additional constraint is necessary. Forcing $\bvf'[l,k]$ to be real (which will turn all $\he{(\cdot)}$ into $\tr{(\cdot)}$, pure transpose), from the distortionless constraint of \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
+\subsection{Real-valued true-MVDR beamformer with SSBT}
+Although $\Corr{\bvw'}[l,k]$ is a matrix with real entries, $\bvD{x}$ is complex-valued, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT. To preserve this desired behavior, an additional constraint is necessary. Forcing $\bvf'[l,k]$ to be real (which will turn all $\he{(\cdot)}$ into $\tr{(\cdot)}$, pure transpose), from the distortionless constraint of \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
 \begin{subalign}
 	\tr{\bvf'}[l,k] \real{\bvD{x}[k]} & = 1 \\
 	\tr{\bvf'}[l,k] \imag{\bvD{x}[k]} & = 0	

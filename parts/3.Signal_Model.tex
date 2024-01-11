@@ -1,4 +1,4 @@
-\section{Signal and Array Model}
+\section{Signal Model and Beamforming}
 \label{sec:signal_model}
 
 Let there be a generic sensor array, comprised of $M$ sensors, within a reverberant environment. In this setting there also are a desired and an interfering sources (namely $x[n]$ and $v[n]$), and also uncorrelated noise $r_m[n]$ (at each sensor $m$), all travelling with a speed $c$. We assume that the sources are spatially stationary, and all discrete signals were sampled with the same sampling frequency $f_s$.
@@ -21,7 +21,7 @@ We similarly define $c_m[n]$ such that $c_m[n] \ast v_1[n] = g_m[n] \ast v[n]$. 
 %
 %In this new scenario, the impulse responses $b_m[n]$ and $c_m[n]$ can be non-causal, depending on the direction of arrival and features of the reverberant environment.
 
-We can use a time-frequency transform (here the STFT or the SSBT\footnote{Although the SSBT doesn't hold the convolution theorem, we will assume it does for the purpose of the formulation.}, exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to turn \cref{eq:sec3:time_model_relative} into
+We can use a time-frequency transform (here the STFT or the SSBT, exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to get our time-frequency signal model,
 \begin{equation}
 	\label{eq:sec3:time-freq_model_conv}
 	Y_m[l,k] = B_m[l,k] \ast X_1[l,k] + C_m[l,k] \ast V_1[l,k] + R_m[l,k]
@@ -80,7 +80,7 @@ with $\bvw[l,k]$ being the undesired signal (undesired speech components + inter
 	\bvw[l,k] = \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] + \sum_{l''=-\Delta}^{L_C-\Delta-1}\bvq{C,l''}[k] V_1[l-l'',k] + \bvr[l,k]
 \end{equation}
 
-Note that in \cref{eq:sec3:time-freq_model_final,eq:sec3:def_undes_sig_bvwlk} we can treat each window of the incoming signals as a different source, with its own frequency response, which allows the use of traditional methods for signal enhancement.
+Note that in \cref{eq:sec3:time-freq_model_final,eq:sec3:def_undes_sig_bvwlk} we can treat each window of the incoming signals as a different source, with its own frequency response. This facilitates the use of known methods for signal enhancement.
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the distance to the farthest sensor, and $K$ is the window length.
 
@@ -88,13 +88,13 @@ for simplicity we assume that $X_1[l_1,k]$ is independent of $X_1[l_2,k]$, and e
 
 \subsection{MVDR beamformer}
 
-We use a linear time-variant filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
+We use a filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
 \begin{equations}
 	Z[l,k]
 	& = \he{\bvf}[l,k] \bvy[l,k] \\
 	& \approx X_1[l,k]
 \end{equations}
-with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. This filter is time-invariant within each window, but it may change over time to adapt to the signals.
+with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. Since the source signals' properties can vary over time, so can the filter, in order to adapt to the environment.
 
 In order to minimize $\bvw[l,k]$ the MVDR beamformer \cite{erdogan_improved_2016} will be used, being given by
 \begin{equation}
