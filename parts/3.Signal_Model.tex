@@ -3,13 +3,13 @@
 
 Let there be a generic sensor array, comprised of $M$ sensors, within a reverberant environment. In this setting there also are a desired and an interfering sources (namely $x[n]$ and $v[n]$), and also uncorrelated noise $r_m[n]$ (at each sensor $m$), all travelling with a speed $c$. We assume that the sources are spatially stationary, and all discrete signals were sampled with the same sampling frequency $f_s$.
 
-We denote $h_m[n]$ as the room impulse response between the desired signal (at source) and the $m$-th sensor. We similarly define $g_m[n]$ for the interfering signal at source. From this, we write $y_m[n]$ as the observed signal at the $m$-th sensor as
+We denote $h_m[n]$ as the room impulse response between the desired source and the $m$-th sensor. We similarly define $g_m[n]$ for the interfering source. From this, we write $y_m[n]$ as the observed signal at the $m$-th sensor as
 \begin{equation}
 	\label{eq:sec3:time_model_basic}
 	y_m[n] = h_m[n] \ast x[n] + g_m[n] \ast v[n] + r_m[n]
 \end{equation}
 
-We let $m'$ be the reference sensor's index and, without compromise, set $m'=1$. We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, define such that
+We let $m'$ be the reference sensor's index, for simplicity assume $m'=1$. We let $x_1[n] = h_1[n] \ast x[n]$ (and similarly for $v_1[n]$). $b_m[n]$ is the \textit{relative} impulse response between the desired signal (at the reference sensor) and the $m$-th sensor, define such that
 \begin{equation}
 	b_m[n] \ast x_1[n] = h_m[n] \ast x[n]
 \end{equation}
@@ -18,6 +18,8 @@ We similarly define $c_m[n]$ such that $c_m[n] \ast v_1[n] = g_m[n] \ast v[n]$. 
 	\label{eq:sec3:time_model_relative}
 	y_m[n] = b_m[n] \ast x_1[n] + c_m[n] \ast v_1[n] + r_m[n]
 \end{equation}
+%
+%In this new scenario, the impulse responses $b_m[n]$ and $c_m[n]$ can be non-causal, depending on the direction of arrival and features of the reverberant environment.
 
 We can use a time-frequency transform (here the STFT or the SSBT\footnote{Although the SSBT doesn't hold the convolution theorem, we will assume it does for the purpose of the formulation.}, exposed in \cref{sec:stft_and_ssbt}) with the CTF model \cite{talmon_relative_2009} to turn \cref{eq:sec3:time_model_relative} into
 \begin{equation}
@@ -26,16 +28,18 @@ We can use a time-frequency transform (here the STFT or the SSBT\footnote{Althou
 \end{equation}
 where $Y_m[l,k]$ is the transform of $y_m[n]$ (resp. all other signals); $l$ is the window index, and $k$ the bin index, with $0 \leq k \leq K-1$; and the convolution is in the window-index axis.
 
-Assuming that $B_m[l,k]$ is a finite (possibly truncated) response with $L_B$ windows, then
+Using that $B_m[l,k]$ is a finite (possibly truncated) response with $L_B$ windows, then
 \begin{equation}
 	B_m[l,k] \ast X_1[l,k] = \tr{\bvb{m}}[k] \bvx{1}[l,k]
 \end{equation}
 in which
 \begin{subalign}
-	\bvb{m}[k] & = \tr{\tup{ {B_m[0,k]} , {B_m[1,k]} , , {B_m[L_B-1,k]} }} \\
-	\bvx{1}[l,k] & = \tr{\tup{ {X_1[l,k]} ,{ X_1[l-1,k]} , , {X_1[l-L_B+1,k]} }}
+	\bvb{m}[k] & = \tr{\tup{ {B_m[-\Delta,k]} ,, {B_m[0,k]} , , {B_m[L_B-\Delta-1,k]} }} \\
+	\bvx{1}[l,k] & = \tr{\tup{ {X_1[l+\Delta,k]} , , { X_1[l,k]} , , {X_1[l-L_B+\Delta+1,k]} }}
 \end{subalign}
-and in the same way we define $\bvc{m}[k]$ and $\bvv{1}[l,k]$. Note that $\bvb{m}[k]$ doesn't depend on the index $l$, since neither the environment nor the source's position change over time. With this, \cref{eq:sec3:time-freq_model_conv} becomes
+and in the same way we define $\bvc{m}[k]$ and $\bvv{1}[l,k]$; where $\bvb{m}[k]$, $x_1[l,k]$, $\bvc{m}[k]$ and $v_1[l,k]$ are non-causal, given that they are relative to the first sensor.
+
+Note that $\bvb{m}[k]$ doesn't depend on the index $l$, since neither the environment nor the source's position change over time. With this, \cref{eq:sec3:time-freq_model_conv} becomes
 \begin{equation}
 	\label{eq:sec3:time-freq_model_mult1}
 	Y_m[l,k] = \tr{\bvb{m}}[k] \bvx{1}[l,k] + \tr{\bvc{m}}[k] \bvv{1}[l,k] + R_m[l,k]
@@ -52,45 +56,45 @@ where
 and similarly for the other variables. In this situation, $\bvB[k]$ and $\bvC[k]$ are $\sz{L_B}{M}$ and $\sz{L_C}{M}$ matrices respectively; $\bvx{1}[l,k]$ and $\bvv{1}[l,k]$ are $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
 
 \subsection{Reverb-aware formulation}
-We define $\Delta$ as the window-index in which $b_1[n]$ starts, and therefore the $\Delta$-th window of $\bvB[k]$ is the desired-speech frequency response (named $\bvd{x}[k]$), with the rest being an undesired component, comprised only of reverberation.
+We let the $0$-th window of $\bvB[k]$ be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest being (both forward and backwards in time) an undesired component, comprised only of reverberation.
 
 With this, we write
 \begin{equation}
-	\tr{\bvB}[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l-\Delta,k] + \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \bvp{B,l'}[k] X_1[l-l',k]
+	\tr{\bvB}[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k]
 \end{equation}
 where $\bvp{B,l'}[k]$ is the $l'$-th row of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\tr{\bvB}[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
 
 We define $\bvq{C,l''}$ similarly, such that
 \begin{equation}
-	\tr{\bvC}[k] \bvv{1}[l,k] = \sum_{l''=0}^{L_C-1} \bvq{C,l''}[k] V_1[l-l'',k]
+	\tr{\bvC}[k] \bvv{1}[l,k] = \sum_{l''=-\Delta}^{L_C-\Delta-1} \bvq{C,l''}[k] V_1[l-l'',k]
 \end{equation}
 
 From here, we can write
 \begin{equation}
     \label{eq:sec3:time-freq_model_final}
-	\bvy[l,k] = \bvd{x}[k] X_1[l-\Delta,k] + \bvw[l,k]
+	\bvy[l,k] = \bvd{x}[k] X_1[l,k] + \bvw[l,k]
 \end{equation}
 with $\bvw[l,k]$ being the undesired signal (undesired speech components + interfering source + noise), given by
 \begin{equation}
     \label{eq:sec3:def_undes_sig_bvwlk}
-	\bvw[l,k] = \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \bvp{B,l'}[k] X_1[l-l',k] + \sum_{l''=0}^{L_C-1}\bvq{C,l''}[k] V_1[l-l'',k] + \bvr[l,k]
+	\bvw[l,k] = \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] + \sum_{l''=-\Delta}^{L_C-\Delta-1}\bvq{C,l''}[k] V_1[l-l'',k] + \bvr[l,k]
 \end{equation}
 
 Note that in \cref{eq:sec3:time-freq_model_final,eq:sec3:def_undes_sig_bvwlk} we can treat each window of the incoming signals as a different source, with its own frequency response, which allows the use of traditional methods for signal enhancement.
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the distance to the farthest sensor, and $K$ is the window length.
 
-Even though overlapping windows are used when windowing the signal for the time-frequency transform, for simplicity we assume that $X_1[l_1,k]$ is independent of $X_1[l_2,k]$, and each component of $\bvw[l,k]$ is independent of the other, and of $\bvd{x}[k] X_1[l-\Delta,k]$.
+for simplicity we assume that $X_1[l_1,k]$ is independent of $X_1[l_2,k]$, and each component of $\bvw[l,k]$ is independent of the other, and of $\bvd{x}[k] X_1[l-\Delta,k]$. This isn't strictly true, given both the time-frequency windowing process and the reverberant behavior of the environment.
 
 \subsection{MVDR beamformer}
 
-We use a linear time-invariant filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
+We use a linear time-variant filter $\bvf[l,k]$ to estimate the desired signal at the reference sensor, such that
 \begin{equations}
 	Z[l,k]
 	& = \he{\bvf}[l,k] \bvy[l,k] \\
-	& \approx X_1[l-\Delta,k]
+	& \approx X_1[l,k]
 \end{equations}
-with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. This filter is time-invariant within each window, but it may change over time depending on the signal.
+with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. This filter is time-invariant within each window, but it may change over time to adapt to the signals.
 
 In order to minimize $\bvw[l,k]$ the MVDR beamformer \cite{erdogan_improved_2016} will be used, being given by
 \begin{equation}
@@ -100,8 +104,8 @@ In order to minimize $\bvw[l,k]$ the MVDR beamformer \cite{erdogan_improved_2016
 in which $\he{\bvf}[l,k] \bvd{x}[k] = 1$ is the distortionless constraint, and $\Corr{\bvw}[l,k]$ is the correlation matrix of the undesired signal,
 \begin{equations}
 	\Corr{\bvw}[l,k] 
-	& = \sum_{\substack{l'=0 \\ l' \neq \Delta}}^{L_B-1} \he{\bvp{B,l'}}[k] \bvp{B,l'}[k] \var{X_1}[l-l',k] \\
-	& + \sum_{l''=0}^{L_C-1} \he{\bvq{C,l''}}[k] \bvq{C,l''}[k] \var{V_1}[l-l'',k] \\
+	& = \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1}  \he{\bvp{B,l'}}[k] \bvp{B,l'}[k] \var{X_1}[l-l',k] \\
+	& + \sum_{l''=-\Delta}^{L_C-\Delta-1} \he{\bvq{C,l''}}[k] \bvq{C,l''}[k] \var{V_1}[l-l'',k] \\
 	& + \id{M} \var{R}[l,k]
 \end{equations}
 where $\var{X_1}[l,k]$ is the variance of $X_1[l,k]$ (same for $\var{V_1}[l,k]$ and $\var{R}[l,k]$), and $\id{M}$ is the $\sz{M}{M}$ identity matrix, under the premise that the distribution of $\bvr[l,k]$ is the same for all sensors.

@@ -3,7 +3,7 @@
 
 When using the previous formulation with the SSBT, the distortionless constraint (in \cref{eq:sec3:minimization_problem_mvdr}) ensures that the beamformer avoids causing distortion exclusively within the SSBT domain. However, as explained towards the end of \cref{sec:stft_and_ssbt}, the SSBT beamformer must undergo conversion into the STFT domain (via \cref{eq:sec2:equivalence_stft_ssbt}) before filtering due to the transform's limitations. To construct an SSBT beamformer that correctly adheres to the distortionless constraint, it is essential to consider this conversion step.
 
-Given the signal $x[n]$, its STFT $X_{\F}[l,k]$ (with $\floor{\frac{K+1}{2}+1}$ bins), and its SSBT $X_{\S}[l,k]$ (with $K$ bins), from \cref{eq:sec2:equivalence_stft_ssbt} it is possible to show\footnote{\cref{eq:sec4:equivalence_ssbt_stft} (and its derivations) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. In these case $X_{\F}[l,k] = X_{\S}[l,k]$, and the "naive" SSBT beamformer from \cref{sec:signal_model} works.} that
+Given the signal $x[n]$, its STFT $X_{\F}[l,k]$ (with $\floor{\frac{K+1}{2}+1}$ bins), and its SSBT $X_{\S}[l,k]$ (with $K$ bins), from \cref{eq:sec2:equivalence_stft_ssbt} it is possible to show\footnote{\cref{eq:sec4:equivalence_ssbt_stft} (and its derivations) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. In these cases $X_{\F}[l,k] = X_{\S}[l,k]$, and the "naive" SSBT beamformer from \cref{sec:signal_model} works.} that
 \begin{equation}
 	\label{eq:sec4:equivalence_ssbt_stft}
 	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
