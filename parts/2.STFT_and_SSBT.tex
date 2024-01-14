@@ -23,9 +23,9 @@ Assuming that all $K$ bins of the STFT are available, from \cref{eq:sec2:def_stf
 	\label{eq:sec2:equivalence_stft_ssbt}
 	X_{\S}[l,k]
 	& = \Sqrt{2} \real{X_{\F}[l,k] e^{\j\frac{3\pi}{4}}} \\
-	& = - \real{X_{\F}[l,k]} + \imag{X_{\F}[l,k]}
+	& = - \real{X_{\F}[l,k]} - \imag{X_{\F}[l,k]}
 \end{equations}
-from which it is possible to show\footnote{\cref{eq:sec2:equivalence_ssbt_stft} (and its derivations) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. However in these cases $X_{\F}[l,k] = X_{\S}[l,k]$, and the "naive" SSBT beamformer from \cref{sec:signal_model} works.} that\begin{equation}
+from which it is possible to show\footnote{\cref{eq:sec2:equivalence_ssbt_stft} (and its derivations) is invalid for $k = 0$, and $k = \nicefrac{K}{2}$ if $K$ is even. However in these cases $X_{\F}[l,k] = X_{\S}[l,k]$.} that\begin{equation}
 	\label{eq:sec2:equivalence_ssbt_stft}
 	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
 \end{equation}
