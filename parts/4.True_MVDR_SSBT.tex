@@ -15,23 +15,19 @@ from which we define $\Corr{\bvy'}[l,k]$ as its correlation matrix. Under this i
 where $\bvfh_{\F}[l,k]$ is the STFT-equivalent beamformer for $\bvf[l,k]$, and $\bvAh$ is
 \begin{equation}
 	\bvAh = \frac{1}{\Sqrt{2}} \begin{bmatrix}
-		e^{\j\frac{3\pi}{4}} & 0 & \cdots & 0  & e^{-\j\frac{3\pi}{4}} & 0 & \cdots & 0\\
-		0 & e^{\j\frac{3\pi}{4}} & \cdots & 0  & 0 & e^{-\j\frac{3\pi}{4}} & \cdots & 0\\
+		e^{-\j\frac{3\pi}{4}} & 0 & \cdots & 0  & e^{\j\frac{3\pi}{4}} & 0 & \cdots & 0\\
+		0 & e^{-\j\frac{3\pi}{4}} & \cdots & 0  & 0 & e^{\j\frac{3\pi}{4}} & \cdots & 0\\
 		\vdots & \vdots & \ddots & \vdots & \vdots & \ddots & \vdots  \\
-		0 & 0 & \cdots & e^{\j\frac{3\pi}{4}} & 0 & 0 & \cdots & e^{-\j\frac{3\pi}{4}}
+		0 & 0 & \cdots & e^{-\j\frac{3\pi}{4}} & 0 & 0 & \cdots & e^{\j\frac{3\pi}{4}}
 	\end{bmatrix}\SubSize{M}{2M}
 \end{equation}
 From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, the distortionless constraint for the STFT, within the SSBT domain, is
-\begin{equation}
+\begin{subgather}
 	\label{eq:sec4:distortionless_constraint_in_ssbt}
-	\he{\bvf'}[l,k] \bvD{x}[k] = 1
-\end{equation}
-where $\bvd{\F;x}[l,k]$ is the desired-speech frequency response in the STFT domain; and
-\begin{equation}
-	\bvD{x}[k] = \he{\bvAh} \bvd{\F;x}[k]
-\end{equation}
-
-In this scheme, our minimization problem becomes
+	\he{\bvf'}[l,k] \bvD{x}[k] = 1 \\
+    \bvD{x}[k] = \he{\bvAh} \bvd{\F;x}[k]
+\end{subgather}
+where $\bvd{\F;x}[l,k]$ is the desired-speech frequency response in the STFT domain. In this scheme, our minimization problem becomes
 \begin{equation}
 	\label{eq:true-mvdr_ssbt_beamformer}
 	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvy'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvD{x}[k] = 1
