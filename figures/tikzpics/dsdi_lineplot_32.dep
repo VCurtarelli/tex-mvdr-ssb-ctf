@@ -1,3 +1,3 @@
 figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/STFT/dsdi_k_STFT_32.csv
-figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/SSBT/dsdi_k_SSBT_32.csv
-figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/SSBT-TRUE/dsdi_k_SSBT-TRUE_32.csv
+figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/NSSBT/dsdi_k_NSSBT_32.csv
+figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/TSSBT/dsdi_k_TSSBT_32.csv
