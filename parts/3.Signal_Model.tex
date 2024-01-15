@@ -44,28 +44,28 @@ and in the same way we define $\bvc{m}[k]$ and $\bvv{1}[l,k]$. Note that $\bvb{m
 Vectorizing the signals sensor-wise, we finally get
 \begin{equation}
 	\label{eq:sec3:bvylk_vectorized}
-	\bvy[l,k] = \tr{\bvB}[k] \bvx{1}[l,k] + \tr{\bvC}[k] \bvv{1}[l,k] + \bvr[l,k]
+	\bvy[l,k] = \bvB[k] \bvx{1}[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
 \end{equation}
 where
 \begin{equation}
 	\bvy[l,k] = \tr{\tup{ {y_1[l,k]},,{y_M[l,k]} }}
 \end{equation}
-and similarly for the other variables. In this situation, $\bvB[k]$ and $\bvC[k]$ are $\sz{L_B}{M}$ and $\sz{L_C}{M}$ matrices respectively; $\bvx{1}[l,k]$ and $\bvv{1}[l,k]$ are $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
+and similarly for the other variables. In this situation, $\bvB[k]$ and $\bvC[k]$ are $\sz{M}{L_B}$ and $\sz{M}{L_C}$ matrices respectively; $\bvx{1}[l,k]$ and $\bvv{1}[l,k]$ are $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
 
 \subsection{Reverb-aware formulation}
-Let the $0$-th window of $\bvB[k]$ be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest comprising an undesired component. We therefore write
+Let the $\Delta$-th column of $\bvB[k]$ (equivalent to $l=0$) be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest comprising an undesired component. We therefore write
 \begin{equation}
 	\label{eq:sec3:bvBk_bvx1lk_separated}
-	\tr{\bvB}[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k]
+	\bvB[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k]
 \end{equation}
-where $\bvp{B,l'}[k]$ is the $l'$-th row of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\tr{\bvB}[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
+where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 
 Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + noise),
 \begin{equation}
 	\label{eq:sec3:def_undes_sig_bvwlk}
-	\bvw[l,k] = \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] + \tr{\bvC}[k] \bvv{1}[l,k] + \bvr[l,k]
+	\bvw[l,k] = \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
 \end{equation}
 and therefore
 \begin{equation}
@@ -75,7 +75,7 @@ and therefore
 
 %Note that in \cref{eq:sec3:time-freq_model_final,eq:sec3:def_undes_sig_bvwlk} we can treat each window of the incoming signals as a different source, with its own frequency response. This facilitates the use of known methods for signal enhancement.
 
-For simplicity we assume that all windows of $X_{1}[l,k]$ are independent of one-another, and that $\bvw[l,k]$ is independent of  $\bvd{x}[k] X_1[l,k]$. This isn't strictly true, given both the time-frequency windowing process and the reverberant behavior of the environment.
+%For simplicity we assume that all windows of $X_{1}[l,k]$ are independent of one-another, and that $\bvw[l,k]$ is independent of $\bvd{x}[k] X_1[l,k]$. This isn't strictly true, given both the time-frequency windowing process and the reverberant behavior of the environment.
 
 \subsection{MVDR beamformer}
 
