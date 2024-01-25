@@ -97,35 +97,26 @@ The solution to \cref{eq:sec3:minimization_problem_mvdr} is
 	\bvf{\mvdr}[l,k] = \frac{ \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }{ \he{\bvd{x}}[k] \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }
 \end{equation}
 
-%\subsection{Reverb-aware formulation}\label{subsec:sec3:reverb-aware_formulation}
-%In the previous section, we let $\bvB[k]\bvx{1}[l,k]$ be comprised of desired and undesired portions, from which we extracted a $\bvd{x}[k]$ as the desired signal, and treated the rest as unwanted speech. However, it is possible to use this reverberant information to better estimate the desired signal.%
-%
-%By using \cref{eq:sec3:bvylk_vectorized} fully, we can construct the MVDR beamformer as
-%\begin{equation}
-%	\label{eq:sec3:minimization_problem_mvdr_2}
-%	\bvf_{\mvdr,2}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvB{x}[k] = \bvi{\Delta}
-%\end{equation}
-%with $\bvi{\Delta}$ being a $\sz{L_B}{1}$ vector comprised of zeros except for the $\Delta$-th entry which is a $1$, symbolizing the desired signal. In this way, we have the same formulation as the Linearly-Constrained Minimum-Variance (LCMV) \cite{habets_application_2009} beamformer, and thus the solution is
-%\begin{equation}
-%	\bvf{\mvdr,2} = \inv{\Corr{\bvy}}[l,k] \bvB[l,k] \inv{ \pts{ \he{\bvB}[l,k] \inv{\Corr{\bvy}}[l,k] \bvB[l,k] } } \bvi{\Delta}
-%\end{equation}
-%%For such, we will treat each frequency bin as a different time-domain signal. That is, we define $\bvx{1;k}[l] \defas \bvx{1}[l,k]$ from \cref{subeq:sec3:def_bvx1lk} as a time-domain signal within the $l$ parameter.
-%%
-
 \subsection{Beamformer metrics}
 
 Considering the problem, the relevant metrics are the narrowband gain in signal-to-noise ratio (SNR) and narrowband desired signal reduction factor (DSRF), respectively given by
 \begin{equation}
-	\Delta\snr[l,k] = \var{V_1}[l,k] \frac{ \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{ \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] }
+	\gsnr[l,k] = \var{V_1}[l,k] \frac{ \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{ \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] }
 \end{equation}
 \begin{equation}
 	\dsrf[l,k] = \frac{1}{\abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
 \end{equation}
-We can also define the window-averaged gain in SNR and DSRF as
+It is easy to see that if $\dsrf[l,k] = 1$ then the distortionless constraint is satisfied. We can also define the window-averaged gain in SNR and DSRF as
 \begin{equation}
-	\Delta\snr[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \text{gSNR}[l,k]
+	\gsnr[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \text{gSNR}[l,k]
 \end{equation}
 \begin{equation}
 	\dsrf[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \dsrf[l,k]
 \end{equation}
-with $L_Z$ being the number of windows of $Z[l,k]$.
+with $L_Z$ being the number of windows of $Z[l,k]$; and the broadband SNR gain and DSRF, given by
+\begin{equation}
+	\gsnr = \frac{1}{K} \sum_{k=0}^{K-1} \gsnr[k]
+\end{equation}
+\begin{equation}
+	\dsrf = \frac{1}{K} \sum_{k=0}^{K-1} \dsrf[k]
+\end{equation}

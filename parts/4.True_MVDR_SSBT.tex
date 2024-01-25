@@ -62,23 +62,3 @@ whose formulation is again similar to that of the LCMV beamformer, and therefore
 	\bvf'_{\mvdr}[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \inv{\Corr{\bvy'}}[k] \bvD{x}[k] }} \bvi
 \end{equation}
 Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mvdr}'[l,k]$, in the STFT domain.
-
-%\subsection{Reverb-aware SSBT formulation}
-%Now continuing \cref{subsec:sec3:reverb-aware_formulation}, the new distortionless constraint will become
-%\begin{subgather}
-%	\he{\bvf'}[l,k] \bvBh[k] = \bvi{\Delta} \\
-%	\bvBh[k] = \he{\bvA} \bvB{\F}[k]
-%\end{subgather}
-%with $\bvB{\F}[k]$ being in the STFT domain. Again, to ensure that $\bvf'[l,k]$ is a real-valued vector, we write
-%\begin{subgather}
-%	\bvbe[k] = \tup{ \real{\bvBh[k]} , \imag{\bvBh[k]} }\SubSize{2M}{2L_B} \\
-%	\bvi[h]{\Delta} = \tr{ \tup{ 0 ,, 0 , 1 , 0 , , 0 } }\SubSize{2L_b}{1}
-%\end{subgather}
-%where the $1$ entry of $\bvi[h]{\Delta}$ is again at the $\Delta$-th position. The solution is therefore similar to that in \cref{eq:sec4:mvdr_reverb-reject_formulation},
-%\begin{equation}
-%	\bvf{\mvdr}'[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvbe[k] \inv{\pts{ \tr{\bvbe}[k] \inv{\Corr{\bvy'}}[k] \bvbe[k] }} \bvi[h]{\Delta}
-%\end{equation}
-%%<<<<<<< HEAD
-%%=======
-%%Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mvdr}'[l,k]$, in the STFT domain.
-%%>>>>>>> main
