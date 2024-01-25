@@ -52,22 +52,13 @@ where
 \end{equation}
 and similarly for the other variables. In this situation, $\bvB[k]$ and $\bvC[k]$ are $\sz{M}{L_B}$ and $\sz{M}{L_C}$ matrices respectively; $\bvx{1}[l,k]$ and $\bvv{1}[l,k]$ are $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
 
-<<<<<<< HEAD
 \subsection{Reverb-rejecting formulation}\label{subsec:sec3:reverb-rejecting_formulation}
-Let the $\Delta$-th window of $\bvB[k]$ be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest comprising an undesired component. We therefore write
-=======
-\subsection{Reverb-aware formulation}
 Let the $\Delta$-th column of $\bvB[k]$ (equivalent to $l=0$) be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest comprising an undesired component. We therefore write
->>>>>>> main
 \begin{equation}
 	\label{eq:sec3:bvBk_bvx1lk_separated}
 	\bvB[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k]
 \end{equation}
-<<<<<<< HEAD
-where $\bvp{B,l'}[k]$ is the $l'$-th row of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
-=======
 where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$, and the summation over $l'$ is the undesired component. We will call $\bvd{x}[k]$ the desired-speech frequency response.
->>>>>>> main
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 
@@ -81,14 +72,9 @@ and therefore
     \label{eq:sec3:time-freq_model_final}
 	\bvy[l,k] = \bvd{x}[k] X_1[l,k] + \bvw[l,k]
 \end{equation}
-
-<<<<<<< HEAD
-For simplicity we assume that all windows of $X_{1}[l,k]$ are independent of one-another, and that $\bvw[l,k]$ is independent of  $\bvd{x}[k] X_1[l,k]$. This isn't strictly true, given both the time-frequency windowing process and the reverberant behavior of the environment.
-=======
 %Note that in \cref{eq:sec3:time-freq_model_final,eq:sec3:def_undes_sig_bvwlk} we can treat each window of the incoming signals as a different source, with its own frequency response. This facilitates the use of known methods for signal enhancement.
 
 %For simplicity we assume that all windows of $X_{1}[l,k]$ are independent of one-another, and that $\bvw[l,k]$ is independent of $\bvd{x}[k] X_1[l,k]$. This isn't strictly true, given both the time-frequency windowing process and the reverberant behavior of the environment.
->>>>>>> main
 
 We estimate the desired signal at reference through a filter $\bvf[l,k]$, such that
 \begin{equations}
@@ -101,45 +87,45 @@ with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. Since the s
 In order to minimize $\bvw[l,k]$ the MVDR beamformer \cite{erdogan_improved_2016} will be used, being given by
 \begin{equation}
 	\label{eq:sec3:minimization_problem_mvdr}
-	\bvf_{\mvdr,1}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvd{x}[k] = 1
+	\bvf_{\mvdr}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvd{x}[k] = 1
 \end{equation}
 in which $\he{\bvf}[l,k] \bvd{x}[k] = 1$ is the distortionless constraint, and $\Corr{\bvy}[l,k]$ is the correlation matrix of the observed signal $\bvy[l,k]$. This formulation is preferred over the one using $\Corr{\bvw}[l,k]$ given the observed signal's availability.
 
 The solution to \cref{eq:sec3:minimization_problem_mvdr} is
 \begin{equation}
 	\label{eq:sec3:solution_mvdr_beamformer}
-	\bvf{\mvdr,1}[l,k] = \frac{ \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }{ \he{\bvd{x}}[k] \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }
+	\bvf{\mvdr}[l,k] = \frac{ \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }{ \he{\bvd{x}}[k] \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }
 \end{equation}
 
-\subsection{Reverb-aware formulation}\label{subsec:sec3:reverb-aware_formulation}
-In the previous section, we let $\bvB[k]\bvx{1}[l,k]$ be comprised of desired and undesired portions, from which we extracted a $\bvd{x}[k]$ as the desired signal, and treated the rest as unwanted speech. However, it is possible to use this reverberant information to better estimate the desired signal.%
-
-By using \cref{eq:sec3:bvylk_vectorized} fully, we can construct the MVDR beamformer as
-\begin{equation}
-	\label{eq:sec3:minimization_problem_mvdr_2}
-	\bvf_{\mvdr,2}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvB{x}[k] = \bvi{\Delta}
-\end{equation}
-with $\bvi{\Delta}$ being a $\sz{L_B}{1}$ vector comprised of zeros except for the $\Delta$-th entry which is a $1$, symbolizing the desired signal. In this way, we have the same formulation as the Linearly-Constrained Minimum-Variance (LCMV) \cite{habets_application_2009} beamformer, and thus the solution is
-\begin{equation}
-	\bvf{\mvdr,2} = \inv{\Corr{\bvy}}[l,k] \bvB[l,k] \inv{ \pts{ \he{\bvB}[l,k] \inv{\Corr{\bvy}}[l,k] \bvB[l,k] } } \bvi{\Delta}
-\end{equation}
-%For such, we will treat each frequency bin as a different time-domain signal. That is, we define $\bvx{1;k}[l] \defas \bvx{1}[l,k]$ from \cref{subeq:sec3:def_bvx1lk} as a time-domain signal within the $l$ parameter.
+%\subsection{Reverb-aware formulation}\label{subsec:sec3:reverb-aware_formulation}
+%In the previous section, we let $\bvB[k]\bvx{1}[l,k]$ be comprised of desired and undesired portions, from which we extracted a $\bvd{x}[k]$ as the desired signal, and treated the rest as unwanted speech. However, it is possible to use this reverberant information to better estimate the desired signal.%
 %
+%By using \cref{eq:sec3:bvylk_vectorized} fully, we can construct the MVDR beamformer as
+%\begin{equation}
+%	\label{eq:sec3:minimization_problem_mvdr_2}
+%	\bvf_{\mvdr,2}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvB{x}[k] = \bvi{\Delta}
+%\end{equation}
+%with $\bvi{\Delta}$ being a $\sz{L_B}{1}$ vector comprised of zeros except for the $\Delta$-th entry which is a $1$, symbolizing the desired signal. In this way, we have the same formulation as the Linearly-Constrained Minimum-Variance (LCMV) \cite{habets_application_2009} beamformer, and thus the solution is
+%\begin{equation}
+%	\bvf{\mvdr,2} = \inv{\Corr{\bvy}}[l,k] \bvB[l,k] \inv{ \pts{ \he{\bvB}[l,k] \inv{\Corr{\bvy}}[l,k] \bvB[l,k] } } \bvi{\Delta}
+%\end{equation}
+%%For such, we will treat each frequency bin as a different time-domain signal. That is, we define $\bvx{1;k}[l] \defas \bvx{1}[l,k]$ from \cref{subeq:sec3:def_bvx1lk} as a time-domain signal within the $l$ parameter.
+%%
 
 \subsection{Beamformer metrics}
 
-Considering the problem, the relevant metrics are the narrowband gain in signal-to-noise ratio (SNR) and narrowband desired signal distortion index (DSDI), respectively given by
+Considering the problem, the relevant metrics are the narrowband gain in signal-to-noise ratio (SNR) and narrowband desired signal reduction factor (DSRF), respectively given by
 \begin{equation}
 	\Delta\snr[l,k] = \var{V_1}[l,k] \frac{ \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{ \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] }
 \end{equation}
 \begin{equation}
-	\dsdi[l,k] = \abs{\he{\bvf}[l,k] \bvd{x}[k] - 1}^2
+	\dsrf[l,k] = \frac{1}{\abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
 \end{equation}
-We can also define the window-averaged gain in SNR and DSDI as
+We can also define the window-averaged gain in SNR and DSRF as
 \begin{equation}
 	\Delta\snr[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \text{gSNR}[l,k]
 \end{equation}
 \begin{equation}
-	\dsdi[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \dsdi[l,k]
+	\dsrf[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \dsrf[l,k]
 \end{equation}
 with $L_Z$ being the number of windows of $Z[l,k]$.
