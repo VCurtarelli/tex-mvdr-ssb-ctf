@@ -44,3 +44,22 @@
 
 	\noindent\bsquare
 }
+
+\newcounter{smethod}
+\setcounter{smethod}{0}
+\newcounter{method}
+\setcounter{method}{0}
+
+\NewDocumentEnvironment{method}{s}{%
+\IfBooleanT{#1}{\stepcounter{method}\setcounter{smethod}{0}}%
+\stepcounter{smethod}%
+{\noindent\textbf{Method \Alph{method}.\arabic{smethod}:}}
+
+}{
+\vspace{-0.5em}\newline%
+\noindent\bsquare%
+
+}
+
+\AtBeginDocument{%
+}

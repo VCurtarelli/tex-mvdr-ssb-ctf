@@ -36,4 +36,9 @@ from which it we deduce
 	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
 \end{equation}
 
-One disadvantage of the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by converting any result in the SSBT domain to the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the transform to study of the problem at hand.
+One disadvantage of the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by adapting our assumptions within the SSBT domain to correctly reflect the desired result in the STFT domain before evaluation, it remains feasible to employ the transform to study of the problem at hand.
+
+%With this in mind, when working within the STFT domain we will consider both conjugate-frequencies simultaneously, since they aren't independent of one-another. We therefore define
+%\begin{equation}
+%	\bvX{\S}[l,k] = \vtup{ {X_{\S}[l,k]} , {X_{\S}[l,K-k]} }
+%\end{equation}

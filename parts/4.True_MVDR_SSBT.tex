@@ -21,7 +21,10 @@ in which
 		0 & 0 & \cdots & e^{\j\frac{3\pi}{4}} & 0 & 0 & \cdots & e^{-\j\frac{3\pi}{4}}
 	\end{bmatrix}\SubSize{M}{2M}
 \end{equation}
-From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, the distortionless constraint for the STFT, within the SSBT domain, is
+
+\subsection{Reverb-rejecting SSBT formulation}\label{subsec:sec4:reverb-rejecting_formulation}
+
+Continuing the results of \cref{subsec:sec3:reverb-rejecting_formulation}, from \cref{eq:sec4:conversion_beamformer_ssbt_to_stft} the distortionless constraint for the STFT, within the SSBT domain, is
 \begin{subgather}
 	\label{eq:sec4:distortionless_constraint_in_ssbt}
 	\he{\bvf'}[l,k] \bvd[h]{x}[k] = 1 \\
@@ -33,32 +36,57 @@ where $\bvd{\F;x}[l,k]$ is the desired-speech frequency response in the STFT dom
 	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvy'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvd[h]{x}[k] = 1
 \end{equation}
 
+<<<<<<< HEAD
+Although $\Corr{\bvy'}[l,k]$ is a matrix with real entries, $\bvd[h]{x}$ is complex-valued, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT. To ensure the desired behavior of $\bvf'[l,k]$ being real-valued, an additional constraint is necessary. By forcing $\bvf'[l,k]$ to have real entries, from \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
+=======
 Although $\Corr{\bvy'}[l,k]$ is a matrix with real entries, $\bvd[h]{x}$ is complex-valued, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT.
 
 \subsection{Real-valued true-MVDR beamformer with SSBT}
 
 To ensure the desired behavior of $\bvf'[l,k]$ being real-valued, an additional constraint is necessary. By forcing $\bvf'[l,k]$ to have real entries, from \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
+>>>>>>> main
 \begin{subalign}
 	\tr{\bvf'}[l,k] \real{\bvd[h]{x}[k]} & = 1 \\
 	\tr{\bvf'}[l,k] \imag{\bvd[h]{x}[k]} & = 0	
 \end{subalign}
-which can be put in matricial form,
-\begin{equation}
-	\tr{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
-\end{equation}
-with
+which can be put in matricial form as $\tr{\bvf'}[l,k] \bvD{x}[k] = \tr{\bvi}$, with
 \begin{subgather}
+<<<<<<< HEAD
+	\bvD{x}[k] = \tup{ \real{\bvd[h]{x}[k]} , \imag{\bvd[h]{x}[k]} }\SubSize{2M}{2} \\
+=======
 	\bvQ{x}[k] = \tup{ \real{\bvd[h]{x}[k]} , \imag{\bvd[h]{x}[k]} }\SubSize{2M}{2} \\
+>>>>>>> main
 	\bvi = \vtup{1 , 0}
 \end{subgather}
 
 Therefore, the minimization problem from \cref{eq:true-mvdr_ssbt_beamformer} becomes
 \begin{equation}
 	\label{eq:true-mvdr_real-ssbt_beamformer}
-	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \tr{\bvf'}[l,k] \Corr{\bvy'}[l,k] \bvf'[l,k]~\text{s.t.}~\tr{\bvf'}[l,k] \bvQ{x}[k] = \tr{\bvi}
+	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \tr{\bvf'}[l,k] \Corr{\bvy'}[l,k] \bvf'[l,k]~\text{s.t.}~\tr{\bvf'}[l,k] \bvD{x}[k] = \tr{\bvi}
 \end{equation}
-whose formulation is the same as the linearly-constrained minimum variance (LCMV) \cite{habets_application_2009} beamformer, and thus has the solution
+whose formulation is again similar to that of the LCMV beamformer, and therefore
 \begin{equation}
-	\bvf'_{\mvdr}[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvQ{x}[k] \inv{\pts{ \tr{\bvQ{x}}[k] \inv{\Corr{\bvy'}}[k] \bvQ{x}[k] }} \bvi
+	\label{eq:sec4:mvdr_reverb-reject_formulation}
+	\bvf'_{\mvdr}[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \inv{\Corr{\bvy'}}[k] \bvD{x}[k] }} \bvi
 \end{equation}
 Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mvdr}'[l,k]$, in the STFT domain.
+
+\subsection{Reverb-aware SSBT formulation}
+Now continuing \cref{subsec:sec3:reverb-aware_formulation}, the new distortionless constraint will become
+\begin{subgather}
+	\he{\bvf'}[l,k] \bvBh[k] = \bvi{\Delta} \\
+	\bvBh[k] = \he{\bvA} \bvB{\F}[k]
+\end{subgather}
+with $\bvB{\F}[k]$ being in the STFT domain. Again, to ensure that $\bvf'[l,k]$ is a real-valued vector, we write
+\begin{subgather}
+	\bvbe[k] = \tup{ \real{\bvBh[k]} , \imag{\bvBh[k]} }\SubSize{2M}{2L_B} \\
+	\bvi[h]{\Delta} = \tr{ \tup{ 0 ,, 0 , 1 , 0 , , 0 } }\SubSize{2L_b}{1}
+\end{subgather}
+where the $1$ entry of $\bvi[h]{\Delta}$ is again at the $\Delta$-th position. The solution is therefore similar to that in \cref{eq:sec4:mvdr_reverb-reject_formulation},
+\begin{equation}
+	\bvf{\mvdr}'[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvbe[k] \inv{\pts{ \tr{\bvbe}[k] \inv{\Corr{\bvy'}}[k] \bvbe[k] }} \bvi[h]{\Delta}
+\end{equation}
+<<<<<<< HEAD
+=======
+Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mvdr}'[l,k]$, in the STFT domain.
+>>>>>>> main
