@@ -13,7 +13,7 @@ where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between
 The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, being cleverly constructed such that its frequency spectrum is real-valued, without loss of information. The SSB transform of $x[n]$ is defined as
 \begin{equation}
 	\label{eq:sec2:def_ssbt_xn}
-	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{KL-1} w[n] x[n-l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
+	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{K-1} w[n] x[n-l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}
 
 Assuming that $x[n]$ is real-valued, one advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$, however it is real-valued.
