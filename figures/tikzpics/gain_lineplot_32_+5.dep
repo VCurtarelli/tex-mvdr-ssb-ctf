@@ -1,3 +1,0 @@
-figures/tikzpics/gain_lineplot_32_+5.pdf: figures/io_input/STFT/gSINR_k_STFT_32_+5.csv
-figures/tikzpics/gain_lineplot_32_+5.pdf: figures/io_input/NSSBT/gSINR_k_NSSBT_32_+5.csv
-figures/tikzpics/gain_lineplot_32_+5.pdf: figures/io_input/TSSBT/gSINR_k_TSSBT_32_+5.csv
