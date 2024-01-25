@@ -16,9 +16,9 @@ We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \c
 
 \subsection{Results - 32 samples/window}
 
-In this scenario, we assume that the analysis windows have 32 samples. \cref{fig:lineplot_gain_32} shows the window-wise averaged gain in SNR, and in \cref{fig:lineplot_dsdi_32} we have the window-averaged DSDI, for all three methods.
+In this scenario, we assume that the analysis windows have 32 samples. \cref{fig:lineplot_gain_32} shows the window-wise averaged gain in SNR, and in \cref{fig:lineplot_dsrf_32} we have the window-averaged DSRF, for all three methods.
 
-\cref{fig:lineplot_gain_32} shows that all three beamformers had a similar performance, with no clear advantage of one to the other on the overall spectrum. Also, \cref{fig:lineplot_dsdi_32} shows that both the T-SSBT and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the N-SSBT beamformer. This was expected, since the T-SSBT was appropriately designed to achieve this quality, while the N-SSBT wasn't.
+\cref{fig:lineplot_gain_32} shows that all three beamformers had a similar performance, with no clear advantage of one to the other on the overall spectrum. Also, \cref{fig:lineplot_dsrf_32} shows that both the T-SSBT and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the N-SSBT beamformer. This was expected, since the T-SSBT was appropriately designed to achieve this quality, while the N-SSBT wasn't.
 
 \input{figures/io_input/aux_data_32.tex}
 
@@ -42,29 +42,25 @@ In this scenario, we assume that the analysis windows have 32 samples. \cref{fig
 
 \begin{figure}[H]
 	\centering
-	\input{figures/32.lineplot_dsdi.tex}
-	\caption{Window-average DSDI for 32 samples/window.}
-	\label{fig:lineplot_dsdi_32}
+	\input{figures/32.lineplot_dsrf.tex}
+	\caption{Window-average DSRF for 32 samples/window.}
+	\label{fig:lineplot_dsrf_32}
 \end{figure}
+
+%\begin{figure}[H]
+%\centering
+%\input{figures/32.lineplot_dsdi.tex}
+%\caption{Window-average DSDI for 32 samples/window.}
+%\label{fig:lineplot_dsdi_32}
+%\end{figure}
 %
 \subsection{Results - 64 samples/window}
 
 In this simulation, we changed the number of samples per window from 32 to 64, keeping everything else the same. 
 
-Differently than the last situation, from \cref{fig:lineplot_gain_64} we see that the N-SSBT had a worse overall performance, driven by the higher frequencies. The STFT and T-SSBT beamformers' performances were similar, with one being more advantageous than the other in specific frequencies, but with overall similar output. In \cref{fig:lineplot_dsdi_64} we have an akin result to that of \cref{fig:lineplot_dsdi_32}, with the N-SSBT being the only one to distort the desired signal.
+Differently than the last situation, from \cref{fig:lineplot_gain_64} we see that the N-SSBT had a worse overall performance, driven by the higher frequencies. The STFT and T-SSBT beamformers' performances were similar, with one being more advantageous than the other in specific frequencies, but with overall similar output. In \cref{fig:lineplot_dsrf_64} we have an akin result to that of \cref{fig:lineplot_dsrf_32}, with the N-SSBT being the only one to distort the desired signal.
 
 \input{figures/io_input/aux_data_64.tex}
-
-%\begin{figure}[H]
-%	\centering
-%	\input{figures/64.heatmap_gain.tex}
-%	
-%	\tikzsetnextfilename{heatmap_gain_64}%
-%	\vspace*{0.4em}
-%	\ref*{heatmap_SSBT_64}
-%	\caption{Per-window SNR gain for 64 samples/window.}
-%	\label{fig:heatmap_gain_64}
-%\end{figure}
 
 \begin{figure}[H]
 \centering
@@ -75,11 +71,18 @@ Differently than the last situation, from \cref{fig:lineplot_gain_64} we see tha
 
 \begin{figure}[H]
 	\centering
-	\input{figures/64.lineplot_dsdi.tex}
-	\caption{Window-average DSDI for 64 samples/window.}
-	\label{fig:lineplot_dsdi_64}
+	\input{figures/64.lineplot_dsrf.tex}
+	\caption{Window-average DSRF for 64 samples/window.}
+	\label{fig:lineplot_dsrf_64}
 \end{figure}
+
+%\begin{figure}[H]
+%\centering
+%\input{figures/64.lineplot_dsdi.tex}
+%\caption{Window-average DSDI for 64 samples/window.}
+%\label{fig:lineplot_dsdi_64}
+%\end{figure}
 
 \subsection{Overall result}
 
-In both situations simulated, the proposed true-MVDR SSBT and the traditional STFT beamformers had a similar performance in terms SNR gain, and both achieved the null DSDI desired for the distortionless behavior. The naive SSBT beamformer matched their performance for 32 samples/window, but that didn't transfer to the 64 samples/window case. It also didn't achieve the null DSDI, therefore causing some distortion in the desired signal.
+In both situations simulated, the proposed true-MVDR SSBT and the traditional STFT beamformers had a similar performance in terms SNR gain, and both achieved the appropriate DSRF desired for the distortionless behavior. The naive SSBT beamformer matched their performance for 32 samples/window, but that didn't transfer to the 64 samples/window case. It also didn't achieve the null DSRF (in dB), therefore causing some distortion in the desired signal.

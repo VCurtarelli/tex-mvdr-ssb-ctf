@@ -13,7 +13,7 @@ where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between
 The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, being cleverly constructed such that its frequency spectrum is real-valued, without loss of information. The SSB transform of $x[n]$ is defined as
 \begin{equation}
 	\label{eq:sec2:def_ssbt_xn}
-	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{L-1} w[n] x[n-l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
+	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{KL-1} w[n] x[n-l\cdot O] e^{-\j 2\pi k \frac{(n - l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}
 
 Assuming that $x[n]$ is real-valued, one advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$, however it is real-valued.
@@ -28,7 +28,7 @@ Assuming that all $K$ bins of the STFT are available, from \cref{eq:sec2:def_stf
 
 It is easy to see that\footnote{For the abuse of notation, we let $X_{\S}[l,K] \equiv X_{\S}[l,0]$, and equally for $X_{\F}[l,K]$.}
 \begin{equation}
-    X_{\S}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\F}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\F}[l,K-k] }
+	X_{\S}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\F}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\F}[l,K-k] }
 \end{equation}
 from which it we deduce
 \begin{equation}
@@ -36,9 +36,4 @@ from which it we deduce
 	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
 \end{equation}
 
-One disadvantage of the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by adapting our assumptions within the SSBT domain to correctly reflect the desired result in the STFT domain before evaluation, it remains feasible to employ the transform to study of the problem at hand.
-
-%With this in mind, when working within the STFT domain we will consider both conjugate-frequencies simultaneously, since they aren't independent of one-another. We therefore define
-%\begin{equation}
-%	\bvX{\S}[l,k] = \vtup{ {X_{\S}[l,k]} , {X_{\S}[l,K-k]} }
-%\end{equation}
+One disadvantage of the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by converting any result in the SSBT domain to the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the transform to study of the problem at hand.
