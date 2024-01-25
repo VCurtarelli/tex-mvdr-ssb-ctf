@@ -1,3 +1,0 @@
-figures/tikzpics/dsdi_lineplot_64.pdf: figures/io_input/STFT/dsdi_k_STFT_64.csv
-figures/tikzpics/dsdi_lineplot_64.pdf: figures/io_input/NSSBT/dsdi_k_NSSBT_64.csv
-figures/tikzpics/dsdi_lineplot_64.pdf: figures/io_input/TSSBT/dsdi_k_TSSBT_64.csv
