@@ -21,28 +21,28 @@
 {\footnotesize%
 	\begin{subfigure}{0.48\linewidth}% resA
 		%\centering
-		\tikzsetnextfilename{heatmap_SSBT_64}%
+		\tikzsetnextfilename{heatmap_NSSBT_64}%
 		\begin{tikzpicture}%
-			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_SSBT_64}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
-				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/SSBT/gain_SINR_lk_SSBT_64.csv};%
+			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_NSSBT_64}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
+				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/NSSBT/gain_SINR_lk_NSSBT_64.csv};%
 			\end{heatmap}%
 		\end{tikzpicture}%
 		\vspace*{-2mm}\caption{N-SSBT}%
-		\label{subfig:heatmap_gain_SSBT_64}%
+		\label{subfig:heatmap_gain_NSSBT_64}%
 		\vspace*{2mm}%
 	\end{subfigure}%
 }\newline%
 {\footnotesize%
 	\begin{subfigure}{0.48\linewidth}% resA
 		%\centering
-		\tikzsetnextfilename{heatmap_SSBT-TRUE_64}%
+		\tikzsetnextfilename{heatmap_TSSBT_64}%
 		\begin{tikzpicture}%
-			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_SSBT-TRUE_64}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
-				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/SSBT-TRUE/gain_SINR_lk_SSBT-TRUE_64.csv};%
+			\begin{heatmap}{\meshcols}{Gain (dB)}[colorbar to name={heatmap_TSSBT_64}, xlabel={Time ($\si{\second}$)}, ylabel={Freq. ($\si{\kilo\hertz}$)}]%
+				\addplot3[surf, mesh/cols=\meshcols, mesh/rows=\meshrows, shader=interp] table[y=freq, x=win, z=val, col sep=comma] {figures/io_input/TSSBT/gain_SINR_lk_TSSBT_64.csv};%
 			\end{heatmap}%
 		\end{tikzpicture}%
 		\vspace*{-2mm}\caption{T-SSBT}%
-		\label{subfig:heatmap_gain_SSBT-TRUE_64}%
+		\label{subfig:heatmap_gain_TSSBT_64}%
 		\vspace*{2mm}%
 	\end{subfigure}%
 }%
