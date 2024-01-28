@@ -50,32 +50,32 @@ While in \cref{fig:lineplot_gain_32_p5} all three beamformers had a similar perf
 
 \subsection{Average results per iSIR}
 
-Here, we now take the broadband average output for the beamformers, allowing us to compare them for different values of input SIR, for both $K = 32$ and $K = 64$.
+Here, we now take the frequency-average metrics for the beamformers, allowing us to compare them for different values of input SIR, for both $K = 32$ and $K = 64$.
 
-From \cref{fig:lineplot_dsrf_32,fig:lineplot_dsrf_64}, as expected we see that the STFT and T-SSBT beamformers didn't cause distortion on the desired signal, while the N-SSBT did, due to its nature. Im terms of SNR gain, the N-SSBT beamformer had a better performance overall with $K = 32$, while the opposite was true for $K = 64$. Also, in general the T-SSBT beamformer outperformed (in broadband) the STFT beamformer, being at most marginally worse in the case of $K = 32$ and higher input SIRs.
+From \cref{fig:lineplot_dsrf_32,fig:lineplot_dsrf_64}, as expected we see that the STFT and T-SSBT beamformers didn't cause distortion on the desired signal, while the N-SSBT did, due to its nature. Im terms of SNR gain, the N-SSBT beamformer had a better performance overall with $K = 32$, while the opposite was true for $K = 64$. Also, in general the T-SSBT beamformer outperformed the STFT beamformer, being at most marginally worse in the case of $K = 32$ and higher input SIRs.
 \begin{figure}[H]
 	\centering
 	\input{figures/32.lineplot_gain_av.tex}
-	\caption{Broadband SNR gain for $K = 32$.}
+	\caption{Frequency-average SNR gain for $K = 32$.}
 	\label{fig:lineplot_gain_32}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\input{figures/32.lineplot_dsrf_av.tex}
-	\caption{Broadband DSRF for $K = 32$.}
+	\caption{Frequency-average DSRF for $K = 32$.}
 	\label{fig:lineplot_dsrf_32}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\input{figures/64.lineplot_gain_av.tex}
-	\caption{Broadband SNR gain for $K = 64$.}
+	\caption{Frequency-average SNR gain for $K = 64$.}
 	\label{fig:lineplot_gain_64}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\input{figures/64.lineplot_dsrf_av.tex}
-	\caption{Broadband DSRF for $K = 64$.}
+	\caption{Frequency-average DSRF for $K = 64$.}
 	\label{fig:lineplot_dsrf_64}
 \end{figure}
 
