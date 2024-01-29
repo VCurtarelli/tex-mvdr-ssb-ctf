@@ -100,7 +100,7 @@ The solution to \cref{eq:sec3:minimization_problem_mvdr} is
 \subsection{Beamformer metrics}
 
 The metrics which will be used to observe and study the results will be the gain in SNR and desired signal reduction factor (DSRF), in window-averaged narrowband form as in \cref{eqs:window-averaged_narrowband_metrics}; and in window-averaged broadband form presented in \cref{eqs:window-averaged_broadband_metrics}.
-
+%
 \begin{subgather}{eqs:window-averaged_narrowband_metrics}
 	\gsnr[k] = \frac{\sum_{l} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{\sum_{l} \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] } \div \frac{\sum_{l} \var{X_1}[l,k]}{\sum_{l} \var{W_1}[l,k]} \\
 	\dsrf[k] = \frac{\sum_{l} \var{X_1}[l,k]}{\sum_{l} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
