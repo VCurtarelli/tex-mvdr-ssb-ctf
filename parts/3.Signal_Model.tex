@@ -110,24 +110,3 @@ The metrics which will be used to observe and study the results will be the gain
 	\dsrf = \frac{\sum\limits_{l,k} \var{X_1}[l,k]}{\sum\limits_{l,k} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
 \end{subgather}
 It is easy to see that if $\dsrf[l,k] = 1$ then the distortionless constraint is satisfied. Also, $\dsrf[l,k] = 1$ implies that $\dsrf[k] = \dsrf = 1$.
-% are the narrowband gain in signal-to-noise ratio (SNR) and narrowband desired signal reduction factor (DSRF), respectively given by
-%\begin{equation}
-%	\gsnr[l,k] = \var{V_1}[l,k] \frac{ \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{ \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] }
-%\end{equation}
-%\begin{equation}
-%	\dsrf[l,k] = \frac{1}{\abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
-%\end{equation}
-%It is easy to see that if $\dsrf[l,k] = 1$ then the distortionless constraint is satisfied. We can also define the window-averaged gain in SNR and DSRF as
-%\begin{equation}
-%	\gsnr[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \text{gSNR}[l,k]
-%\end{equation}
-%\begin{equation}
-%	\dsrf[k] = \frac{1}{L_Z}\sum_{l=0}^{L_Z-1} \dsrf[l,k]
-%\end{equation}
-%with $L_Z$ being the number of windows of $Z[l,k]$; and the frequency-averaged SNR gain and DSRF, given by
-%\begin{equation}
-%	\gsnr = \frac{1}{K} \sum_{k=0}^{K-1} \gsnr[k]
-%\end{equation}
-%\begin{equation}
-%	\dsrf = \frac{1}{K} \sum_{k=0}^{K-1} \dsrf[k]
-%\end{equation}
