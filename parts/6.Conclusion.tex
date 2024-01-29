@@ -3,6 +3,6 @@
 
 In this study, we investigated the application of the Single-Sideband Transform in beamforming within a reverberant environment, utilizing the convolutive transfer function model for filter bank (i.e., the beamformer) estimation. We implemented a Minimum-Variance Distortionless-Response beamformer to enhance signals in a real-life-like scenario, elucidating the process to achieve a truly-distortionless MVDR beamformer when employing the SSB transform.
 
-The true-MVDR SSBT beamformer outperformed (at most matched) the beamformer obtained with the traditional STFT, in terms of SNR gain and distortionless response. The naive-MVDR SSBT beamformer's SNR gain performance varied with the number of samples per window and input signal-to-noise ratio, and in all situations it caused distortion in the desired signal.
+The true-MVDR SSBT beamformer strictly outperformed the beamformer obtained with the traditional STFT in terms of SNR gain, matching it regarding the distortionlessness. The naive-MVDR SSBT beamformer's SNR gain performance varied with the number of samples per window and input signal-to-interference ratio, always performing worse than the true-MVDR SSBT beamformer; and in all situations it caused distortion in the desired signal.
 
 Future research avenues may explore the integration of this transform into different beamformers, or undertake further comparisons of the proposed SSBT beamformer (following the considerations exposed in here) against the established and reliable STFT methodology.
