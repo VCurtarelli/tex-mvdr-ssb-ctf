@@ -58,16 +58,16 @@ Let the $\Delta$-th column of $\bvB[k]$ (equivalent to $l=0$) be the desired-spe
 	\label{eq:sec3:bvBk_bvx1lk_separated}
 	\bvB[k] \bvx{1}[l,k]
 	& = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] \\
-	& = \bvs[l,k] + \bvxi[l,k]
+	& = \bvs[l,k] + \bvq[l,k]
 \end{equations}
-where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvs[l,k] = \bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$ with $\bvd{x}[k]$ being the desired-speech frequency response; and $\bvxi[l,k]$ (the summation over $l \neq 0$) is the undesired component, or reverberation signal. 
+where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvs[l,k] = \bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$ with $\bvd{x}[k]$ being the desired-speech frequency response; and $\bvq[l,k]$ (the summation over $l \neq 0$) is the undesired component, or reverberation signal.
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 
 Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + noise),
 \begin{equation}
 	\label{eq:sec3:def_undes_sig_bvwlk}
-	\bvw[l,k] = \bvxi[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
+	\bvw[l,k] = \bvq[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
 \end{equation}
 and therefore
 \begin{equation}
