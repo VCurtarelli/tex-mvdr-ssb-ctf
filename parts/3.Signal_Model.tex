@@ -58,16 +58,16 @@ Let the $\Delta$-th column of $\bvB[k]$ (equivalent to $l=0$) be the desired-spe
 	\label{eq:sec3:bvBk_bvx1lk_separated}
 	\bvB[k] \bvx{1}[l,k]
 	& = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvp{B,l'}[k] X_1[l-l',k] \\
-	& = \bvd{x}[k] X_1[l,k] + \bvk[l,k]
+	& = \bvd{x}[k] X_1[l,k] + \bvq[l,k]
 \end{equations}
-where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$ with $\bvd{x}[k]$ being the desired-speech frequency response; and $\bvk[l,k]$ (the summation over $l \neq 0$) is the undesired component, or reverberation signal. 
+where $\bvp{B,l'}[k]$ is the $l'$-th column of $\bvB[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvB[k] \bvx{1}[l,k]$ with $\bvd{x}[k]$ being the desired-speech frequency response; and $\bvq[l,k]$ (the summation over $l \neq 0$) is the undesired component, or reverberation signal. 
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 
-Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + noise),
+Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + uncorrelated noise),
 \begin{equation}
 	\label{eq:sec3:def_undes_sig_bvwlk}
-	\bvw[l,k] = \bvk[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
+	\bvw[l,k] = \bvq[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
 \end{equation}
 and therefore
 \begin{equation}
@@ -101,16 +101,16 @@ The solution to \cref{eq:sec3:minimization_problem_mvdr} is
 
 \subsection{Beamformer metrics}
 
-The metrics which will be used to observe and study the results will be the gain in SNR, gain in Signal-to-Reverberation Ratio (SRR) and desired signal reduction factor (DSRF), in window-averaged narrowband form as in \cref{eqs:window-averaged_narrowband_metrics}; and in window-averaged broadband form presented in \cref{eqs:window-averaged_broadband_metrics}.
+The metrics which will be used to observe and study the results will be the gain in Signal-to-Noise Ratio (SNR), where "noise" is $\bvw[l,k]$, encompassing all undesired signals; Reverberation Signal Reduction Factor $\rsrf$, which shows how much the undesired speech components were reduced; and Desired Signal Reduction Factor $\dsrf$, which explores how much the desired speech components were reduced; in both window-averaged narrowband (\cref{eqs:window-averaged_narrowband_metrics}) and window-averaged broadband (\cref{eqs:window-averaged_broadband_metrics}) forms.
 %
 \begin{subgather}{eqs:window-averaged_narrowband_metrics}
 	\gsnr[k] = \frac{\sum_{l} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{\sum_{l} \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] } \div \frac{\sum_{l} \var{X_1}[l,k]}{\sum_{l} \var{W_1}[l,k]} \\
-	\gsrr[k] = \frac{\sum_{l} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{\sum_{l} \he{\bvf}[l,k] \Corr{\bvk}[l,k] \bvf[l,k] } \div \frac{\sum_{l} \var{X_1}[l,k]}{\sum_{l} \var{\kappa_1}[l,k]} \\
+	\rsrf[k] = \frac{\sum_{l} \var{Q_1}[l,k]}{\sum_{l} \he{\bvf}[l,k] \Corr{\bvq}[l,k] \bvf[l,k] } \\
 	\dsrf[k] = \frac{\sum_{l} \var{X_1}[l,k]}{\sum_{l} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
 \end{subgather}
 \begin{subgather}{eqs:window-averaged_broadband_metrics}
 	\gsnr = \frac{\sum\limits_{l,k} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{\sum\limits_{l,k} \he{\bvf}[l,k] \Corr{\bvw}[l,k] \bvf[l,k] } \div \frac{\sum\limits_{l,k} \var{X_1}[l,k]}{\sum\limits_{l,k} \var{W_1}[l,k]} \\
-	\gsrr = \frac{\sum\limits_{l,k} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}{\sum\limits_{l,k} \he{\bvf}[l,k] \Corr{\bvk}[l,k] \bvf[l,k] } \div \frac{\sum\limits_{l,k} \var{X_1}[l,k]}{\sum\limits_{l,k} \var{\kappa_1}[l,k]} \\
+	\rsrf = \frac{\sum\limits_{l,k} \var{Q_1}[l,k]}{\sum\limits_{l,k} \he{\bvf}[l,k] \Corr{\bvq}[l,k] \bvf[l,k] } \\
 	\dsrf = \frac{\sum\limits_{l,k} \var{X_1}[l,k]}{\sum\limits_{l,k} \var{X_1}[l,k] \abs{\he{\bvf}[l,k] \bvd{x}[k]}^2}
 \end{subgather}
-where $\kappa_1[l,k]$ is the first element (corresponding to the reference sensor) of $\bvk[l,k]$. It is easy to see that if $\dsrf[l,k] = 1$ then the distortionless constraint is satisfied. Also, $\dsrf[l,k] = 1$ implies that $\dsrf[k] = \dsrf = 1$.
+where $Q_1[l,k]$ is the first element (corresponding to the reference sensor) of $\bvq[l,k]$. It is easy to see that if $\dsrf[l,k] = 1$ then the distortionless constraint is satisfied. Also, $\dsrf[l,k] = 1$ implies that $\dsrf[k] = \dsrf = 1$.

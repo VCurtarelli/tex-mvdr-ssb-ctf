@@ -1,0 +1,3 @@
+figures/tikzpics/gsrr_lineplot_32_p5.pdf: figures/io_input/STFT/gSRR_k_STFT_32_p5.csv
+figures/tikzpics/gsrr_lineplot_32_p5.pdf: figures/io_input/NSSBT/gSRR_k_NSSBT_32_p5.csv
+figures/tikzpics/gsrr_lineplot_32_p5.pdf: figures/io_input/TSSBT/gSRR_k_TSSBT_32_p5.csv
