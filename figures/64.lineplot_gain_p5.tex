@@ -7,15 +7,15 @@
 %\centering
 \tikzsetnextfilename{gain_lineplot_64_p5}
 \begin{tikzpicture}
-	\begin{lineplot}{Gain (dB)}[ymin=-5, ymax=12]
+	\begin{lineplot}{Gain (dB)}%[ymin=-5, ymax=12]
 		\addplot [style=resA]
-		table [col sep=comma, y=val] {figures/io_input/STFT/gSRINR_k_STFT_64_p5.csv};
+		table [col sep=comma, y=val] {figures/io_input/STFT/gSINR_k_STFT_64_p5.csv};
 		
 		\addplot [style=resC]
-		table [col sep=comma, y=val] {figures/io_input/NSSBT/gSRINR_k_NSSBT_64_p5.csv};
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/gSINR_k_NSSBT_64_p5.csv};
 		
 		\addplot [style=resE]
-		table [col sep=comma, y=val] {figures/io_input/TSSBT/gSRINR_k_TSSBT_64_p5.csv};
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/gSINR_k_TSSBT_64_p5.csv};
 		
 		\addlegendentry{STFT};
 		\addlegendentry{N-SSBT};
