@@ -91,13 +91,18 @@ In order to minimize $\bvw[l,k]$ the MVDR beamformer \cite{erdogan_improved_2016
 	\label{eq:sec3:minimization_problem_mvdr}
 	\bvf_{\mvdr}[l,k] = \min_{\bvf[l,k]} \he{\bvf[l,k]} \Corr{\bvy}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvd{x}[k] = 1
 \end{equation}
-in which $\he{\bvf}[l,k] \bvd{x}[k] = 1$ is the distortionless constraint, and $\Corr{\bvy}[l,k]$ is the correlation matrix of the observed signal $\bvy[l,k]$. This formulation is preferred over the one using $\Corr{\bvw}[l,k]$ given the observed signal's availability.
+in which $\he{\bvf}[l,k] \bvd{x}[k] = 1$ is the distortionless constraint, and $\Corr{\bvy}[l,k]$ is the correlation matrix of the observed signal $\bvy[l,k]$. %This formulation is preferred over the one using $\Corr{\bvw}[l,k]$ given the observed signal's availability.
 
 The solution to \cref{eq:sec3:minimization_problem_mvdr} is
 \begin{equation}
 	\label{eq:sec3:solution_mvdr_beamformer}
 	\bvf{\mvdr}[l,k] = \frac{ \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }{ \he{\bvd{x}}[k] \inv{\Corr{\bvy}}[l,k] \bvd{x}[k] }
 \end{equation}
+Equivalently, the MVDR beamformer can be written as
+\begin{equation}
+	\bvf{\mvdr}[l,k] = \frac{ \inv{\Corr{\bvw}}[l,k] \bvd{x}[k] }{ \he{\bvd{x}}[k] \inv{\Corr{\bvw}}[l,k] \bvd{x}[k] }
+\end{equation}
+with $\Corr{\bvw}[l,k]$ being the correlation matrix of $\bvw[l,k]$. This formulation is advantageous given that $\bvw[l,k]$ and $X_1[l,k]$ are correlated, since different windows of $\bvB[k] \bvx{1}[l,k]$ aren't independent due to their overlap.
 
 \subsection{Beamformer metrics}
 
