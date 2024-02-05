@@ -18,7 +18,7 @@ We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \c
 
 In this scenario, we assume that the input SIR is $5\dB$, and we use analysis windows with: 32 samples in \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_gain_32_p5}; or 64 samples in \cref{fig:lineplot_dsrf_64_p5,fig:lineplot_gain_64_p5}. \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} show the window-wise averaged narrowband gain in SNR, and \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} the window-averaged narrowband DSRF, for all presented methods.
 
-From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that the N-SSBT beamformer had the worse performance of them all. We also see that the T-SSBT beamformer had a better performance overall compared to the STFT one, although not by a landslide, and also being slightly worse at times. Also, in both \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} show that both the T-SSBT and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the N-SSBT beamformer. This was expected, since the T-SSBT was appropriately designed to achieve this quality, while the N-SSBT wasn't.
+From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that both beamformers derived through the SSBT outperformed the STFT beamformer in terms of SNR gain, with the N-SSBT one having a slightly better yield than the T-SSBT one. Also, both \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} show that the T-SSBT and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the N-SSBT beamformer. This was expected, since the T-SSBT was appropriately designed to achieve this quality, while the N-SSBT wasn't.
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[H]
@@ -33,6 +33,12 @@ From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that the
 	\caption{Window-average DSRF for $K = 32$.}
 	\label{fig:lineplot_dsrf_32_p5}
 \end{figure}
+%\begin{figure}[H]
+%	\centering
+%	\input{figures/32.lineplot_gsrr_p5.tex}
+%	\caption{Window-average SRR for $K = 32$.}
+%	\label{fig:lineplot_gsrr_32_p5}
+%\end{figure}
 
 \input{figures/io_input/aux_data_64.tex}
 \begin{figure}[H]
@@ -52,36 +58,36 @@ From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that the
 
 Here, we now take the broadband metrics for the beamformers, allowing us to compare them for different values of input SIR. We again test for both $K = 32$ and $K = 64$.
 
-From \cref{fig:lineplot_dsrf_32,fig:lineplot_dsrf_64}, as expected we see that the STFT and T-SSBT beamformers didn't cause distortion on the desired signal, while the N-SSBT did, due to its nature. In terms of SNR gain (\cref{fig:lineplot_gain_32,fig:lineplot_gain_64}), the N-SSBT beamformer had a better performance with $K = 32$ than with $K = 64$, being at times better or worse than the STFT beamformer. Comparing the filters obtained via the T-SSBT and STFT transforms, the T-SSBT beamformer strictly outperformed the STFT one, being always 1-2dB better in terms of gain.
+From \cref{fig:lineplot_dsrf_32_av,fig:lineplot_dsrf_64_av}, as expected we see that the STFT and T-SSBT beamformers didn't cause distortion on the desired signal, while the N-SSBT did, due to its nature. In terms of SNR gain (\cref{fig:lineplot_gain_32_av,fig:lineplot_gain_64_av}), we again see that the SSBT beamformers led to a strictly better result than the STFT one, the later being 6-7 dB worse than the former ones for all input SIRs.
 
 \begin{figure}[H]
 	\centering
 	\input{figures/32.lineplot_dsrf_av.tex}
 	\caption{Broadband DSRF for $K = 32$.}
-	\label{fig:lineplot_dsrf_32}
+	\label{fig:lineplot_dsrf_32_av}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\input{figures/64.lineplot_dsrf_av.tex}
 	\caption{Broadband DSRF for $K = 64$.}
-	\label{fig:lineplot_dsrf_64}
+	\label{fig:lineplot_dsrf_64_av}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\input{figures/32.lineplot_gain_av.tex}
 	\caption{Broadband SNR gain for $K = 32$.}
-	\label{fig:lineplot_gain_32}
+	\label{fig:lineplot_gain_32_av}
 \end{figure}
 
 \begin{figure}[H]
-\centering
-\input{figures/64.lineplot_gain_av.tex}
-\caption{Broadband SNR gain for $K = 64$.}
-\label{fig:lineplot_gain_64}
-\end{figure}
+	\centering
+	\input{figures/64.lineplot_gain_av.tex}
+	\caption{Broadband SNR gain for $K = 64$.}
+	\label{fig:lineplot_gain_64_av}
+	\end{figure}
 
 \subsection{Overall result}
 
-In all situations evaluated, the proposed true-MVDR SSBT beamformer outperformed the beamformer through the traditional STFT in terms of SNR gain, both also achieving the appropriate DSRF necessary for the desired distortionless behavior of the MVDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall performance for $K = 32$ for the gain in SNR, and a worse overall performance for $K = 64$, while also incurring some distortion on the desired signal, seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.
+In all situations evaluated, the proposed true-MVDR SSBT beamformer consistently outperformed the beamformer through the traditional STFT in terms of SNR gain, both achieving the appropriate DSRF necessary for the desired distortionless behavior of the MVDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall than that of the T-SSBT beamformer for both evaluated $K$, while also incurring some undesired distortion on the desired signal seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.

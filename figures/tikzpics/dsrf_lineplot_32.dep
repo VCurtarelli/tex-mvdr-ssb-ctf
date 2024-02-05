@@ -1,3 +1,0 @@
-figures/tikzpics/dsrf_lineplot_32.pdf: figures/io_input/STFT/DSRF_STFT_32.csv
-figures/tikzpics/dsrf_lineplot_32.pdf: figures/io_input/NSSBT/DSRF_NSSBT_32.csv
-figures/tikzpics/dsrf_lineplot_32.pdf: figures/io_input/TSSBT/DSRF_TSSBT_32.csv

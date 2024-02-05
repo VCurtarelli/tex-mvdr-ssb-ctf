@@ -5,17 +5,17 @@
 \pgfplotsset{compat=1.18}
 %\begin{subfigure}{\linewidth}
 %\centering
-\tikzsetnextfilename{dsrf_lineplot_64}
+\tikzsetnextfilename{dsrf_lineplot_64_av}
 \begin{tikzpicture}
 	\begin{lineplot}{DSRF (dB)}[xtick={-20, -10, ..., 20}, xlabel={iSIR (dB)}, xmin=-21, xmax=+21]
 		\addplot [style=resA]
-		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF_STFT_64.csv};
+		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF_STFT_64_av.csv};
 		
 		\addplot [style=resC]
-		table [col sep=comma, y=val] {figures/io_input/NSSBT/DSRF_NSSBT_64.csv};
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/DSRF_NSSBT_64_av.csv};
 		
 		\addplot [style=resE]
-		table [col sep=comma, y=val] {figures/io_input/TSSBT/DSRF_TSSBT_64.csv};
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/DSRF_TSSBT_64_av.csv};
 		
 		\addlegendentry{STFT};
 		\addlegendentry{N-SSBT};
