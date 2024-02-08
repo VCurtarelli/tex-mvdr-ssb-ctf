@@ -30,7 +30,9 @@ From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft,eq:sec3:def_bvP_constraint
 	\he{\bvf'}[l,k] \bvPh[k] = \tr{\bvi{P+1}} \\
     \bvPh[k] = \he{\bvLa} \bvP{\F}[k]
 \end{subgather}
-where $\bvP{\F}[l,k]$ is the constraint matrix within the STFT domain. In this scheme, our minimization problem becomes
+where $\bvP{\F}[l,k]$ is the constraint matrix within the STFT domain. %Since $\bvLa$ was chosen to be the matrix-equivalent of \cref{eq:sec2:equivalence_ssbt_stft}, then $\bvPh[k]$ is composed of the equivalent vectors, but within the SSBT domain.
+
+In this scheme, our minimization problem becomes
 \begin{equation}
 	\label{eq:true-mvdr_ssbt_beamformer}
 	\bvf'_{\lcmv}[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvPh[k] = \bvi{P+1}

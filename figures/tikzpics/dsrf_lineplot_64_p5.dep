@@ -1,3 +1,0 @@
-figures/tikzpics/dsrf_lineplot_64_p5.pdf: figures/io_input/STFT/dsrf_k_STFT_64_p5.csv
-figures/tikzpics/dsrf_lineplot_64_p5.pdf: figures/io_input/NSSBT/dsrf_k_NSSBT_64_p5.csv
-figures/tikzpics/dsrf_lineplot_64_p5.pdf: figures/io_input/TSSBT/dsrf_k_TSSBT_64_p5.csv

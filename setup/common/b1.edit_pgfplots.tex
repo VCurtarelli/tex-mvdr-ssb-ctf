@@ -83,18 +83,18 @@
 		width=0.6\linewidth,
 		height=0.36\linewidth,
 		%
-		xtick = {1, 2 ,..., 7},
+%		xtick = {1, 2 ,..., 7},
 		xtick pos=bottom,
 		%		ytick align=outside,
 		ytick pos=left,
 		%
-		xlabel = {Freq. ($\si{\kilo\hertz}$)},
+		xlabel = {Time ($\si{\second}$)},
 		ylabel = {#1},
 		yticklabel style={text width=\wdtwenty, align=right},
 		ylabel style={yshift=-1em},
 		%
-		xmin = \fmin,
-		xmax = \fmax,
+		xmin = 0,
+		xmax = 8,
 		%
 		%		legend pos={outer south},
 		%
@@ -122,54 +122,54 @@ black
 ]
 \tikzstyle{resA} = [
 thick, ColA, dash pattern = {on 1pt off 0pt},
-mark=square*, mark size=1, mark options={
-	rotate=0,
-	solid,
-}
+%mark=square*, mark size=1, mark options={
+%	rotate=0,
+%	solid,
+%}
 ]
 \tikzstyle{resB} = [
 thick, ColB, dash pattern = {on 2pt off 1pt},
-mark=triangle*, mark size=1.5, mark options={
-	rotate=0,
-	solid,
-}
+%mark=triangle*, mark size=1.5, mark options={
+%	rotate=0,
+%	solid,
+%}
 ]
 \tikzstyle{resC} = [
 thick, ColC, dash pattern = {on 2pt off 2pt},
-mark=star, mark size=2, mark options={
-	rotate=0,
-	solid,
-	very thick
-}
+%mark=star, mark size=2, mark options={
+%	rotate=0,
+%	solid,
+%	very thick
+%}
 ]
 \tikzstyle{resD} = [
 thick, ColD, dash pattern = {on 2pt off 3pt},
-mark=square*, mark size=1.2, mark options={
-	rotate=45,
-	solid,
-}
+%mark=square*, mark size=1.2, mark options={
+%	rotate=45,
+%	solid,
+%}
 ]
 \tikzstyle{resE} = [
 thick, ColE, dash pattern = {on 3pt off 1pt},
-mark=triangle*, mark size=1.5, mark options={
-	rotate=180,
-	solid,
-}
+%mark=triangle*, mark size=1.5, mark options={
+%	rotate=180,
+%	solid,
+%}
 ]
 \tikzstyle{resF} = [
 thick, ColF, dash pattern = {on 3pt off 2pt},
-mark=x, mark size=2, mark options={
-	rotate=0,
-	solid,
-	very thick
-}
+%mark=x, mark size=2, mark options={
+%	rotate=0,
+%	solid,
+%	very thick
+%}
 ]
 \tikzstyle{resG} = [
 thick, ColG, dash pattern = {on 3pt off 4pt},
-mark=+, mark size=2, mark options={
-	rotate=0,
-	solid,
-	very thick
-}
+%mark=+, mark size=2, mark options={
+%	rotate=0,
+%	solid,
+%	very thick
+%}
 ]
 %END_FOLD

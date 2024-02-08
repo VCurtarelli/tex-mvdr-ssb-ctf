@@ -30,6 +30,7 @@ where $Y_m[l,k]$ is the transform of $y_m[n]$ (resp. all other signals); $l$ and
 
 Using that $A_m[l,k]$ is a finite (possibly truncated) response with $L_A$ windows, then
 \begin{equation}
+	\label{eq:sec3:convert_convol_matmult}
 	A_m[l,k] \ast X_1[l,k] = \tr{\bva{m}}[k] \bvx{1}[l,k]
 \end{equation}
 in which
@@ -55,18 +56,31 @@ where
 and similarly for the other variables. In this situation, $\bvA[k]$, $\bvB[k]$ and $\bvC[k]$ are $\sz{M}{L_A}$, $\sz{M}{L_B}$ and $\sz{M}{L_C}$ matrices respectively; $\bvx{1}[l,k]$, $\bvw{1}[l,k]$ and $\bvs{1}[l,k]$ are $\sz{L_A}{1}$, $\sz{L_B}{1}$ and $\sz{L_C}{1}$ vectors respectively; and $\bvy[l,k]$ and $\bvr[l,k]$ are $\sz{M}{1}$ vectors.
 
 \subsection{Reverb-aware formulation}\label{subsec:sec3:reverb-rejecting_formulation}
-Let the $\Delta$-th column of $\bvA[k]$ (equivalent to $l=0$) be the desired-speech frequency response $\bvd{x}[k]$, with the rest comprising an undesired component. We therefore write
-\begin{equations}
-	\label{eq:sec3:bvBk_bvx1lk_separated}
-	\bvA[k] \bvx{1}[l,k]
-	& = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvpsi_{A,l'}[k] X_1[l-l',k] \\
-	& = \bvd{x}[k] X_1[l,k] + \bvq[l,k]
-\end{equations}
-where $\bvpsi_{B,l'}[k]$ is the $l'$-th column of $\bvA[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvA[k] \bvx{1}[l,k]$; and $\bvq[l,k]$ (the summation over $l' \neq 0$) is the undesired component, or reverberation signal. Note that $\bvd{x}[k] X_1[l,k]$ also consists of some reverberation, since $x_1[n] = h_1[n] \ast x[n]$ is the desired signal at the reference sensor, therefore after going through the environment.
+Let $l = 0$ be the desired window which we would like to retrieve from the signal $\bvA[k] \bvx{1}[l,k]$. We can write $\bvA[k] \bvx{1}[l,k]$ as
+\begin{equation}
+	\label{eq:sec3:bvAk_bvx1lk_separated}
+	\bvA[k] \bvx{1}[l,k] = \bvd{x}[k] X_1[l,k] + \bvq[l,k]
+\end{equation}
+where $X_1[l,k]$ is the desired speech signal, and $\bvq[l,k]$ is an undesired component, uncorrelated to $X_1[l,k]$. Through a similar process as exposed in \cite{bai_acoustic_2013} (sec. 7.1.1) (see \cref{app:derivation_correct_sep} for details), we can deduce that $\bvd{x}[k]$ can be defined as
+\begin{equation}
+	\bvd{x}[k] = \frac{\sum_{i} \bva{m}[k]_{i} \sum_{n=0}^{K-1-\abs{i\O}} w[n] w[n+ \abs{i\O}]}{\sum_{n'=0}^{K-1}w[n']^2}
+\end{equation}
+in which $w[n]$ and $\O$ are the window-function and the decimation factor used for the time-frequency transform; and $\bva{m}[k]_{i}$ is the $(\Delta+i)$-th element of $\bva{m}[k]$.
+
+Note that $\bvd{x}[k] X_1[l,k]$ also consists of some reverberation, since $x_1[n] = h_1[n] \ast x[n]$ is the desired signal at the reference sensor and not at source, therefore being affected by the environment. However, this formulation allows us to better estimate the influence of the neighboring time-frequency windows over the desired signal, given their overlap.
+%\newpage
+%Let the $\Delta$-th column of $\bvA[k]$ (equivalent to $l=0$) be the desired-speech frequency response $\bvd{x}[k]$, with the rest comprising an undesired component. We therefore write
+%\begin{equations}
+%	\label{eq:sec3:bvAk_bvx1lk_separated}
+%	\bvA[k] \bvx{1}[l,k]
+%	& = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvpsi_{A,l'}[k] X_1[l-l',k] \\
+%	& = \bvd{x}[k] X_1[l,k] + \bvq[l,k]
+%\end{equations}
+%where $\bvpsi_{B,l'}[k]$ is the $l'$-th column of $\bvA[k]$. With this, $\bvd{x}[k] X_1[l,k]$ is the desired speech component of $\bvA[k] \bvx{1}[l,k]$; and $\bvq[l,k]$ (the summation over $l' \neq 0$) is the undesired component, or reverberation signal. Note that $\bvd{x}[k] X_1[l,k]$ also consists of some reverberation, since $x_1[n] = h_1[n] \ast x[n]$ is the desired signal at the reference sensor, therefore after going through the environment.
 
 It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 
-Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvv[l,k]$ as the undesired signal (undesired speech components + speaker signal + interfering source + uncorrelated noise),
+Using \cref{eq:sec3:bvAk_bvx1lk_separated} we define $\bvv[l,k]$ as the undesired signal (undesired speech components + speaker signal + interfering source + uncorrelated noise),
 \begin{equation}
 	\label{eq:sec3:def_undes_sig_bvwlk}
 	\bvv[l,k] = \bvq[l,k] + \bvB[k] \bvw{1}[l,k] + \bvC[k] \bvs{1}[l,k] + \bvr[l,k]
@@ -103,6 +117,7 @@ To minimize $\bvv[l,k]$ under the constraints from \cref{eq:sec3:def_bvP_constra
 \end{equation}
 where $\Corr{\bvv}[l,k]$ is the correlation matrix of the undesired signal $\bvv[l,k]$. The solution to this minimization problem 
 \begin{equation}
+	\label{eq:sec3:solution_lcmv_beamformer}
 	\bvf{\lcmv}[l,k] = \inv{\Corr{\bvv}}[l,k] \bvP[k] \inv{\pts{\he{\bvP}[k] \inv{\Corr{\bvw}}[l,k] \bvP[k]}} \bvi{P+1}
 \end{equation}
 
@@ -205,7 +220,7 @@ in which $V_1[l,k]$ is the undesired signal at the reference sensor.
 %\subsection{Reverb-aware formulation}\label{subsec:sec3:reverb-rejecting_formulation}
 %Let the $\Delta$-th column of $\bvB[k]$ (equivalent to $l=0$) be the desired-speech frequency response (named $\bvd{x}[k]$), with the rest comprising an undesired component. We therefore write
 %\begin{equations}
-%	\label{eq:sec3:bvBk_bvx1lk_separated}
+%	\label{eq:sec3:bvAk_bvx1lk_separated}
 %	\bvB[k] \bvx{1}[l,k]
 %	& = \bvd{x}[k] X_1[l,k] + \sum_{\substack{l'=-\Delta \\ l' \neq 0}}^{L_B-\Delta-1} \bvpsi{B,l'}[k] X_1[l-l',k] \\
 %	& = \bvd{x}[k] X_1[l,k] + \bvq[l,k]
@@ -214,7 +229,7 @@ in which $V_1[l,k]$ is the undesired signal at the reference sensor.
 %
 %It's important to have in mind the sensor delay and window length. If the time for the signal to travel from the reference to the farthest sensor exceeds the window length (in seconds), multiple windows may represent the desired speech. This isn't a problem if $\frac{\delta}{c} < \frac{K}{f_s}$, where $\delta$ is the biggest reference-to-sensor distance, and $K$ is the window length.
 %
-%Using \cref{eq:sec3:bvBk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + uncorrelated noise),
+%Using \cref{eq:sec3:bvAk_bvx1lk_separated} we define $\bvw[l,k]$ as the undesired signal (undesired speech components + interfering source + uncorrelated noise),
 %\begin{equation}
 %	\label{eq:sec3:def_undes_sig_bvwlk}
 %	\bvw[l,k] = \bvq[l,k] + \bvC[k] \bvv{1}[l,k] + \bvr[l,k]
