@@ -1,22 +1,22 @@
-\section{True-MVDR with the Single-Sideband Transform}
+\section{True-LCMV with the Single-Sideband Transform}
 \label{sec:true_mvdr_ssbt}
 
 When carelessly using any of the established methods with the SSBT, the distortionless constraint ensures that the beamformer avoids causing distortion exclusively within the SSBT domain. However, as explained in \cref{sec:stft_and_ssbt} the SSBT beamformer must be carefully constructed to achieve the desired effects, such as the distortionless constraint.
 
-We thus propose a framework for the SSBT in which we consider both bins $k$ and $K-k$ simultaneously, since from \cref{eq:sec2:equivalence_ssbt_stft} they both contribute to each the $k$-th bin in the STFT domain. We define $\bvw'[l,k]$ as
+We thus propose a framework for the SSBT in which we consider the bins $k$ and $K-k$ simultaneously, since from \cref{eq:sec2:equivalence_ssbt_stft} they both contribute to the $k$-th bin in the STFT domain. We define $\bvw'[l,k]$ as
 \begin{equation}
 	\bvw'[l,k] = \vtup{ {\bvw[l,k]} , {\bvw[l, K-k]} }\SubSize{2M}{1}
 \end{equation}
 from which we define $\Corr{\bvw'}[l,k]$ as its correlation matrix. Under this idea, our filter $\bvf'[l,k]$ is a $\sz{2M}{1}$ vector, with the first $M$ values being for the $k$-th bin, and the last $M$ values for the $[K-k]$-th bin. We let the STFT-equivalent filter for the SSBT beamformer $\bvf'[l,k]$ be $\bvf{\F}'[l,k]$, given by
 \begin{equation}
 	\label{eq:sec4:conversion_beamformer_ssbt_to_stft}
-	\bvf{\F}'[l,k] = \bvA \bvf'[l,k]
+	\bvf{\F}'[l,k] = \bvLa \bvf'[l,k]
 \end{equation}
 in which
 \def\facA{e^{-\j\frac{3\pi}{4}}}
 \def\facB{e^{\j\frac{3\pi}{4}}}
 \begin{equation}
-	\bvA = \frac{1}{\Sqrt{2}} \begin{bmatrix}
+	\bvLa = \frac{1}{\Sqrt{2}} \begin{bmatrix}
 		\facA 	& 0 		& \cdots & 0  		& \facB 	& 0 		& \cdots 	& 0 	\\
 		0 		& \facA 	& \cdots & 0  		& 0 		& \facB 	& \cdots 	& 0 	\\
 		\vdots 	& \vdots 	& \ddots & \vdots 	& \vdots 	& \ddots 	& \vdots  	& 0 	\\
@@ -24,43 +24,43 @@ in which
 	\end{bmatrix}\SubSize{M}{2M}
 \end{equation}
 
-\subsection{Reverb-aware SSBT formulation}\label{subsec:sec4:reverb-rejecting_formulation}
-
-Continuing the results of \cref{subsec:sec3:reverb-rejecting_formulation}, from \cref{eq:sec4:conversion_beamformer_ssbt_to_stft} the distortionless constraint for the STFT, within the SSBT domain, is
+From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft,eq:sec3:def_bvP_constraint_matrix} the constraint matrix within the SSBT domain becomes
 \begin{subgather}
 	\label{eq:sec4:distortionless_constraint_in_ssbt}
-	\he{\bvf'}[l,k] \bvd[h]{x}[k] = 1 \\
-    \bvd[h]{x}[k] = \he{\bvA} \bvd{\F;x}[k]
+	\he{\bvf'}[l,k] \bvPh[k] = \tr{\bvi{P+1}} \\
+    \bvPh[k] = \he{\bvLa} \bvP{\F}[k]
 \end{subgather}
-where $\bvd{\F;x}[l,k]$ is the desired-speech frequency response in the STFT domain. In this scheme, our minimization problem becomes
+where $\bvP{\F}[l,k]$ is the constraint matrix within the STFT domain. In this scheme, our minimization problem becomes
 \begin{equation}
 	\label{eq:true-mvdr_ssbt_beamformer}
-	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvd[h]{x}[k] = 1
+	\bvf'_{\lcmv}[l,k] = \min_{\bvf'[l,k]} \he{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\he{\bvf'}[l,k] \bvPh[k] = \bvi{P+1}
 \end{equation}
 
-Although $\Corr{\bvw'}[l,k]$ is a matrix with real entries, $\bvd[h]{x}$ is complex-valued, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT.
+Although $\Corr{\bvw'}[l,k]$ is a matrix with real entries, $\bvPh[k]$ is complex-valued, and thus is the solution to \cref{eq:true-mvdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT.
 
-\subsection{Real-valued true-MVDR beamformer with SSBT}
+\subsection{Real-valued true-LCMV beamformer with SSBT}
 
 To ensure the desired behavior of $\bvf'[l,k]$ being real-valued, an additional constraint is necessary. By forcing $\bvf'[l,k]$ to have real entries, from \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
 \begin{subalign}
-	\tr{\bvf'}[l,k] \real{\bvd[h]{x}[k]} & = 1 \\
-	\tr{\bvf'}[l,k] \imag{\bvd[h]{x}[k]} & = 0	
+\tr{\bvf'}[l,k] \real{\bvPh[k]} & = \tr{\bvi{P+1}} \\
+\tr{\bvf'}[l,k] \imag{\bvPh[k]} & = \tr{\bv{0}{P+1}}
 \end{subalign}
-which can be put in matricial form as $\tr{\bvf'}[l,k] \bvD{x}[k] = \tr{\bvi}$, with
+which can be put in matricial form as $\tr{\bvf'}[l,k] \bvPh'[k] = \tr{\bvi{2(P+1)}}$, with
 \begin{subgather}
-	\bvD{x}[k] = \tup{ \real{\bvd[h]{x}[k]} , \imag{\bvd[h]{x}[k]} }\SubSize{2M}{2} \\
-	\bvi = \vtup{1 , 0}
+\bvPh'[k] = \tup{ \real{\bvPh[k]} , \imag{\bvPh[k]} }\SubSize{2M}{2(P+1)} \\
+\bvi{2(P+1)} = \tr{\tup{1 , 0 ,, 0}}
 \end{subgather}
 
 Therefore, the minimization problem from \cref{eq:true-mvdr_ssbt_beamformer} becomes
 \begin{equation}
-	\label{eq:true-mvdr_real-ssbt_beamformer}
-	\bvf'_{\mvdr}[l,k] = \min_{\bvf'[l,k]} \tr{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\tr{\bvf'}[l,k] \bvD{x}[k] = \tr{\bvi}
+\label{eq:true-mvdr_real-ssbt_beamformer}
+\bvf'_{\lcmv}[l,k] = \min_{\bvf'[l,k]} \tr{\bvf'}[l,k] \Corr{\bvw'}[l,k] \bvf'[l,k]~\text{s.t.}~\tr{\bvf'}[l,k] \bvPh'[k] = \tr{\bvi{2(P+1)}}
 \end{equation}
-whose formulation is again similar to that of the LCMV beamformer, and therefore
+whose solution is
 \begin{equation}
-	\label{eq:sec4:mvdr_reverb-reject_formulation}
-	\bvf'_{\mvdr}[l,k] = \inv{\Corr{\bvw'}}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \inv{\Corr{\bvw'}}[k] \bvD{x}[k] }} \bvi
+\label{eq:sec4:mvdr_reverb-reject_formulation}
+\bvf'_{\lcmv}[l,k] = \inv{\Corr{\bvw'}}[l,k] \bvPh'{x}[k] \inv{\pts{ \tr{\bvPh'{x}}[k] \inv{\Corr{\bvw'}}[k] \bvPh'{x}[k] }} \bvi{2(P+1)}
 \end{equation}
-Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mvdr}'[l,k]$, in the STFT domain.
+Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\lcmv}'[l,k]$, transformed to the STFT domain.
+
+\newpage
