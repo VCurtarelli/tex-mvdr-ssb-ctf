@@ -2,13 +2,13 @@
 \section{Simulations}
 \label{sec:results}
 
-In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. The sensor array consists of a uniform linear array with 10 sensors spaced at $2\si{\cm}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
+In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD \cite{smard_database} and LINSE \cite{linse_database} databases.
 
 The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The desired source is located at $(2\m,~1\m,~1\m)$, it being a male voice (SMARD, \texttt{50\_male\_speech\_english\_ch8\_OmniPower4296.flac}).
 %
-The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)$. It is comprised of 10 radially-symmetric sensors located $8\si{\centi\meter}$ away from the center, all omnidirectional and of flat frequency response. In the center is the loudspeaker source, whose signal is a music noise (SMARD database, \texttt{69\_abba\_ch8\_OmniPower4296.flac}). The interfering source, simulating an open door, is located simultaneously at $(0.5\m,~5\m,~[0.3:0.3:2.7]\m)$, with a babble sound signal (LINSE database, \texttt{babble.mat}). The noise signal is white Gaussian noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). All signals were resampled to the desired frequency.
+The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)$. Its sensors are located in a circular array with radius of $8\si{\centi\meter}$, all omnidirectional and of flat frequency response. In the center is the loudspeaker source, whose signal is a music noise (SMARD database, \texttt{69\_abba\_ch8\_OmniPower4296.flac}). The interfering source is located at $(0.5\m,~5\m,~2.7\m)$, emulating an air conditioning unit, with a white noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). The noise signal is white Gaussian noise (SMARD database, \texttt{wgn\_48kHz\_ch8\_OmniPower4296.flac}). Although both interfering and noise signals are the same, they were taken starting on different timestamps, to ensure they are uncorrelated. All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$.
 
-At the reference sensor, the SNR for the loudspeaker's signal, interfering signal and noise are, respectively, of $-15\dB$, $10\dB$ and $30\dB$. The beamformers were calculated every 200 windows, and used up to the previous 1000 samples to estimate the correlation matrices.
+At the reference sensor (here assume the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's signal, interfering signal and noise are, respectively, of $-15\dB$, $10\dB$ and $30\dB$. For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
 
 We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_lcmv_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MVDR from \cref{sec:true_mvdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
 
@@ -35,6 +35,16 @@ We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \c
 From \cref{fig:lineplot_gain_32}, all beamformers achieved a similar gain in SNR over time, with some fluctuations but no distinguishable advantage. From \cref{fig:lineplot_dsdi_32}, both the STFT and T-SSBT beamformers achieved the desired null distortion on the desired signal, while the N-SSBT one caused some minimal distortion, although present.
 
 In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperformed both other beamformers in terms of ERLE, which would mean a better reduction of the loudspeaker's signal, the main objective.
+
+%TODO: Change the interference signal source (and signal) to the new ones
+%TODO: Read papers MPDR
+%TODO: Read papers real-time MVDR/MPDR
+%TODO: Change to MPDR
+%TODO: Separate into two results:
+%       Calibrated steerable MPDR
+%       Real-time MPDR
+%TODO: Generate audios & send to Israel
+
 
 %%%%%%%%%%%%%%%%%%%%%
 
