@@ -27,16 +27,22 @@
 \DeclareDocumentCommand{\BV}{m g}{
     \mathbf{#1}\IfValueT{#2}{_{#2}}
 }
+\DeclareDocumentCommand{\sbv}{m O{n} g}{
+	\ensuremath{\@my{#2}{\boldsymbol{#1}}\IfValueT{#3}{_{#3}}}
+}
+\DeclareDocumentCommand{\sBV}{m g}{
+	\boldsymbol{#1}\IfValueT{#2}{_{#2}}
+}
 \DeclareDocumentCommand{\newbv}{s o m}{
     \IfBooleanTF{#1}{
         \IfValueTF{#2}{
-            \@namedef{bv#2}{\BV{#3}}
+            \@namedef{bv#2}{\sBV{#3}}
         }{
             \@namedef{bv#3}{\BV{#3}}
         }
     }{
         \IfValueTF{#2}{
-            \@namedef{bv#2}{\bv{#3}}
+            \@namedef{bv#2}{\sbv{#3}}
         }{
             \@namedef{bv#3}{\bv{#3}}
         }
@@ -57,16 +63,23 @@
 \newbv*{B}
 \newbv*{C}
 \newbv*{r}
-\newbv*{d}
-\def\bvpsi{\boldsymbol{\psi}}
+\newbv{d}
+\newbv*[psi]{\psi}
 \newbv*{q}
 \newbv*{v}
 \newbv*{f}
-\def\bvrho{\boldsymbol{\varrho}}
-\newbv*{P}
+\newbv*[rho]{\varrho}
+%\def\bvrho{\boldsymbol{\varrho}}
+\newbv{D}
 \newbv{i}
 \def\bvPh{\hat{\bvP}}
-\def\bvLa{\boldsymbol{\Lambda}}
+\def\bvPt{\tilde{\bvP}}
+\def\bvft{\tilde{\bvf}}
+\newbv*[La]{\Lambda}
+\newbv*[Psi]{\Psi}
+%\def\bvOm{\boldsymbol{\Omega}}
+\newbv*[Om]{\Omega}
+\newbv[de]{\delta}
 %\def\bvAh{\bvA[h]}
 %\newbv[Ga]{\Gamma}
 %\newbv{I}
@@ -91,6 +104,5 @@
 %\newbv*{Q}
 % \def\bvL{*************}
 
-\def\mvdr{\text{mvdr}}
-\def\lcmv{\text{lcmv}}
+\def\mpdr{\text{mpdr}}
 \AtBeginDocument{\def\O{\mathcal{O}}}

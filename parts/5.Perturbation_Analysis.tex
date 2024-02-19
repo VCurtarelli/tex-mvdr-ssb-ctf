@@ -1,0 +1,15 @@
+\section{Perturbation Analysis}
+
+Until now, we assumed an appropriate knowledge of all signals and their impulse responses. However, in a real application these would be estimated, and thus prone to error. Given our beamformers from \cref{eq:sec3:solution_mpdr_beamformer,eq:sec4:solution_mpdr_beamformer_tssbt} and their dependence on $\bvd[k]$, they are directly influenced by impulse response estimation errors.
+
+We can write
+\begin{equation}
+	\bvd{x}[k] = \bvd[b]{x}[k] + \bvde{x}[k]
+\end{equation}
+where $\bvd[b]{x}[k]$ is the accurate steering vector (SV), $\bvd{x}[k]$ is the measured SV, $\bvde{x}[k]$ is a perturbation (or error) on the SV measurement. With this, the MPDR beamformer with the STFT (assuming the knowledge of $\bvd{x}[k]$) is $\bvf_{\mpdr}[l,k]$, being given by
+\begin{equations}
+	\bvft_{\mpdr}
+	& = \frac{\inv{\Corr{\bvy}} \bvd{x}}{\pts{\he{\bvd{x}} \inv{\Corr{\bvy}} \bvd{x}}} \\
+	& = \frac{\inv{\Corr{\bvy}} \pts{\bvd[b]{x} + \bvde{x}}}{\pts{\he{\bvd[b]{x}} + \he{\bvde{x}}} \inv{\Corr{\bvy}} \pts{\bvd[b]{x} + \bvde{x}}} \\
+%	& = \frac{\inv{\Corr{\bvy} \bvd[b]{x} + \inv{\Corr{\bvy}} \bvde{x}}{ \he{\bvd[b]{x}} \iCorr{\bvy} }
+\end{equations}

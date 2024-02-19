@@ -136,11 +136,21 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 %\JEL{}
 
 \begin{document}
+	%TODO: Change to MPDR				DONE
+	%TODO: Trocar gSNR por NSRF			DONE
+	
+	%TODO: (IN SIMS) Change the interference signal source (and signal) to the new ones
+	
+	%TODO: Read papers MPDR
+	%TODO: Read papers real-time MVDR/MPDR
+	%TODO: Separate into two results:
+		%TODO: Calibrated steerable MPDR
+		%TODO: Real-time MPDR
+	%TODO: Generate audios & send to Israel
 % \setcounter{footnote}{-1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%TODO: Rewrite Abstract, Sec1, Sec5.3 and Sec.6
 %\input{parts/0.Info.tex}
 
 \input{parts/1.Introduction.tex}
@@ -151,8 +161,12 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 %
 \input{parts/4.True_MVDR_SSBT.tex}
 %
-\input{parts/5.Simulations.tex}
+\input{parts/5.Perturbation_Analysis.tex}
 %
+\newpage
+%%
+%\input{parts/5.Simulations.tex}
+%%
 %\input{parts/6.Conclusion.tex}
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -178,8 +192,8 @@ The following abbreviations are used in this manuscript:
 %CB & Constant-beamwidth \\
 CTF & Convolutive Transfer Function \\
 DSRF & Desired Signal Reduction Factor \\
-LCMV & Linearly-Constrained Minimum-Variance \\
-MVDR & Minimum-Variance Distortionless-Response \\
+MPDR & Minimum-Power Distortionless-Response \\
+% MVDR & Minimum-Variance Distortionless-Response \\
 MTF & Multiplicative Transfer Function \\
 SNR & Signal-to-Noise Ratio \\
 SSBT & Single-Sideband Transform \\

@@ -43,7 +43,7 @@ Using the substitutions $\tn = n+l\O$ and $\tnu = \nu + (l-i)\O$,
 	E_i = \sum_{\tnu=l\O}^{K-1+l\O} \sum_{\tn=(l-i)\O}^{K-1+(l-i)\O} w(\tn - l\O) w(\tnu - (l-i)\O) \expec{x_1(\tn) x_1(\tnu)} e^{-\j2\pi\frac{k}{K}(\tnu - \tn)}
 \end{equation}
 
-We now \emph{assume} $x_1(n)$ is the result of a zero-mean white process, and therefore $x_1(\tn)$ and $x_1(\tnu)$ are independent if $\tn \neq \tnu$ (which isn't true, but will allow us to continue the derivations). Then
+We now assume $x_1(n)$ is the result of a zero-mean white process, and therefore $x_1(\tn)$ and $x_1(\tnu)$ are independent if $\tn \neq \tnu$ (which isn't true, but will allow us to continue the derivations). Then
 \begin{equation}
 	E_i = \sum_{\tn} w(\tn - l\O) w(\tn - (l-i)\O) \expec{x_1(\tn)^2}
 \end{equation}
@@ -51,7 +51,7 @@ Rolling back the substitution $n = \tn - l\O$,
 \begin{equation}
 	E_i = \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + i\O) \expec{x_1(n + l\O)^2}
 \end{equation}
-where the summation takes into account that both windows are finite. Now we at last \emph{assume} that $\expec{x_1(n+l\O)^2} \approx \expec{x_1(l\O)^2}$ for small values of $n$ (such as within at most one window), such that
+where the summation takes into account that both windows are finite. We at last assume that $\expec{x_1(n+l\O)^2} \approx \expec{x_1(l\O)^2}$ for small values of $n$ (such as $0 \leq n < K$), such that
 \begin{equation}
 	E_i = \var{x_1}(l\O) \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + i\O)
 \end{equation}
@@ -60,6 +60,7 @@ Going back to \cref{eq:def_rho}, and applying the derivations also to the numera
 \begin{equations}
 	d_m[l,k]
 	& = \frac{\sum_{i} A_m[i,k] \var{x_1}(l\O) \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + \abs{i\O})}{\var{x_1}(l\O) \sum_{n'=0}^{K - 1} w(n')^2} \\
+	& = \frac{\var{x_1}(l\O) \sum_{i} A_m[i,k] \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + \abs{i\O})}{\var{x_1}(l\O) \sum_{n'=0}^{K - 1} w(n')^2} \\
 	& = \frac{\sum_{i} \sum_{n=0}^{K - 1 -\abs{i\O}} A_m[i,k] w(n) w(n + \abs{i\O})}{\sum_{n'=0}^{K - 1} w(n')^2}
 \end{equations}
-This way, we see that $d_m[l,k] \equiv d_m[k]$ since it doesn't depend on $l$. However, since for the summation over $n$ we need that $K - 1 - \abs{i\O} \geq 0$, this means that $-S \leq i \leq S$, and thus our desired speech signal $X_1[l,k]$ depends on up to the previous (or next) $S = \floor{\nicefrac{(K-1)}{\O}}$ windows.
+This way, we see that $d_m[l,k] \equiv d_m[k]$ since it doesn't depend on $l$. However, since for the summation over $n$ we need that $K - 1 - \abs{i\O} \geq 0$, this means that $-S \leq i \leq S$ (where $S = \floor{\nicefrac{(K-1)}{\O}}$), and thus our desired speech signal $X_1[l,k]$ depends on up to the previous (or next) $S$ windows.

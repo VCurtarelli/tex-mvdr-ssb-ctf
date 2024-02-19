@@ -69,6 +69,13 @@
 \NewDocumentCommand{\Corr}{m}{%
 	\bv{\Phi}_{#1}%
 }
+\let\Det\det
+\DeclareDocumentCommand{\det}{m}{%
+	\Det\pts{#1}
+}
+\NewDocumentCommand{\iCorr}{m}{%
+\bv{\Phi}_{#1}^{-1}%
+}
 %
 \NewDocumentCommand{\erle}{}{%
 	\xi_{\bar{s}}%
@@ -79,15 +86,15 @@
 \NewDocumentCommand{\dsrf}{}{%
 	\xi_{\mathrm{d}}
 }
-\NewDocumentCommand{\rsrf}{}{%
-	\xi_{\mathrm{r}}
+\NewDocumentCommand{\nsrf}{}{%
+	\xi_{\mathrm{v}}
 }
 \NewDocumentCommand{\snr}{}{%
 	\text{SNR}%
 }
 \NewDocumentCommand{\gsnr}{}{%
-\text{gSNR}%
+	\text{gSNR}%
 }
 \NewDocumentCommand{\gsrr}{}{%
-\text{gSRR}%
+	\text{gSRR}%
 }

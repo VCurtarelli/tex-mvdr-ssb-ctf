@@ -10,7 +10,7 @@ The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)
 
 At the reference sensor (here assume the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's signal, interfering signal and noise are, respectively, of $-15\dB$, $10\dB$ and $30\dB$. For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
 
-We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_lcmv_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MVDR from \cref{sec:true_mvdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
+We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_mpdr_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MPDR from \cref{sec:true_mpdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[H]
@@ -36,14 +36,7 @@ From \cref{fig:lineplot_gain_32}, all beamformers achieved a similar gain in SNR
 
 In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperformed both other beamformers in terms of ERLE, which would mean a better reduction of the loudspeaker's signal, the main objective.
 
-%TODO: Change the interference signal source (and signal) to the new ones
-%TODO: Read papers MPDR
-%TODO: Read papers real-time MVDR/MPDR
-%TODO: Change to MPDR
-%TODO: Separate into two results:
-%       Calibrated steerable MPDR
-%       Real-time MPDR
-%TODO: Generate audios & send to Israel
+
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -124,4 +117,4 @@ In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperfo
 %
 %\subsection{Overall result}
 %
-%In all situations evaluated, the proposed true-MVDR SSBT beamformer consistently outperformed the beamformer through the traditional STFT in terms of SNR gain, both achieving the appropriate DSRF necessary for the desired distortionless behavior of the MVDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall than that of the T-SSBT beamformer for both evaluated $K$, while also incurring some undesired distortion on the desired signal seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.
+%In all situations evaluated, the proposed true-MPDR SSBT beamformer consistently outperformed the beamformer through the traditional STFT in terms of SNR gain, both achieving the appropriate DSRF necessary for the desired distortionless behavior of the MPDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall than that of the T-SSBT beamformer for both evaluated $K$, while also incurring some undesired distortion on the desired signal seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.
