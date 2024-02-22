@@ -1,3 +1,0 @@
-figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/STFT/dsdi_l_STFT_32_p30.csv
-figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/NSSBT/dsdi_l_NSSBT_32_p30.csv
-figures/tikzpics/dsdi_lineplot_32.pdf: figures/io_input/TSSBT/dsdi_l_TSSBT_32_p30.csv

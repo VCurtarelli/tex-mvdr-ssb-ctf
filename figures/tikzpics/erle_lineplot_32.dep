@@ -1,3 +1,0 @@
-figures/tikzpics/erle_lineplot_32.pdf: figures/io_input/STFT/erle_l_STFT_32_p30.csv
-figures/tikzpics/erle_lineplot_32.pdf: figures/io_input/NSSBT/erle_l_NSSBT_32_p30.csv
-figures/tikzpics/erle_lineplot_32.pdf: figures/io_input/TSSBT/erle_l_TSSBT_32_p30.csv
