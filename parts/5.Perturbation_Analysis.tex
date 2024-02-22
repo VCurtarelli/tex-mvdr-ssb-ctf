@@ -29,7 +29,7 @@ Thus, the beamformer with an estimated steering vector is an affine transformati
 Applying the same procedure to the MPDR beamformer with the SSBT from \cref{eq:sec4:cf_solution_mpdr_beamformer_tssbt}, we get a similar result as obtained in \cref{eq:sec5:beamformer_approx_sv}, but in which $e$, $g_e$, and $\bvf{\bvde}$ now are
 \begin{subgather}
 	e = \tr{\bvd{x;\re}} \,\bvOm\, \bvde{x;\im} + \tr{\bvde{x;\re}} \,\bvOm\, \bvd{x;\im} + \tr{\bvde{x;\re}} \,\bvOm\, \bvde{x;\im} \\
-	g_m = \frac{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} }{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} + e } \\
+	g_e = \frac{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} }{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} + e } \\
 	\bvf{\bvde} = \frac{\bvOm\, \bvde{x;\im}}{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} + e }
 \end{subgather}
 where $\bvde{x;\re}$ and $\bvde{x;\im}$ are the perturbation vectors for $\bvd{x;\re}$ and $\bvd{x;\im}$ respectively.

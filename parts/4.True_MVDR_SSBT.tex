@@ -107,6 +107,7 @@ Finally,
 
 Denoting $\bvOm \equiv \bvOm[l,k]$ as
 \begin{equation}
+	\label{eq:sec4:def_bvOmega}
 	\bvOm \defas \iCorr{\bvy'} \pts{\bvd{x;\re} \tr{\bvd{x;\im}} - \bvd{x;\im} \tr{\bvd{x;\re}} } \iCorr{\bvy'}
 \end{equation}
 then we finally arrive at the final version of our MPDR beamformer with the SSBT,
@@ -129,11 +130,6 @@ In the simulations\footnote{Code is available at \url{https://github.com/VCurtar
 
 The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$.The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)$. Its sensors are located in a circular array with radius of $8\si{\centi\meter}$, all omnidirectional and of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. Although both interfering and noise signals are the same, they were taken starting on different timestamps, to ensure they are uncorrelated. All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$.
 
-At the reference sensor (the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's, interfering, and noise signals are respectively $-15\dB$, $10\dB$ and $30\dB$. For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
-
-In line plots, STFT is presented in red with continuous lines, N-SSBT in green with dashed lines, and T-SSBT in blue with dotted lines. The output metrics were averaged over 200 windows, for a better visualization.
-%We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_mpdr_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MPDR from \cref{sec:true_mpdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
-
 \begin{table}[H]
 	\centering
 	\begin{tabular}{rll}
@@ -147,25 +143,40 @@ In line plots, STFT is presented in red with continuous lines, N-SSBT in green w
 	\caption{Source information for the simulations.}
 	\label{tab:sec4:information_position_sources}
 \end{table}
+%
+At the reference sensor (the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's, interfering, and noise signals are respectively $-15\dB$, $10\dB$ and $30\dB$. For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
+
+In line plots, STFT is presented in red with continuous lines, N-SSBT in green with dashed lines, and T-SSBT in blue with dotted lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a better visualization.
+%We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_mpdr_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MPDR from \cref{sec:true_mpdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
+
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[H]
+\begin{subfigure}{\textwidth}
 	\centering
 	\input{figures/lineplot_dsrf_32_n15_acc.tex}
-	\caption{Per-window broadband DSRF gain for $K = 32$.}
-	\label{fig:lineplot_dsrf_32_n15_acc}
-\end{figure}
-\begin{figure}[H]
+	\caption{Per-window broadband DSRF.}
+	\label{subfig:lineplot_dsrf_32_n15_acc}
+\end{subfigure}\\[1em]
+\begin{subfigure}{\textwidth}
 	\centering
 	\input{figures/lineplot_erle_32_n15_acc.tex}
-	\caption{Per-window broadband ERLE gain for $K = 32$.}
-	\label{fig:lineplot_erle_32_n15_acc}
-\end{figure}
-\begin{figure}[H]
+	\caption{Per-window broadband ERLE.}
+	\label{subfig:lineplot_erle_32_n15_acc}
+\end{subfigure}\\[1em]
+\begin{subfigure}{\textwidth}
 	\centering
 	\input{figures/lineplot_nsrf_32_n15_acc.tex}
-	\caption{Per-window broadband NSRF for $K = 32$.}
-	\label{fig:lineplot_nsrf_32_n15_acc}
+	\caption{Per-window broadband NSRF.}
+	\label{subfig:lineplot_nsrf_32_n15_acc}
+\end{subfigure}\\[1em]
+\centering\ref*{dsrf_lineplot_32_n15_acc}
+\caption{Output metrics for the beamformers.}
+\label{fig:lineplots_32_n15_acc}
 \end{figure}
 
-From \cref{fig:lineplot_dsrf_32_n15_acc}, we see that all . However, from both the ERLE and NSRF figures (\cref{fig:lineplot_erle_32_n15_acc,fig:lineplot_nsrf_32_n15_acc}) we see that the STFT beamformer had strictly the best performance, being consistently better than the other two for both metrics. The T-SSBT had a slightly better result than the N-SSBT for the ERLE, while the opposite is true for the NSRF.
+From \cref{subfig:lineplot_dsrf_32_n15_acc}, we see that all beamformers had a negligible distortion (notice the y-axis scale), however the distortion for the STFT and T-SSBT beamformers was still closer to zero.
+
+From the ERLE results in \cref{subfig:lineplot_erle_32_n15_acc} it is noticeable that the STFT and T-SSBT beamformers had a similar performance (arguably with the T-SSBT being marginally better), both outperforming the N-SSBT beamformer's results by approx. $5\dB$.
+
+A similar result can be seen in \cref{subfig:lineplot_nsrf_32_n15_acc} for the NSRF, however in this regard the STFT had a minimal margin over the T-SSBT, and their gap compared to the N-SSBT wasn't as prominent, although still visible.

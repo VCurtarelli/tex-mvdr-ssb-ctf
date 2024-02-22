@@ -7,7 +7,7 @@
 %\centering
 \tikzsetnextfilename{dsrf_lineplot_32_n15_acc}
 \begin{tikzpicture}
-	\begin{lineplot}{DSRF (dB)}%[ymin=-3, ymax=0.5]
+	\begin{lineplot}{DSRF (dB)}[ymin=-0.09, ymax=0.01, ytick={-0.09, -0.06, ..., 0}, legend to name={dsrf_lineplot_32_n15_acc}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF_l_STFT_32_n15_acc.csv};
 		
