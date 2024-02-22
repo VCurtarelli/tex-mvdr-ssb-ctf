@@ -65,13 +65,13 @@ Therefore, the minimization problem from \cref{eq:true-mpdr_ssbt_beamformer} bec
 whose formulation is the same as of the Linearly-Constrained Minimum Power (LCMP) beamformer, and thus its solution is
 \begin{equation}
 	\label{eq:sec4:solution_mpdr_beamformer_tssbt}
-	\bvf_{\mpdr}[l,k] = \inv{\Corr{\bvy'}}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \inv{\Corr{\bvy'}}[l,k] \bvD{x}[k] }} \bvi{2}
+	\bvf_{\mpdr}[l,k] = \iCorr{\bvy'}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \iCorr{\bvy'}[l,k] \bvD{x}[k] }} \bvi{2}
 \end{equation}
 Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mpdr}[l,k]$, transformed to the STFT domain.
 
 Here onward we will omit the $[k]$ and $[l,k]$ indices for clarity, except for definitions. Using \cref{eq:sec4:matrix_form_tMPDR}, we can write
 \begin{equation}
-	\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x} =
+	\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x} =
 	\begin{bmatrix}
 		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re} & \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
 		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} & \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im}
@@ -79,25 +79,25 @@ Here onward we will omit the $[k]$ and $[l,k]$ indices for clarity, except for d
 \end{equation}
 With this,
 \begin{subgather}
-	\inv{\pts{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}}} = 
+	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} = 
 	\begin{bmatrix}
 		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} & - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
 		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} &   \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}
-	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}}} \\[0.5cm]
-	\det{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}} = \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
+	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \\[0.5cm]
+	\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}} = \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
 \end{subgather}
 
 Going one step further,
 \begin{equation}
-	\inv{\pts{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}}} \bvi{2} = 
+	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = 
 	\begin{bmatrix}
 		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} \\
 		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
-	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}}}
+	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
 \end{equation}
 and thus
 \begin{equation}
-	\bvD{x} \inv{\pts{\tr{\bvD{x}} \inv{\Corr{\bvy'}} \bvD{x}}} \bvi{2} = \frac{\bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
+	\bvD{x} \inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = \frac{\bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
 \end{equation}
 
 Finally,
@@ -107,10 +107,11 @@ Finally,
 
 Denoting $\bvOm \equiv \bvOm[l,k]$ as
 \begin{equation}
-	\bvOm \defas \iCorr{\bvy'} \bvd{x;\re} \he{\bvd{x;\im}} \iCorr{\bvy'} - \iCorr{\bvy'} \bvd{x;\im} \he{\bvd{x;\re}} \iCorr{\bvy'}
+	\bvOm \defas \iCorr{\bvy'} \pts{\bvd{x;\re} \tr{\bvd{x;\im}} - \bvd{x;\im} \tr{\bvd{x;\re}} } \iCorr{\bvy'}
 \end{equation}
 then we finally arrive at the final version of our MPDR beamformer with the SSBT,
 \begin{equation}
+	\label{eq:sec4:cf_solution_mpdr_beamformer_tssbt}
 	\bvf{\mpdr}[l,k] = \frac{\bvOm[l,k]\, \bvd{x;\im}[k]}{ \tr{\bvd{x;\re}[k]} \,\bvOm[l,k]\, \bvd{x;\im}[k]}
 \end{equation}
 
