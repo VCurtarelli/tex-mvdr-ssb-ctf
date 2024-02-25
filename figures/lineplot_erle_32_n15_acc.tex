@@ -7,7 +7,7 @@
 %\centering
 \tikzsetnextfilename{erle_lineplot_32_n15_acc}
 \begin{tikzpicture}
-	\begin{lineplot}{ERLE (dB)}[ymin=12, ymax=27, ytick={12, 17, ..., 27}, legend to name={erle_lineplot_32_n15_acc}]
+	\begin{timeplot}{ERLE (dB)}[ymin=12, ymax=27, ytick={12, 17, ..., 27}, legend to name={erle_lineplot_32_n15_acc}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/ERLE_l_STFT_32_n15_acc.csv};
 		
@@ -18,9 +18,9 @@
 		table [col sep=comma, y=val] {figures/io_input/TSSBT/ERLE_l_TSSBT_32_n15_acc.csv};
 		
 		\addlegendentry{STFT};
-		\addlegendentry{N-SSBT};
-		\addlegendentry{T-SSBT};
-	\end{lineplot}
+		\addlegendentry{\nssbt{}};
+		\addlegendentry{\tssbt{}};
+	\end{timeplot}
 \end{tikzpicture}
 %	\caption{}
 %	\label{subfig:1_gain_lineplot}

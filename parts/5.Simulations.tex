@@ -10,7 +10,7 @@ The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)
 
 At the reference sensor (here assume the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's signal, interfering signal and noise are, respectively, of $-15\dB$, $10\dB$ and $30\dB$. For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
 
-We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \cref{eq:sec3:solution_mpdr_beamformer} to (naively) calculate the SSBT beamformer, and T-SSBT will denote the beamformer obtained via the true-distortionless MPDR from \cref{sec:true_mpdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, N-SSBT in green, and T-SSBT in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
+We compare filters obtained through the STFT and SSBT transforms. \nssbt{} uses \cref{eq:sec3:solution_mpdr_beamformer} to (naively) calculate the SSBT beamformer, and \nssbt{} will denote the beamformer obtained via the true-distortionless MPDR from \cref{sec:true_mpdr_ssbt}. Performance analysis is conducted via the STFT domain, with the SSBT beamformers being converted into it. In line plots, STFT is presented in red, \nssbt{} in green, and \nssbt{} in blue. The output metrics were averaged over 20 windows, to facilitate visualization.
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[H]
@@ -32,7 +32,7 @@ We compare filters obtained through the STFT and SSBT transforms. N-SSBT uses \c
 	\label{fig:lineplot_erle_32}
 \end{figure}
 
-From \cref{fig:lineplot_gain_32}, all beamformers achieved a similar gain in SNR over time, with some fluctuations but no distinguishable advantage. From \cref{fig:lineplot_dsdi_32}, both the STFT and T-SSBT beamformers achieved the desired null distortion on the desired signal, while the N-SSBT one caused some minimal distortion, although present.
+From \cref{fig:lineplot_gain_32}, all beamformers achieved a similar gain in SNR over time, with some fluctuations but no distinguishable advantage. From \cref{fig:lineplot_dsdi_32}, both the STFT and \nssbt{} beamformers achieved the desired null distortion on the desired signal, while the \nssbt{} one caused some minimal distortion, although present.
 
 In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperformed both other beamformers in terms of ERLE, which would mean a better reduction of the loudspeaker's signal, the main objective.
 
@@ -45,7 +45,7 @@ In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperfo
 %
 %In this scenario, we assume that the input SIR is $5\dB$, and we use analysis windows with: 32 samples in \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_gain_32_p5}; or 64 samples in \cref{fig:lineplot_dsrf_64_p5,fig:lineplot_gain_64_p5}. \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} show the window-wise averaged narrowband gain in SNR, and \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} the window-averaged narrowband DSRF, for all presented methods.
 %
-%From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that both beamformers derived through the SSBT outperformed the STFT beamformer in terms of SNR gain, with the N-SSBT one having a slightly better yield than the T-SSBT one. Also, both \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} show that the T-SSBT and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the N-SSBT beamformer. This was expected, since the T-SSBT was appropriately designed to achieve this quality, while the N-SSBT wasn't.
+%From \cref{fig:lineplot_gain_32_p5,fig:lineplot_gain_64_p5} it is clear that both beamformers derived through the SSBT outperformed the STFT beamformer in terms of SNR gain, with the \nssbt{} one having a slightly better yield than the \nssbt{} one. Also, both \cref{fig:lineplot_dsrf_32_p5,fig:lineplot_dsrf_64_p5} show that the \nssbt{} and the STFT beamformers ensured a distortionless response, a feature that wasn't achieved by the \nssbt{} beamformer. This was expected, since the \nssbt{} was appropriately designed to achieve this quality, while the \nssbt{} wasn't.
 %
 %\input{figures/io_input/aux_data_32.tex}
 %\begin{figure}[H]
@@ -85,7 +85,7 @@ In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperfo
 %
 %Here, we now take the broadband metrics for the beamformers, allowing us to compare them for different values of input SIR. We again test for both $K = 32$ and $K = 64$.
 %
-%From \cref{fig:lineplot_dsrf_32_av,fig:lineplot_dsrf_64_av}, as expected we see that the STFT and T-SSBT beamformers didn't cause distortion on the desired signal, while the N-SSBT did, due to its nature. In terms of SNR gain (\cref{fig:lineplot_gain_32_av,fig:lineplot_gain_64_av}), we again see that the SSBT beamformers led to a strictly better result than the STFT one, the later being 6-7 dB worse than the former ones for all input SIRs.
+%From \cref{fig:lineplot_dsrf_32_av,fig:lineplot_dsrf_64_av}, as expected we see that the STFT and \nssbt{} beamformers didn't cause distortion on the desired signal, while the \nssbt{} did, due to its nature. In terms of SNR gain (\cref{fig:lineplot_gain_32_av,fig:lineplot_gain_64_av}), we again see that the SSBT beamformers led to a strictly better result than the STFT one, the later being 6-7 dB worse than the former ones for all input SIRs.
 %
 %\begin{figure}[H]
 %	\centering
@@ -117,4 +117,4 @@ In \cref{fig:lineplot_erle_32}, we see that the STFT beamformer clearly outperfo
 %
 %\subsection{Overall result}
 %
-%In all situations evaluated, the proposed true-MPDR SSBT beamformer consistently outperformed the beamformer through the traditional STFT in terms of SNR gain, both achieving the appropriate DSRF necessary for the desired distortionless behavior of the MPDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall than that of the T-SSBT beamformer for both evaluated $K$, while also incurring some undesired distortion on the desired signal seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.
+%In all situations evaluated, the proposed true-MPDR SSBT beamformer consistently outperformed the beamformer through the traditional STFT in terms of SNR gain, both achieving the appropriate DSRF necessary for the desired distortionless behavior of the MPDR filter. Meanwhile, the naive SSBT beamformer had a (slightly) better overall than that of the \nssbt{} beamformer for both evaluated $K$, while also incurring some undesired distortion on the desired signal seen via the DSRF. It is interesting to note that for all beamformers the gain in SNR decreases as the input SIR increases, which was expected as in this scenario the weight of both the undesired speech components and uncorrelated noise over the input SNR increase.

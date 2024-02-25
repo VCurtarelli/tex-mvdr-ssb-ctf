@@ -91,6 +91,8 @@ and therefore
 	\bvy[l,k] = \bvd{x}[k] X_1[l,k] + \bvv[l,k]
 \end{equation}
 
+\subsection{Filtering and the MPDR beamformer}
+\label{subsec:sec3:filtering_mpdr}
 We estimate the desired signal at reference $X_1[l,k]$ as $Z[l,k]$ through a filter $\bvf[l,k]$, such that
 \begin{equations}
 	Z[l,k]
@@ -112,22 +114,30 @@ where $\Corr{\bvy}[l,k]$ is the correlation matrix of the observed signal $\bvy[
 \end{equation}
 
 \subsection{Performance metrics}
+\label{subsec:sec3:perofrmance_metrics}
 
 Given the three main goals of the beamformer being the cancellation of the LS signal, the minimization of the overall undesired signal, and the maintenance of the desired signal (through the distortionless constraint), our choice of metrics will reflect these objectives. We define $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1}[l,k]$ and $V_f[l,k] = \he{\bvf}[l,k] \bvv{1}[l,k]$ as the filtered-LS, filtered-desired and filtered-undesired signals, respectively. Unless stated otherwise, the metrics used are broadband.
 
-The LS signal's minimization will be measured via the echo-return loss enhancement $\erle[l]$, defined as
+The LS signal's decrease will be measured via the echo-return loss enhancement $\erle[l]$, defined as
 \begin{equation}
 	\erle[l] = \frac{\sum_{k}\abs{S_1[l,k]}^2}{\sum_{k}\abs{S_f[l,k]}^2}
 \end{equation}
-The desired signal distortion index $\dsdi[l]$ will be used to assess the distortion on the desired signal, given by
+The desired signal reduction factor (DSRF) will be used to assess the distortion on the desired signal, given by
 \begin{equation}
-	\dsdi[l] = \frac{\sum_{k}\abs{X_1[l,k] - X_f[l,k]}^2}{\sum_{k}\abs{X_1[l,k]}^2}
+	\dsrf[l] = \frac{\sum_{k}\abs{X_1[l,k]}^2}{\sum_{k}\abs{X_f[l,k]}^2}
 \end{equation}
 
-Finally, the minimization of the overall undesired signal will be measured using the noise signal reduction factor (NSRF), such that
+Finally, the reduction of the overall undesired signal will be measured using the noise signal reduction factor (NSRF), such that
 \begin{equation}
 	\nsrf[l] = \frac{\sum_{k} \abs{V_1[l,k]}^2 }{\sum_{k} \abs{V_f[l,k]}^2 }
 \end{equation}
 in which $V_1[l,k]$ is the undesired signal at the reference sensor.
+
+We will also be interested in the time-average of these metrics, these being defined as
+\begin{subgather}{eq:sec3:time-average_metrics}
+	\erle = \frac{\sum_{l,k}\abs{S_1[l,k]}^2}{\sum_{l,k}\abs{S_f[l,k]}^2} \\
+	\dsrf = \frac{\sum_{l,k}\abs{X_1[l,k]}^2}{\sum_{l,k}\abs{X_f[l,k]}^2} \\
+	\nsrf = \frac{\sum_{l,k}\abs{V_1[l,k]}^2}{\sum_{l,k}\abs{V_f[l,k]}^2} \\
+\end{subgather}
 
 
