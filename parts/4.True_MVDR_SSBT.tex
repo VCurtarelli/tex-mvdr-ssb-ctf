@@ -152,63 +152,80 @@ We will compare one beamformer for the STFT with and two for the SSBT. The STFT 
 
 In line plots, STFT is presented in red with continuous lines, \nssbt{} in green with dashed lines, and \tssbt{} in blue with dotted lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a better visualization.
 
+In these simulations, we are interested in three main metrics: desired signal reduction factor (DSRF), echo-return loss enhancement (ERLE), and noise signal reduction factor (NSRF). Their time-dependent broadband formulations are
+\begin{subgather}
+	\dsrf[l] = \frac{\sum_{k}\abs{X_1[l,k]}^2}{\sum_{k}\abs{X_f[l,k]}^2} \\
+	\erle[l] = \frac{\sum_{k}\abs{S_1[l,k]}^2}{\sum_{k}\abs{S_f[l,k]}^2} \\
+	\nsrf[l] = \frac{\sum_{k} \abs{V_1[l,k]}^2 }{\sum_{k} \abs{V_f[l,k]}^2 }
+\end{subgather}
+
 \input{figures/io_input/aux_data_32.tex}
-\begin{figure}[H]
+\begin{figure}[!ht]
 \begin{subfigure}{\textwidth}
 	\centering
-	\input{figures/lineplot_dsrf_32_n15_acc.tex}
+	\input{figures/lineplot_dsrf_32_n15_acc_v7.tex}
 	\caption{Per-window broadband DSRF.}
-	\label{subfig:lineplot_dsrf_32_n15_acc}
+	\label{subfig:lineplot_dsrf_32_n15_acc_v7}
 \end{subfigure}\\[1em]
 \begin{subfigure}{\textwidth}
 	\centering
-	\input{figures/lineplot_erle_32_n15_acc.tex}
+	\input{figures/lineplot_erle_32_n15_acc_v7.tex}
 	\caption{Per-window broadband ERLE.}
-	\label{subfig:lineplot_erle_32_n15_acc}
+	\label{subfig:lineplot_erle_32_n15_acc_v7}
 \end{subfigure}\\[1em]
 \begin{subfigure}{\textwidth}
 	\centering
-	\input{figures/lineplot_nsrf_32_n15_acc.tex}
+	\input{figures/lineplot_nsrf_32_n15_acc_v7.tex}
 	\caption{Per-window broadband NSRF.}
-	\label{subfig:lineplot_nsrf_32_n15_acc}
+	\label{subfig:lineplot_nsrf_32_n15_acc_v7}
 \end{subfigure}\\[1em]
-\centering\ref*{dsrf_lineplot_32_n15_acc}
+\centering\ref*{dsrf_lineplot_32_n15_acc_v7}
 \caption{Output metrics for the beamformers.}
-\label{fig:lineplots_32_n15_acc}
+\label{fig:lineplots_32_n15_acc_v7}
 \end{figure}
 
-From \cref{subfig:lineplot_dsrf_32_n15_acc}, we see that all beamformers had a negligible distortion of less than $0.5\dB$, however the distortion for the STFT and \tssbt{} beamformers was still closer to zero.
-
-From the ERLE results in \cref{subfig:lineplot_erle_32_n15_acc} it is noticeable that the STFT and \nssbt{} beamformers had a similar performance, with the \tssbt{} one being slightly better, both outperforming the \nssbt{} beamformer's results by approx. $4\dB$. A similar result can be seen in \cref{subfig:lineplot_nsrf_32_n15_acc} for the NSRF, however in this regard the STFT had a minimal margin over the \tssbt{}, and their gap compared to the \nssbt{} wasn't as prominent, although still visible.
-
-We will also compare the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics as in \cref{eq:sec3:time-average_metrics}. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
+and their time-average broadband definitions are
+\begin{subgather}{eq:sec4:time-average_metrics}
+	\dsrf = \frac{\sum_{l,k}\abs{X_1[l,k]}^2}{\sum_{l,k}\abs{X_f[l,k]}^2} \\
+	\erle = \frac{\sum_{l,k}\abs{S_1[l,k]}^2}{\sum_{l,k}\abs{S_f[l,k]}^2} \\
+	\nsrf = \frac{\sum_{l,k}\abs{V_1[l,k]}^2}{\sum_{l,k}\abs{V_f[l,k]}^2}
+\end{subgather}
+were $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1}[l,k]$ and $V_f[l,k] = \he{\bvf}[l,k] \bvv{1}[l,k]$ as the filtered-LS, filtered-desired and filtered-undesired signals, respectively.
 
 \input{figures/io_input/aux_data_32.tex}
-\begin{figure}[H]
+\begin{figure}[!ht]
 	\begin{subfigure}{\textwidth}
 		\centering
-		\input{figures/lineplot_dsrf_32_avg_acc.tex}
+		\input{figures/lineplot_dsrf_32_avg_acc_v7.tex}
 		\caption{Time-average broadband DSRF.}
-		\label{subfig:lineplot_dsrf_32_avg_acc}
+		\label{subfig:lineplot_dsrf_32_avg_acc_v7}
 	\end{subfigure}\\[1em]
 	\begin{subfigure}{\textwidth}
 		\centering
-		\input{figures/lineplot_erle_32_avg_acc.tex}
+		\input{figures/lineplot_erle_32_avg_acc_v7.tex}
 		\caption{Time-average broadband ERLE.}
-		\label{subfig:lineplot_erle_32_avg_acc}
+		\label{subfig:lineplot_erle_32_avg_acc_v7}
 	\end{subfigure}\\[1em]
 	\begin{subfigure}{\textwidth}
 		\centering
-		\input{figures/lineplot_nsrf_32_avg_acc.tex}
+		\input{figures/lineplot_nsrf_32_avg_acc_v7.tex}
 		\caption{Time-average broadband NSRF.}
-		\label{subfig:lineplot_nsrf_32_avg_acc}
+		\label{subfig:lineplot_nsrf_32_avg_acc_v7}
 	\end{subfigure}\\[1em]
-	\centering\ref*{dsrf_lineplot_32_n15_acc}
+	\centering\ref*{dsrf_lineplot_32_n15_acc_v7}
 	\caption{Output metrics for the beamformers.}
-	\label{fig:lineplots_32_avg_acc}
+	\label{fig:lineplots_32_avg_acc_v7}
 \end{figure}
 
-As seen in \cref{subfig:lineplot_dsrf_32_avg_acc}, the SF-SSBT beamformer caused some distortion on the desired signal. However, this distortion is minimal, and decreases as the loudspeaker SNR increases.
+These metrics represent, respectively, how much distortion is being caused in the desired signal, how much the echo (loudspeaker signal) is being reduced, and how much the general noise is being reduced.
+
+From \cref{subfig:lineplot_dsrf_32_n15_acc_v7}, we see that all beamformers had a negligible distortion of less than $0.5\dB$, however the distortion for the STFT and \tssbt{} beamformers was still closer to zero.
+
+From the ERLE results in \cref{subfig:lineplot_erle_32_n15_acc_v7} it is noticeable that the STFT and \nssbt{} beamformers had a similar performance, with the \tssbt{} one being slightly better, both outperforming the \nssbt{} beamformer's results by approx. $4\dB$. A similar result can be seen in \cref{subfig:lineplot_nsrf_32_n15_acc_v7} for the NSRF, however in this regard the STFT had a minimal margin over the \tssbt{}, and their gap compared to the \nssbt{} wasn't as prominent, although still visible.
+
+We will also compare the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics as in \cref{eq:sec4:time-average_metrics}. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
+
+As seen in \cref{subfig:lineplot_dsrf_32_avg_acc_v7}, the SF-SSBT beamformer caused some distortion on the desired signal. However, this distortion is minimal, and decreases as the loudspeaker SNR increases.
 
 In terms of ERLE, we see that the SF-SSBT is the worse for all SER's. The DF-SSBT beamformer is slightly better than the STFT, for $\text{SER} \lessapprox -5\dB$, and the STFT beamformer is considerably better otherwise.
 

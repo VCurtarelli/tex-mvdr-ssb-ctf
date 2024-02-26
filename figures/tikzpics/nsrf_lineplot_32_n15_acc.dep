@@ -1,3 +1,0 @@
-figures/tikzpics/nsrf_lineplot_32_n15_acc.pdf: figures/io_input/STFT/NSRF_l_STFT_32_n15_acc.csv
-figures/tikzpics/nsrf_lineplot_32_n15_acc.pdf: figures/io_input/NSSBT/NSRF_l_NSSBT_32_n15_acc.csv
-figures/tikzpics/nsrf_lineplot_32_n15_acc.pdf: figures/io_input/TSSBT/NSRF_l_TSSBT_32_n15_acc.csv

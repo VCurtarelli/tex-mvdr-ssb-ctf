@@ -1,0 +1,27 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+%\begin{subfigure}{\linewidth}
+%\centering
+\tikzsetnextfilename{gsnr_lineplot_32_n15_est_avg_v8}
+\begin{tikzpicture}
+	\begin{errplot}{gSNR (dB)}[ymin=-0.5, ymax=15, ytick={0, 5, ..., 15}, legend to name={gsnr_lineplot_32_n15_est_avg_v8}]
+		\addplot [style=resA]
+		table [col sep=comma, y=val] {figures/io_input/STFT/gSNR_STFT_32_n15_est_avg_v8.csv};
+		
+		\addplot [style=resC]
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/gSNR_NSSBT_32_n15_est_avg_v8.csv};
+		
+		\addplot [style=resE]
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/gSNR_TSSBT_32_n15_est_avg_v8.csv};
+		
+		\addlegendentry{STFT};
+		\addlegendentry{\nssbt{}};
+		\addlegendentry{\tssbt{}};
+	\end{errplot}
+\end{tikzpicture}
+%	\caption{}
+%	\label{subfig:1_gain_lineplot}
+%\end{subfigure}

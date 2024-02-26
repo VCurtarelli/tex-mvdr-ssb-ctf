@@ -1,3 +1,0 @@
-figures/tikzpics/dsrf_lineplot_32_avg_acc.pdf: figures/io_input/STFT/DSRF_STFT_32_avg_acc.csv
-figures/tikzpics/dsrf_lineplot_32_avg_acc.pdf: figures/io_input/NSSBT/DSRF_NSSBT_32_avg_acc.csv
-figures/tikzpics/dsrf_lineplot_32_avg_acc.pdf: figures/io_input/TSSBT/DSRF_TSSBT_32_avg_acc.csv
