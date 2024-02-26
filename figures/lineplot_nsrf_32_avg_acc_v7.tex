@@ -5,9 +5,9 @@
 \pgfplotsset{compat=1.18}
 %\begin{subfigure}{\linewidth}
 %\centering
-\tikzsetnextfilename{nsrf_lineplot_32_avg_acc_v7}
+%\tikzsetnextfilename{nsrf_lineplot_32_avg_acc_v7}
 \begin{tikzpicture}
-	\begin{snrplot}{NSRF (dB)}[ymin=-5, ymax=15, ytick={-5, 0, ..., 15}, legend to name={nsrf_lineplot_32_avg_acc_v7_leg}]
+	\begin{snrplot}{NSRF (dB)}[ymin=-5, ymax=15, ytick={-5, 0, ..., 15}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/NSRF_STFT_32_avg_acc_v7.csv};
 		
@@ -16,10 +16,6 @@
 		
 		\addplot [style=resE]
 		table [col sep=comma, y=val] {figures/io_input/TSSBT/NSRF_TSSBT_32_avg_acc_v7.csv};
-		
-		\addlegendentry{STFT};
-		\addlegendentry{\nssbt{}};
-		\addlegendentry{\tssbt{}};
 	\end{snrplot}
 \end{tikzpicture}
 %	\caption{}

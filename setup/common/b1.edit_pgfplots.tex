@@ -7,9 +7,9 @@
 \newlength{\Yaxisshift}
 \setlength{\Yaxisshift}{3.8cm}
 
-\usetikzlibrary{external}
-\tikzexternalize
-\tikzsetexternalprefix{figures/tikzpics/}
+%\usetikzlibrary{external}
+%\tikzexternalize
+%\tikzsetexternalprefix{figures/tikzpics/}
 
 %END_FOLD
 
@@ -107,7 +107,7 @@
 			%			anchor=west,
 			legend columns=6
 		},
-		#5
+		#5,
 		]
 		\draw[ultra thin, dotted] (axis cs:\pgfkeysvalueof{/pgfplots/xmin},0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0);
 	}{

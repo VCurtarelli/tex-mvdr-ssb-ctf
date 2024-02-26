@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.26)  26 FEB 2024 17:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.10.12) (preloaded format=pdflatex 2023.12.26)  26 FEB 2024 18:22
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2100,16 +2100,13 @@ PGFPlots: reading {figures/io_input/STFT/NSRF_l_STFT_32_n15_acc_v7.csv}
 
 PGFPlots: reading {figures/io_input/NSSBT/NSRF_l_NSSBT_32_n15_acc_v7.csv}
 PGFPlots: reading {figures/io_input/TSSBT/NSRF_l_TSSBT_32_n15_acc_v7.csv}
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
 [9
 
 {C:/Users/vitor.c/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/vi
 tor.c/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}])
 
-LaTeX Warning: Reference `dsrf_lineplot_32_n15_acc_v7_leg' on page 9 undefined 
-on input line 182.
+LaTeX Warning: Reference `timeplot_legend' on page 9 undefined on input line 18
+3.
 
 (figures/io_input/aux_data_32.tex) (figures/lineplot_dsrf_32_avg_acc_v7.tex
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -2122,31 +2119,31 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `dsrf_lineplot_32_n15_acc_v7_leg' on page 9 undefined 
-on input line 215.
+LaTeX Warning: Reference `timeplot_legend' on page 9 undefined on input line 21
+7.
 
 
 LaTeX Warning: Reference `subfig:lineplot_dsrf_32_n15_acc_v7' on page 1 undefin
-ed on input line 222.
+ed on input line 224.
 
 
 LaTeX Warning: Reference `subfig:lineplot_erle_32_n15_acc_v7' on page 1 undefin
-ed on input line 224.
+ed on input line 226.
 
 
 LaTeX Warning: Reference `subfig:lineplot_nsrf_32_n15_acc_v7' on page 1 undefin
-ed on input line 224.
+ed on input line 226.
 
 
 LaTeX Warning: Reference `eq:sec4:time-average_metrics' on page 1 undefined on 
-input line 226.
+input line 228.
 
 
 LaTeX Warning: Reference `subfig:lineplot_dsrf_32_avg_acc_v7' on page 1 undefin
-ed on input line 228.
+ed on input line 230.
 
 
-LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 229.
+LaTeX Warning: Reference `LastPage' on page 9 undefined on input line 231.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -2203,8 +2200,8 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `dsrf_lineplot_32_n15_est_avg_v8_leg' on page 11 undef
-ined on input line 66.
+LaTeX Warning: Reference `timeplot_legend' on page 11 undefined on input line 6
+6.
 
 
 LaTeX Warning: Reference `subfig:lineplot_gsnr_32_n15_est_avg_v8' on page 1 und
@@ -2360,19 +2357,19 @@ Package lastpage Warning: Rerun to get the references right on input line 242.
 
  ) 
 Here is how much of TeX's memory you used:
- 51311 strings out of 474495
- 1195727 string characters out of 5742990
+ 51308 strings out of 474495
+ 1195603 string characters out of 5742990
  1953460 words of memory out of 5000000
- 72338 multiletter control sequences out of 15000+600000
+ 72336 multiletter control sequences out of 15000+600000
  619724 words of font info for 299 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 127i,27n,124p,4700b,2832s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 127i,27n,124p,4700b,2838s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/vitor.c/AppData/Local/Programs/MiKTeX/fonts/type1/urw/palatino/uplr
 8a.pfb>
-Output written on figures/tikzpics/nsrf_lineplot_32_n15_acc_v7.pdf (1 page, 272
-14 bytes).
+Output written on figures/tikzpics/nsrf_lineplot_32_n15_acc_v7.pdf (1 page, 271
+01 bytes).
 PDF statistics:
- 34 PDF objects out of 1000 (max. 8388607)
- 2 named destinations out of 1000 (max. 500000)
+ 33 PDF objects out of 1000 (max. 8388607)
+ 1 named destinations out of 1000 (max. 500000)
  89613 words of extra memory for PDF output out of 106986 (max. 10000000)
 

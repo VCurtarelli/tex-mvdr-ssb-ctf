@@ -161,27 +161,28 @@ In these simulations, we are interested in three main metrics: desired signal re
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[!ht]
-\begin{subfigure}{\textwidth}
 	\centering
-	\input{figures/lineplot_dsrf_32_n15_acc_v7.tex}
-	\caption{Per-window broadband DSRF.}
-	\label{subfig:lineplot_dsrf_32_n15_acc_v7}
-\end{subfigure}\\[1em]
-\begin{subfigure}{\textwidth}
-	\centering
-	\input{figures/lineplot_erle_32_n15_acc_v7.tex}
-	\caption{Per-window broadband ERLE.}
-	\label{subfig:lineplot_erle_32_n15_acc_v7}
-\end{subfigure}\\[1em]
-\begin{subfigure}{\textwidth}
-	\centering
-	\input{figures/lineplot_nsrf_32_n15_acc_v7.tex}
-	\caption{Per-window broadband NSRF.}
-	\label{subfig:lineplot_nsrf_32_n15_acc_v7}
-\end{subfigure}\\[1em]
-\centering\ref*{dsrf_lineplot_32_n15_acc_v7_leg}
-\caption{Output metrics for the beamformers.}
-\label{fig:lineplots_32_n15_acc_v7}
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot_dsrf_32_n15_acc_v7.tex}
+		\caption{Per-window broadband DSRF.}
+		\label{subfig:lineplot_dsrf_32_n15_acc_v7}
+	\end{subfigure}\\[1em]
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot_erle_32_n15_acc_v7.tex}
+		\caption{Per-window broadband ERLE.}
+		\label{subfig:lineplot_erle_32_n15_acc_v7}
+	\end{subfigure}\\[1em]
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot_nsrf_32_n15_acc_v7.tex}
+		\caption{Per-window broadband NSRF.}
+		\label{subfig:lineplot_nsrf_32_n15_acc_v7}
+	\end{subfigure}\\[1em]
+	\ref*{timeplot_legend}
+	\caption{Output metrics for the beamformers.}
+	\label{fig:lineplots_32_n15_acc_v7}
 \end{figure}
 
 and their time-average broadband definitions are
@@ -194,6 +195,7 @@ were $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[!ht]
+	\centering
 	\begin{subfigure}{\textwidth}
 		\centering
 		\input{figures/lineplot_dsrf_32_avg_acc_v7.tex}
@@ -212,7 +214,7 @@ were $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1
 		\caption{Time-average broadband NSRF.}
 		\label{subfig:lineplot_nsrf_32_avg_acc_v7}
 	\end{subfigure}\\[1em]
-	\centering\ref*{dsrf_lineplot_32_n15_acc_v7_leg}
+	\ref*{timeplot_legend}
 	\caption{Output metrics for the beamformers.}
 	\label{fig:lineplots_32_avg_acc_v7}
 \end{figure}

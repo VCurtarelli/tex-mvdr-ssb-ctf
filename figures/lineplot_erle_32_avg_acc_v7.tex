@@ -5,9 +5,9 @@
 \pgfplotsset{compat=1.18}
 %\begin{subfigure}{\linewidth}
 %\centering
-\tikzsetnextfilename{erle_lineplot_32_avg_acc_v7}
+%\tikzsetnextfilename{erle_lineplot_32_avg_acc_v7}
 \begin{tikzpicture}
-	\begin{snrplot}{ERLE (dB)}[ymin=0.5, ymax=24, ytick={0, 6, ..., 24}, legend to name={erle_lineplot_32_avg_acc_v7_leg}]
+	\begin{snrplot}{ERLE (dB)}[ymin=0.5, ymax=24, ytick={0, 6, ..., 24}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/ERLE_STFT_32_avg_acc_v7.csv};
 		
@@ -16,10 +16,6 @@
 		
 		\addplot [style=resE]
 		table [col sep=comma, y=val] {figures/io_input/TSSBT/ERLE_TSSBT_32_avg_acc_v7.csv};
-		
-		\addlegendentry{STFT};
-		\addlegendentry{\nssbt{}};
-		\addlegendentry{\tssbt{}};
 	\end{snrplot}
 \end{tikzpicture}
 %	\caption{}
