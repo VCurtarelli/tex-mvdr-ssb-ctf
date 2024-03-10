@@ -34,41 +34,43 @@ Applying the same procedure to the MPDR beamformer with the SSBT from \cref{eq:s
 \end{subgather}
 where $\bvde{x;\re}$ and $\bvde{x;\im}$ are the perturbation vectors for $\bvd{x;\re}$ and $\bvd{x;\im}$ respectively.
 
-\subsection{Tests}
+%\subsection{Tests}
+%
+%In these tests, we repeated the simulation as before, but now with a slightly miscalculated steering vector. This was done by simulating $\bvde{x}[k]$ as a zero-mean random additive noise, whose variance is the controllable variable. In the plots of \cref{fig:lineplots_32_n15_est_avg_v8}, the x-axis indicates the standard deviation of $\bvde{x}[k]$ relative to that of $\bvd{x}[k]$. Trivially, the case where the error is $0\%$ is when the steering vector is accurately evaluated. The input SER in this scenario is of $-15\dB$.
+%
+%We are still interested in the same three results as before, but given the (possible) desired signal distortion, the Signal-to-Echo Ratio gain (gSER) and Signal-to-Noise Ratio gain (gSNR) will be used. This choice normalizes the metrics by the signal reduction. These are defined as
+%\begin{subgather}{eq:sec5:time-average_metrics}
+%	\gser = \frac{\erle}{\dsrf} \\
+%	\gsnr = \frac{\nsrf}{\dsrf}
+%\end{subgather}
 
-In these tests, we repeated the simulation as before, but now with a slightly miscalculated steering vector. This was done by simulating $\bvde{x}[k]$ as a zero-mean random additive noise, whose variance is the controllable variable. In the plots of \cref{fig:lineplots_32_n15_est_avg_v8}, the x-axis indicates the standard deviation of $\bvde{x}[k]$ relative to that of $\bvd{x}[k]$. Trivially, the case where the error is $0\%$ is when the steering vector is accurately evaluated. The input SER in this scenario is of $-15\dB$.
-
-We are still interested in the same three results as before, but the (possible) desired signal distortion, the Signal-to-Echo Ratio gain (gSER) and Signal-to-Noise Ratio gain (gSNR) will be used, which will normalize the decrease in the undesired signals, by how much the desired signal was reduced. These are defined as
-\begin{subgather}{eq:sec5:time-average_metrics}
-	\gser = \frac{\erle}{\dsrf} \\
-	\gsnr = \frac{\nsrf}{\dsrf}
-\end{subgather}
-
-\begin{figure}[!t]
-	\centering
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_dsrf_32_n15_est_avg_v8.tex}
-		\caption{Time-average broadband DSRF.}
-		\label{subfig:lineplot_dsrf_32_n15_avg_est_v8}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_gser_32_n15_est_avg_v8.tex}
-		\caption{Time-average broadband gSER.}
-		\label{subfig:lineplot_gser_32_n15_avg_est_v8}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_gsnr_32_n15_est_avg_v8.tex}
-		\caption{Time-average broadband gSNR.}
-		\label{subfig:lineplot_gsnr_32_n15_est_avg_v8}
-	\end{subfigure}\\[1em]
-	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
-	\label{fig:lineplots_32_n15_est_avg_v8}
-\end{figure}
-
-Analysing the results, we see that all methods follow a similar pattern, in all observed metrics. In the DSRF, it is noticeable that the signal distortion increases as the error in the steering vector increases. Interestingly, the gain in SER increases slightly as the error increases, however in general the overall gain in SNR decreases, so even though we reduce more of the echo signal, we would end up increasing the other undesired sources.
-
-In both \cref{subfig:lineplot_dsrf_32_n15_avg_est_v8,subfig:lineplot_gsnr_32_n15_est_avg_v8} we see that the STFT beamformer was the more robust one, followed by the DF-SSBT and then the SF-SSBT. The results in \cref{subfig:lineplot_gser_32_n15_avg_est_v8} differ from this, with the DF-SSBT marginally outperforming the STFT beamformer.
+%Given that, in practice, the ratio between desired and undesired signals is of uttermost interest, these better reflect the quality of the output, when there is distortion.
+%
+%\begin{figure}[!t]
+%	\centering
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot_dsrf_32_n15_est_avg_v8.tex}
+%		\caption{Time-average broadband DSRF.}
+%		\label{subfig:lineplot_dsrf_32_n15_avg_est_v8}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot_gser_32_n15_est_avg_v8.tex}
+%		\caption{Time-average broadband gSER.}
+%		\label{subfig:lineplot_gser_32_n15_avg_est_v8}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot_gsnr_32_n15_est_avg_v8.tex}
+%		\caption{Time-average broadband gSNR.}
+%		\label{subfig:lineplot_gsnr_32_n15_est_avg_v8}
+%	\end{subfigure}\\[1em]
+%	\ref*{timeplot_legend}
+%	\caption{Output metrics for the beamformers.}
+%	\label{fig:lineplots_32_n15_est_avg_v8}
+%\end{figure}
+%
+%Analysing the results, we see that all methods follow a similar pattern, in all observed metrics. In the DSRF, it is noticeable that the signal distortion increases as the error in the steering vector increases. Interestingly, the gain in SER increases slightly as the error increases, however in general the overall gain in SNR decreases, so even though we reduce more of the echo signal, we would end up increasing the other undesired sources.
+%
+%In both \cref{subfig:lineplot_dsrf_32_n15_avg_est_v8,subfig:lineplot_gsnr_32_n15_est_avg_v8} we see that the STFT beamformer was the more robust one, followed by the DF-SSBT and then the SF-SSBT. The results in \cref{subfig:lineplot_gser_32_n15_avg_est_v8} differ from this, with the DF-SSBT marginally outperforming the STFT beamformer.

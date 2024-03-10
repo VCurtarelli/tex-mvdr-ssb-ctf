@@ -3,16 +3,16 @@
 
 When carelessly using any of the established methods with the SSBT, the distortionless constraint ensures that the beamformer avoids causing distortion exclusively within the SSBT domain. However, as explained in \cref{sec:stft_and_ssbt} the SSBT beamformer must be carefully constructed to achieve the desired effects, such as the distortionless constraint.
 
-We thus propose a framework for the SSBT in which we consider the bins $k$ and $K-k$ simultaneously, since from \cref{eq:sec2:equivalence_ssbt_stft} they both contribute to the $k$-th bin in the STFT domain. We define $\bvy'[l,k]$ as
+We thus propose a framework for the SSBT in which we consider the bins $k$ and $K-k$ simultaneously, since from \cref{eq:sec2:equivalence_ssbt_stft} they both contribute to the $k$-th bin in the STFT domain. We define $\bvy{k}'[l]$ as
 \begin{equation}
-	\bvy'[l,k] = \vtup{ {\bvy[l,k]} , {\bvy[l, K-k]} }\SubSize{2M}{1}
+	\bvy{k}'[l] = \vtup{ {\bvy{k}[l]} , {\bvy{K-k}[l]} }\SubSize{2ML_Y}{1}
 \end{equation}
-from which we define $\Corr{\bvy'}[l,k]$ as its correlation matrix. Under this idea, our filter $\bvf[l,k]$ is a $\sz{2M}{1}$ vector, with the first $M$ values being for the $k$-th bin, and the last $M$ values for the $[K-k]$-th bin. We let the STFT-equivalent filter for the SSBT beamformer $\bvf[l,k]$ be $\bvf{\F}[l,k]$, given by
+from which we define $\Corr{\bvy{k}'}[l]$ as its correlation matrix. Under this idea, our filter $\bvf{k}[l]$ is a $\sz{2ML_Y}{1}$ vector, with the first $M$ values being for the $k$-th bin, and the last $M$ values for the $[K-k]$-th bin. We let the STFT-equivalent filter for the SSBT beamformer $\bvf{k}[l]$ be $\bvf{k;\F}[l]$, given by
 \begin{equation}
 	\label{eq:sec4:conversion_beamformer_ssbt_to_stft}
-	\bvf{\F}[l,k] = \bvLa \bvf[l,k]
+	\bvf{\F;k}[l] = \bvLa \bvf{k}[l]
 \end{equation}
-in which
+in which $\bvLa$ is a $\sz{ML_Y}{2ML_Y}$ matrix,
 \def\facA{e^{-\j\frac{3\pi}{4}}}
 \def\facB{e^{\j\frac{3\pi}{4}}}
 \begin{equation}
@@ -21,214 +21,100 @@ in which
 		0 		& \facA 	& \cdots & 0  		& 0 		& \facB 	& \cdots 	& 0 	\\
 		\vdots 	& \vdots 	& \ddots & \vdots 	& \vdots 	& \ddots 	& \vdots  	& 0 	\\
 		0 		& 0 		& \cdots & \facA 	& 0 		& 0 		& \cdots	& \facB
-	\end{bmatrix}\SubSize{M}{2M}
+	\end{bmatrix}
 \end{equation}
 
-From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft} the constraint matrix within the SSBT domain becomes
+From \cref{eq:sec4:conversion_beamformer_ssbt_to_stft} the distortionless constraint from the STFT, within the SSBT domain, becomes
 \begin{subgather}
 	\label{eq:sec4:distortionless_constraint_in_ssbt}
-	\he{\bvf}[l,k] \bvd{x;\S}[k] = 1 \\
-    \bvd{x;\S}[k] = \he{\bvLa} \bvd{x;\F}[k]
+	\he{\bvf{k}}[l] \bvA{k}' = \tr{\bvi{\Delta}} \\
+    \bvA{k}' = \he{\bvLa} \bvA{\F;k}
 \end{subgather}
-where $\bvd{x;\F}[l,k]$ is the constraint matrix within the STFT domain, and $\bvd{x;\S}[k]$ is the new constraint matrix within the SSBT domain. %Since $\bvLa$ was chosen to be the matrix-equivalent of \cref{eq:sec2:equivalence_ssbt_stft}, then $\bvPh[k]$ is composed of the equivalent vectors, but within the SSBT domain.
+where $\bvA{\F;k}$ is the constraint matrix within the STFT domain, and $\bvA{k}'$ is the new constraint matrix within the SSBT domain. %Since $\bvLa$ was chosen to be the matrix-equivalent of \cref{eq:sec2:equivalence_ssbt_stft}, then $\bvPh[k]$ is composed of the equivalent vectors, but within the SSBT domain.
 
 In this scheme, our minimization problem becomes
 \begin{equation}
 	\label{eq:true-mpdr_ssbt_beamformer}
-	\bvf_{\mpdr}[l,k] = \min_{\bvf[l,k]} \he{\bvf}[l,k] \Corr{\bvy'}[l,k] \bvf[l,k]~\text{s.t.}~\he{\bvf}[l,k] \bvd{x;\S}[k] = 1
+	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}'}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvA{k}' = \tr{\bvi{\Delta}}
 \end{equation}
 
-Although $\Corr{\bvy'}[l,k]$ is a matrix with real entries, $\bvd{x;\S}[k]$ is complex-valued, and thus is the solution to \cref{eq:true-mpdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT.
+Although $\Corr{\bvy{k}'}[l]$ is a matrix with real entries, $\bvA{k}'$ is complex-valued, and thus is the solution to \cref{eq:true-mpdr_ssbt_beamformer}, contradicting the purpose of utilizing the SSBT.
 
 \subsection{Real-valued true-MPDR beamformer with SSBT}
 
-To ensure the desired behavior of $\bvf[l,k]$ being real-valued, an additional constraint is necessary. By forcing $\bvf[l,k]$ to have real entries, from \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
+To ensure the desired behavior of $\bvf{k}[l]$ being real-valued, an additional constraint is necessary. By forcing $\bvf{k}[l]$ to have real entries, from \cref{eq:sec4:distortionless_constraint_in_ssbt} we trivially have that
 \begin{subalign}
-	\tr{\bvf}[l,k] \real{\bvd{x;\S}[k]} & = 1 \\
-	\tr{\bvf}[l,k] \imag{\bvd{x;\S}[k]} & = 0
+	\tr{\bvf{k}}[l] \real{\bvA{k}'} & = 1 \\
+	\tr{\bvf{k}}[l] \imag{\bvA{k}'} & = 0
 \end{subalign}
-which can be put in matricial form as $\tr{\bvf}[l,k] \bvD{x}[k] = \tr{\bvi{2}}$, with
+which can be put in matricial form as $\tr{\bvf{k}}[l] \bvA[u]{k} = \tr{\bvi[u]{\Delta}}$, with
 \begin{subgather}{eq:sec4:matrix_form_tMPDR}
 	\begin{split}
-		\bvD{x}[k]
-		& = \tup{ \real{\bvd{x;\S}[k]} , \imag{\bvd{x;\S}[k]} }\SubSize{2M}{2} \\
-		& = \tup{ \bvd{x;\re}[k] , \bvd{x;\im}[k] }
+		\bvA[u]{k}
+		& = \tup{ \real{\bvA{k}'} , \imag{\bvA{k}'} }\SubSize{2ML_Y}{2L} \\
+%		& = \tup{ \bvd{x;\re}[k] , \bvd{x;\im}[k] }
 	\end{split} \\
-	\bvi{2} = \tr{\tup{1 , 0}}
+	\bvi[u]{\Delta} = \tr{\tup{0 ,, 0 , 1 , 0 ,, 0}}\SubSize{2ML_Y}{1}
 \end{subgather}
 
 Therefore, the minimization problem from \cref{eq:true-mpdr_ssbt_beamformer} becomes
 \begin{equation}
 	\label{eq:sec4:minimization_problem_mpdr_tssbt}
-	\bvf_{\mpdr}[l,k] = \min_{\bvf[l,k]} \tr{\bvf}[l,k] \Corr{\bvy'}[l,k] \bvf[l,k]~\text{s.t.}~\tr{\bvf}[l,k] \bvD{x}[k] = \tr{\bvi{2}}
+	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \tr{\bvf{k}}[l] \Corr{\bvy{k}'}[l] \bvf{k}[l,k]~\text{s.t.}~\tr{\bvf{k}}[l] \bvA[u]{k} = \tr{\bvi[u]{\Delta}}
 \end{equation}
-whose formulation is the same as of the Linearly-Constrained Minimum Power (LCMP) beamformer, and thus its solution is
+whose solution is
 \begin{equation}
 	\label{eq:sec4:solution_mpdr_beamformer_tssbt}
-	\bvf_{\mpdr}[l,k] = \iCorr{\bvy'}[l,k] \bvD{x}[k] \inv{\pts{ \tr{\bvD{x}}[k] \iCorr{\bvy'}[l,k] \bvD{x}[k] }} \bvi{2}
+	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}'}[l] \bvA[u]{k} \inv{\bts{ \tr{\bvA[u]{k}} \iCorr{\bvy{k}'}[l] \bvA[u]{k} }} \bvi[u]{\Delta}
 \end{equation}
-Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F;\mpdr}[l,k]$, transformed to the STFT domain.
+Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F,\mpdr;k}[l]$, transformed to the STFT domain.
 
-Here onward we will omit the $[k]$ and $[l,k]$ indices for clarity, except for definitions. Using \cref{eq:sec4:matrix_form_tMPDR}, we can write
-\begin{equation}
-	\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x} =
-	\begin{bmatrix}
-		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re} & \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
-		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} & \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im}
-	\end{bmatrix}
-\end{equation}
-With this,
-\begin{subgather}
-	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} = 
-	\begin{bmatrix}
-		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} & - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
-		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} &   \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}
-	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \\[0.5cm]
-	\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}} = \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
-\end{subgather}
-
-Going one step further,
-\begin{equation}
-	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = 
-	\begin{bmatrix}
-		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} \\
-		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
-	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
-\end{equation}
-and thus
-\begin{equation}
-	\bvD{x} \inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = \frac{\bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
-\end{equation}
-
-Finally,
-\begin{equation}
-	\bvf{\mpdr} = \frac{\iCorr{\bvy'} \bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}
-\end{equation}
-
-Denoting $\bvOm \equiv \bvOm[l,k]$ as
-\begin{equation}
-	\label{eq:sec4:def_bvOmega}
-	\bvOm \defas \iCorr{\bvy'} \pts{\bvd{x;\re} \tr{\bvd{x;\im}} - \bvd{x;\im} \tr{\bvd{x;\re}} } \iCorr{\bvy'}
-\end{equation}
-then we finally arrive at the final version of our MPDR beamformer with the SSBT,
-\begin{equation}
-	\label{eq:sec4:cf_solution_mpdr_beamformer_tssbt}
-	\bvf{\mpdr}[l,k] = \frac{\bvOm[l,k]\, \bvd{x;\im}[k]}{ \tr{\bvd{x;\re}[k]} \,\bvOm[l,k]\, \bvd{x;\im}[k]}
-\end{equation}
-
-This equation is advantageous since it is similar to the MPDR's formulation for the STFT, given in \cref{eq:sec3:solution_mpdr_beamformer}. This allows us to study both beamformers similarly, given that their expressions are analogous.
-
-\input{figures/io_input/colors_6.tex}
-\NewDocumentCommand{\filename}{m}{%
-	\small{\texttt{#1}}
-}
-\let\mc\multicolumn
-\subsection{Comparison between beamformers}
-\label{sec:results}
-
-In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD database \cite{smard_database}.
-
-The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)$. Its sensors are located in a circular array with radius of $8\si{\centi\meter}$, all omnidirectional and of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. Although both interfering and noise signals are the same, they were taken starting on different timestamps, to ensure they are uncorrelated. All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$.
-
-\begin{table}[H]
-	\centering
-	\begin{tabular}{rll}
-		Source & Position 				& Signal \\
-		\hline\vphantom{$\tilde{d}$}
-		$x[n]$ & $(2\m,~1\m,~1\m)$ 		& \filename{50\_male\_speech\_english\_ch8\_OmniPower4296.flac} \\
-		$s[n]$ & $(2\m,~2\m,~1\m)$ 		& \filename{69\_abba\_ch8\_OmniPower4296.flac} \\
-		$w[n]$ & $(2\m,~5.8\m,~2.8\m)$ 	& \filename{wgn\_48kHz\_ch8\_OmniPower4296.flac} \\
-		$r[n]$ & \mc{1}{c}{$\sim$}		& \filename{wgn\_48kHz\_ch8\_OmniPower4296.flac}
-	\end{tabular}
-	\caption{Source information for the simulations.}
-	\label{tab:sec4:information_position_sources}
-\end{table}\vspace*{-2em}
+%Here onward we will omit the $[k]$ and $[l,k]$ indices for clarity, except for definitions. Using \cref{eq:sec4:matrix_form_tMPDR}, we can write
+%\begin{equation}
+%	\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x} =
+%	\begin{bmatrix}
+%		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re} & \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
+%		\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} & \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im}
+%	\end{bmatrix}
+%\end{equation}
+%With this,
+%\begin{subgather}
+%	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} = 
+%	\begin{bmatrix}
+%		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} & - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \\
+%		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} &   \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}
+%	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \\[0.5cm]
+%	\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}} = \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
+%\end{subgather}
 %
-At the reference sensor (the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's, interfering, and noise signals are respectively $-15\dB$, $10\dB$ and $30\dB$. These will be referred as Signal-to-Echo, Signal-to-Interference and Signal-to-White-Noise Ratios (SER, SIR and SWR) respectively, with SNR still being the ratio between signal and the sum of the noises. 
+%Going one step further,
+%\begin{equation}
+%	\inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = 
+%	\begin{bmatrix}
+%		  \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} \\
+%		- \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}
+%	\end{bmatrix} \cdot \frac{1}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
+%\end{equation}
+%and thus
+%\begin{equation}
+%	\bvD{x} \inv{\pts{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}} \bvi{2} = \frac{\bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\det{\tr{\bvD{x}} \iCorr{\bvy'} \bvD{x}}}
+%\end{equation}
+%
+%Finally,
+%\begin{equation}
+%	\bvf{\mpdr} = \frac{\iCorr{\bvy'} \bvd{x;\re} \tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}{\tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\re}\tr{\bvd{x;\im}} \iCorr{\bvy'} \bvd{x;\im} - \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im} \tr{\bvd{x;\re}} \iCorr{\bvy'} \bvd{x;\im}}
+%\end{equation}
+%
+%Denoting $\bvOm \equiv \bvOm[l,k]$ as
+%\begin{equation}
+%	\label{eq:sec4:def_bvOmega}
+%	\bvOm \defas \iCorr{\bvy'} \pts{\bvd{x;\re} \tr{\bvd{x;\im}} - \bvd{x;\im} \tr{\bvd{x;\re}} } \iCorr{\bvy'}
+%\end{equation}
+%then we finally arrive at the final version of our MPDR beamformer with the SSBT,
+%\begin{equation}
+%	\label{eq:sec4:cf_solution_mpdr_beamformer_tssbt}
+%	\bvf{\mpdr}[l,k] = \frac{\bvOm[l,k]\, \bvd{x;\im}[k]}{ \tr{\bvd{x;\re}[k]} \,\bvOm[l,k]\, \bvd{x;\im}[k]}
+%\end{equation}
+%
+%This equation is advantageous since it is similar to the MPDR's formulation for the STFT, given in \cref{eq:sec3:solution_mpdr_beamformer}. This allows us to study both beamformers similarly, given that their expressions are analogous.
 
-For the transforms, Hann windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
-
-We will compare one beamformer for the STFT with and two for the SSBT. The STFT one will be based on \cref{subsec:sec3:filtering_mpdr,eq:sec3:solution_mpdr_beamformer}, as well as the first with the SSBT (which will be called "Single-Frequency SSBT", or "SF-SSBT" for short). The second one based on the SSBT will be called "Dual-Frequency SSBT" (or "DF-SSBT"), as derived in \cref{sec:true_mpdr_ssbt}, building up to \cref{eq:sec4:cf_solution_mpdr_beamformer_tssbt}. These names are logical, given that the one proposed in \cref{sec:true_mpdr_ssbt} uses two frequencies (namely the "dual-frequencies" from the STFT) at each moment.
-
-In line plots, STFT is presented in red with continuous lines, \nssbt{} in green with dashed lines, and \tssbt{} in blue with dotted lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a better visualization.
-
-In these simulations, we are interested in three main metrics: desired signal reduction factor (DSRF), echo-return loss enhancement (ERLE), and noise signal reduction factor (NSRF). Their time-dependent broadband formulations are
-\begin{subgather}
-	\dsrf[l] = \frac{\sum_{k}\abs{X_1[l,k]}^2}{\sum_{k}\abs{X_f[l,k]}^2} \\
-	\erle[l] = \frac{\sum_{k}\abs{S_1[l,k]}^2}{\sum_{k}\abs{S_f[l,k]}^2} \\
-	\nsrf[l] = \frac{\sum_{k} \abs{V_1[l,k]}^2 }{\sum_{k} \abs{V_f[l,k]}^2 }
-\end{subgather}
-
-\input{figures/io_input/aux_data_32.tex}
-\begin{figure}[!ht]
-	\centering
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_dsrf_32_n15_acc_v7.tex}
-		\caption{Per-window broadband DSRF.}
-		\label{subfig:lineplot_dsrf_32_n15_acc_v7}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_erle_32_n15_acc_v7.tex}
-		\caption{Per-window broadband ERLE.}
-		\label{subfig:lineplot_erle_32_n15_acc_v7}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_nsrf_32_n15_acc_v7.tex}
-		\caption{Per-window broadband NSRF.}
-		\label{subfig:lineplot_nsrf_32_n15_acc_v7}
-	\end{subfigure}\\[1em]
-	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
-	\label{fig:lineplots_32_n15_acc_v7}
-\end{figure}
-
-and their time-average broadband definitions are
-\begin{subgather}{eq:sec4:time-average_metrics}
-	\dsrf = \frac{\sum_{l,k}\abs{X_1[l,k]}^2}{\sum_{l,k}\abs{X_f[l,k]}^2} \\
-	\erle = \frac{\sum_{l,k}\abs{S_1[l,k]}^2}{\sum_{l,k}\abs{S_f[l,k]}^2} \\
-	\nsrf = \frac{\sum_{l,k}\abs{V_1[l,k]}^2}{\sum_{l,k}\abs{V_f[l,k]}^2}
-\end{subgather}
-were $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1}[l,k]$ and $V_f[l,k] = \he{\bvf}[l,k] \bvv{1}[l,k]$ as the filtered-LS, filtered-desired and filtered-undesired signals, respectively.
-
-\input{figures/io_input/aux_data_32.tex}
-\begin{figure}[!ht]
-	\centering
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_dsrf_32_avg_acc_v7.tex}
-		\caption{Time-average broadband DSRF.}
-		\label{subfig:lineplot_dsrf_32_avg_acc_v7}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_erle_32_avg_acc_v7.tex}
-		\caption{Time-average broadband ERLE.}
-		\label{subfig:lineplot_erle_32_avg_acc_v7}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot_nsrf_32_avg_acc_v7.tex}
-		\caption{Time-average broadband NSRF.}
-		\label{subfig:lineplot_nsrf_32_avg_acc_v7}
-	\end{subfigure}\\[1em]
-	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
-	\label{fig:lineplots_32_avg_acc_v7}
-\end{figure}
-
-These metrics represent, respectively, how much distortion is being caused in the desired signal, how much the echo (loudspeaker signal) is being reduced, and how much the general noise is being reduced.
-
-From \cref{subfig:lineplot_dsrf_32_n15_acc_v7}, we see that all beamformers had a negligible distortion of less than $0.5\dB$, however the distortion for the STFT and \tssbt{} beamformers was still closer to zero.
-
-From the ERLE results in \cref{subfig:lineplot_erle_32_n15_acc_v7} it is noticeable that the STFT and \nssbt{} beamformers had a similar performance, with the \tssbt{} one being slightly better, both outperforming the \nssbt{} beamformer's results by approx. $4\dB$. A similar result can be seen in \cref{subfig:lineplot_nsrf_32_n15_acc_v7} for the NSRF, however in this regard the STFT had a minimal margin over the \tssbt{}, and their gap compared to the \nssbt{} wasn't as prominent, although still visible.
-
-We will also compare the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics as in \cref{eq:sec4:time-average_metrics}. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
-
-As seen in \cref{subfig:lineplot_dsrf_32_avg_acc_v7}, the SF-SSBT beamformer caused some distortion on the desired signal. However, this distortion is minimal, and decreases as the loudspeaker SNR increases.
-
-In terms of ERLE, we see that the SF-SSBT is the worse for all SER's. The DF-SSBT beamformer is slightly better than the STFT, for $\text{SER} \lessapprox -5\dB$, and the STFT beamformer is considerably better otherwise.
-
-For the NSRF, the opposite is true regarding these two beamformers, with the STFT one being better for lower input SERs in terms of overall SNR gain, and the SSBT being better for higher input SERs. Interestingly, for this metric the SF-SSBT beamformer manages to outperform the other two for higher input SERs.

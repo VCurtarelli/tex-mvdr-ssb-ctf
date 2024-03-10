@@ -7,15 +7,15 @@
 %\centering
 %\tikzsetnextfilename{dsrf_lineplot_32_avg_acc_v7}
 \begin{tikzpicture}
-	\begin{snrplot}{DSRF (dB)}[ymin=-0.09, ymax=0.01, ytick={-0.09, -0.06, ..., 0}]
+	\begin{snrplot}{DSRF (dB)}%[ymin=-0.09, ymax=0.01, ytick={-0.09, -0.06, ..., 0}]
 		\addplot [style=resA]
-		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF_STFT_32_avg_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/STFT/v7__DSRF__STFT__N_32__iSER_avg__sv_acc__Ly_1.csv};
 		
 		\addplot [style=resC]
-		table [col sep=comma, y=val] {figures/io_input/NSSBT/DSRF_NSSBT_32_avg_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/v7__DSRF__NSSBT__N_32__iSER_avg__sv_acc__Ly_1.csv};
 		
 		\addplot [style=resE]
-		table [col sep=comma, y=val] {figures/io_input/TSSBT/DSRF_TSSBT_32_avg_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/v7__DSRF__TSSBT__N_32__iSER_avg__sv_acc__Ly_1.csv};
 	\end{snrplot}
 \end{tikzpicture}
 %	\caption{}

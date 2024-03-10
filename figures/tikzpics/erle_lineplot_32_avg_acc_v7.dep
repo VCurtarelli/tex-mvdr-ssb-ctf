@@ -1,3 +1,0 @@
-figures/tikzpics/erle_lineplot_32_avg_acc_v7.pdf: figures/io_input/STFT/ERLE_STFT_32_avg_acc_v7.csv
-figures/tikzpics/erle_lineplot_32_avg_acc_v7.pdf: figures/io_input/NSSBT/ERLE_NSSBT_32_avg_acc_v7.csv
-figures/tikzpics/erle_lineplot_32_avg_acc_v7.pdf: figures/io_input/TSSBT/ERLE_TSSBT_32_avg_acc_v7.csv

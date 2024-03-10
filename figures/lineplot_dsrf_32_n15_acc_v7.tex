@@ -9,13 +9,13 @@
 \begin{tikzpicture}
 	\begin{timeplot}{DSRF (dB)}[ymin=-0.30, ymax=0.03, ytick={-0.3, -0.2, -0.1, 0}, yticklabels={-0.3, -0.2, -0.1, 0}, legend to name = {timeplot_legend}]
 		\addplot [style=resA]
-		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF_l_STFT_32_n15_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/STFT/v7__DSRF_l__STFT__N_32__iSER_n15__sv_acc__Ly_1.csv};
 		
 		\addplot [style=resC]
-		table [col sep=comma, y=val] {figures/io_input/NSSBT/DSRF_l_NSSBT_32_n15_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/v7__DSRF_l__NSSBT__N_32__iSER_n15__sv_acc__Ly_1.csv};
 		
 		\addplot [style=resE]
-		table [col sep=comma, y=val] {figures/io_input/TSSBT/DSRF_l_TSSBT_32_n15_acc_v7.csv};
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/v7__DSRF_l__TSSBT__N_32__iSER_n15__sv_acc__Ly_1.csv};
 		
 		\addlegendentry{STFT};
 		\addlegendentry{\nssbt{}};

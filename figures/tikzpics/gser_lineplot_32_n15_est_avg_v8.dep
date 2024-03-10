@@ -1,3 +1,0 @@
-figures/tikzpics/gser_lineplot_32_n15_est_avg_v8.pdf: figures/io_input/STFT/gSER_STFT_32_n15_est_avg_v8.csv
-figures/tikzpics/gser_lineplot_32_n15_est_avg_v8.pdf: figures/io_input/NSSBT/gSER_NSSBT_32_n15_est_avg_v8.csv
-figures/tikzpics/gser_lineplot_32_n15_est_avg_v8.pdf: figures/io_input/TSSBT/gSER_TSSBT_32_n15_est_avg_v8.csv
