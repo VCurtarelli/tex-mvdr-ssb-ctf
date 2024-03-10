@@ -1,0 +1,23 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+%\begin{subfigure}{\linewidth}
+%\centering
+%\tikzsetnextfilename{nsrf_lineplot_32_n15_acc_v7}
+\begin{tikzpicture}
+	\begin{timeplot}{NSRF (dB)}[ymin=-20, ymax=-5]
+		\addplot [style=resA]
+		table [col sep=comma, y=val] {figures/io_input/STFT/v7__NSRF_l__STFT__N_32__iSER_n15__Ly_1__err_0.csv};
+		
+		\addplot [style=resC]
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/v7__NSRF_l__NSSBT__N_32__iSER_n15__Ly_1__err_0.csv};
+		
+		\addplot [style=resE]
+		table [col sep=comma, y=val] {figures/io_input/TSSBT/v7__NSRF_l__TSSBT__N_32__iSER_n15__Ly_1__err_0.csv};
+	\end{timeplot}
+\end{tikzpicture}
+%	\caption{}
+%	\label{subfig:1_gain_lineplot}
+%\end{subfigure}
