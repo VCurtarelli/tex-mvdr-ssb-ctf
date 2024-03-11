@@ -7,7 +7,7 @@
 %\centering
 %\tikzsetnextfilename{nsrf_lineplot_32_var_acc_v7}
 \begin{tikzpicture}
-	\begin{errplot}{gSNR (dB)}[ymin=-55, ymax=5, ytick={-50, -25, 0}]
+	\begin{errplot}{gSNR (dB)}[ymin=-30, ymax=5, ytick={-30, -20, ..., 0}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/v7__gSNR__STFT__N_32__iSER_n15__Ly_1__err_var.csv};
 		

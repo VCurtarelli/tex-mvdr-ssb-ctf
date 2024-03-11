@@ -7,7 +7,7 @@
 %\centering
 %\tikzsetnextfilename{erle_lineplot_32_var_acc_v7}
 \begin{tikzpicture}
-	\begin{snrplot}{ERLE (dB)}[ymin=0.5, ymax=24, ytick={0, 6, ..., 24}]
+	\begin{snrplot}{ERLE (dB)}[ymin=10, ymax=30, ytick={12, 18, 24, 30}]
 		\addplot [style=resA]
 		table [col sep=comma, y=val] {figures/io_input/STFT/v7__ERLE__STFT__N_32__iSER_var__Ly_1__err_0.csv};
 		

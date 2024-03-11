@@ -8,28 +8,35 @@
 
 In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD database \cite{smard_database}.
 
-The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(2\m,~2\m,~1\m)$. Its sensors are located in a circular array with radius of $8\si{\centi\meter}$, all omnidirectional and of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$.
+The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(3\m,~4\m,~1\m)$, being comprised of $M=8$ sensors. They are arranged in a circular array with radius of $8\si{\centi\meter}$, and all are omnidirectional of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. The room's layout is in \cref{fig:room_layout}, where in green we have the desired source, and in red the loudspeaker device.
 
 \begin{table}[H]
 	\centering
 	\begin{tabular}{rll}
 		Source & Position 				& Signal \\
 		\hline\vphantom{$\tilde{d}$}
-		$x[n]$ & $(2\m,~1\m,~1\m)$ 		& \filename{50\_male\_speech\_english\_ch8\_OmniPower4296.flac} \\
-		$s[n]$ & $(2\m,~2\m,~1\m)$ 		& \filename{69\_abba\_ch8\_OmniPower4296.flac} \\
+		$x[n]$ & $(2\m,~1\m,~1.8\m)$ 		& \filename{50\_male\_speech\_english\_ch8\_OmniPower4296.flac} \\
+		$s[n]$ & $(3\m,~2\m,~1\m)$ 		& \filename{69\_abba\_ch8\_OmniPower4296.flac} \\
 		$r[n]$ & \mc{1}{c}{$\sim$}		& \filename{wgn\_48kHz\_ch8\_OmniPower4296.flac}
 	\end{tabular}
 	\caption{Source information for the simulations.}
 	\label{tab:sec4:information_position_sources}
 \end{table}\vspace*{-2em}
 
-For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated once for the whole signal, to speed up the processes. We will compare one beamformer for the STFT with and two for the SSBT. The STFT one will be based on \cref{eq:sec3:solution_mpdr_beamformer,eq:sec3:solution_mpdr_beamformer}, as well as the first with the SSBT (which will be called "Single-Frequency SSBT", or "SF-SSBT" for short). The second one based on the SSBT will be called "Dual-Frequency SSBT" (or "DF-SSBT"), as derived in \cref{sec:true_mpdr_ssbt}, which led to \cref{eq:sec4:solution_mpdr_beamformer_tssbt}. These names were chosen given that the one proposed in \cref{sec:true_mpdr_ssbt} uses two frequencies (namely the "dual-frequencies" from the STFT) at each moment, while the SF-SSBT beamformer only calculates one frequency at a time.
+\begin{figure}[!t]
+	\centering
+	\includesvg[width=0.6\linewidth]{figures/drawing/room_layout.svg}
+	\caption{Room layout for simulations.}
+	\label{fig:room_layout}
+\end{figure}
+
+All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$. For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated once for the whole signal, to speed up the processes. We will compare one beamformer for the STFT with and two for the SSBT. The STFT one will be based on \cref{eq:sec3:solution_mpdr_beamformer,eq:sec3:solution_mpdr_beamformer}, as well as the first with the SSBT (which will be called "Single-Frequency SSBT", or "SF-SSBT" for short). The second one based on the SSBT will be called "Dual-Frequency SSBT" (or "DF-SSBT"), as derived in \cref{sec:true_mpdr_ssbt}, which led to \cref{eq:sec4:solution_mpdr_beamformer_tssbt}. These names were chosen given that the one proposed in \cref{sec:true_mpdr_ssbt} uses two frequencies (namely the "dual-frequencies" from the STFT) at each moment, while the SF-SSBT beamformer only calculates one frequency at a time.
 
 In line plots, STFT is presented in red with continuous lines, \nssbt{} in green with dashed lines, and \tssbt{} in blue with dotted lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a better visualization.
 %
 
 \subsection{Basic comparison}
-At the reference sensor (assumed to be the one at $(2\m,~2\m,~1.08\m)$), the SNR for the loudspeaker's and noise signals are respectively $-15\dB$ and $30\dB$. These will be referred as Signal-to-Echo and Signal-to-Noise Ratios (SER and SNR) respectively. We will use $L_Y = 1$ in this first scenario; other cases will be studied later.%every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
+At the reference sensor (assumed to be the one at $(3\m,~1.92\m,~1\m)$), the SNR for the loudspeaker's and noise signals are respectively $-15\dB$ and $30\dB$. These will be referred as Signal-to-Echo and Signal-to-Noise Ratios (SER and SNR) in that order. We will use $L_Y = 1$ in this first scenario; other cases will be studied later.%every 200 frames (equivalent to every $0.2\si{\second}$), and used up to the previous 1000 samples to estimate the correlation matrices.
 
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[!t]
@@ -53,11 +60,11 @@ At the reference sensor (assumed to be the one at $(2\m,~2\m,~1.08\m)$), the SNR
 		\label{subfig:lineplot__v7__NSRF_l__iSER_n15__Ly_1__err_0}
 	\end{subfigure}\\[1em]
 	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
+	\caption{Output metrics for the beamformers over time, in the base scenario.}
 	\label{fig:lineplot__v7__iSER_n15__Ly_1__err_0}
 \end{figure}
 
-In these simulations, we are interested in three metrics: desired signal reduction factor (DSRF), echo-return loss enhancement (ERLE), and noise signal reduction factor (NSRF). Their time-dependent broadband formulations are
+In these simulations, we are interested in three metrics results: maintenance/no-distortion of the desired signal; decrease in the loudspeaker's signal; and reduction/minimal enhancement of the white noise. In order, these will be measured by the desired signal reduction factor (DSRF), echo-return loss enhancement (ERLE), and noise signal reduction factor (NSRF), the later being used for the white noise given that the only other undesired signal at the sensors is white uncorrelated. Their time-dependent broadband formulations are
 \begin{subgather}
 	\dsrf[l] = \frac{\sum_{k}\abs{X_1[l,k]}^2}{\sum_{k}\abs{X_f[l,k]}^2} \\
 	\erle[l] = \frac{\sum_{k}\abs{S_1[l,k]}^2}{\sum_{k}\abs{S_f[l,k]}^2} \\
@@ -65,15 +72,13 @@ In these simulations, we are interested in three metrics: desired signal reducti
 \end{subgather}
 where $S_f[l,k] = \he{\bvf}[l,k] \bvs{1}[l,k]$, $X_f[l,k] = \he{\bvf}[l,k] \bvx{1}[l,k]$ and $R_f[l,k] = \he{\bvf}[l,k] \bvr{1}[l,k]$ as the filtered-LS, filtered-desired and filtered-noise signals, respectively.
 
-These metrics represent, respectively, how much distortion is being caused in the desired signal, how much the echo (loudspeaker signal) is being reduced, and how much the general noise is being reduced.
+From \cref{subfig:lineplot__v7__DSRF_l__iSER_n15__Ly_1__err_0}, we see that the STFT and DF-SSBT beamformers had a null distortion of the desired signal, while the SF-SSBT had errors of (on average) $2\dB$.
 
-From \cref{subfig:lineplot__v7__DSRF_l__iSER_n15__Ly_1__err_0}, we see that all beamformers had a negligible distortion of less than $0.2\dB$, however the distortion for the STFT and \tssbt{} beamformers was still closer to zero.
-
-From the ERLE results in \cref{subfig:lineplot__v7__ERLE_l__iSER_n15__Ly_1__err_0} it is noticeable that the STFT and \nssbt{} beamformers had a similar performance, with the \tssbt{} one being marginally better, both outperforming the \nssbt{} beamformer's results by $2\sim3\dB$. In terms of the NSRF (which, since $R_m[n]$ is a white noise, is similar to a white-noise gain), we see that the STFT beamformer had a much better performance than the two SSBT-based beamformers, therefore increasing the white-noise less on the output.
+From the ERLE results in \cref{subfig:lineplot__v7__ERLE_l__iSER_n15__Ly_1__err_0} it is noticeable that the STFT and \nssbt{} beamformers had a similar performance, with the STFT one being marginally better, both outperforming the \nssbt{} beamformer's results by about $3\dB$. In terms of the NSRF, we see that the STFT beamformer had a much better performance than the two SSBT-based beamformers, therefore increasing the white-noise less on the output.
 
 \subsection{Comparison over different input SERs}
 
-We now the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics, as presented below. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
+We now examine the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics, as presented below. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
 
 \begin{subgather}{eq:sec4:time-average_metrics}
 	\dsrf = \frac{\sum_{l,k}\abs{X_1[l,k]}^2}{\sum_{l,k}\abs{X_f[l,k]}^2} \\
@@ -103,15 +108,15 @@ We now the results with a varying input SERs, to assess the beamformer's perform
 		\label{subfig:lineplot__v7__NSRF__iSER_var__Ly_1__err_0}
 	\end{subfigure}\\[1em]
 	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
+	\caption{Output metrics for the beamformers for varying input SERs.}
 	\label{fig:lineplot__v7__iSER_var__Ly_1__err_0}
 \end{figure}
 
-As seen in \cref{subfig:lineplot__v7__DSRF__iSER_var__Ly_1__err_0}, the STFT and DF-SSBT beamformers caused zero distortion, and the SF-SSBT beamformer led to some, although again minimal and negligible. We can also see that this distortion decreases as the loudspeaker SNR increases.
+As seen in \cref{subfig:lineplot__v7__DSRF__iSER_var__Ly_1__err_0}, the STFT and DF-SSBT beamformers caused zero distortion, and the SF-SSBT beamformer led to some. We can also see that this distortion decreases as the loudspeaker SNR increases.
 
-In terms of ERLE, we see that the SF-SSBT is strictly worse than the two other beamformers, for all SER's. The DF-SSBT beamformer is slightly better than the STFT for $\iser \lessapprox -5\dB$, and the STFT beamformer is considerably better otherwise.
+In terms of ERLE, we see that the SF-SSBT is strictly worse than the two other beamformers, for all SER's. The DF-SSBT beamformer has a similar performance to that of the STFT beamformer for $\iser \lessapprox -20\dB$, but is outperformed for higher iSER's.
 
-For the NSRF we see the same results as were obtained previously, with the white-noise increase for the STFT beamformer being considerably lower than that for both SSBT-based beamformers. It is interesting to see that the SF-SSBT beamformer's performance surpassed that of the DF-SSBT in this metric, for $\iser \gtrapprox 7\dB$.
+For the NSRF we see the same results as were obtained previously, with the white-noise increase for the STFT beamformer being considerably lower than that for both SSBT-based beamformers. It is interesting that the performance of both SSBT beamformers worsens for higher iSER's, for both the ERLE and NSRF metrics.
 
 \subsection{Comparison for different $L_Y$}
 
@@ -138,21 +143,15 @@ Going back to observing only the case for $\iser = -15\dB$, we will now investig
 		\label{subfig:lineplot__v7__NSRF__iSER_n15__Ly_var__err_0}
 	\end{subfigure}\\[1em]
 	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
+	\caption{Output metrics for the beamformers for varying input $L_Y$'s.}
 	\label{fig:lineplot__v7__iSER_n15__Ly_var__err_0}
 \end{figure}
 
-In this comparison, we have two different relevant effects that can be seen: firstly, we see that the SF-SSBT beamformer's performance deteriorates drastically, for both the desired signal's distortionless-ness behavior, and the ERLE. This is likely due to the mathematical results exposed in \cref{app:ssbt_convolution}, and since the SSBT transform doesn't respect the convolution, a convolutive filter doesn't work well with it. Note that this is not the case for the DF-SSBT beamformer, since we designed it to appropriately bypass this complication. The increase in the SF-SSBT's NSRF performance is due to it no not working correctly, and thus ``randomly".
+In this comparison, we have two different relevant effects that can be seen: firstly, we see that the SF-SSBT beamformer's performance deteriorates drastically, for both the desired signal's distortionless-ness behavior, and the ERLE. This is likely due to the mathematical results exposed in \cref{app:ssbt_convolution}, and since the SSBT transform doesn't respect the convolution, a convolutive filter doesn't work well with it. Note that this is not the case for the DF-SSBT beamformer, since these were appropriately designed to bypass this complication. The increase in the SF-SSBT's NSRF performance is due to it no not working correctly, and thus ``randomly".
 
-Another effect that can be seen is regarding the ERLE and NSRF performances, for the STFT and DF-SSBT beamformers. We see that their ERLE performance increases (although minimally), while their NSRF decreases, with the DF-SSBT beamformer being strictly better than the STFT one for the ERLE, and strictly worse for the NSRF.
+Another relevant result from this comparison is that increasing $L_Y$ doesn't seem to have much of an effect on neither the ERLE nor the NSRF, for both the STFT and DF-SSBT beamformers. We also see, in accordance with the previous results, that the STFT beamformer strictly outperforms the DF-SSBT one for both metrics.
 
 \subsection{Comparison with perturbation}
-
-As exposed in \cref{sec:perturbation_analysis}, it is also of interest to compare how robust the derived beamformers are, when the information regarding the desired signal's RIR isn't accurate. For such, we model the matrix $\bvA[u]{k}$ as
-\begin{equation}
-	\bvA[u]{k} = \bvA[u]{k}^\star + \Delta\bvA[u]{k}
-\end{equation}
-where $\bvA[u]{k}^\star$ is the accurate steering matrix, and $\Delta\bvA[u]{k}$ is a perturbation on it, which we assume is a zero-mean uniform white noise, with an adjustable variance.
 
 \begin{figure}[!t]
 	\centering
@@ -175,9 +174,15 @@ where $\bvA[u]{k}^\star$ is the accurate steering matrix, and $\Delta\bvA[u]{k}$
 		\label{subfig:lineplot__v7__gSNR__iSER_n15__Ly_1__err_var}
 	\end{subfigure}\\[1em]
 	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers.}
+	\caption{Output metrics for the beamformers with error in the steering vectors.}
 	\label{fig:lineplot__v7_iSER_n15__Ly_1__err_var}
 \end{figure}
+
+As exposed in \cref{sec:perturbation_analysis}, it is also of interest to compare how robust the derived beamformers are, when the information regarding the desired signal's RIR isn't accurate. For such, we model the matrix $\bvA[u]{k}$ as
+\begin{equation}
+	\bvA[u]{k} = \bvA[u]{k}^\star + \Delta\bvA[u]{k}
+\end{equation}
+where $\bvA[u]{k}^\star$ is the accurate steering matrix, and $\Delta\bvA[u]{k}$ is a perturbation on it, which we assume is a zero-mean uniform white noise, with an adjustable variance.
 
 Since in this scenario the desired signal can suffer some distortion (given that its steering matrix isn't appropriately estimated), we will use the gain in SER and gain in SNR metrics instead of ERLE and NSRF, to take this distortion into account. These are defined as
 \begin{subgather}
@@ -187,4 +192,4 @@ Since in this scenario the desired signal can suffer some distortion (given that
 
 The DSRF will still be showed, to give a sense of proportion on how much the beamformer distorts the desired signal. In the results of \cref{fig:lineplot__v7_iSER_n15__Ly_1__err_var}, the x-axis represents the standard deviation of $\Delta\bvA[u]{k}$, as a percentage of the standard deviation of $\bvA[u]{k}^\star$.
 
-For all three metrics, we see that the DF-SSBT beamformer had the worse performance, in terms of robustness, leading to the worse results for any error different than $0$. The STFT beamformer had the best performance overall, being minimally worse than the SF-SSBT beamformer for some values of the error, for the gain in SER (\cref{subfig:lineplot__v7__gSER__iSER_n15__Ly_1__err_var}). The results for the SF-SSBT and DF-SSBT beamformers were very similar for the DSRF and gain in SNR, with differences of less than $1\dB$.
+Each metric showed a different result: differently than before, the SF-SSBT beamformer led to the least distortion on the desired signal, out of all three beamformers, and the DF-SSBT led to the most distortion. Meanwhile, the gain in SER showed the STFT beamformer to be the (overall) more robust, and the one that led to the best results, with the DF-SSBT again being the worse one. A similar result can be seen for the gain in SNR, with the STFT beamformer being the best, but in this regard the SF-SSBT beamformer led to the worst results, although marginally.
