@@ -61,5 +61,14 @@
 
 }
 
-\AtBeginDocument{%
+\NewDocumentEnvironment{changingfrom}{}{
+	\begin{tcolorbox}[enhanced, breakable, colback=red!5!white, colframe=red!50!black]
+	}{
+	\end{tcolorbox}
+}
+
+\NewDocumentEnvironment{changingto}{}{
+\begin{tcolorbox}[enhanced, breakable, colback=green!5!white, colframe=green!50!black]
+}{
+\end{tcolorbox}
 }
