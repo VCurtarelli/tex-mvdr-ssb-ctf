@@ -75,8 +75,8 @@
 %	\end{equation}
 %	where
 %	\begin{subgather}
-%		\bvy{k}[l] = \vtup{\bvy[b]{1,k}[l] ,, \bvy[b]{k,M}[l]} \\
-%		\bvA{k} = \vtup{\bvA[b]{1,k} ,, \bvA[b]{k,M}}
+%		\bvy{k}[l] = \vtup{\bvy[b]{1,k}[l] ,, \bvy[b]{M,k}[l]} \\
+%		\bvA{k} = \vtup{\bvA[b]{1,k} ,, \bvA[b]{M,k}}
 %	\end{subgather}
 %	$\bvy{k}[l]$ is a $\sz{ML_Y}{1}$ vector, and $\bvA{k}$ is a $\sz{ML_Y}{L}$ matrix. $\bvr{k}[l]$ is defined in the same way as $\bvy{k}[l]$ and $\bvB{k}$ as $\bvA{k}$. 
 %\end{changingfrom}
@@ -156,8 +156,8 @@
 	\end{equation}
 	where
 	\begin{subgather}
-		\bvy{k}[l] = \vtup{\bvy[b]{1,k}[l] ,, \bvy[b]{k,M}[l]} \\
-		\bvA{k} = \vtup{\bvA[b]{1,k} ,, \bvA[b]{k,M}}
+		\bvy{k}[l] = \vtup{\bvy[b]{1,k}[l] ,, \bvy[b]{M,k}[l]} \\
+		\bvA{k} = \vtup{\bvA[b]{1,k} ,, \bvA[b]{M,k}}
 	\end{subgather}
 	$\bvy{k}[l]$ is a $\sz{ML_Y}{1}$ vector, and $\bvA{k}$ is a $\sz{ML_Y}{L}$ matrix. $\bvr{k}[l]$ and $\bvq{k}[l]$ are defined in the same way as $\bvy{k}[l]$, and $\bvB{k}$ as $\bvA{k}$. 
 %\end{changingto}
@@ -186,7 +186,7 @@ From this, we easily see that to achieve a distortionless response from the desi
 \begin{equation}
 	\he{\bvf{k}}[l] \bvA{k} = \tr{\bvi{\Delta}}
 \end{equation}
-where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeroes, except for the $\Delta$-th entry which is a $1$. For this to be true, we assume that $\bvq{k}[l]$ is uncorrelated to $\bvx[b]{1,k}[l]$, which may not be true depending on the values of $\Delta$ and $L_A$ chosen, and the characteristics of the environment.
+where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeroes, except for the $\Delta$-th entry which is a $1$. %For this to be true, we assume that $\bvq{k}[l]$ is uncorrelated to $\bvx[b]{1,k}[l]$, which may not be true depending on the values of $\Delta$ and $L_A$ chosen, and the characteristics of the environment.
 
 To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
 \begin{equation}
@@ -196,5 +196,5 @@ To minimize the variance of the output signal while obeying the distortionless c
 where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
 \begin{equation}
 	\label{eq:sec3:solution_mpdr_beamformer}
-	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}}[l] \bvA{k} \inv{\bts{ \he{\bvA{k}} \iCorr{\bvy{k}}[l] \bvA{k} }} \bvi{\Delta}
+	\bvf{\mpdr;k}[l] = \iCorr{\bvy;k}[l] \bvA{k} \inv{\bts{ \he{\bvA{k}} \iCorr{\bvy;k}[l] \bvA{k} }} \bvi{\Delta}
 \end{equation}

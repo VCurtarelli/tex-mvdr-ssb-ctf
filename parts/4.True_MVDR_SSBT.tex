@@ -65,7 +65,7 @@ Therefore, the minimization problem from \cref{eq:true-mpdr_ssbt_beamformer} bec
 whose solution is
 \begin{equation}
 	\label{eq:sec4:solution_mpdr_beamformer_tssbt}
-	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}'}[l] \bvA[u]{k} \inv{\bts{ \tr{\bvA[u]{k}} \iCorr{\bvy{k}'}[l] \bvA[u]{k} }} \bvi[u]{\Delta}
+	\bvf{\mpdr;k}[l] = \iCorr{\bvy';k}[l] \bvA[u]{k} \inv{\bts{ \tr{\bvA[u]{k}} \iCorr{\bvy';k}[l] \bvA[u]{k} }} \bvi[u]{\Delta}
 \end{equation}
 Using \cref{eq:sec4:conversion_beamformer_ssbt_to_stft}, we can obtain the desired beamformer $\bvf{\F,\mpdr;k}[l]$, transformed to the STFT domain.
 

@@ -2,38 +2,78 @@
 \label{sec:perturbation_analysis}
 Until now, we assumed an appropriate knowledge of all signals and their impulse responses. However, in a real application these would be estimated, and thus prone to error. Given our beamformers from \cref{eq:sec3:solution_mpdr_beamformer,eq:sec4:solution_mpdr_beamformer_tssbt} and their dependence on $\bvd[k]$, they are directly influenced by impulse response estimation errors.
 
-We can write
+%\begin{changingfrom}
+%	We can write
+%	\begin{equation}
+%		\bvd{x}[k] = \bvd[b]{x}[k] + \bvde{x}[k]
+%	\end{equation}
+%	where $\bvd[b]{x}[k]$ is the accurate steering vector (SV), $\bvd{x}[k]$ is the measured SV, $\bvde{x}[k]$ is a perturbation (or error) on the SV measurement. With this, the MPDR beamformer with the STFT (assuming the knowledge of $\bvd{x}[k]$) from \cref{eq:sec3:solution_mpdr_beamformer} is
+%	\begin{equations}
+%		\bvf{\mpdr}
+%		& = \frac{\iCorr{\bvy} \bvd{x}}{\pts{\he{\bvd{x}} \iCorr{\bvy} \bvd{x}}} \\
+%		& = \frac{\iCorr{\bvy} \pts{\bvd[b]{x} + \bvde{x}}}{\pts{\he{\bvd[b]{x}} + \he{\bvde{x}}} \iCorr{\bvy} \pts{\bvd[b]{x} + \bvde{x}}} \\
+%		& = \frac{\iCorr{\bvy} \bvd[b]{x} + \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + \he{\bvd[b]{x}} \iCorr{\bvy} \bvde{x} + \he{\bvde{x}} \iCorr{\bvy} \bvd[b]{x} + \he{\bvde{x}} \iCorr{\bvy} \bvde{x} } \\
+%		& = \frac{ \iCorr{\bvy} \bvd[b]{x}}{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e} + \frac{ \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e}
+%	\end{equations}
+%	\begin{equation}
+%		\label{eq:sec5:beamformer_approx_sv}
+%		\bvf{\mpdr}[l,k] = g_e[l,k] \bvfb{\mpdr}[l,k] + \bvf{\bvde}[l,k]
+%	\end{equation}
+%	in which $\bvfb{\mpdr}[l,k]$ is the beamformer for the accurate steering vector $\bvd[b]{x}[k]$, and $g_e[l,k]$ and $\bvf{\bvde}[l,k]$ are
+%	\begin{subgather}
+%		g_e = \frac{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e} \\
+%		\bvf{\bvde} = \frac{ \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e}
+%	\end{subgather}
+%	
+%	Thus, the beamformer with an estimated steering vector is an affine transformation of $\bvfb{\mpdr}[l,k]$. It is trivial that $\bvde{x} \to \mathbf{0} \implies g_e = 1,~\bvf{\bvde} = \mathbf{0}$.
+%	
+%	Applying the same procedure to the MPDR beamformer with the SSBT from \cref{eq:sec4:solution_mpdr_beamformer_tssbt}, we get a similar result as obtained in \cref{eq:sec5:beamformer_approx_sv}, but in which $e$, $g_e$, and $\bvf{\bvde}$ now are
+%	\begin{subgather}
+%		e = \tr{\bvd{x;\re}} \,\bvPsi\, \bvde{x;\im} + \tr{\bvde{x;\re}} \,\bvPsi\, \bvd{x;\im} + \tr{\bvde{x;\re}} \,\bvPsi\, \bvde{x;\im} \\
+%		g_e = \frac{ \tr{\bvd{x;\re}} \,\bvPsi\, \bvd{x;\im} }{ \tr{\bvd{x;\re}} \,\bvPsi\, \bvd{x;\im} + e } \\
+%		\bvf{\bvde} = \frac{\bvPsi\, \bvde{x;\im}}{ \tr{\bvd{x;\re}} \,\bvPsi\, \bvd{x;\im} + e }
+%	\end{subgather}
+%	where $\bvde{x;\re}$ and $\bvde{x;\im}$ are the perturbation vectors for $\bvd{x;\re}$ and $\bvd{x;\im}$ respectively.
+%\end{changingfrom}
+%\begin{changingto}
+Going back to the time domain in \cref{eq:sec3:time_model_basic}, we can write the observed/measured room impulse response $h_m[n]$ for each sensor as
 \begin{equation}
-	\bvd{x}[k] = \bvd[b]{x}[k] + \bvde{x}[k]
+	h_m[n] = h_m^\star[n] + \dlt h_m[n]
 \end{equation}
-where $\bvd[b]{x}[k]$ is the accurate steering vector (SV), $\bvd{x}[k]$ is the measured SV, $\bvde{x}[k]$ is a perturbation (or error) on the SV measurement. With this, the MPDR beamformer with the STFT (assuming the knowledge of $\bvd{x}[k]$) from \cref{eq:sec3:solution_mpdr_beamformer} is
+with $h_m^\star$ being the accurate room impulse response, and $\dlt h_m[n]$ is a perturbation (or error) on the measurement. Through the same derivations that were presented in \cref{sec:signal_model}, we find that
+\begin{equation}
+	\bvA{k} = \bvA{k}^\star + \dlt \bvA{k}
+\end{equation}
+
+This will also have an effect on the beamformers designed with an inaccurate steering matrix $\bvA{k}$, leading to errors in the signal estimation and beamforming output. Note that $\dlt\bvA{k}$ will depend on both $h_m^\star[n]$ and $\dlt h_m[n]$ given the deconvolution process necessary to obtain the relative transfer functions. From now on we will omit the $[l]$ dependence on the variables, unless strictly necessary.
+
+The solutions obtained at the end of both \cref{sec:signal_model,sec:true_mpdr_ssbt} have the same form. Expanding the inverse in the beamformer's solution from \cref{eq:sec3:solution_mpdr_beamformer}, we get
 \begin{equations}
-	\bvf{\mpdr}
-	& = \frac{\iCorr{\bvy} \bvd{x}}{\pts{\he{\bvd{x}} \iCorr{\bvy} \bvd{x}}} \\
-	& = \frac{\iCorr{\bvy} \pts{\bvd[b]{x} + \bvde{x}}}{\pts{\he{\bvd[b]{x}} + \he{\bvde{x}}} \iCorr{\bvy} \pts{\bvd[b]{x} + \bvde{x}}} \\
-	& = \frac{\iCorr{\bvy} \bvd[b]{x} + \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + \he{\bvd[b]{x}} \iCorr{\bvy} \bvde{x} + \he{\bvde{x}} \iCorr{\bvy} \bvd[b]{x} + \he{\bvde{x}} \iCorr{\bvy} \bvde{x} } \\
-	& = \frac{ \iCorr{\bvy} \bvd[b]{x}}{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e} + \frac{ \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e}
+	\inv*{\he{\bvA{k}} \iCorr{\bvy;k} \bvA{k}}
+	& = \inv*{ \he{\pts{\bvA{k}^\star + \dlt\bvA{k}}} \iCorr{\bvy;k} \he{\pts{\bvA{k}^\star + \dlt\bvA{k}}} } \\
+	& = \inv*{ \he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \bvA{k}^\star + \he{\bvA{k}^\star} \iCorr{\bvy;k} \dlt\bvA{k} + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \dlt\bvA{k} }
 \end{equations}
+We will denote $\bvOm = \he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star$, and $\bvPsi$ as the rest. Using the Woodbury identity, we have that
 \begin{equation}
-	\label{eq:sec5:beamformer_approx_sv}
-	\bvf{\mpdr}[l,k] = g_e[l,k] \bvfb{\mpdr}[l,k] + \bvf{\bvde}[l,k]
+\inv*{ \bvOm + \bvPsi} = \Inv{\bvOm} - \Inv{\bvOm}\Inv*{\Inv{\bvOm} + \Inv{\bvPsi}} \Inv{\bvOm}
 \end{equation}
-in which $\bvfb{\mpdr}[l,k]$ is the beamformer for the accurate steering vector $\bvd[b]{x}[k]$, and $g_e[l,k]$ and $\bvf{\bvde}[l,k]$ are
+
+Going back to \cref{eq:sec3:solution_mpdr_beamformer}, we have that
+\begin{equations}
+	\bvf{\mpdr;k}
+	& = \iCorr{\bvy;k} \pts{\bvA{k}^\star + \dlt\bvA{k}} \pts{\Inv{\bvOm} - \Inv{\bvOm}\Inv*{\Inv{\bvOm} + \Inv{\bvPsi}} \Inv{\bvOm}} \bvi{\Delta} \\
+	& = \bvf{\mpdr;k}^\star + \bvf{\delta;k}
+\end{equations}
+in which
 \begin{subgather}
-	g_e = \frac{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e} \\
-	\bvf{\bvde} = \frac{ \iCorr{\bvy} \bvde{x} }{ \he{\bvd[b]{x}} \iCorr{\bvy} \bvd[b]{x} + e}
+	\bvf{\mpdr;k}^\star = \iCorr{\bvy;k} \bvA{k}^\star \inv*{\he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star} \bvi{\Delta} \\
+	\bvf{\delta;k} = \iCorr{\bvy;k} \bts{ \dlt\bvA{k}\Inv{\bvOm} - \pts{\bvA{k}^\star + \dlt\bvA{k}} \pts{\Inv{\bvOm}\Inv*{\Inv{\bvOm} + \Inv{\bvPsi}} \Inv{\bvOm}} }\bvi{\Delta} 
 \end{subgather}
 
-Thus, the beamformer with an estimated steering vector is an affine transformation of $\bvfb{\mpdr}[l,k]$. It is trivial that $\bvde{x} \to \mathbf{0} \implies g_e = 1,~\bvf{\bvde} = \mathbf{0}$.
+Thus, the resulting beamformer is composed of the accurate beamformer $\bvf{\mpdr;k}^\star$ and one that is dependent on both the accurate and the perturbation steering matrices, $\bvf{\delta;k}$, both being dependent on $[l]$. Of course, when $\dlt\bvA{k} \to \bv{0}$, then $\bvf{\delta;k} \to \bv{0}$, and $\bvf{\mpdr;k} \to \bvf{\mpdr;k}^\star$.
 
-Applying the same procedure to the MPDR beamformer with the SSBT from \cref{eq:sec4:solution_mpdr_beamformer_tssbt}, we get a similar result as obtained in \cref{eq:sec5:beamformer_approx_sv}, but in which $e$, $g_e$, and $\bvf{\bvde}$ now are
-\begin{subgather}
-	e = \tr{\bvd{x;\re}} \,\bvOm\, \bvde{x;\im} + \tr{\bvde{x;\re}} \,\bvOm\, \bvd{x;\im} + \tr{\bvde{x;\re}} \,\bvOm\, \bvde{x;\im} \\
-	g_e = \frac{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} }{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} + e } \\
-	\bvf{\bvde} = \frac{\bvOm\, \bvde{x;\im}}{ \tr{\bvd{x;\re}} \,\bvOm\, \bvd{x;\im} + e }
-\end{subgather}
-where $\bvde{x;\re}$ and $\bvde{x;\im}$ are the perturbation vectors for $\bvd{x;\re}$ and $\bvd{x;\im}$ respectively.
-
+This same process is valid for the beamformer in \cref{eq:sec4:solution_mpdr_beamformer_tssbt}, with $\bvA[u]{k}$, $\Corr{\bvy';k}$ and $\bvi[u]{\Delta}$ instead of $\bvA{k}$, $\Corr{\bvy;k}$ and $\bvi{\Delta}$, respectively, and also taking the transpose instead of the hermitian-transpose.
+%\end{changingto}
 %\subsection{Tests}
 %
 %In these tests, we repeated the simulation as before, but now with a slightly miscalculated steering vector. This was done by simulating $\bvde{x}[k]$ as a zero-mean random additive noise, whose variance is the controllable variable. In the plots of \cref{fig:lineplots_32_n15_est_var_v8}, the x-axis indicates the standard deviation of $\bvde{x}[k]$ relative to that of $\bvd{x}[k]$. Trivially, the case where the error is $0\%$ is when the steering vector is accurately evaluated. The input SER in this scenario is of $-15\dB$.
