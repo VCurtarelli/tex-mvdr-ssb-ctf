@@ -9,31 +9,31 @@
 Let $x[n]$ be a time domain signal, with $X_{\F}[l,k]$ being its STFT equivalent, and $X_{\S}[l,k]$ its SSBT equivalent. We here assume that both the STFT and the SSBT have $K$ frequency bins. $X_{\S}[l,k]$ can be obtained using $X_{\F}[l,k]$, through
 \begin{equation}
 	\label{eq:appA:equiv_ssbt_stft}
-	X_{\S}[l,k] = - \xfr[l,k] - \xfi[l,k]
+	X_{\R}[l,k] = - \xfr[l,k] - \xfi[l,k]
 \end{equation}
 in which $\Re{(\cdot)}$ and $\Im{(\cdot)}$ represent the real and imaginary components of their argument, respectively.
 
 It is easy to see that
 \begin{equation}
 	\label{eq:appA:equiv_stft_ssbt}
-	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
+	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\R}[l,k] + e^{\j\frac{3\pi}{4}} X_{\R}[l,K-k] }
 \end{equation}
-As stated before, in this formulation we abuse the notation by letting $X_{\S}[l,K] = X_{\S}[l,0]$ to simplify the mathematical operations.
+As stated before, in this formulation we abuse the notation by letting $X_{\R}[l,K] = X_{\R}[l,0]$ to simplify the mathematical operations.
 
-Now, let there also be $h[n]$, $H_{\F}[k]$ and $H_{\S}[k]$, with the same assumptions as before. We define $Y_{\F}[l,k]$ and $Y_{\S}[l,k]$ as the output of an LTI system with impulse response $h[n]$, such that
+Now, let there also be $h[n]$, $H_{\F}[k]$ and $H_{\R}[k]$, with the same assumptions as before. We define $Y_{\F}[l,k]$ and $Y_{\R}[l,k]$ as the output of an LTI system with impulse response $h[n]$, such that
 \begin{subalign}
 	Y_{\F}[l,k] & = H_{\F}[k] X_{\F}[l,k] \label{subeq:appA:mtf_stft} \\
-	Y_{\S}[l,k] & = H_{\S}[k] X_{\S}[l,k] \label{subeq:appA:mtf_ssbt}
+	Y_{\R}[l,k] & = H_{\R}[k] X_{\R}[l,k] \label{subeq:appA:mtf_ssbt}
 \end{subalign}
 
 We will assume that the MTF model \cite{talmon_relative_2009} correctly models the convolution here. This waas used instead of the CTF for simplicity, as these derivations would work exactly the same for the CTF, but with window-wise summations as well, which would pollute the notation.
 
 Applying \cref{eq:appA:equiv_ssbt_stft} in \cref{subeq:appA:mtf_ssbt}, and knowing that $X_{\F}[l,k] = X_{\F}^{*}[l,K-k]$ (same for $H_{\F}[k]$), with $(\cdot)^*$ representing the complex-conjugate; we get that
 \begin{equations}
-	Y_{\S}[l,k]
+	Y_{\R}[l,k]
 	& = \xfr[l,k] \hfr[l,k] + \xfr[l,k] \hfi[l,k] \\
 	& + \xfi[l,k] \hfr[l,k] + \xfi[l,k] \hfi[l,k] \\[0.2cm]
-	Y_{\S}[l,K-k] 
+	Y_{\R}[l,K-k] 
 	& = \xfr[l,k] \hfr[l,k] - \xfr[l,k] \hfi[l,k] \\
 	& - \xfi[l,k] \hfr[l,k] + \xfi[l,k] \hfi[l,k]
 \end{equations}
@@ -44,7 +44,7 @@ Passing this through \cref{eq:appA:equiv_stft_ssbt},
 	& - \xfr[l,k] \hfr[l,k] + \j \xfr[l,k] \hfr[l,k] \\
 	& + \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
 \end{equations}
-where $Y_{\F}'[l,k]$ is the STFT-equivalent of $Y_{\S}[l,k]$.
+where $Y_{\F}'[l,k]$ is the STFT-equivalent of $Y_{\R}[l,k]$.
 
 Expanding \cref{subeq:appA:mtf_stft} in terms of real and imaginary components,
 \begin{equations}{eq:appA:expansion_Yf_stft}

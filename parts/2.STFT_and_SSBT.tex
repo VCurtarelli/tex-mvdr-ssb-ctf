@@ -1,39 +1,170 @@
-\section{STFT and the Single-Sideband Transform}
+\section{Frequency and Time-Frequency Transforms}
 \label{sec:stft_and_ssbt}
 
-When studying signals and systems, often frequency and time-frequency transforms are used in order to change the signal domain \cite{demuth_frequency_1977}, allowing the exploitation of different patterns and informations inherent to the signal.
+When studying signals and systems, often frequency and time-frequency transforms are used in order to change the signal domain \cite{demuth_frequency_1977}, allowing the exploitation of different patterns and informations inherent to the signal. We from now on assume that all time-domain signals are real-valued.
+
+For continuous time and frequency domains, the Fourier Transform (FT) is defined as
+\begin{equations}{eq:sec2:def_fourier_transform}
+	X_{\F}(f)
+	& \equiv \FT{x(t)} \\
+	& = \int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t}\dd t
+\end{equations}
+
+We define the Real Fourier Transform (RFT) similarly, being cleverly constructed such that its frequency spectrum is real-valued without loss of information, as
+\begin{equations}{eq:sec2:def_real_fourier_transform}
+	X_{\R}(f)
+	& \equiv \RFT{x(t)} \\
+	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t + \j\frac{3\pi}{4}} \dd t} \\
+	& = \int\limits_{-\infty}^{\infty} x(t) \bts{-\cos\pts{2\pi f t} - \sin\pts{2\pi f t}} \dd t
+\end{equations}
+and the Inverse Real Fourier Transform (iRFT) as
+\begin{equations}
+	x(t)
+	& \equiv \IRFT{X_{\R}(f)} \\
+	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
+\end{equations}
+
+It is easy to see that we can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform}, such that
+\begin{equations}{eq:sec2:equivalence_ft_rft}
+	X_{\R}(f)
+	& = \real{X_{\F}(f) e^{\j\frac{3\pi}{4}}} \\
+	& = -\Re{X}_{\F}(f) + \Im{X}_{\F}(f)
+\end{equations}
+
+One can also write the RFT in terms of the FT as
+\begin{equation}\label{eq:sec2:equivalence_pair_ft_to_rft}
+	X_{\R}(f) = \frac{1}{\Sqrt{2}} \pts{e^{-\j\frac{3\pi}{4}} X_{\F}(f) + e^{\j\frac{3\pi}{4}} X_{\F}(\-f) }
+\end{equation}
+from which we deduce that
+\begin{equation}\label{eq:sec2:equivalence_pair_rft_to_ft}
+	X_{\F}(f) = \frac{1}{\Sqrt{2}} \pts{e^{\j\frac{3\pi}{4}} X_{\R}(f) + e^{-\j\frac{3\pi}{4}} X_{\R}(\-f) }
+\end{equation}
+
+\subsection{Convolution}
+
+Given an impulse response $h(t)$ for a LIT system, through the FT it is known that
+\begin{equation}
+	h(t) \ast x(t) \hrel{\F} H_{\F}(f) X_{\F}(f)
+\end{equation}
+where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this property isn't valid for the RFT (see \cref{app:ssbt_convolution}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
+\begin{equation}
+	h(t) \ast x(t) \centernot{\hrel{\R}} H_{\R}(f) X_{\R}(f)
+\end{equation}
+
+However, through \cref{eq:sec2:equivalence_ft_rft} we can show that
+\begin{equations}{eq:sec2:convolution_on_rft}
+	h(t) \ast x(t) \hrel{\R} \vphantom{d}
+	  & \tfrac{1}{2} X_{\R}(f) \bts{-H_{\R}(\-f) - H_{\R}(f)}  \\
+	+ & \tfrac{1}{2} X_{\R}(\-f) \bts{H_{\R}(\-f) - H_{\R}(f)}
+\end{equations}
+in which we see that, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$. Using \cref{eq:sec2:equivalence_ft_rft}, which is also valid for $H_{\R}(f)$, we easily have that
+\begin{equation}
+	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) - X_{\R}(\-f) \Im{H}_{\F}(f)
+\end{equation}
+
+\subsection{Discrete time-frequency transforms}
 
 Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microphone_2021} is
 \begin{equation}
 	\label{eq:sec2:def_stft_xn}
-	X_{\F}[l,k] = \sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K}}
+	X_{\sF}[l,k] = \sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K}}
 \end{equation}
-where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Thus, exploring different possibilities for such an operation can be useful and lead to interesting results.
+where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. The STFT can be seen as a discretization of the FT, while also applying it over different ``snippets'' of time.
 
-The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is one such alternative, being cleverly constructed such that its frequency spectrum is real-valued, without loss of information. The SSB transform of $x[n]$ is defined as
+%Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Thus, exploring different possibilities for such an operation can be useful and lead to interesting results.
+
+The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is similarly defined, being the RFT's windowed discrete-time adaptation. The SSB transform of $x[n]$ is defined as
 \begin{equation}
 	\label{eq:sec2:def_ssbt_xn}
-	X_{\S}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K} + \j\frac{3\pi}{4} } }
+	X_{\sS}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}
 
-Assuming that $x[n]$ is real-valued, one advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$, however it is real-valued.
+One advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$, however it is real-valued.
 
-Assuming that all $K$ bins of the STFT are available, from \cref{eq:sec2:def_stft_xn,eq:sec2:def_ssbt_xn} we have
+Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:equivalence_ft_rft,eq:sec2:equivalence_pair_ft_to_rft,eq:sec2:equivalence_pair_rft_to_ft} we have\footnote{For the abuse of notation, we let $X_{\sS}[l,K] \equiv X_{\sS}[l,0]$, and equally for $X_{\sF}[l,K]$.}
 \begin{equations}
 	\label{eq:sec2:equivalence_stft_ssbt}
-	X_{\S}[l,k]
-	& = \Sqrt{2} \real{X_{\F}[l,k] e^{\j\frac{3\pi}{4}}} \\
-	& = - \real{X_{\F}[l,k]} - \imag{X_{\F}[l,k]}
+	X_{\sS}[l,k]
+	& = \Sqrt{2} \real{X_{\sF}[l,k] e^{\j\frac{3\pi}{4}}} \\
+	& = - \real{X_{\sF}[l,k]} + \imag{X_{\sF}[l,k]}
 \end{equations}
-
-It is easy to see that\footnote{For the abuse of notation, we let $X_{\S}[l,K] \equiv X_{\S}[l,0]$, and equally for $X_{\F}[l,K]$.}
 \begin{equation}
-	X_{\S}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\F}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\F}[l,K-k] }
+	X_{\sS}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\sF}[l,k] + e^{\j\frac{3\pi}{4}} X_{\sF}[l,K-k] }
 \end{equation}
-from which it we deduce
 \begin{equation}
 	\label{eq:sec2:equivalence_ssbt_stft}
-	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\S}[l,k] + e^{\j\frac{3\pi}{4}} X_{\S}[l,K-k] }
+	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\sS}[l,K-k] }
 \end{equation}
 
-One disadvantage of the SSBT is that the convolution theorem does not hold when employing it (see \cref{app:ssbt_convolution}), not even as an approximation. Nonetheless, by converting any result in the SSBT domain to the STFT domain (using \cref{eq:sec2:equivalence_stft_ssbt}) before utilization, it remains feasible to employ the transform to study of the problem at hand.
+As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_on_rft}, we can write the convolution on the SSBT domain as
+\begin{equation}
+	\label{eq:sec2:convolution_on_ssbt_mtf}
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \Re{H}_{\sF}[k] - X_{\sS}[l,K-k] \Im{H}_{\sF}[k]
+\end{equation}
+or, with the convolutive transfer function (CTF) model \cite{talmon_relative_2009},
+\begin{equation}
+	\label{eq:sec2:convolution_on_ssbt_ctf}
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast \Re{H}_{\sF}[l,k] - X_{\sS}[l,K-k] \ast \Im{H}_{\sF}[l,k]
+\end{equation}
+in which this convolution is done over the frames $l$.
+
+\subsection{Relative transfer functions}
+
+Given two systems that share an input $x[n]$ each with an impulse response $h_1[n]$ and $h_2[n]$, on the STFT domain $H_1[l,k]$ and $H_2[l,k]$, we can calculate their relative transfer functions (RTF's), respective to a common input. We denote these RTF's $A_1[l,k]$ and $A_2[l,k]$, respective for each system.
+
+Let us denote $Y_1[l,k] = H_1[k] X[l,k]$, under the MTF model, and similarly for $Y_2[l,k]$. With the STFT, we write $X_1[l,k] = H_1[k] X[l,k]$, and thus $Y_1[l,k] = A_1[k] X_1[l,k]$ with $A_1[k] = 1$. We can obtain $A_2[k]$ as
+\begin{equation}
+	A_2[k] = \frac{H_2[k]}{H_1[k]}
+\end{equation}
+which trivially satisfies that $A_2[k] X_1[l,k] = H_2[k] X[l,k]$. These RTF's can be calculated as
+\begin{equation}
+	\label{eq:sec2:calc_RTF_stft_expec}
+	A_m[k] = \frac{\expec{X_m[l,k] X_1^*[l,k]}}{\expec{X_1[l,k] X_1^*[l,k]}}
+\end{equation}
+where $\expec{\cdot}$ is the expectation operator.
+
+This isn't as straight-forward with the SSBT, since after the convolution each frequency depends on its conjugate as well. However, by considering each system to have two inputs $X'[l,k] = X[l,k]$ and $X''[l,k] = X[l,K-k]$ and two transfer functions $H_m'[k]$ and $H_m''[k]$ (where $m$ represents the system's index), then our outputs can be described as
+\begin{subgather}
+	Y_1[l,k] = H_1'[k] X'[l,k] + H_1''[k] X''[l,k] \\
+	Y_2[l,k] = H_2'[k] X'[l,k] + H_2''[k] X''[l,k]
+\end{subgather}
+
+From \cref{eq:sec2:convolution_on_ssbt_mtf}, we easily see that
+\begin{subgather}{eqs:sec2:def_Hm'_Hm''_ssbt}
+	H_m'[k] = H_m'[K-k] = \Re{H}_{\sF;m}[k] \\
+	H_m''[k] = - H_m''[K-k] = -\Im{H}_{\sF;m}[k]
+\end{subgather}
+We let
+\begin{subgather}{eqs:sec2:def_X1'_and_X1''_ssbt}
+	X_1'[l,k] = H_1'[k]X'[l,k] \\X_1''[l,k] = H_1''[k] X''[l,k]
+\end{subgather}
+and
+\begin{equations}{eq:sec2:definition_X1_ssbt}
+	X_1[l,k]
+	& = H_1'[k] X'[l,k] + H_1''[k] X''[l,k] \\
+	& = X_1'[l,k] + X_1''[l,k]
+\end{equations}
+in which $X_1'[l,k]$ and $X_1''[l,k]$ are the inputs processed by the first system, and $X_1[l,k]$ is the observable input signal.
+Through these, we get that
+\begin{subgather}{eqs:sec2:rtf_systems_ssbt}
+	Y_1[l,k] = A_1'[k] X_1'[l,k] + A_1''[k] X_1''[l,k] \\
+	Y_2[l,k] = A_2'[k] X_1'[l,k] + A_2''[k] X_1''[l,k]
+\end{subgather}
+where
+\begin{equation}
+	\label{eq:sec2:rtf_form_ssbt}
+	A_m^{n}[k] = \frac{H_m^{n}[k]}{H_1^{n}[k]}
+\end{equation}
+are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'[k] = A_1''[k] = 1$. Note that, for this, we must be able to estimate each $G^n_m[k]$ separately, which may not be easy. For example, the technique in \cref{eq:sec2:calc_RTF_stft_expec} used for the STFT isn't applicable here. Using it directly on the observable input $X_m[l,k]$ would yield
+\begin{equation}
+	\frac{\expec{X_m[l,k] X_1^*[l,k]}}{\expec{X_1[l,k] X_1^*[l,k]}} = \frac{H_m'H_1' + H_m'' H_1''}{{H_1'}^2 + {H_1''}^2}
+\end{equation}
+where we used that different frequency bins are independent and all are zero-mean. The exact same would be obtained for $K-k$, thus this tool isn't useful to give us any insight into the desired RTF's of the form from \cref{eq:sec2:rtf_form_ssbt}, opposite to with the STFT, where this is possible. Also, since we don't have access to each input $X_1'[l,k]$ and $X_1''[l,k]$ separately, we can't do this practically on each of them, following \cref{eq:sec2:calc_RTF_stft_expec}.
+
+This same formulation can be used with the CTF model. That is, if we consider $A^n_m[l,k]$ as a convolutive gain, then
+\begin{equation}
+	A^n_m[l,k] \approx \frac{H^n_m[l,k]}{H^n_1[0,k]}
+\end{equation}
+this being valid for both the STFT (where $n = 1$ is the only option), and for the SSBT. This is an approximation, since different windows in a time-frequency transform aren't independent and thus can contribute to the gain of one-another.
+
+We will from now on assume that we have the RTF's according to \cref{eqs:sec2:rtf_systems_ssbt,eq:sec2:rtf_form_ssbt}, allowing the mathematical continuation of the problem.

@@ -80,3 +80,9 @@
 \NewDocumentCommand{\vs}{}{%
 	\textit{vs}
 }
+
+\makeatletter
+\AtBeginDocument{
+\def\-{\dabar@\!}
+}
+\makeatother

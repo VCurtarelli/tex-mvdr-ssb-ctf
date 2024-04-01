@@ -29,10 +29,10 @@
 }
 
 \DeclareDocumentCommand{\re}{}{%
-	\mathnfrak{R}%
+	\mathbb{R}%
 }
 \DeclareDocumentCommand{\im}{}{%
-	\mathnfrak{I}%
+	\mathbb{I}%
 }
 
 \DeclareDocumentCommand{\Re}{m}{%
@@ -50,4 +50,8 @@
 }
 \DeclareDocumentCommand{\floor}{m}{%
 	\left\lfloor #1 \right\rfloor
+}
+
+\NewDocumentCommand{\expec}{m}{%
+	\mathbb{E}\cts{#1}%
 }

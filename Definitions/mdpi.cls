@@ -25,6 +25,7 @@
 
  %% PRELIMINARY DECLARATIONS
 \LoadClass[10pt,a4paper]{article}
+\usepackage{yfonts}
 \RequirePackage[T1]{fontenc}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{calc}

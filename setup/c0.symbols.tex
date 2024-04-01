@@ -52,17 +52,27 @@
 \makeatother
 % END_FOLD
 
+\newbv{Y}
+\newbv{A}
+\newbv{Q}
+\newbv{S}
+\newbv{R}
+%
+\newbv{y}
 \newbv{a}
+\newbv{q}
+\newbv{s}
+\newbv{r}
+%
+\newbv{f}
+\newbv{C}
+\newbv{i}
+%
+%
+%
 \newbv{x}
 \newbv{b}
-\newbv{s}
-\newbv{y}
-\newbv{r}
-\newbv{q}
-\newbv{A}
 \newbv{B}
-\newbv{f}
-\newbv{i}
 \newbv{d}
 \newbv{D}
 \def\bvfb{\bv{f}[b]}
@@ -71,6 +81,7 @@
 \newbv*[Om]{\Omega}
 \newbv*[Psi]{\Psi}
 \newbv[de]{\delta}
+\def\bX{\bar{X}}
 %\def\bvAh{\bvA[h]}
 %\newbv[Ga]{\Gamma}
 %\newbv{I}
@@ -100,3 +111,7 @@
 \MakeSymbol\tssbt{\text{DF-SSBT}}
 \MakeSymbol\dlt{\scaleobj{0.8}{\Delta}}
 \AtBeginDocument{\def\O{\mathcal{O}}}
+
+\NewDocumentCommand{\Ly}{s}{%
+	\IfBooleanTF{#1}{\bar{L}}{L}_Y%
+}

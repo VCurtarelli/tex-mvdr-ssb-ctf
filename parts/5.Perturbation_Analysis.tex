@@ -51,9 +51,9 @@ The solutions obtained at the end of both \cref{sec:signal_model,sec:true_mpdr_s
 \begin{equations}
 	\inv*{\he{\bvA{k}} \iCorr{\bvy;k} \bvA{k}}
 	& = \inv*{ \he{\pts{\bvA{k}^\star + \dlt\bvA{k}}} \iCorr{\bvy;k} \he{\pts{\bvA{k}^\star + \dlt\bvA{k}}} } \\
-	& = \inv*{ \he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \bvA{k}^\star + \he{\bvA{k}^\star} \iCorr{\bvy;k} \dlt\bvA{k} + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \dlt\bvA{k} }
+	& = \inv*{ \he{{\bvA{k}^\star}} \iCorr{\bvy;k} \bvA{k}^\star + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \bvA{k}^\star + \he{{\bvA{k}^\star}} \iCorr{\bvy;k} \dlt\bvA{k} + \he{\dlt\bvA{k}} \iCorr{\bvy;k} \dlt\bvA{k} }
 \end{equations}
-We will denote $\bvOm = \he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star$, and $\bvPsi$ as the rest. Using the Woodbury identity, we have that
+We will denote $\bvOm = \he{{\bvA{k}^\star}} \iCorr{\bvy;k} \bvA{k}^\star$, and $\bvPsi$ as the rest. Using the Woodbury identity, we have that
 \begin{equation}
 \inv*{ \bvOm + \bvPsi} = \Inv{\bvOm} - \Inv{\bvOm}\Inv*{\Inv{\bvOm} + \Inv{\bvPsi}} \Inv{\bvOm}
 \end{equation}
@@ -66,7 +66,7 @@ Going back to \cref{eq:sec3:solution_mpdr_beamformer}, we have that
 \end{equations}
 in which
 \begin{subgather}
-	\bvf{\mpdr;k}^\star = \iCorr{\bvy;k} \bvA{k}^\star \inv*{\he{\bvA{k}^\star} \iCorr{\bvy;k} \bvA{k}^\star} \bvi{\Delta} \\
+	\bvf{\mpdr;k}^\star = \iCorr{\bvy;k} \bvA{k}^\star \inv*{\he{{\bvA{k}^\star}} \iCorr{\bvy;k} \bvA{k}^\star} \bvi{\Delta} \\
 	\bvf{\delta;k} = \iCorr{\bvy;k} \bts{ \dlt\bvA{k}\Inv{\bvOm} - \pts{\bvA{k}^\star + \dlt\bvA{k}} \pts{\Inv{\bvOm}\Inv*{\Inv{\bvOm} + \Inv{\bvPsi}} \Inv{\bvOm}} }\bvi{\Delta} 
 \end{subgather}
 
