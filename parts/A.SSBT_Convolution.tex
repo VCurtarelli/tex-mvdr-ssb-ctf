@@ -1,56 +1,210 @@
-\section{SSBT Convolution}
-\label{app:ssbt_convolution}
+\section{Properties of the Real Fourier Transform}
+\label{app:properties_rft}
 
 \def\xfr{\Re{X_{\F}}}
 \def\xfi{\Im{X_{\F}}}
 \def\hfr{\Re{H_{\F}}}
 \def\hfi{\Im{H_{\F}}}
 
-Let $x[n]$ be a time domain signal, with $X_{\F}[l,k]$ being its STFT equivalent, and $X_{\S}[l,k]$ its SSBT equivalent. We here assume that both the STFT and the SSBT have $K$ frequency bins. $X_{\S}[l,k]$ can be obtained using $X_{\F}[l,k]$, through
 \begin{equation}
-	\label{eq:appA:equiv_ssbt_stft}
-	X_{\R}[l,k] = - \xfr[l,k] - \xfi[l,k]
+	\label{eq:appA:def_fourier_transform}
+	X_{\F}(f) = \int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t}\dd t
 \end{equation}
-in which $\Re{(\cdot)}$ and $\Im{(\cdot)}$ represent the real and imaginary components of their argument, respectively.
 
-It is easy to see that
 \begin{equation}
-	\label{eq:appA:equiv_stft_ssbt}
-	X_{\F}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\R}[l,k] + e^{\j\frac{3\pi}{4}} X_{\R}[l,K-k] }
+	\label{eq:appA:def_real_fourier_transform}
+	X_{\R}(f) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t + \j\frac{3\pi}{4}} \dd t}
 \end{equation}
-As stated before, in this formulation we abuse the notation by letting $X_{\R}[l,K] = X_{\R}[l,0]$ to simplify the mathematical operations.
 
-Now, let there also be $h[n]$, $H_{\F}[k]$ and $H_{\R}[k]$, with the same assumptions as before. We define $Y_{\F}[l,k]$ and $Y_{\R}[l,k]$ as the output of an LTI system with impulse response $h[n]$, such that
-\begin{subalign}
-	Y_{\F}[l,k] & = H_{\F}[k] X_{\F}[l,k] \label{subeq:appA:mtf_stft} \\
-	Y_{\R}[l,k] & = H_{\R}[k] X_{\R}[l,k] \label{subeq:appA:mtf_ssbt}
-\end{subalign}
+\begin{equation}
+	\label{eq:appA:def_inverse_real_fourier_transform}
+	x(t) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
+\end{equation}
 
-We will assume that the MTF model \cite{talmon_relative_2009} correctly models the convolution here. This waas used instead of the CTF for simplicity, as these derivations would work exactly the same for the CTF, but with window-wise summations as well, which would pollute the notation.
+\begin{Property}{The FT and RFT can be obtained from one another.}[\label{prop:FT_RFT_equivalence}]	
+	By manipulating \cref{eq:appA:def_real_fourier_transform} we can get
+	\begin{equation}\label{eq:propI:propI:manip_Xrf}
+		X_{\R}(f) = \Sqrt{2} \real{\pts{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t} \dd t} e^{\j\frac{3\pi}{4}}}
+	\end{equation}
+	where the term in parenthesis is trivially the FT of $x(t)$ from \cref{eq:appA:def_fourier_transform}. Thus, we get that
+	\begin{equations}{eq:propI:equiv_FT_to_RFT}
+		X_{\R}(f)
+		& = \real{\pts{\Re{X}_{\F}(f) + \j\Im{X}_{\F}(f)} \cdot(-1 + \j)} \\
+		& = - \Re{X}_{\F}(f) - \Im{X}_{\F}(f)
+	\end{equations}
+	Likewise, using that the FT of a real signal is complex-conugate, such that $X_{\F}(f) = X_{\F}^*(\-f)$, it is easy to see that
+	\begin{equation}
+		\label{eq:propI:equiv_FT_to_RFT_neg}
+		X_{\R}(\-f) = -\Re{X}_{\F}(f) + \Im{X}_{\F}(f)
+	\end{equation}
+	With this, we have that
+	\begin{equations}
+		\Sqrt{2}X_{\R}(f) e^{-\j\frac{3\pi}{4}} & = \Re{X}_{\F}(f) + \Im{X}_{\F}(f) + \j\Re{X}_{\F}(f) + \j\Re{X}_{\F}(f) \\
+		\Sqrt{2}X_{\R}(\-f) e^{\j\frac{3\pi}{4}} & = \Re{X}_{\F}(f) - \Im{X}_{\F}(f) - \j\Re{X}_{\F}(f) + \j\Re{X}_{\F}(f)
+	\end{equations}
+	and therefore
+	\begin{equations}
+		\frac{X_{\R}(f) e^{-\j\frac{3\pi}{4}} + X_{\R}(\-f) e^{\j\frac{3\pi}{4}}}{\Sqrt{2}}
+		& = \Re{X}_{\F}(f) + \j\Re{X}_{\F}(f) \\
+		& = X_{\F}(f)
+	\end{equations}
+	Similarly, using \cref{eq:propI:propI:manip_Xrf} we have that
+	\begin{equation}
+		X_{\R}(f) = \Sqrt{2}\real{X_{\F}(f) e^{\j\frac{3\pi}{4}}}
+	\end{equation}
+	Using the property of complex numbers that $\real{a} = \tfrac{a+a^*}{2}$, then
+	\begin{equation}
+		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
+	\end{equation}
+\end{Property}
 
-Applying \cref{eq:appA:equiv_ssbt_stft} in \cref{subeq:appA:mtf_ssbt}, and knowing that $X_{\F}[l,k] = X_{\F}^{*}[l,K-k]$ (same for $H_{\F}[k]$), with $(\cdot)^*$ representing the complex-conjugate; we get that
-\begin{equations}
-	Y_{\R}[l,k]
-	& = \xfr[l,k] \hfr[l,k] + \xfr[l,k] \hfi[l,k] \\
-	& + \xfi[l,k] \hfr[l,k] + \xfi[l,k] \hfi[l,k] \\[0.2cm]
-	Y_{\R}[l,K-k] 
-	& = \xfr[l,k] \hfr[l,k] - \xfr[l,k] \hfi[l,k] \\
-	& - \xfi[l,k] \hfr[l,k] + \xfi[l,k] \hfi[l,k]
-\end{equations}
+\begin{Property}{The IRFT is the inverse of the RFT.}[\label{prop:RFT_IRFT_inverses}]
+	From \cref{prop:FT_RFT_equivalence}, we have that
+	\begin{equation}
+		\IRFT{X_{\R}(f)} = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
+	\end{equation}
+	Substituting this in \cref{eq:appA:def_inverse_real_fourier_transform}, we have
+	\begin{equations}
+		\IRFT{X_{\R}(f)}
+		& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} \pts{\frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}} e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f} \\
+		& = \real{\int\limits_{-\infty}^{\infty} \pts{X_{\F}(f) e^{\j 2\pi f t} + X_{\F}(\-f) e^{\j 2\pi f t - \j\frac{3\pi}{2}}} \dd f}
+	\end{equations}
+	The first term expands to the inverse Fourier transform of $X_{\F}(f)$, which is trivially $x(t)$; the second term is the inverse Fourier transform of $X_{\F}(\-f)$, which is from the time reversal property is $x(-t)$. Therefore,
+	\begin{equations}
+		\IRFT{X_{\R}(f)}
+		& = \real{x(t) + x(\-t) e^{-\j\frac{3\pi}{2}}} \\
+		& = \real{x(t) + \j x(\-t)} \\
+		& = x(t)
+	\end{equations}
+	thus concluding the proof.
+\end{Property}
 
-Passing this through \cref{eq:appA:equiv_stft_ssbt},
-\begin{equations}{eq:appA:expansion_Yf_ssbt}
-	Y_{\F}'[l,k] =
-	& - \xfr[l,k] \hfr[l,k] + \j \xfr[l,k] \hfr[l,k] \\
-	& + \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
-\end{equations}
-where $Y_{\F}'[l,k]$ is the STFT-equivalent of $Y_{\R}[l,k]$.
+\begin{Property}{The convolution theorem doesn't apply for the RFT.}[\label{prop:conv_theorem_RFT}]
+	Let $h(t)$ be the impulse response of an LIT system, with input $x(t)$. It is trivial that the system's output, $y(t)$, is given by
+	\begin{equation}
+		y(t) = h(t) \ast x(t)
+	\end{equation}
+	with $\ast$ being the convolution operator. For the Fourier transform, through the convolution theorem it is trivial that
+	\begin{equation}
+		Y_{\F}(f) = H_{\F}(f) X_{\F}(f)
+	\end{equation}
+	Expanding these in terms of real and imaginary parts (omitting the frequency index for clarity),
+	\begin{equation}
+		\label{eq:propIII:YF_expanded_real_imag}
+		Y_{\F} = \Re{H_{\F}} \Re{X_{\F}} + \j \Re{H_{\F}} \Im{X_{\F}} + \j \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}}
+	\end{equation}
+	Now in the RFT domain, with \cref{eq:propI:equiv_FT_to_RFT} we have that
+	\begin{equations}
+		X_{\R}(f) & = -\Re{X_{\F}}(f) - \Im{X_{\F}}(f) \\
+		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f)
+	\end{equations}
+	Assuming the convolution theorem true for the RFT,
+	\begin{equation}
+		\label{eq:propIII:res_product_of_RFTs}
+		Y_{\R} = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}
+	\end{equation}
+	Now, by applying \cref{eq:propI:equiv_FT_to_RFT} on \cref{eq:propIII:YF_expanded_real_imag}, we have
+	\begin{equation}
+		\label{eq:propIII:res_RFT_of_convol}
+		\tilde{Y}_{\R} = - \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}
+	\end{equation}
+	where it is explicit that $Y_{\R}(f) \neq \tilde{Y}_{\R}(f)$. Therefore, the RFT of the convolution (\cref{eq:propIII:res_RFT_of_convol}) is not the product of the RFT's of the signals (\cref{eq:propIII:res_product_of_RFTs}), and thus the convolution theorem doesn't hold for the RFT.
+\end{Property}
 
-Expanding \cref{subeq:appA:mtf_stft} in terms of real and imaginary components,
-\begin{equations}{eq:appA:expansion_Yf_stft}
-	Y_{\F}[l,k] 
-	& = \xfr[l,k] \hfr[l,k] + \j \xfr[l,k] \hfi[l,k] \\
-	& + \j \xfi[l,k] \hfr[l,k] - \xfi[l,k] \hfi[l,k]
-\end{equations}
+\begin{Property}{There is an equivalent of the convolution theorem for the RFT.}[\label{prop:equivalent_conv_theorem_RFT}]
+	From \cref{eq:propIII:res_RFT_of_convol}, we have our objective for the ``convolution theorem''-equivalent for the RFT. From both \cref{eq:propI:equiv_FT_to_RFT,eq:propI:equiv_FT_to_RFT_neg}, we have
+	\begin{equations}{eq:propIV:equiv_FT_to_RFT_posneg_XH}
+		X_{\R}(f) & = -\Re{X_{\F}}(f) - \Im{X_{\F}}(f) \\
+		X_{\R}(\-f) & = -\Re{X_{\F}}(f) + \Im{X_{\F}}(f) \\
+		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f) \\
+		H_{\R}(\-f) & = -\Re{H_{\F}}(f) + \Im{H_{\F}}(f)
+	\end{equations}
+	We will omit the frequency dependency in the FT values. Taking the possible combinations, we have
+	\begin{subalign}
+		X_{\R}(f) H_{\R}(f) 	& = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:++} \\
+		X_{\R}(f) H_{\R}(\-f) 	& = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:+-} \\
+		X_{\R}(\-f) H_{\R}(f) 	& = \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:-+} \\
+		X_{\R}(\-f) H_{\R}(\-f) & = \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:--}
+	\end{subalign}
+	Taking the difference between \cref{subeq:propIV:mult_XR_HR:++} and \cref{subeq:propIV:mult_XR_HR:--}, and the sum of \cref{subeq:propIV:mult_XR_HR:+-} and \cref{subeq:propIV:mult_XR_HR:-+}, we have
+	\begin{subalign}
+		X_{\R}(f) H_{\R}(f) - X_{\R}(\-f) H_{\R}(\-f) & = 2\pts{\Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}}} \\
+		X_{\R}(f) H_{\R}(\-f) + X_{\R}(\-f) H_{\R}(f) & = 2\pts{\Re{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}}}
+	\end{subalign}
+	and therefore, to achieve \cref{eq:propIII:res_RFT_of_convol}, we let
+	\begin{equations}
+		Y_{\R}(f)
+		& = \frac{- X_{\R}(f) H_{\R}(f) + X_{\R}(\-f) H_{\R}(\-f) - X_{\R}(f) H_{\R}(\-f) - X_{\R}(\-f) H_{\R}(f)}{2} \\
+		& = X_{\R}(f) \frac{-H_{\R}(f) - H_{\R}(\-f)}{2} + X_{\R}(\-f) \frac{-H_{\R}(f) + H_{\R}(\-f)}{2}
+	\end{equations}
+	Finally, from \cref{eq:propIV:equiv_FT_to_RFT_posneg_XH}, we achieve
+	\begin{equation}
+		\label{eq:propIV:convolution_theorem_RFT_result}
+		Y_{\R}(f) = X_{\R}(f) \Re{H_{\F}}(f) + X_{\R}(\-f) \Im{H_{\F}}(f)
+	\end{equation}
+	and, for its conjugate frequency (that is, for $\-f$), we have
+	\begin{equations}
+		Y_{\R}(\-f)
+		& = X_{\R}(\-f) \Re{H_{\F}}(\-f) + X_{\R}(f) \Im{H_{\F}}(\-f) \\
+		& = X_{\R}(\-f) \Re{H_{\F}}(f) - X_{\R}(f) \Im{H_{\F}}(f)
+	\end{equations}
+\end{Property}
 
-Comparing \cref{eq:appA:expansion_Yf_ssbt} and \cref{eq:appA:expansion_Yf_stft}, trivially $Y_{\F}'[l,k] \neq Y_{\F}[l,k]$. This proves that the SSBT doesn't appropriately models the convolution, and therefore the convolution theorem doesn't hold when applying this transform.
+\begin{Property}{Frequencies in the RFT have the same variance as their FT counterpart.}[\label{prop:RFT_same-variance_FT}]
+	We now assume that $X_{\F}(f)$ is the transform of a random process, such that its real and imaginary parts are independent and identically distributed with zero mean. Taking the complex correlation of a given frequency in the FT domain,
+	\begin{equation}
+		\expec{X_{\F}(f) X_{\F}^*(f)} = \expec{\Re{X_{\F}}(f)^2 + \Im{X_{\F}}(f)^2}
+	\end{equation}
+	Since they are identically distributed, we denote
+	\begin{equation}
+		\label{eq:propV:same_variance_FT_RI}
+		\expec{\Re{X_{\F}}(f)^2} = \expec{\Im{X_{\F}}(f)^2} = \sigma_f^2
+	\end{equation}
+	and therefore
+	\begin{equation}
+		\expec{X_{\F}(f) X_{\F}^*(f)} = 2\sigma_f^2
+	\end{equation}
+	Now in the RFT domain, we take the correlation of a given frequency \cref{eq:propI:equiv_FT_to_RFT},
+	\begin{equation}
+		\expec{X_{\R}(f)^2} = \expec{\Re{X_{\F}}(f)^2 + 2 \Re{X_{\F}}(f) \Im{X_{\F}}(f) + \Im{X_{\F}}(f)^2}
+	\end{equation}
+	Using that $\Re{X_{\F}}(f)$ and $\Im{X_{\F}}(f)$ are i.i.d. and zero-mean, the cross terms are zero, and thus
+	\begin{equations}
+		\expec{X_{\R}(f)^2} & = 2\sigma_f^2 \\
+		& = \expec{X_{\F}(f) X_{\F}^*(f)}
+	\end{equations}
+	It is trivial to see that the same applies for $X_{\R}(\-f)$.
+\end{Property}
+
+\begin{Property}{Conjugate frequencies in the RFT domain are independent.}[\label{prop:conjugate-freqs_independent_RFT}]
+	We take the same assumptions as those in \cref{prop:RFT_same-variance_FT}. Taking the complex correlation between the two conjugate frequencies, 
+	\begin{equation}
+		\expec{X_{\F}(f) X_{\F}^*(\-f)} = \expec{\Re{X_{\F}}(f)^2 + 2 \j\Re{X_{\F}}(f) \Im{X_{\F}}(f) - \Im{X_{\F}}(f)^2}
+	\end{equation}
+	Using that the $\Re{X_{\F}}(f)$ and $\Im{X_{\F}}(f)$ are independent and zero-mean, the cross terms are zero, and with \cref{eq:propV:same_variance_FT_RI} then
+	\begin{equation}
+		\expec{X_{\F}(f) X_{\F}^*(\-f)} = 0
+	\end{equation}
+	This result is known, but nonetheless it is useful to show it, since this same procedure will be used for the RFT.
+	
+	\noindent We now consider \cref{eq:propI:equiv_FT_to_RFT,eq:propI:equiv_FT_to_RFT_neg}. Taking the correlation between the two conjugate frequencies yields
+	\begin{equation}
+		\expec{X_{\R}(f) X_{\R}(\-f)} = \expec{\Re{X_{\F}}(f)^2 - \Im{X_{\F}}(f)^2}
+	\end{equation}
+	Under the same assumptions that the real and imaginary parts of $X_{\F}(f)$ are identically distributed, we get the same result as before, where
+	\begin{equation}
+		\expec{X_{\R}(f) X_{\R}(\-f)} = 0
+	\end{equation}
+	Note that, with the RFT, we didn't use the complex correlation, since it is real-valued.
+	
+	\noindent Lastly, we take the correlation between conjugate frequencies of the output of a system according to \cref{eq:propIV:convolution_theorem_RFT_result},
+	\begin{equations}
+		\expec{Y_{\R}(f) Y_{\R}(\-f)} 
+		& = \Re{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)} - \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(f)^2} \\
+		& + \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(\-f)^2} + \Im{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)}
+	\end{equations}
+	Since $X_{\R}(f)$ and $X_{\R}(\-f)$ are independent and zero-mean, the first and lest terms are zero, and also the other two cancel each other out since $\expec{X_{\R}(f)^2} = \expec{X_{\R}(\-f)^2} = 2\sigma_f^2$. Therefore,
+	\begin{equation}
+		\expec{Y_{\R}(f) Y_{\R}(\-f)} = 0
+	\end{equation}
+\end{Property}

@@ -38,6 +38,25 @@
 	\noindent\bsquare
 }
 
+\setcounter{property}{0}
+\DeclareDocumentEnvironment{Property}{s m O{}}{%
+	\begingroup
+	\IfBooleanF{#1}{\refstepcounter{property}}%
+	\IfValueT{#3}{#3}%
+	\noindent\textbf{Property \theproperty:} {\itshape #2}%
+	
+	\noindent\textbf{Proof:}%
+	\begin{subequations}%
+		\renewcommand{\theequation}{\roman{property}.\arabic{equation}}%
+}{
+	\end{subequations}
+	
+	\vspace*{-1em}
+	\noindent\rule{0.5\textwidth}{0.4pt}
+	\vspace*{1em}
+	\endgroup
+}
+
 \NewDocumentEnvironment{example}{}{%
 	\noindent\textbf{Example:}
 }{

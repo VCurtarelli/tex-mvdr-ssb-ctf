@@ -15,52 +15,48 @@ We define the Real Fourier Transform (RFT) similarly, being cleverly constructed
 	X_{\R}(f)
 	& \equiv \RFT{x(t)} \\
 	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t + \j\frac{3\pi}{4}} \dd t} \\
-	& = \int\limits_{-\infty}^{\infty} x(t) \bts{-\cos\pts{2\pi f t} - \sin\pts{2\pi f t}} \dd t
+	& = \int\limits_{-\infty}^{\infty} x(t) \bts{-\cos\pts{2\pi f t} + \sin\pts{2\pi f t}} \dd t
 \end{equations}
-and the Inverse Real Fourier Transform (iRFT) as
+and the Inverse Real Fourier Transform (IRFT) as (see \cref{prop:RFT_IRFT_inverses})
 \begin{equations}
 	x(t)
 	& \equiv \IRFT{X_{\R}(f)} \\
 	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
 \end{equations}
 
-It is easy to see that we can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform}, such that
+We can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform} (see \cref{prop:FT_RFT_equivalence}), such that
 \begin{equations}{eq:sec2:equivalence_ft_rft}
 	X_{\R}(f)
-	& = \real{X_{\F}(f) e^{\j\frac{3\pi}{4}}} \\
-	& = -\Re{X}_{\F}(f) + \Im{X}_{\F}(f)
+	& = \Sqrt{2} \real{X_{\F}(f) e^{\j\frac{3\pi}{4}}} \\
+	& = -\Re{X}_{\F}(f) - \Im{X}_{\F}(f)
 \end{equations}
 
 One can also write the RFT in terms of the FT as
 \begin{equation}\label{eq:sec2:equivalence_pair_ft_to_rft}
-	X_{\R}(f) = \frac{1}{\Sqrt{2}} \pts{e^{-\j\frac{3\pi}{4}} X_{\F}(f) + e^{\j\frac{3\pi}{4}} X_{\F}(\-f) }
+	X_{\R}(f) = \frac{1}{\Sqrt{2}} \pts{e^{\j\frac{3\pi}{4}} X_{\F}(f) + e^{-\j\frac{3\pi}{4}} X_{\F}(\-f) }
 \end{equation}
 from which we deduce that
 \begin{equation}\label{eq:sec2:equivalence_pair_rft_to_ft}
-	X_{\F}(f) = \frac{1}{\Sqrt{2}} \pts{e^{\j\frac{3\pi}{4}} X_{\R}(f) + e^{-\j\frac{3\pi}{4}} X_{\R}(\-f) }
+	X_{\F}(f) = \frac{1}{\Sqrt{2}} \pts{e^{-\j\frac{3\pi}{4}} X_{\R}(f) + e^{\j\frac{3\pi}{4}} X_{\R}(\-f) }
 \end{equation}
 
 \subsection{Convolution}
 
-Given an impulse response $h(t)$ for a LIT system, through the FT it is known that
+Given an impulse response $h(t)$ for a LIT system, the FT the convolution theorem states that
 \begin{equation}
 	h(t) \ast x(t) \hrel{\F} H_{\F}(f) X_{\F}(f)
 \end{equation}
-where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this property isn't valid for the RFT (see \cref{app:ssbt_convolution}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
+where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this theorem isn't strictly valid for the RFT (see \cref{prop:conv_theorem_RFT}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
 \begin{equation}
 	h(t) \ast x(t) \centernot{\hrel{\R}} H_{\R}(f) X_{\R}(f)
 \end{equation}
 
-However, through \cref{eq:sec2:equivalence_ft_rft} we can show that
-\begin{equations}{eq:sec2:convolution_on_rft}
-	h(t) \ast x(t) \hrel{\R} \vphantom{d}
-	  & \tfrac{1}{2} X_{\R}(f) \bts{-H_{\R}(\-f) - H_{\R}(f)}  \\
-	+ & \tfrac{1}{2} X_{\R}(\-f) \bts{H_{\R}(\-f) - H_{\R}(f)}
-\end{equations}
-in which we see that, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$. Using \cref{eq:sec2:equivalence_ft_rft}, which is also valid for $H_{\R}(f)$, we easily have that
+However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT}), where
 \begin{equation}
-	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) - X_{\R}(\-f) \Im{H}_{\F}(f)
+	\label{eq:sec2:convolution_equiv_rft}
+	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) + X_{\R}(\-f) \Im{H}_{\F}(f)
 \end{equation}
+where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$.
 
 \subsection{Discrete time-frequency transforms}
 
@@ -96,7 +92,7 @@ Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:eq
 	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\sS}[l,K-k] }
 \end{equation}
 
-As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_on_rft}, we can write the convolution on the SSBT domain as
+As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft}, we can write the convolution on the SSBT domain as
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_mtf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \Re{H}_{\sF}[k] - X_{\sS}[l,K-k] \Im{H}_{\sF}[k]
@@ -132,7 +128,7 @@ This isn't as straight-forward with the SSBT, since after the convolution each f
 From \cref{eq:sec2:convolution_on_ssbt_mtf}, we easily see that
 \begin{subgather}{eqs:sec2:def_Hm'_Hm''_ssbt}
 	H_m'[k] = H_m'[K-k] = \Re{H}_{\sF;m}[k] \\
-	H_m''[k] = - H_m''[K-k] = -\Im{H}_{\sF;m}[k]
+	H_m''[k] = - H_m''[K-k] = \Im{H}_{\sF;m}[k]
 \end{subgather}
 We let
 \begin{subgather}{eqs:sec2:def_X1'_and_X1''_ssbt}

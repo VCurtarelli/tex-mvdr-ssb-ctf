@@ -349,6 +349,8 @@
 	} 
 }
 \RequirePackage[capitalise]{cleveref}
+
+\crefname{property}{Property}{Properties}
 }
 \ifdef{\AddToHook}{
 \DeclareHookRule{begindocument}{hyperref}{before}{mdpi}

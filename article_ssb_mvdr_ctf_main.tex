@@ -210,6 +210,8 @@ STFT & Short-Time Fourier Transform
 \appendixstart
 \appendix
 \renewcommand{\thealgorithm}{\arabic{algorithm}}
+\counterwithin{property}{section}
+\renewcommand{\theproperty}{\Alph{section}-\Roman{property}}
 \counterwithin{equation}{section}
 
 \input{parts/A.SSBT_Convolution.tex}
