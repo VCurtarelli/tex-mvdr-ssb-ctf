@@ -1,27 +1,29 @@
 \section{Properties of the Real Fourier Transform}
 \label{app:properties_rft}
 
-\def\xfr{\Re{X_{\F}}}
-\def\xfi{\Im{X_{\F}}}
-\def\hfr{\Re{H_{\F}}}
-\def\hfi{\Im{H_{\F}}}
-
+The Fourier Transform (FT) is defined as
 \begin{equation}
 	\label{eq:appA:def_fourier_transform}
 	X_{\F}(f) = \int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t}\dd t
 \end{equation}
+with an inverse
+\begin{equation}
+	\label{eq:appA:def_inverse_fourier_transform}
+	x(t) = \int\limits_{-\infty}^{\infty} X_{\F}(f) e^{\j 2\pi f t} \dd t
+\end{equation}
 
+The Real Fourier Transform (RFT) is defined as
 \begin{equation}
 	\label{eq:appA:def_real_fourier_transform}
 	X_{\R}(f) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t + \j\frac{3\pi}{4}} \dd t}
 \end{equation}
-
+with an inverse
 \begin{equation}
 	\label{eq:appA:def_inverse_real_fourier_transform}
 	x(t) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
 \end{equation}
 
-\begin{Property}{The FT and RFT can be obtained from one another.}[\label{prop:FT_RFT_equivalence}]	
+\begin{Property}{The FT and RFT are bijective transformations of one-another.}[\label{prop:FT_RFT_equivalence}]	
 	By manipulating \cref{eq:appA:def_real_fourier_transform} we can get
 	\begin{equation}\label{eq:propI:propI:manip_Xrf}
 		X_{\R}(f) = \Sqrt{2} \real{\pts{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t} \dd t} e^{\j\frac{3\pi}{4}}}
@@ -55,6 +57,10 @@
 	Using the property of complex numbers that $\real{a} = \tfrac{a+a^*}{2}$, then
 	\begin{equation}
 		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
+	\end{equation}
+	Since for each $X_{\F}(f)$ there exists one and only one $X_{\R}(f)$, and vice-versa, it is possible to define a bijective transformation $T$ such that
+	\begin{equation}
+		X_{\F}(f) \hrel{T} X_{\R}(f)
 	\end{equation}
 \end{Property}
 
@@ -143,7 +149,7 @@
 		Y_{\R}(f) = X_{\R}(f) \Re{H_{\F}}(f) + X_{\R}(\-f) \Im{H_{\F}}(f)
 	\end{equation}
 	and, for its conjugate frequency (that is, for $\-f$), we have
-	\begin{equations}
+	\begin{equations}{eq:propIV:convolution_theorem_RFT_result_neg}
 		Y_{\R}(\-f)
 		& = X_{\R}(\-f) \Re{H_{\F}}(\-f) + X_{\R}(f) \Im{H_{\F}}(\-f) \\
 		& = X_{\R}(\-f) \Re{H_{\F}}(f) - X_{\R}(f) \Im{H_{\F}}(f)
@@ -197,7 +203,7 @@
 	\end{equation}
 	Note that, with the RFT, we didn't use the complex correlation, since it is real-valued.
 	
-	\noindent Lastly, we take the correlation between conjugate frequencies of the output of a system according to \cref{eq:propIV:convolution_theorem_RFT_result},
+	\noindent Lastly, we take the correlation between conjugate frequencies of the output of a system according to \cref{eq:propIV:convolution_theorem_RFT_result,eq:propIV:convolution_theorem_RFT_result_neg},
 	\begin{equations}
 		\expec{Y_{\R}(f) Y_{\R}(\-f)} 
 		& = \Re{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)} - \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(f)^2} \\

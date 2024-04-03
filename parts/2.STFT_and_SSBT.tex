@@ -17,14 +17,14 @@ We define the Real Fourier Transform (RFT) similarly, being cleverly constructed
 	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t + \j\frac{3\pi}{4}} \dd t} \\
 	& = \int\limits_{-\infty}^{\infty} x(t) \bts{-\cos\pts{2\pi f t} + \sin\pts{2\pi f t}} \dd t
 \end{equations}
-and the Inverse Real Fourier Transform (IRFT) as (see \cref{prop:RFT_IRFT_inverses})
+and the Inverse Real Fourier Transform (IRFT) as (see \cref{prop:RFT_IRFT_inverses} in \cref{app:properties_rft})
 \begin{equations}
 	x(t)
 	& \equiv \IRFT{X_{\R}(f)} \\
 	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
 \end{equations}
 
-We can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform} (see \cref{prop:FT_RFT_equivalence}), such that
+We can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform} (see \cref{prop:FT_RFT_equivalence} in \cref{app:properties_rft}), such that
 \begin{equations}{eq:sec2:equivalence_ft_rft}
 	X_{\R}(f)
 	& = \Sqrt{2} \real{X_{\F}(f) e^{\j\frac{3\pi}{4}}} \\
@@ -46,12 +46,12 @@ Given an impulse response $h(t)$ for a LIT system, the FT the convolution theore
 \begin{equation}
 	h(t) \ast x(t) \hrel{\F} H_{\F}(f) X_{\F}(f)
 \end{equation}
-where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this theorem isn't strictly valid for the RFT (see \cref{prop:conv_theorem_RFT}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
+where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this theorem isn't strictly valid for the RFT (see \cref{prop:conv_theorem_RFT} in \cref{app:properties_rft}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
 \begin{equation}
 	h(t) \ast x(t) \centernot{\hrel{\R}} H_{\R}(f) X_{\R}(f)
 \end{equation}
 
-However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT}), where
+However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT} in \cref{app:properties_rft}), where
 \begin{equation}
 	\label{eq:sec2:convolution_equiv_rft}
 	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) + X_{\R}(\-f) \Im{H}_{\F}(f)
@@ -95,20 +95,25 @@ Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:eq
 As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft}, we can write the convolution on the SSBT domain as
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_mtf}
-	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \Re{H}_{\sF}[k] - X_{\sS}[l,K-k] \Im{H}_{\sF}[k]
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \Re{H}_{\sF}[k] + X_{\sS}[l,K-k] \Im{H}_{\sF}[k]
 \end{equation}
 or, with the convolutive transfer function (CTF) model \cite{talmon_relative_2009},
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_ctf}
-	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast \Re{H}_{\sF}[l,k] - X_{\sS}[l,K-k] \ast \Im{H}_{\sF}[l,k]
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast \Re{H}_{\sF}[l,k] + X_{\sS}[l,K-k] \ast \Im{H}_{\sF}[l,k]
 \end{equation}
 in which this convolution is done over the frames $l$.
 
 \subsection{Relative transfer functions}
 
-Given two systems that share an input $x[n]$ each with an impulse response $h_1[n]$ and $h_2[n]$, on the STFT domain $H_1[l,k]$ and $H_2[l,k]$, we can calculate their relative transfer functions (RTF's), respective to a common input. We denote these RTF's $A_1[l,k]$ and $A_2[l,k]$, respective for each system.
+Given two systems that share an input $x[n]$, each with an impulse response $h_1[n]$ and $h_2[n]$, on the STFT domain $H_1[l,k]$ and $H_2[l,k]$, we can calculate their relative transfer functions (RTF's), respective to a common input. We denote these RTF's $A_1[l,k]$ and $A_2[l,k]$, respective for each system.
 
-Let us denote $Y_1[l,k] = H_1[k] X[l,k]$, under the MTF model, and similarly for $Y_2[l,k]$. With the STFT, we write $X_1[l,k] = H_1[k] X[l,k]$, and thus $Y_1[l,k] = A_1[k] X_1[l,k]$ with $A_1[k] = 1$. We can obtain $A_2[k]$ as
+Under the MTF model, let us denote $Y_1[l,k]$ as the first system's output, given by
+\begin{equation}
+	\label{eq:output_sys1_stft}
+	Y_1[l,k] = H_1[k] X[l,k]
+\end{equation}
+and similarly for $Y_2[l,k]$. With the STFT, we write $X_1[l,k] = H_1[k] X[l,k]$, and thus $Y_1[l,k] = A_1[k] X_1[l,k]$ with $A_1[k] = 1$. We can obtain $A_2[k]$ as
 \begin{equation}
 	A_2[k] = \frac{H_2[k]}{H_1[k]}
 \end{equation}
@@ -120,12 +125,11 @@ which trivially satisfies that $A_2[k] X_1[l,k] = H_2[k] X[l,k]$. These RTF's ca
 where $\expec{\cdot}$ is the expectation operator.
 
 This isn't as straight-forward with the SSBT, since after the convolution each frequency depends on its conjugate as well. However, by considering each system to have two inputs $X'[l,k] = X[l,k]$ and $X''[l,k] = X[l,K-k]$ and two transfer functions $H_m'[k]$ and $H_m''[k]$ (where $m$ represents the system's index), then our outputs can be described as
-\begin{subgather}
-	Y_1[l,k] = H_1'[k] X'[l,k] + H_1''[k] X''[l,k] \\
-	Y_2[l,k] = H_2'[k] X'[l,k] + H_2''[k] X''[l,k]
-\end{subgather}
-
-From \cref{eq:sec2:convolution_on_ssbt_mtf}, we easily see that
+\begin{equation}
+	\label{eq:output_sys1_ssbt}
+	Y_1[l,k] = H_1'[k] X'[l,k] + H_1''[k] X''[l,k]
+\end{equation}
+and in the same way for $Y_2[l,k]$ under the SSBT. From \cref{eq:sec2:convolution_on_ssbt_mtf}, we easily see that
 \begin{subgather}{eqs:sec2:def_Hm'_Hm''_ssbt}
 	H_m'[k] = H_m'[K-k] = \Re{H}_{\sF;m}[k] \\
 	H_m''[k] = - H_m''[K-k] = \Im{H}_{\sF;m}[k]
@@ -153,14 +157,49 @@ where
 \end{equation}
 are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'[k] = A_1''[k] = 1$. Note that, for this, we must be able to estimate each $G^n_m[k]$ separately, which may not be easy. For example, the technique in \cref{eq:sec2:calc_RTF_stft_expec} used for the STFT isn't applicable here. Using it directly on the observable input $X_m[l,k]$ would yield
 \begin{equation}
-	\frac{\expec{X_m[l,k] X_1^*[l,k]}}{\expec{X_1[l,k] X_1^*[l,k]}} = \frac{H_m'H_1' + H_m'' H_1''}{{H_1'}^2 + {H_1''}^2}
+	\frac{\expec{X_m[l,k] X_1[l,k]}}{\expec{X_1[l,k] X_1[l,k]}} = \frac{H_m'[k]H_1'[k] + H_m''[k] H_1''[k]}{{H_1'}^2[k] + {H_1''}^2[k]}
 \end{equation}
-where we used that different frequency bins are independent and all are zero-mean. The exact same would be obtained for $K-k$, thus this tool isn't useful to give us any insight into the desired RTF's of the form from \cref{eq:sec2:rtf_form_ssbt}, opposite to with the STFT, where this is possible. Also, since we don't have access to each input $X_1'[l,k]$ and $X_1''[l,k]$ separately, we can't do this practically on each of them, following \cref{eq:sec2:calc_RTF_stft_expec}.
+where we used that different frequency bins are i.i.d. and zero-mean (see \cref{prop:conjugate-freqs_independent_RFT} in \cref{app:properties_rft}). Noticeably this isn't the same as the desired result from \cref{eq:sec2:rtf_form_ssbt}, however we can work around it. 
 
-This same formulation can be used with the CTF model. That is, if we consider $A^n_m[l,k]$ as a convolutive gain, then
+First, it is easy to see that
+\begin{equations}{eq:sec2:expec_Xm_X1_ssbt}
+	\expec{X_m[l,k] X_1[l,k]} & = \pts{H_m'[k] H_1'[k] + H_m''[k] H_1''[k]} \sigma_{X,k}^2 \\
+	\expec{X_m[l,k] X_1[l,K-k]} & = \pts{H_m'[k] H_1'[k] - H_m''[k] H_1''[k]} \sigma_{X,k}^2
+\end{equations}
+where $\sigma_{X,k}^2 = \expec{\pts{X'[l,k]}^2} = \expec{\pts{X''[l,k]}^2}$. From \cref{eq:sec2:expec_Xm_X1_ssbt}, we can see that we can calculate $H_m'[k] H_1'[k] \sigma_{X,k}^2$ and $H_m''[k] H_1''[k] \sigma_{X,k}^2$ as
+\begin{subalign}
+	H_m'[k] H_1'[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{2} \\
+	H_m''[k] H_1''[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{2}
+\end{subalign}
+and from this we can easily calculate $(H_1'[k])^2 \sigma_{X,k}^2$ and $(H_1''[k])^2 \sigma_{X,k}^2$ as well. Therefore, it is trivial that the gains $A^n_m[k]$ from \cref{eq:sec2:rtf_form_ssbt} can be calculated as
+\begin{subgather}
+	\begin{split}
+		A_m'[k]
+		& = \frac{H_m'[k]}{H_1'[k]} \\
+		& = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} + \expec{X_1[l,k] X_1[l,K-k]}}
+	\end{split} \\[0.5cm]
+	\begin{split}
+	A_m''[k]
+	& = \frac{H_m''[k]}{H_1''[k]} \\
+	& = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} - \expec{X_1[l,k] X_1[l,K-k]}}
+	\end{split}
+\end{subgather}
+
+These same derivations can be used with the CTF model. That is, if we consider $A^n_m[l,k]$ as a convolutive gain, then
 \begin{equation}
 	A^n_m[l,k] \approx \frac{H^n_m[l,k]}{H^n_1[0,k]}
 \end{equation}
-this being valid for both the STFT (where $n = 1$ is the only option), and for the SSBT. This is an approximation, since different windows in a time-frequency transform aren't independent and thus can contribute to the gain of one-another.
 
-We will from now on assume that we have the RTF's according to \cref{eqs:sec2:rtf_systems_ssbt,eq:sec2:rtf_form_ssbt}, allowing the mathematical continuation of the problem.
+This is valid for both the STFT (where $n = 1$ is the only option), and for the SSBT. This is an approximation, since different windows in a time-frequency transform aren't independent and thus can contribute to the gain of one-another. Under this model, our systems become
+\begin{equation}
+	\label{eq:sec2:output_system_STFT_CTF}
+	Y_m[l,k] = A_m[l,k] \ast X_1[l,k]
+\end{equation}
+for the STFT, where $X_1[l,k] = H_1[l,k] \ast X[l,k]$, and
+\begin{equation}
+	\label{eq:sec2:output_system_SSBT_CTF}
+	Y_m[l,k] = A_m'[l,k] \ast X_1'[l,k] + A_m''[l,k] \ast X_1''[l,k]
+\end{equation}
+for the SSBT, in which $X_1^n[l,k] = H_1^n[l,k] \ast X^n[l,k]$. We raise attention, since using \cref{eqs:sec2:def_Hm'_Hm''_ssbt,eqs:sec2:def_X1'_and_X1''_ssbt,eq:sec2:definition_X1_ssbt} we have that $X_{1}'[l,k] \neq X_{1}''[l,K-k]$, even though both originate from $X_k[l]$. Likewise, for the same reason $X_{1}''[l,k] \neq X_{1}'[l,K-k]$.
+
+Notice that the STFT formulation can be seen as a particular case of the SSBT one (comparing \cref{eq:output_sys1_stft} with \cref{eq:output_sys1_ssbt}, or \cref{eq:sec2:output_system_STFT_CTF} with \cref{eq:sec2:output_system_SSBT_CTF}), where $A_{m}'[l,k] = A_{m}[l,k]$ and $A_{m}''[l,k] = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:output_system_SSBT_CTF}, as it is a less restricting model.
