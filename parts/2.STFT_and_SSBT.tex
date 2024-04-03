@@ -155,37 +155,40 @@ where
 	\label{eq:sec2:rtf_form_ssbt}
 	A_m^{n}[k] = \frac{H_m^{n}[k]}{H_1^{n}[k]}
 \end{equation}
-are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'[k] = A_1''[k] = 1$. Note that, for this, we must be able to estimate each $G^n_m[k]$ separately, which may not be easy. For example, the technique in \cref{eq:sec2:calc_RTF_stft_expec} used for the STFT isn't applicable here. Using it directly on the observable input $X_m[l,k]$ would yield
+are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'[k] = A_1''[k] = 1$. Note that, for this, we must be able to estimate each $A^n_m[k]$ separately. The technique used for the STFT in \cref{eq:sec2:calc_RTF_stft_expec} isn't directly applicable, as it would yield
 \begin{equation}
 	\frac{\expec{X_m[l,k] X_1[l,k]}}{\expec{X_1[l,k] X_1[l,k]}} = \frac{H_m'[k]H_1'[k] + H_m''[k] H_1''[k]}{{H_1'}^2[k] + {H_1''}^2[k]}
 \end{equation}
-where we used that different frequency bins are i.i.d. and zero-mean (see \cref{prop:conjugate-freqs_independent_RFT} in \cref{app:properties_rft}). Noticeably this isn't the same as the desired result from \cref{eq:sec2:rtf_form_ssbt}, however we can work around it. 
+where we used that different frequency bins are i.i.d. and zero-mean (see \cref{prop:conjugate-freqs_independent_RFT} in \cref{app:properties_rft}). Noticeably this isn't the same as the desired result from \cref{eq:sec2:rtf_form_ssbt}. \textbf{A way to calculate the RTF's in the SSBT domain is still being studied and searched for.}
+%
+%\begin{changingfrom}
+%	however it is possible to work around it. First, it is easy to see that
+%\begin{equations}{eq:sec2:expec_Xm_X1_ssbt}
+%	\expec{X_m[l,k] X_1[l,k]} & = \pts{H_m'[k] H_1'[k] + H_m''[k] H_1''[k]} \sigma_{X,k}^2 \\
+%	\expec{X_m[l,k] X_1[l,K-k]} & = \pts{H_m'[k] H_1'[k] - H_m''[k] H_1''[k]} \sigma_{X,k}^2
+%\end{equations}
+%where $\sigma_{X,k}^2 = \expec{\pts{X'[l,k]}^2} = \expec{\pts{X''[l,k]}^2}$ (using that they are i.i.d.). From \cref{eq:sec2:expec_Xm_X1_ssbt}, we can see that we can calculate $H_m'[k] H_1'[k] \sigma_{X,k}^2$ and $H_m''[k] H_1''[k] \sigma_{X,k}^2$ as
+%\begin{subalign}
+%	H_m'[k] H_1'[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{2} \\
+%	H_m''[k] H_1''[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{2}
+%\end{subalign}
+%and from this we can easily calculate $(H_1'[k])^2 \sigma_{X,k}^2$ and $(H_1''[k])^2 \sigma_{X,k}^2$ as well. Therefore, it is trivial that the gains $A^n_m[k]$ from \cref{eq:sec2:rtf_form_ssbt} can be calculated as
+%\begin{subgather}
+%	\begin{split}
+%		A_m'[k]
+%		& = \frac{H_m'[k]}{H_1'[k]} \\
+%		& = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} + \expec{X_1[l,k] X_1[l,K-k]}}
+%	\end{split} \\[0.5cm]
+%	\begin{split}
+%	A_m''[k]
+%	& = \frac{H_m''[k]}{H_1''[k]} \\
+%	& = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} - \expec{X_1[l,k] X_1[l,K-k]}}
+%	\end{split}
+%\end{subgather}
+%These same derivations can be used with the CTF model. That is, if we consider $A^n_m[l,k]$ as a convolutive gain, then
+%\end{changingfrom}
 
-First, it is easy to see that
-\begin{equations}{eq:sec2:expec_Xm_X1_ssbt}
-	\expec{X_m[l,k] X_1[l,k]} & = \pts{H_m'[k] H_1'[k] + H_m''[k] H_1''[k]} \sigma_{X,k}^2 \\
-	\expec{X_m[l,k] X_1[l,K-k]} & = \pts{H_m'[k] H_1'[k] - H_m''[k] H_1''[k]} \sigma_{X,k}^2
-\end{equations}
-where $\sigma_{X,k}^2 = \expec{\pts{X'[l,k]}^2} = \expec{\pts{X''[l,k]}^2}$. From \cref{eq:sec2:expec_Xm_X1_ssbt}, we can see that we can calculate $H_m'[k] H_1'[k] \sigma_{X,k}^2$ and $H_m''[k] H_1''[k] \sigma_{X,k}^2$ as
-\begin{subalign}
-	H_m'[k] H_1'[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{2} \\
-	H_m''[k] H_1''[k] \sigma_{X,k}^2 & = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{2}
-\end{subalign}
-and from this we can easily calculate $(H_1'[k])^2 \sigma_{X,k}^2$ and $(H_1''[k])^2 \sigma_{X,k}^2$ as well. Therefore, it is trivial that the gains $A^n_m[k]$ from \cref{eq:sec2:rtf_form_ssbt} can be calculated as
-\begin{subgather}
-	\begin{split}
-		A_m'[k]
-		& = \frac{H_m'[k]}{H_1'[k]} \\
-		& = \frac{\expec{X_m[l,k] X_1[l,k]} + \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} + \expec{X_1[l,k] X_1[l,K-k]}}
-	\end{split} \\[0.5cm]
-	\begin{split}
-	A_m''[k]
-	& = \frac{H_m''[k]}{H_1''[k]} \\
-	& = \frac{\expec{X_m[l,k] X_1[l,k]} - \expec{X_m[l,k] X_1[l,K-k]}}{\expec{X_1[l,k] X_1[l,k]} - \expec{X_1[l,k] X_1[l,K-k]}}
-	\end{split}
-\end{subgather}
-
-These same derivations can be used with the CTF model. That is, if we consider $A^n_m[l,k]$ as a convolutive gain, then
+With the CTF model, if we consider $A^n_m[l,k]$ as a convolutive gain, then
 \begin{equation}
 	A^n_m[l,k] \approx \frac{H^n_m[l,k]}{H^n_1[0,k]}
 \end{equation}
