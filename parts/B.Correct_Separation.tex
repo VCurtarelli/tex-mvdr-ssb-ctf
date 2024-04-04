@@ -61,16 +61,26 @@ With this we simplified the problem and got rid of one of the variables, now hav
 	\end{equation}
 	and therefore
 	\begin{equation}
-		\br = \frac{\E\ar + \E*{12}\ai}{\E{11}}
+		\br = \frac{\E{12}\ar + \E*{12}\ai}{\E{11}}
 	\end{equation}
 	Similarly, by multiplying \cref{eq:appB:system_equations_simp:subeq2} by $\ai$ and \cref{eq:appB:system_equations_simp:subeq3} by $-\ar$ and adding them, we get
 	\begin{equation}
-		\ai\ar\br + \ai^2\bi + \ar^2\bi - \ar\ai\br = \E\ai - \E*{12}\ar
+		\ai\ar\br + \ai^2\bi + \ar^2\bi - \ar\ai\br = \E{12}\ai - \E*{12}\ar
 	\end{equation}
 	and thus
 	\begin{equation}
-		\bi = \frac{\E\ai - \E*{12}\ar}{\E{11}}
+		\bi = \frac{\E{12}\ai - \E*{12}\ar}{\E{11}}
 	\end{equation}
 	
 	However, for this we would have to know $\ar$ and $\ai$, which aren't available.
+
+    Doing the same idea but around (to find $\ar$ and $\ai$ in terms of $\br$ and $\bi$), we find...
+    \begin{equation}
+        \cdots
+    \end{equation}
+    With this, we have four linear equations, which can formulate a system as ...
+    \begin{equation}
+        \cdots
+    \end{equation}
+    which is of the form $Ax = b$, and therefore the solution is of the form $x = \inv{A} b$. Thus...
 \end{thought}
