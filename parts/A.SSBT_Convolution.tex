@@ -214,3 +214,46 @@ with an inverse
 		\expec{Y_{\R}(f) Y_{\R}(\-f)} = 0
 	\end{equation}
 \end{Property}
+
+\begin{Property}{RTF's are even on frequency.}[\label{prop:rtfs_are_even-func_of_frequency}]
+	First, given two real systems with a shared input $x(t)$, each with an impulse response $h_m(t)$ and an output $y_m(t)$, such that
+	\begin{equations}
+		Y_{1}(f) = X(f) \Re{H_{1,\F}}(f) + X(\-f) \Im{H_{1,\F}}(f) \\
+		Y_{2}(f) = X(f) \Re{H_{2,\F}}(f) + X(\-f) \Im{H_{2,\F}}(f)
+	\end{equations}
+	and, for their conjugate frequencies,
+	\begin{equations}
+		Y_{1}(\-f) = X(\-f) \Re{H_{1,\F}}(\-f) + X(f) \Im{H_{1,\F}}(\-f) \\
+		Y_{2}(\-f) = X(\-f) \Re{H_{2,\F}}(\-f) + X(f) \Im{H_{2,\F}}(\-f)
+	\end{equations}
+	where we are omitting the transform index when it is an RFT's domain value, for compactness. If we define $X_1'(f)$ and $X_1''(f)$ as
+	\begin{equations}
+		X_1'(f) = \Re{H_{1,\F}}(f) X(f) \\
+		X_1''(f) = \Im{H_{1,\F}}(f) X(\-f)
+	\end{equations}
+	then
+	\begin{equations}
+		Y_m(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)}X_1'(f) + \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)} X_1''(f) \\
+		Y_m(\-f) = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)}X_1'(\-f) + \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} X_1''(\-f)
+	\end{equations}
+	By defining $A_m'(f)$ and $A_m''(f)$ as
+	\begin{equations}
+		A_m'(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
+		A_m''(f) = \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)}
+	\end{equations}
+	then, by analyzing these for negative frequencies, we have
+	\begin{equations}
+		A_m'(\-f)
+		& = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)} = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
+		& = A_m'(f)
+	\end{equations}
+	\begin{equations}
+	A_m''(\-f)
+	& = \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} = \frac{-\Im{H_{m,\F}}(f)}{-\Im{H_{1,\F}}(f)} \\
+	& = A_m''(f)
+	\end{equations}
+	where we used that $H_{m\F}(f) = H_{m\F}^*(\-f)$, if $h_m(t)$ is real-valued.
+	
+	With this, $A_m'(f) = A_m'(\-f)$ and $A_m''(f) = A_m''(\-f)$, and therefore the RTF's $A_m'(f)$ and $A_m''(f)$ are even in terms of conjugate frequencies.
+	
+\end{Property}

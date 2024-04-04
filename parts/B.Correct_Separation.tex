@@ -1,66 +1,76 @@
-\section{Correct separation of desired signal}
-\label{app:derivation_correct_sep}
-\def\tn{\tilde{n}}
-\def\tnu{\tilde{\nu}}
-\def\bn{\bar{n}}
-\NewDocumentCommand{\expec}{m}{%
-	\textsf{E}\cts{#1}%
+\section{Correct calculation of steering vectors in SSBT}
+\DeclareDocumentCommand{\E}{s m}{%
+	\mathrm{E}_{#2}\IfBooleanTF{#1}{'}{^{}}
 }
+\def\ar{\alpha_{\re}}
+\def\ai{\alpha_{\im}}
+\def\br{\beta_{\re}}
+\def\bi{\beta_{\im}}
+Assume we have two LTI systems with impulse responses $h_m(t)$, with a singular input $x(t)$. In the RFT domain,
+\begin{equation}
+	X_{m\R}(f) = X_{\R}(f) \Re{H_{m\F}}(f) + X_{\R}(\-f) \Im{H_{m\F}}(f)
+\end{equation}
 
-Let $X_m[l,k]$ be such that
+Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
+\begin{subalign}{eqs:appB:system_equations}
+	\expec{X_{1\R}(f) X_{1\R}(f)}   & = \pts{  {\Re{H_{1\F}}}^2(f)             + {\Im{H_{1\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:appB:system_equations:subeq1} \\
+	\expec{X_{1\R}(f) X_{2\R}(f)}   & = \pts{   \Re{H_{1\F}}(f) H_{2\F}^\re(f) +  \Im{H_{1\F}} H_{2\F}^\im(f)} \sigma_{X}^2(f) \label{eq:appB:system_equations:subeq2} \\
+	\expec{X_{1\R}(f) X_{2\R}(\-f)} & = \pts{\- \Re{H_{1\F}}(f) H_{2\F}^\im(f) +  \Im{H_{1\F}} H_{2\F}^\re(f)} \sigma_{X}^2(f) \label{eq:appB:system_equations:subeq3} \\
+	\expec{X_{2\R}(f) X_{2\R}(f)}	& = \pts{  {\Re{H_{2\F}}}^2(f)             + {\Im{H_{2\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:appB:system_equations:subeq4}
+\end{subalign}
+where $H_{m\F}(f) = \Re{H_{m\F}}(f) + \j\Im{H_{m\F}}(f)$ is the FT of $h_m(t)$, and $\sigma_X^2(f) = \expec{X_{\R}(f)^2}$.
+
+Note that, we have 4 equations and 5 variables. Our objective is to find $A_{m,\R}'(f)$ and $A_{m,\R}''(f)$ such that
+\begin{subgather}{eqs:appB:rtfs_in_rft_domain}
+	A_{m,\R}'(f) = \frac{\Re{H_{m\F}}(f)}{\Re{H_{1\F}}(f)} \\
+	A_{m,\R}''(f) = \frac{\Im{H_{m\F}}(f)}{\Im{H_{1\F}}(f)}
+\end{subgather}
+where we're not worried about negative frequencies, since from \cref{prop:rtfs_are_even-func_of_frequency} we know that $A_{m,\R}'(f) = A_{m,\R}'(\-f)$ and $A_{m,\R}''(f) = A_{m,\R}''(\-f)$. We rewrite the equations in \cref{eqs:appB:system_equations} by defining
 \begin{equations}
-	X_m[l,k]
-	& = A_m[l,k] \ast X_1[l,k] \\
-	& = \tr{\bva{m}}[k] \bvx{1}[l,k]	
+	\ar & 	= \Re{H_{1\F}}(f) \sigma_X(f) \\
+	\ai & 	= \Im{H_{1\F}}(f) \sigma_X(f) \\
+	\br & 	= \Re{H_{2\F}}(f) \sigma_X(f) \\
+	\bi & 	= \Im{H_{2\F}}(f) \sigma_X(f)
 \end{equations}
-as in \cref{eq:sec3:convert_convol_matmult,eq:sec3:time-freq_model_conv}. We can separate $X_m[l,k]$ as
-\begin{equation}
-	X_m[l,k] = d_{m}[l,k] X_1[l,k] + X'[l,k]
-\end{equation}
-where $d_{m}[l,k]$ is the steering vector for the desired speech portion $X_1[l,k]$, and $X'[l,k]$ is the undesired speech component, in such a way that $X_1[l,k]$ and $X'[l,k]$ are uncorrelated.
-
-This seems trivial in a first glance, by adopting $d_m[k]$ as the $0$-th element of $\bva{m}[k]$, and $X'[l,k]$ as the rest of the summation. However, this doesn't take into account that $X[l,k]$ and $X[l',k]$ may be correlated if $\abs{l - l'} \leq S$, where $S = \floor{\nicefrac{(K-1)}{\O}}$. That is, if $l$-th and $l'$-th transform window share samples, then there is some correlation between them.
-
-We define
-\begin{equations}{eq:def_rho}
-	d_m[l,k]
-	& = \frac{\expec{X_1^*[l,k] X_m[l,k]}}{\expec{\abs{X_1[l,k]}^2}} \\
-	& = \frac{\sum_{i} A_m[i,k] \expec{X_1^*[l,k] X_1[l-i,k]}}{\expec{\abs{X_1[l,k]}^2}}
-\end{equations}
-
-Focusing on each expectation in the numerator,
-\begin{equation}
-	E_i = \expec{X_1^*[l,k] X_1[l-i,k]}
-\end{equation}
-Through the definition of the STFT,
 \begin{equations}
-	E_i
-	& = \expec{\sum_{n=0}^{K-1} w(n) x_1(n+l\O) e^{\j2\pi\frac{k}{K}(n+l\O)} \sum_{\nu=0}^{K-1} w(\nu) x_1(\nu+(l-i)\O) e^{-\j2\pi\frac{k}{K}(\nu+(l-i)\O)} } \\
-	& = \sum_{n=0}^{K-1} \sum_{\nu=0}^{K-1} w(n) w(\nu) e^{-\j2\pi\frac{k}{K}(\nu - n + i\O)} \expec{x_1(n+l\O) x_1(\nu+(l-i)\O)}
+	\E{11} 	& 	= \expec{X_{1\R}(f) X_{1\R}(f)} \\
+	\E{12}	& 	= \expec{X_{1\R}(f) X_{2\R}(f)} \\
+	\E*{12} &   = \expec{X_{1\R}(f) X_{2\R}(\-f)} \\
+	\E{22}	&	= \expec{X_{2\R}(f) X_{2\R}(f)}
 \end{equations}
-Using the substitutions $\tn = n+l\O$ and $\tnu = \nu + (l-i)\O$,
-\begin{equation}
-	E_i = \sum_{\tnu=l\O}^{K-1+l\O} \sum_{\tn=(l-i)\O}^{K-1+(l-i)\O} w(\tn - l\O) w(\tnu - (l-i)\O) \expec{x_1(\tn) x_1(\tnu)} e^{-\j2\pi\frac{k}{K}(\tnu - \tn)}
-\end{equation}
 
-We now assume $x_1(n)$ is the result of a zero-mean white process, and therefore $x_1(\tn)$ and $x_1(\tnu)$ are independent if $\tn \neq \tnu$ (which isn't true, but will allow us to continue the derivations). Then
-\begin{equation}
-	E_i = \sum_{\tn} w(\tn - l\O) w(\tn - (l-i)\O) \expec{x_1(\tn)^2}
-\end{equation}
-Rolling back the substitution $n = \tn - l\O$,
-\begin{equation}
-	E_i = \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + i\O) \expec{x_1(n + l\O)^2}
-\end{equation}
-where the summation takes into account that both windows are finite. We at last assume that $\expec{x_1(n+l\O)^2} \approx \expec{x_1(l\O)^2}$ for small values of $n$ (such as $0 \leq n < K$), such that
-\begin{equation}
-	E_i = \var{x_1}(l\O) \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + i\O)
-\end{equation}
+Where we will be omitting the $(f)$ index for clarity in these newly defined variables, however they are frequency-dependent. With this, \cref{eqs:appB:system_equations} becomes
+\begin{subalign}
+	\ar^2 + \ai^2 		& = \E{11} \label{eq:appB:system_equations_simp:subeq1} \\
+	\ar \br + \ai \bi 	& = \E{12}\label{eq:appB:system_equations_simp:subeq2} \\
+	-\ar \bi + \ai \br 	& = \E*{12} \label{eq:appB:system_equations_simp:subeq3} \\
+	\br^2 + \bi^2 		& = \E{22}\label{eq:appB:system_equations_simp:subeq4}
+\end{subalign}
+and \cref{eqs:appB:rtfs_in_rft_domain} is
+\begin{subgather}
+	A_{m,\R}'(f) = \frac{\br}{\ar} \\
+	A_{m,\R}'(f) = \frac{\bi}{\ai}
+\end{subgather}
 
-Going back to \cref{eq:def_rho}, and applying the derivations also to the numerator (with $i = 0$),
-\begin{equations}
-	d_m[l,k]
-	& = \frac{\sum_{i} A_m[i,k] \var{x_1}(l\O) \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + \abs{i\O})}{\var{x_1}(l\O) \sum_{n'=0}^{K - 1} w(n')^2} \\
-	& = \frac{\var{x_1}(l\O) \sum_{i} A_m[i,k] \sum_{n=0}^{K - 1 -\abs{i\O}} w(n) w(n + \abs{i\O})}{\var{x_1}(l\O) \sum_{n'=0}^{K - 1} w(n')^2} \\
-	& = \frac{\sum_{i} \sum_{n=0}^{K - 1 -\abs{i\O}} A_m[i,k] w(n) w(n + \abs{i\O})}{\sum_{n'=0}^{K - 1} w(n')^2}
-\end{equations}
-This way, we see that $d_m[l,k] \equiv d_m[k]$ since it doesn't depend on $l$. However, since for the summation over $n$ we need that $K - 1 - \abs{i\O} \geq 0$, this means that $-S \leq i \leq S$ (where $S = \floor{\nicefrac{(K-1)}{\O}}$), and thus our desired speech signal $X_1[l,k]$ depends on up to the previous (or next) $S$ windows.
+With this we simplified the problem and got rid of one of the variables, now having a system of four equations and four variables, which is solvable. However, it is a non-linear system, which makes the solution harder to find.
+
+\begin{thought}
+	By multiplying \cref{eq:appB:system_equations_simp:subeq2} by $\ar$ and \cref{eq:appB:system_equations_simp:subeq3} by $\ai$ and adding, we get
+	\begin{equation}
+		\ar^2\br + \ar\ai\bi - \ai\ar\bi + \ai^2\br = \E{12}\ar + \E*{12} \ai
+	\end{equation}
+	and therefore
+	\begin{equation}
+		\br = \frac{\E\ar + \E*{12}\ai}{\E{11}}
+	\end{equation}
+	Similarly, by multiplying \cref{eq:appB:system_equations_simp:subeq2} by $\ai$ and \cref{eq:appB:system_equations_simp:subeq3} by $-\ar$ and adding them, we get
+	\begin{equation}
+		\ai\ar\br + \ai^2\bi + \ar^2\bi - \ar\ai\br = \E\ai - \E*{12}\ar
+	\end{equation}
+	and thus
+	\begin{equation}
+		\bi = \frac{\E\ai - \E*{12}\ar}{\E{11}}
+	\end{equation}
+	
+	However, for this we would have to know $\ar$ and $\ai$, which aren't available.
+\end{thought}
