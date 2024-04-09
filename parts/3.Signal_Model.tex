@@ -102,11 +102,26 @@ which is equivalent to requiring that
 	\he{\bvf{k}}[l] \bva{k}' = 1 \\
 	\he{\bvf{k}}[l] \bva{k}'' = 1
 \end{subgather}
-where we ensure that each component of $X_{1,k}[l]$ is distortionlessly recovered. With this, 
+where we ensure that each component of $X_{1,k}[l]$ is distortionlessly recovered. For the STFT, only the first constraint is considered, since then we have that $\bva{k}'' = \bv{0}$ and thus the second condition is unreachable. With this, we write our constraint matrix as
+\begin{equation}
+	\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
+\end{equation}
+where, for the STFT, $\bvC{k} = \bva{k}$ and $\bvi = 1$; and, for the SSBT, $\bvC{k} = \bts{\bva{k}'\,,~\bva{k}''}$, and $\bvi = \bts{1\,,~1}$.
 
- Although this approach is more favorable, it comes with its limitations, since following what was achieved in \cref{subsec:sec2:relative_transfer_functions} we can't estimate appropriately the coefficients that comprise $\bva{k}'$ and $\bva{k}''$.
+To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
+\begin{equation}
+	\label{eq:sec3:minimization_problem_mpdr_hard}
+	\bvf{\mpdr_1;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
+\end{equation}
+where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
+\begin{equation}
+	\label{eq:sec3:solution_mpdr_beamformer_hard}
+	\bvf{\mpdr_1;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvA{k} }} \bvi
+\end{equation}
 
-Another alternative is to require that
+Obviously, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued. Although this approach is more favorable, it comes with its limitations, since following what was achieved in \cref{subsec:sec2:relative_transfer_functions} we can't estimate appropriately the coefficients that comprise $\bva{k}'$ and $\bva{k}''$.
+
+One alternative is to impose a lesser requirement when defining the distortionless condition. One such constraint is
 \begin{equation}
 	\label{eq:sec3:soft_distortionless_constriant}
 	\expec{X_{f,k}^2[l]} = \expec{X_{1,k}^2[l]}
@@ -127,37 +142,13 @@ Given that it is feasible to estimate the steering vector from \cref{eq:sec3:new
 
 To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
 \begin{equation}
-	\label{eq:sec3:minimization_problem_mpdr}
-	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bva{k} = 1
+	\label{eq:sec3:minimization_problem_mpdr_soft}
+	\bvf{\mpdr_2;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bva{k} = 1
 \end{equation}
 where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
 \begin{equation}
-	\label{eq:sec3:solution_mpdr_beamformer}
-	\bvf{\mpdr;k}[l] = \frac{\iCorr{\bvy{k}}[l] \bva{k}}{ \he{\bva{k}} \iCorr{\bvy{k}}[l] \bva{k} }
+	\label{eq:sec3:solution_mpdr_beamformer_soft}
+	\bvf{\mpdr_2;k}[l] = \frac{\iCorr{\bvy{k}}[l] \bva{k}}{ \he{\bva{k}} \iCorr{\bvy{k}}[l] \bva{k} }
 \end{equation}
 
-Obviously, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued.
-%\vspace{1em}
-%\hrule
-%\vspace*{2em}
-%
-%Going back to \cref{eq:sec3:def_filtering_process}, with \cref{eq:sec3:def_bvy_sensor-stacking} we can write
-%\begin{equation}
-%	Z_{k}[l] = \he{\bvf{k}}[l] \bvA{k} \bvx[b]{1,k}[l] + \he{\bvf{k}}[l] \bvB{k} \bvs[b]{1,k}[l] + \he{\bvf{k}}[l] \bvr{k}[l] + \he{\bvf{k}}[l] \bvq{k}[l]
-%\end{equation}
-%From this, we easily see that to achieve a distortionless response from the desired signal, we must have that $\he{\bvf{k}}[l] \bvA{k} \bvx[b]{1,k}[l] = X_{1,k}[l]$, and therefore the distortionless constraint is given by
-%\begin{equation}
-%	\he{\bvf{k}}[l] \bvA{k} = \tr{\bvi{\Delta}}
-%\end{equation}
-%where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeroes, except for the $\Delta$-th entry which is a $1$. %For this to be true, we assume that $\bvq{k}[l]$ is uncorrelated to $\bvx[b]{1,k}[l]$, which may not be true depending on the values of $\Delta$ and $L_A$ chosen, and the characteristics of the environment.
-
-%To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
-%\begin{equation}
-%	\label{eq:sec3:minimization_problem_mpdr}
-%	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvA{k} = \tr{\bvi{\Delta}}
-%\end{equation}
-%where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
-%\begin{equation}
-%	\label{eq:sec3:solution_mpdr_beamformer}
-%	\bvf{\mpdr;k}[l] = \iCorr{\bvy;k}[l] \bvA{k} \inv{\bts{ \he{\bvA{k}} \iCorr{\bvy;k}[l] \bvA{k} }} \bvi{\Delta}
-%\end{equation}
+It is obvious that the beamformer from \cref{eq:sec3:solution_mpdr_beamformer_hard} also satisfies the soft constraint from \cref{eq:sec3:soft_distortionless_constriant}. Thus, since we are using a less restricting constraint to obtain $\bvf{\mpdr_2;k}[l]$ compared to $\bvf{\mpdr_1;k}[l]$, it is expected that the noise reduction capabilities of the former would exceed those of the latter.
