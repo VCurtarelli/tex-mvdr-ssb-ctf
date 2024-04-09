@@ -82,29 +82,17 @@
 \newbv*[Psi]{\Psi}
 \newbv[de]{\delta}
 \def\bX{\bar{X}}
-%\def\bvAh{\bvA[h]}
-%\newbv[Ga]{\Gamma}
-%\newbv{I}
-%\newbv{i}
-%\newbv{u}
-%\newbv*{H}
-%\newbv*{B}
-%\newbv*{G}
-%\newbv*{y}
-%\newbv*{r}
-%\newbv*{z}
-%\newbv*{f}
-%\newbv*{d}
-%\newbv*{w}
-%\newbv*{C}
-%\newbv*{p}
-%\newbv*{q}
-%\newbv*{F}
-%\newbv*{P}
-%\newbv*{A}
-%\newbv*{D}
-%\newbv*{Q}
-% \def\bvL{*************}
+
+\def\ar{\alpha_{\re}}
+\def\ai{\alpha_{\im}}
+\def\br{\beta_{\re}}
+\def\bi{\beta_{\im}}
+\def\gr{\gamma_{\re}}
+\def\gi{\gamma_{\im}}
+\def\g{\gamma_}
+\DeclareDocumentCommand{\E}{s m}{%
+	{\mathrm{E}_{#2}\IfBooleanTF{#1}{'}{^{}}}
+}
 
 \MakeSymbol\mpdr{\text{mpdr}}
 \MakeSymbol\nssbt{\text{SF-SSBT}}
