@@ -81,92 +81,94 @@ where $\expec{\cdot}$ is the expectation operator.
 
 This isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. 
 
-\begin{thought}
-	However, by considering each system to have two inputs $X'(f) = X(f)$ and $X''(f) = X[l,K-k]$ and two transfer functions $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index), then our outputs can be described as
-	\begin{equation}
-		\label{eq:output_sys1_rft}
-		Y_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f)
-	\end{equation}
-	and in the same way for $Y_2(f)$ under the RFT. From \cref{eq:sec2:convolution_equiv_rft}, we easily see that
-	\begin{subgather}{eqs:sec2:def_Hm'_Hm''_rft}
-		H_m'(f) = H_m'(\-f) = \Re{H}_{\sF;m}(f) \\
-		H_m''(f) = - H_m''(\-f) = \Im{H}_{\sF;m}(f)
-	\end{subgather}
-	We let
-	\begin{subgather}{eqs:sec2:def_X1'_and_X1''_rft}
-		X_1'(f) = H_1'(f)X'(f) \\X_1''(f) = H_1''(f) X''(f)
-	\end{subgather}
-	and therefore
-	\begin{equations}{eq:sec2:definition_X1_rft}
-		X_1(f)
-		& = H_1'(f) X'(f) + H_1''(f) X''(f) \\
-		& = X_1'(f) + X_1''(f)
-	\end{equations}
-	in which $X_1'(f)$ and $X_1''(f)$ are the inputs processed by the first system, and $X_1(f)$ is the observable input signal.
-	Through these, we get that
-	\begin{subgather}{eqs:sec2:rtf_systems_rft}
-		Y_1(f) = A_1'(f) X_1'(f) + A_1''(f) X_1''(f) \\
-		Y_2(f) = A_2'(f) X_1'(f) + A_2''(f) X_1''(f)
-	\end{subgather}
-	where
-	\begin{equation}
-		\label{eq:sec2:rtf_form_rft}
-		A_m^{n}(f) = \frac{H_m^{n}(f)}{H_1^{n}(f)}
-	\end{equation}
-	are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'(f) = A_1''(f) = 1$. Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
-	\begin{subalign}{eqs:sec2:system_equations}
-		\expec{X_{1}(f) X_{1}(f)}   & = \pts{  {\Re{H_{1\F}}}^2(f)             + {\Im{H_{1\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
-		\expec{X_{1}(f) X_{2}(f)}   & = \pts{   \Re{H_{1\F}}(f) H_{2\F}^\re(f) +  \Im{H_{1\F}} H_{2\F}^\im(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
-		\expec{X_{1}(f) X_{2}(\-f)} & = \pts{\- \Re{H_{1\F}}(f) H_{2\F}^\im(f) +  \Im{H_{1\F}} H_{2\F}^\re(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
-	\end{subalign}
-	where $H_{m\F}(f) = \Re{H_{m\F}}(f) + \j\Im{H_{m\F}}(f)$ is the FT of $h_m(t)$, and $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$.
-	
-	Note that, we have 3 equations and 5 variables. We define the following variables
-	\begin{equations}
-		\ar & 	= \Re{H_{1\F}}(f) \sigma_X(f) \\
-		\ai & 	= \Im{H_{1\F}}(f) \sigma_X(f) \\
-		\gr & 	= \frac{\Re{H_{2\F}}(f) \sigma_X(f)}{\ar} \\
-		\gi & 	= \frac{\Im{H_{2\F}}(f) \sigma_X(f)}{\ai}
-	\end{equations}
-	\begin{equations}
-		\E{11} 	& 	= \expec{X_{1}(f) X_{1}(f)} \\
-		\E{12}	& 	= \expec{X_{1}(f) X_{2}(f)} \\
-		\E*{12} &   = \expec{X_{1}(f) X_{2}(\-f)}
-	\end{equations}
-	where we will be omitting the $(f)$ index for clarity in these newly defined variables, however they are frequency-dependent. With this, \cref{eqs:sec2:system_equations} becomes	
-	\begin{subalign}{eqs:sec2:system_equations_gamma}
-		\ar^2 + \ai^2 & = \E{11} \label{eq:sec2:system_equations_gamma:subeq1} \\
-		\ar^2 \gr + \ai^2 \gi & = \E{12} \label{eq:sec2:system_equations_gamma:subeq2} \\
-		\ar\ai\pts{\gr - \gi} & = \E*{12} \label{eq:sec2:system_equations_gamma:subeq3}
-	\end{subalign}
-	
-	In this new scenario our objective is to calculate $\gr$ and $\gi$, since
-	\begin{subgather}
-		A_{2,\R}'(f) = \gr \\
-		A_{2,\R}''(f) = \gi
-	\end{subgather}
-	
-	Firstly, from \cref{eq:sec2:system_equations_gamma:subeq2,eq:sec2:system_equations_gamma:subeq2} we can find $\gr$ and $\gi$ in terms of the expectations, $\ar$ and $\ai$. Solving it gives us
-	\begin{subalign}{eq:sec2:system_equations_gamma:sol_gr_gi}
-		\gr & = \frac{\E{12}}{\E{11}} + \frac{\frac{\ai}{\ar} \E*{12}}{\E{11}} \\
-		\gi & = \frac{\E{12}}{\E{11}} - \frac{\frac{\ar}{\ai} \E*{12}}{\E{11}}
-	\end{subalign}
-	
-	It is easy to note that
-	\begin{subgather}
-		\expec{X_2(f) X_1(\-f)} = -\E*{12} \\
-		\begin{split}
-			\expec{X_2(f)^2}
-			& = \frac{\E*{12}^2 + \E{12}^2}{\E{11}} \\
-			& = \ar^2 \gr^2 + \ai^2 \gi^2
-		\end{split}
-	\end{subgather}
-	not being useful to solve this problem since they're dependent equations. Therefore, the best one can do is to get an under-determined system with $3$ equations and $4$ variables, which can have infinite solutions.
-	
-	Given any choice of $\ar$ such that $\abs{\ar} \leq \E{11}$, we can find $\ai$ through \cref{eq:sec2:system_equations_gamma:subeq1}, and $\gr$ and $\gi$ (which is equivalent to $A_{2,\R}'$ and $A_{2,\R}''$) via \cref{eq:sec2:system_equations_gamma:sol_gr_gi}.
-	
-	Notice that the FT formulation can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eq:output_sys1_rft}), where $A_{m;\F}'(f) = A_{m;\F}(f)$ and $A_{m;\F}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output}, as it is a less restricting model.
-\end{thought}
+However, by considering each system to have two inputs $X'(f) = X(f)$ and $X''(f) = X[l,K-k]$ and two transfer functions $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index), then our outputs can be described as
+\begin{equation}
+	\label{eq:output_sys1_rft}
+	Y_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f)
+\end{equation}
+and in the same way for $Y_2(f)$ under the RFT. From \cref{eq:sec2:convolution_equiv_rft}, we easily see that
+\begin{subgather}{eqs:sec2:def_Hm'_Hm''_rft}
+	H_m'(f) = H_m'(\-f) = \Re{H}_{\sF;m}(f) \\
+	H_m''(f) = - H_m''(\-f) = \Im{H}_{\sF;m}(f)
+\end{subgather}
+We let
+\begin{subgather}{eqs:sec2:def_X1'_and_X1''_rft}
+	X_1'(f) = H_1'(f)X'(f) \\X_1''(f) = H_1''(f) X''(f)
+\end{subgather}
+and therefore
+\begin{equations}{eq:sec2:definition_X1_rft}
+	X_1(f)
+	& = H_1'(f) X'(f) + H_1''(f) X''(f) \\
+	& = X_1'(f) + X_1''(f)
+\end{equations}
+in which $X_1'(f)$ and $X_1''(f)$ are the inputs processed by the first system, and $X_1(f)$ is the observable input signal.
+Through these, we get that
+\begin{subgather}{eqs:sec2:rtf_systems_rft}
+	Y_1(f) = A_1'(f) X_1'(f) + A_1''(f) X_1''(f) \\
+	Y_2(f) = A_2'(f) X_1'(f) + A_2''(f) X_1''(f)
+\end{subgather}
+where
+\begin{equation}
+	\label{eq:sec2:rtf_form_rft}
+	A_m^{n}(f) = \frac{H_m^{n}(f)}{H_1^{n}(f)}
+\end{equation}
+are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'(f) = A_1''(f) = 1$. Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
+\begin{subalign}{eqs:sec2:system_equations}
+	\expec{X_{1}(f) X_{1}(f)}   & = \pts{  {\Re{H_{1\F}}}^2(f)             + {\Im{H_{1\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
+	\expec{X_{1}(f) X_{2}(f)}   & = \pts{   \Re{H_{1\F}}(f) H_{2\F}^\re(f) +  \Im{H_{1\F}} H_{2\F}^\im(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
+	\expec{X_{1}(f) X_{2}(\-f)} & = \pts{- \Re{H_{1\F}}(f) H_{2\F}^\im(f) +  \Im{H_{1\F}} H_{2\F}^\re(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
+\end{subalign}
+where $H_{m\F}(f) = \Re{H_{m\F}}(f) + \j\Im{H_{m\F}}(f)$ is the FT of $h_m(t)$, and $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$.
+
+Note that, we have 3 equations and 5 variables. We define the following variables
+\begin{equations}
+	\ar & 	= \Re{H_{1\F}}(f) \sigma_X(f) \\
+	\ai & 	= \Im{H_{1\F}}(f) \sigma_X(f) \\
+	\gr & 	= \frac{\Re{H_{2\F}}(f) \sigma_X(f)}{\ar} \\
+	\gi & 	= \frac{\Im{H_{2\F}}(f) \sigma_X(f)}{\ai}
+\end{equations}
+\begin{equations}
+	\E{11} 	& 	= \expec{X_{1}(f) X_{1}(f)} \\
+	\E{12}	& 	= \expec{X_{1}(f) X_{2}(f)} \\
+	\E*{12} &   = \expec{X_{1}(f) X_{2}(\-f)}
+\end{equations}
+where we will be omitting the $(f)$ index for clarity in these newly defined variables, however they are frequency-dependent. With this, \cref{eqs:sec2:system_equations} becomes	
+\begin{subalign}{eqs:sec2:system_equations_gamma}
+	\ar^2 + \ai^2 & = \E{11} \label{eq:sec2:system_equations_gamma:subeq1} \\
+	\ar^2 \gr + \ai^2 \gi & = \E{12} \label{eq:sec2:system_equations_gamma:subeq2} \\
+	\ar\ai\pts{\gr - \gi} & = \E*{12} \label{eq:sec2:system_equations_gamma:subeq3}
+\end{subalign}
+
+In this new scenario our objective is to calculate $\gr$ and $\gi$, since
+\begin{subgather}
+	A_{2,\R}'(f) = \gr \\
+	A_{2,\R}''(f) = \gi
+\end{subgather}
+
+Firstly, from \cref{eq:sec2:system_equations_gamma:subeq2,eq:sec2:system_equations_gamma:subeq2} we can find $\gr$ and $\gi$ in terms of the expectations, $\ar$ and $\ai$. Solving it gives us
+\begin{subalign}{eq:sec2:system_equations_gamma:sol_gr_gi}
+	\gr & = \frac{\E{12}}{\E{11}} + \frac{\frac{\ai}{\ar} \E*{12}}{\E{11}} \\
+	\gi & = \frac{\E{12}}{\E{11}} - \frac{\frac{\ar}{\ai} \E*{12}}{\E{11}}
+\end{subalign}
+
+It is easy to verify that
+\begin{subgather}
+	\expec{X_2(f) X_1(\-f)} = -\E*{12} \\
+	\begin{split}
+		\expec{X_2(f)^2}
+		& = \frac{\E*{12}^2 + \E{12}^2}{\E{11}} \\
+		& = \ar^2 \gr^2 + \ai^2 \gi^2
+	\end{split}
+\end{subgather}
+not being useful to solve this problem since they're dependent equations. Other possibilities include trying to use the FT's RTF, however it is also easy to check that 
+\begin{subgather}
+	\abs{A_{m;\sF}(f)}^2 = \frac{\E{22}}{\E{11}} \\
+	\angle{A_{m;\sF}(f)} = \atan{\frac{\E*{12}}{\E{12}}}
+\end{subgather}
+thus again not being independent relationships between the variables at hand. This is an under-determined system with $3$ equations and $4$ variables, which has infinite solutions. Given any choice of $\ar$ such that $\abs{\ar} \leq \E{11}$, we can find $\ai$ through \cref{eq:sec2:system_equations_gamma:subeq1}, and $\gr$ and $\gi$ (which are equivalent to $A_{2,\R}'$ and $A_{2,\R}''$) via \cref{eq:sec2:system_equations_gamma:sol_gr_gi}.
+
+The FT formulation can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eq:output_sys1_rft}), where $A_{m;\F}'(f) = A_{m;\F}(f)$ and $A_{m;\F}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output}, as it is a less restricting model.
+
 \subsection{Discrete time-frequency transforms}
 
 Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microphone_2021} is

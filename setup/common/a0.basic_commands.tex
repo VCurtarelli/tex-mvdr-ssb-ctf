@@ -55,3 +55,16 @@
 \NewDocumentCommand{\expec}{m}{%
 	\mathbb{E}\cts{#1}%
 }
+
+\makeatletter
+\DeclareDocumentCommand{\asin}{m}{%
+	\sin^{-1}\pts{#1}%
+}
+\DeclareDocumentCommand{\acos}{m}{%
+	\cos^{-1}\pts{#1}%
+}
+\DeclareDocumentCommand{\atan}{m}{%
+	\tan^{-1}\pts{#1}%
+}
+
+\makeatother
