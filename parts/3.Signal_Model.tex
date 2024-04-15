@@ -15,7 +15,7 @@ Treating the multiple paths between the desired source and the $m$-th sensor as 
 	\label{eq:sec3:def_ctf_ssbt}
 	X_{m,k}[l] = A_{m,k}'[l] \ast X_{1,k}'[l] + A_{m,k}''[l] \ast X_{1,k}''[l]
 \end{equation}\vspace*{-2em}
-\begin{subgather}
+\begin{subgather}{eqs:sec3:def_desired_signals_ssbt}
 	X_{1,k}'[l] = H_{1,k}'[l] \ast X_k[l] \\
 	X_{1,k}''[l] = H_{1,k}''[l] \ast X_{K-k}[l]
 \end{subgather}
@@ -67,7 +67,7 @@ and the same for $\bva{k}^n$, $\bvq{k}[l]$, $\bvs{k}[l]$ and $\bvr{k}[l]$, where
 
 \subsection{Filtering and the MPDR beamformer}
 
-We want to recover the desired signal at the reference sensor, $X_{1,k}[l] = X_{1,k}'[l] + X_{1,k}''[l]$ (see \cref{eq:sec3:def_ctf_ssbt} with $m=1$), without any distortion. For this, a linear filter $\bvf{k}[l]$ will be employed, producing an estimate $Z_{k}[l]$ of our desired signal, such that
+We want to recover the desired signal at the reference sensor, $X_{1,k}[l] = X_{1,k}'[l] + X_{1,k}''[l]$ (see \cref{eq:sec3:def_ctf_ssbt,eqs:sec3:def_desired_signals_ssbt} with $m=1$), without any distortion. For this, a linear filter $\bvf{k}[l]$ will be employed, producing an estimate $Z_{k}[l]$ of our desired signal, such that
 \begin{equations}{eq:sec3:def_filtering_process}
 	Z^n_{k}[l]
 	& \approx X_{1,k}[l] \\
@@ -76,10 +76,10 @@ We want to recover the desired signal at the reference sensor, $X_{1,k}[l] = X_{
 with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. This process can also be interpreted as
 \begin{equations}{eq:sec3:convolutive_form_filter}
 	Z_{k}[l]
-	& = \sum_{m} \he{\bvf[b]{m,k}}[l] \bvy[b]{m,k}[l] \\
+	& = \sum_{m} \he{\bvF{m,k}}[l] \bvy[b]{m,k}[l] \\
 	& = \sum_{m} F_{m,k}^*[l] \ast Y_{m,k}[l]
 \end{equations}
-where $\bvf[b]{m,k}[l]$ is the $\sz{L}{1}$ part of $\bvf{k}[l]$ that filters the $m$-th sensor, and $F_{m,k}[l]$ is its signal-form counterpart. In this sense, the filtering process can be interpreted as the sum across all sensors of the convolution between the signal and the observations.
+where $\bvF{m,k}[l]$ are $\sz{L}{1}$ vectors that comprise $\bvf{k}[l]$, each filtering the $m$-th sensor, and $F_{m,k}[l]$ is its signal-form counterpart. In this sense, the filtering process can be interpreted as the sum across all sensors of the convolution between the signal and the observations.
 
 Going back to \cref{eq:sec3:def_filtering_process}, with \cref{eq:sec3:def_bvy_sensor-stacking} we can write
 \begin{equations}
@@ -87,22 +87,23 @@ Going back to \cref{eq:sec3:def_filtering_process}, with \cref{eq:sec3:def_bvy_s
 	& = \he{\bvf{k}}[l] \bva{k}' X_{1,k}'[l] + \he{\bvf{k}}[l] \bva{k}'' X_{1,k}''[l] + \he{\bvf{k}}[l] \bvq{k}[l] + \he{\bvf{k}}[l] \bvs{k}[l] + \he{\bvf{k}}[l] \bvr{k}[l] \\
 	& = X_{f,k}[l] + Q_{f,k}[l] + S_{f,k}[l] + R_{f,k}[l]
 \end{equations}
-where $X_{f,k}[l]$ is the filtered-desired signal, and similarly for all the others. In particular, we have that
+where $X_{f,k}[l]$ is the filtered desired signal, and similarly for all the others. In particular, we have that
 \begin{equation}
+	\label{eq:sec3:sep_Xfk_desired_signals}
 	X_{f,k}[l] = \he{\bvf{k}}[l] \bva{k}' X_{1,k}'[l] + \he{\bvf{k}}[l] \bva{k}'' X_{1,k}''[l]
 \end{equation}
-from which we can derive two forms of the distortionless constraint. In the first one, we require that
+where we expose each component of our desired signal. From this, we can derive two forms of the distortionless constraint. In the first one, we require that our desired signal is completely undistorted, meaning
 \begin{equation}
 	\label{eq:sec3:hard_distortionless_constriant}
 	X_{f,k}[l] = X_{1,k}[l]
 \end{equation}
-which is equivalent to requiring that
-\begin{subgather}
-	\label{eq:sec3:hard_distortionless_constriant_separate}
-	\he{\bvf{k}}[l] \bva{k}' = 1 \\
-	\he{\bvf{k}}[l] \bva{k}'' = 1
+which is equivalent to requiring that each component of $X_{f,k}[l]$ is distortionlessly recovered, implying that
+\begin{subgather}{eq:sec3:hard_distortionless_constraint_separate}
+	\he{\bvf{k}}[l] \bva{k}' = 1 \label{eq:sec3:hard_distortionless_constraint_separate:subeq1} \\
+	\he{\bvf{k}}[l] \bva{k}'' = 1 \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
 \end{subgather}
-where we ensure that each component of $X_{1,k}[l]$ is distortionlessly recovered. For the STFT, only the first constraint is considered, since then we have that $\bva{k}'' = \bv{0}$ and thus the second condition is unreachable. With this, we write our constraint matrix as
+
+For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered, since then we have that $\bva{k}'' = \bv{0}$ and thus the second condition is unreachable. With this, we write our constraint matrix as
 \begin{equation}
 	\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
 \end{equation}
@@ -116,10 +117,10 @@ To minimize the variance of the output signal while obeying the distortionless c
 where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
 \begin{equation}
 	\label{eq:sec3:solution_mpdr_beamformer_hard}
-	\bvf{\mpdr_1;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvA{k} }} \bvi
+	\bvf{\mpdr_1;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi
 \end{equation}
 
-Obviously, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued. Although this approach is more favorable, it comes with its limitations, since following what was achieved in \cref{subsec:sec2:relative_transfer_functions} we can't estimate appropriately the coefficients that comprise $\bva{k}'$ and $\bva{k}''$.
+Obviously, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued. Although this approach is favorable, it comes with its limitations, since following what was achieved in \cref{subsec:sec2:relative_transfer_functions} we can't directly estimate the coefficients that comprise $\bva{k}'$ and $\bva{k}''$.
 
 One alternative is to impose a lesser requirement when defining the distortionless condition. One such constraint is
 \begin{equation}
@@ -132,11 +133,12 @@ where we ensure only that the estimate's magnitude is the same as that of the or
 	\bva{k} = \frac{\ar^2 {\bva{k}'}^2 + \ai^2 {\bva{k}''}^2}{\ar^2 + \ai^2}
 \end{equation}
 where, through the properties and formulas derived in \cref{subsec:sec2:relative_transfer_functions}, we have that the $(L[m-1]+i)$-th element of $\bva{k}$ is
-\begin{equation}
-	\label{eq:sec3:new_bva_vector_element_def}
-	\el{\bva{k}}[(L[m-1]+i)] = \frac{\expec{X_{m,k}[\Ly*-i+l] X_{1,k}[l]}}{\expec{X_{1,k}^2[l]}}
-\end{equation}
-therefore being independent on our choices of $\ar$ and $\ai$, and depending only on the statistics of the signals. This also has the same format as \cref{eq:sec2:calc_RTF_ft_expec} (except that the complex-conjugate of $X_{1,k}[l]$ is used in the numerator), which is used with the STFT for estimating the coefficients of the steering vector. With the STFT, this formulation has the advantage that it also satisfies the distortionless constraint in \cref{eq:sec3:hard_distortionless_constriant}. It is easy to see that $\he{\bvf{k}}[l] \bva{k} = 1$ implies \cref{eq:sec3:soft_distortionless_constriant}.
+\begin{equations}{eq:sec3:new_bva_vector_element_def}
+	\el{\bva{k}}[(L[m-1]+i)] 
+	& = \frac{H_{m,k}'[\Ly*-i] H_{1,k}'[0] + H_{m,k}''[\Ly*-i] H_{1,k}''[0]}{H_{1,k}'[0]^2 + H_{1,k}''[0]^2} \\
+	& = \frac{\expec{X_{m,k}[\Ly*-i+l] X_{1,k}[l]}}{\expec{X_{1,k}^2[l]}}
+\end{equations}
+therefore being independent on our choices of $\ar$ and $\ai$, and depending only on the statistics of the signals. This also has the same format as \cref{eq:sec2:calc_RTF_ft_expec} (except that the complex-conjugate of $X_{1,k}[l]$ is used in the numerator), which is used with the STFT for estimating the coefficients of the steering vector. It is easy to see that $\he{\bvf{k}}[l] \bva{k} = 1$ implies \cref{eq:sec3:soft_distortionless_constriant}.
 
 %Given that it is feasible to estimate the steering vector from \cref{eq:sec3:new_bva_vector_element_def}, opposite to those that would be necessary for \cref{eq:sec3:hard_distortionless_constriant_separate}, we will use the ``soft'' distortionless constraint from \cref{eq:sec3:new_bva_vector_ssbt,eq:sec3:new_bva_vector_element_def}.
 
@@ -151,4 +153,12 @@ where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy
 	\bvf{\mpdr_2;k}[l] = \frac{\iCorr{\bvy{k}}[l] \bva{k}}{ \he{\bva{k}} \iCorr{\bvy{k}}[l] \bva{k} }
 \end{equation}
 
-It is obvious that the beamformer from \cref{eq:sec3:solution_mpdr_beamformer_hard} also satisfies the soft constraint from \cref{eq:sec3:soft_distortionless_constriant}. Thus, since we are using a less restricting constraint to obtain $\bvf{\mpdr_2;k}[l]$ compared to $\bvf{\mpdr_1;k}[l]$, it is expected that the noise reduction capabilities of the former would exceed those of the latter, at the cost of some distortion (at least in terms of phase) on the desired signal.
+It is obvious that the beamformer from \cref{eq:sec3:solution_mpdr_beamformer_hard} also satisfies the soft constraint from \cref{eq:sec3:soft_distortionless_constriant}. Thus, since we are using a less restricting constraint to obtain $\bvf{\mpdr_2;k}[l]$ compared to $\bvf{\mpdr_1;k}[l]$, it is expected that the noise reduction capabilities of the former would exceed those of the latter, at the cost of some distortion (at least in terms of phase) on the desired signal. With the STFT, this formulation is strictly equivalent to that in \cref{eq:sec3:solution_mpdr_beamformer_hard}, by definition of the variables, and thus both beamformers for the STFT are equivalent.
+
+%\begin{algorithm}
+%	\caption{Beamformer calculation}
+%	\begin{algorithmic}
+%		\Require $x$
+%		\Ensure $\bvf$
+%	\end{algorithmic}
+%\end{algorithm}

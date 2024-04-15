@@ -162,8 +162,8 @@ It is easy to verify that
 \end{subgather}
 not being useful to solve this problem since they're dependent equations. Other possibilities include trying to use the FT's RTF, however it is also easy to check that 
 \begin{subgather}
-	\abs{A_{m;\sF}(f)}^2 = \frac{\E{22}}{\E{11}} \\
-	\angle{A_{m;\sF}(f)} = \atan{\frac{\E*{12}}{\E{12}}}
+	\abs{A_{m;\F}(f)}^2 = \frac{\E{22}}{\E{11}} \\
+	\angle{A_{m;\F}(f)} = \atan{\frac{\E*{12}}{\E{12}}}
 \end{subgather}
 thus again not being independent relationships between the variables at hand. This is an under-determined system with $3$ equations and $4$ variables, which has infinite solutions. Given any choice of $\ar$ such that $\abs{\ar} \leq \E{11}$, we can find $\ai$ through \cref{eq:sec2:system_equations_gamma:subeq1}, and $\gr$ and $\gi$ (which are equivalent to $A_{2,\R}'$ and $A_{2,\R}''$) via \cref{eq:sec2:system_equations_gamma:sol_gr_gi}.
 
@@ -206,14 +206,14 @@ Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:eq
 As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain as
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_mtf}
-	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \Re{H}_{\sF}[k] + X_{\sS}[l,K-k] \Im{H}_{\sF}[k]
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] H_{\sS}'[k] + X_{\sS}[l,K-k] H_{\sS}''[k]
 \end{equation}
 or, with the convolutive transfer function (CTF) model \cite{talmon_relative_2009},
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_ctf}
-	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast \Re{H}_{\sF}[l,k] + X_{\sS}[l,K-k] \ast \Im{H}_{\sF}[l,k]
+	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over the frames $l$.
+in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$.
 
 Under the same assumptions as in \cref{subsec:sec2:relative_transfer_functions}, we can write the output of our systems with the CTF model in the SSBT domain as
 \begin{equation}
@@ -222,7 +222,7 @@ Under the same assumptions as in \cref{subsec:sec2:relative_transfer_functions},
 \end{equation}
 where $A_{m;\sS}'[l,k]$ and $A_{m;\sS}''[l,k]$ are defined such that
 \begin{equation}
-	X_{1;\sS}^n[l,k] \ast A_{m;\sS}^n[l,k] = X_{\sS}^n[l,k] \ast H_{m\sS}^n[l,k]
+	X_{1;\sS}^n[l,k] \ast A_{m;\sS}^n[l,k] = X_{\sS}^n[l,k] \ast H_{m;\sS}^n[l,k]
 \end{equation}
 
 From \cref{eqs:sec2:def_Hm'_Hm''_rft,eqs:sec2:def_X1'_and_X1''_rft,eq:sec2:definition_X1_rft} we have that $X_{1}'[l,k] \neq X_{1}''[l,K-k]$, even though both originate from $X_{1}[l,k]$. Likewise, for the same reason $X_{1}''[l,k] \neq X_{1}'[l,K-k]$.
