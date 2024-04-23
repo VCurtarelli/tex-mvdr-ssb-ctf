@@ -19,7 +19,7 @@ Treating the multiple paths between the desired source and the $m$-th sensor as 
 	X_{1,k}'[l] = H_{1,k}'[l] \ast X_k[l] \\
 	X_{1,k}''[l] = H_{1,k}''[l] \ast X_{K-k}[l]
 \end{subgather}
-where $X_{1,k}'[l]$ is the portion of the desired signal at the reference sensor of the direct frequency, $X_{1,k}''[l]$ is the portion of the conjugate frequency $K-k$, $H^n_{1,k}[l]$ are the desired signal's transfer functions between source and reference, and $A^n_{m,k}[l]$ are the RTF's between each sensor and the reference. This formulation models both the STFT and the SSBT, as with the STFT we just take $A_{m,k}''[l] = H_{m,k}''[l] = 0$, as there is no cross-over between conjugate frequencies.
+where $X_{1,k}'[l]$ is the portion of the desired signal at the reference sensor of the direct frequency, $X_{1,k}''[l]$ is the desired signal on the conjugate frequency $(K-k)$, $H^n_{1,k}[l]$ are the desired signal's transfer functions between source and reference, and $A^n_{m,k}[l]$ are the RTF's between each sensor and the reference. This formulation models both the STFT and the SSBT, as with the STFT we just take $A_{m,k}''[l] = H_{m,k}''[l] = 0$, as there is no cross-over between conjugate frequencies.
 
 Note that $A_{m,k}[l]$ isn't strictly a causal response, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. We will assume that there are $\Delta$ non-causal samples in $A_{m,k}[l]$. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
 
@@ -48,7 +48,7 @@ in which
 	\label{eq:sec3:def_bvY_sample-stacking}
 	\bvY{m,k}[l] = \tr{ \tup{ {Y_{m,k}[l+\Ly*]} ,, {Y_{m,k}[l]} ,, {Y_{m,k}[l-\Ly]} } }
 \end{equation}
-and similarly for all other signals, and
+similarly for $\bvQ{m,k}[l]$, $\bvS{m,k}[l]$ and $\bvR{m,k}[l]$, and
 \begin{equation}
 	\bvA_{m,k}^n = \tr{\tup{ {A^n_{m,k}[\Ly*]} ,, {A^n_{m,k}[0]} ,, {A^n_{m,k}[-\Ly]} }}
 \end{equation}
@@ -154,6 +154,8 @@ where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy
 \end{equation}
 
 It is obvious that the beamformer from \cref{eq:sec3:solution_mpdr_beamformer_hard} also satisfies the soft constraint from \cref{eq:sec3:soft_distortionless_constriant}. Thus, since we are using a less restricting constraint to obtain $\bvf{\mpdr_2;k}[l]$ compared to $\bvf{\mpdr_1;k}[l]$, it is expected that the noise reduction capabilities of the former would exceed those of the latter, at the cost of some distortion (at least in terms of phase) on the desired signal. With the STFT, this formulation is strictly equivalent to that in \cref{eq:sec3:solution_mpdr_beamformer_hard}, by definition of the variables, and thus both beamformers for the STFT are equivalent.
+
+It is useful to bring \cref{prop:rtfs_are_even-func_of_frequency} to light. Since the relative transfer functions are an even function on frequency (that is, for the SSBT $\bva{k} = \bva{K-k}$), then we trivially don't have to calculate the filter for both frequencies, given that the should be equal. Therefore, we have a behavior similar to that of the STFT, where we only have to estimate the desired signal for half of the spectrum (for a real time-domain signal), and the other half would come implicitly from the complex-conjugate property.
 
 %\begin{algorithm}
 %	\caption{Beamformer calculation}

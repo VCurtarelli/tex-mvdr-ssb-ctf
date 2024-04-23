@@ -215,7 +215,7 @@ with an inverse
 	\end{equation}
 \end{Property}
 
-\begin{Property}{RTF's are even on frequency.}[\label{prop:rtfs_are_even-func_of_frequency}]
+\begin{Property}{Relative transfer functions are even on frequency.}[\label{prop:rtfs_are_even-func_of_frequency}]
 	First, given two real systems with a shared input $x(t)$, each with an impulse response $h_m(t)$ and an output $y_m(t)$, such that
 	\begin{equations}
 		Y_{1}(f) = X(f) \Re{H_{1,\F}}(f) + X(\-f) \Im{H_{1,\F}}(f) \\
@@ -252,8 +252,20 @@ with an inverse
 	& = \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} = \frac{-\Im{H_{m,\F}}(f)}{-\Im{H_{1,\F}}(f)} \\
 	& = A_m''(f)
 	\end{equations}
-	where we used that $H_{m\F}(f) = H_{m\F}^*(\-f)$, if $h_m(t)$ is real-valued.
+	where we used that $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, if $h_m(t)$ is real-valued.
 	
-	With this, $A_m'(f) = A_m'(\-f)$ and $A_m''(f) = A_m''(\-f)$, and therefore the RTF's $A_m'(f)$ and $A_m''(f)$ are even in terms of conjugate frequencies.
+	If we instead define one relative transfer function $A_m(f)$ such that
+	\begin{equations}{eq:propVII:new_bva_vector_element_def}
+		A_m(f) = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)}
+	\end{equations}
+	it is easy to see that
+	\begin{equations}
+		A_m(\-f)
+		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \bts{- \Im{H_{m,\F}}(f)} \bts{-\Im{H_{1,\F}}(f)}}{{\Re{H_{1,\F}}}^2(f) + \bts{-\Im{H_{1,\F}}}^2(f)} \\
+		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)} \\
+		& = A_m(f)
+	\end{equations}
+	
+	With this, $A_m'(f) = A_m'(\-f)$ and $A_m''(f) = A_m''(\-f)$, and also $A_m(f) = A_m(\-f)$, and therefore all defined relative transfer functions are even in terms of conjugate frequencies.
 	
 \end{Property}
