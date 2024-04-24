@@ -1,8 +1,24 @@
 \makeatletter
 \newcommand{\Sym@tr}{\mathsf{T}\vphantom{\bar{\mathsf{T}}}}
 \newcommand{\Sym@he}{\mathsf{H}\vphantom{\bar{\mathsf{H}}}}
-\newcommand{\tr}[1]{#1^{\Sym@tr}}
-\newcommand{\he}[1]{#1^{\Sym@he}}
+\DeclareDocumentCommand{\tr}{s m}{%
+	\IfBooleanTF{#1}{%
+		{#2}\mkern-6mu^{\Sym@tr}\mkern3mu%
+	}{%
+		#2^{\Sym@tr}%
+	}%
+}
+\DeclareDocumentCommand{\he}{s m}{%
+	\IfBooleanTF{#1}{%
+		{#2}\mkern-6mu^{\Sym@he}\mkern3mu%
+	}{%
+		#2^{\Sym@he}%
+	}%
+}
+%\newcommand{\tr}[1]{#1^{\Sym@tr}}
+%\newcommand{\he}[1]{#1^{\Sym@he}}
+%\let\symtr\Sym@tr
+%\let\symhe\Sym@he
 %
 \NewDocumentCommand{\Sym@inv}{O{1}}{
 	\myminus\mkern-2mu \mathsf{#1}

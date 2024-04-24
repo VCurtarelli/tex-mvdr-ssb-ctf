@@ -76,6 +76,7 @@
 \newbv{B}
 \newbv{d}
 \newbv{D}
+\newbv{X}
 \def\bvfb{\bv{f}[b]}
 
 \newbv*[La]{\Lambda}
@@ -101,6 +102,11 @@
 \MakeSymbol\dlt{\scaleobj{0.8}{\Delta}}
 \AtBeginDocument{\def\O{\mathcal{O}}}
 
+\NewDocumentCommand{\Ld}{s}{%
+	\IfBooleanTF{#1}{\bar{L}}{L}_D%
+}
+
 \NewDocumentCommand{\Ly}{s}{%
 	\IfBooleanTF{#1}{\bar{L}}{L}_Y%
 }
+
