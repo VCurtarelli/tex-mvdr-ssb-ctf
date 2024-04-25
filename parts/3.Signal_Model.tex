@@ -152,7 +152,7 @@ where we expose each component of our desired signal. From this, we can derive t
 	\label{eq:sec3:hard_distortionless_constriant}
 	X_{f,k}[l] = X_{1,k}[l]
 \end{equation}
-which is equivalent to requiring that each component of $X_{1,k}[l]$ is distortionlessly recovered. From \cref{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}, we have that the desired signal on the current instant, $X_{1,k}^n[l]$, is the $(\Delta+1)$-th element of $\bvx[b]{1,k}^n[l]$. Therefore, our distortionless constraint can be written as
+which is equivalent to requiring that each component of $X_{1,k}[l]$ is distortionlessly recovered. From \cref{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}, we have that the desired signal on the current instant is the $(\Delta+1)$-th element of $\bvx[b]{1,k}^n[l]$. Therefore, our distortionless constraint can be written as
 \begin{subgather}{eq:sec3:hard_distortionless_constraint_separate}
 	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq1} \\
 	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
@@ -195,7 +195,7 @@ in which $A_{m,k}[\lambda]$ is
 	A_{m,k}[\lambda] = \frac{ \expec{X_{m,k}[l+\lambda] X_{1,k}[l]} }{ \expec{X_{1,k}^2[l] } }
 \end{equation}
 
-It is easy to see that $A_{m,k}$ is independent of $\ar$ and $\ai$, depending only on the statistics of the signals. We also see that \cref{eq:sec3:def_Amk-l_ssbt_soft-distortionless} has the same format as \cref{eq:sec2:calc_RTF_ft_expec} (except for a complex-conjugate), which is used with the STFT for estimating the coefficients of the steering vector. From $\bvd{m,k}$, we define $\bvD{k}$ following the exact same steps as those in \cref{eq:sec3:def_bvDk_n,eq:sec3:sample-stacking_bvDb_bvxb:subeq1}. It is easy to see that $\he{\bvf{k}}[l] \bvD{k} = \tr{\bvi{\Delta}}$ implies \cref{eq:sec3:soft_distortionless_constriant}.
+It is trivial that $A_{m,k}$ is independent of $\ar$ and $\ai$, depending only on the statistics of the signals. We also see that \cref{eq:sec3:def_Amk-l_ssbt_soft-distortionless} has the same format as \cref{eq:sec2:calc_RTF_ft_expec} (except for a complex-conjugate), which is used with the STFT for estimating the coefficients of the steering vector. From $\bvd{m,k}$, we define $\bvD{k}$ following the exact same steps as those in \cref{eq:sec3:def_bvDk_n,eq:sec3:sample-stacking_bvDb_bvxb:subeq1}. It is easy to see that $\he{\bvf{k}}[l] \bvD{k} = \tr{\bvi{\Delta}}$ implies \cref{eq:sec3:soft_distortionless_constriant}.
 
 %Given that it is feasible to estimate the steering vector from \cref{eq:sec3:new_bva_vector_element_def}, opposite to those that would be necessary for \cref{eq:sec3:hard_distortionless_constriant_separate}, we will use the ``soft'' distortionless constraint from \cref{eq:sec3:new_bva_vector_ssbt,eq:sec3:new_bva_vector_element_def}.
 
