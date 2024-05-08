@@ -1,0 +1,200 @@
+\input{figures/io_input/colors_6.tex}
+\NewDocumentCommand{\filename}{m}{%
+	\small{\texttt{#1}}
+}
+\let\mc\multicolumn
+\section{Comparisons and simulations}
+\label{sec:results}
+
+In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD database \cite{smard_database}. In all cases we will use $\Ld = \Ly$ and $\Delta = 0$; that is, we don't use any non-causal frames, and we consider as many frame samples as RIR samples.
+
+The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(3\m,~4\m,~1\m)$, being comprised of $M=8$ sensors. They are arranged in a circular array with radius of $8\si{\centi\meter}$, and all are omnidirectional of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. The room's layout is in \cref{fig:room_layout}, where in green we have the desired source (assumed to be omnidirectional), and in red the device, with the $8$ sensors and the loudspeaker on the center.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{rll}
+		Source & Position 				& Signal \\
+		\hline\vphantom{$\tilde{d}$}
+		$x[n]$ & $(2\m,~1\m,~1.8\m)$ 	& \filename{50\_male\_speech\_english\_ch8\_OmniPower4296.flac} \\
+		$s[n]$ & $(3\m,~2\m,~1\m)$ 		& \filename{69\_abba\_ch8\_OmniPower4296.flac} \\
+		$r[n]$ & \mc{1}{c}{$\sim$}		& \filename{wgn\_48kHz\_ch8\_OmniPower4296.flac}
+	\end{tabular}
+	\caption{Source information for the simulations.}
+	\label{tab:sec4:information_position_sources}
+\end{table}\vspace*{-2em}
+
+\begin{figure}[!t]
+	\centering
+	\includesvg[width=0.7\linewidth]{figures/drawing/room_layout.svg}
+	\caption{Room layout for simulations.}
+	\label{fig:room_layout}
+\end{figure}
+
+All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$. For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. The beamformers were calculated once for the whole signal, for faster processing and ease to compare the results. We will compare the two transforms exposed, the STFT and the SSBT.
+
+In line plots, STFT is presented in red and SSBT in green lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a better visualization.
+%
+
+\subsection{Basic comparison}
+At the reference sensor (assumed to be the one at $(3\m,~1.92\m,~1\m)$), the SNR for the loudspeaker's and noise signals are respectively $-15\dB$ and $30\dB$. These will be referred as Signal-to-Echo and Signal-to-Noise Ratios (SER and SNR) in that order. We will use $\Ly = 1$ and $\Ly = 15$ to illustrate two different cases in terms of samples used.
+
+\input{figures/io_input/aux_data_32.tex}
+\begin{figure}[!t]
+	\centering
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot__DSRF_l__iSER_n15__err_0.tex}
+		\caption{Per-window broadband DSRF.}
+		\label{subfig:lineplot__DSRF_l__iSER_n15__err_0}
+	\end{subfigure}\\[1em]
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot__gSER_l__iSER_n15__err_0.tex}
+		\caption{Per-window broadband ERLE.}
+		\label{subfig:lineplot__gSER_l__iSER_n15__err_0}
+	\end{subfigure}\\[1em]
+	\begin{subfigure}{\textwidth}
+		\centering
+		\input{figures/lineplot__gSNR_l__iSER_n15__err_0.tex}
+		\caption{Per-window broadband NSRF.}
+		\label{subfig:lineplot__gSNR_l__iSER_n15__err_0}
+	\end{subfigure}\\[1em]
+	\ref*{timeplot_legend}
+	\caption{Output metrics for the beamformers over time, in the base scenario.}
+	\label{fig:lineplot__iSER_n15__Ly_1__err_0}
+\end{figure}
+
+In these simulations, we are interested in three metrics results: maintenance/no-distortion of the desired signal; decrease in the loudspeaker's signal; and reduction/minimal enhancement of the white noise. In order, these will be measured by the desired signal reduction factor (DSRF), signal-to-echo ratio gain (gSER), and signal-to-noise ratio gain (gSNR), the later being used for the white noise given that the only other undesired signal at the sensors is white uncorrelated. Their time-dependent broadband formulations are, respectively,
+\begin{subgather}
+	\dsrf[l] = \frac{\sum_{k}\abs{X_{1,k}[l]}^2}{\sum_{k}\abs{X_{f,k}[l]}^2} \\
+	\gser[l] = \frac{\sum_{k}\abs{S_{1,k}[l]}^2}{\sum_{k}\abs{S_{f,k}[l]}^2} \cdot \frac{1}{\dsrf[l]} \\
+	\gsnr[l] = \frac{\sum_{k}\abs{V_{1,k}[l]}^2}{\sum_{k}\abs{V_{f,k}[l]}^2} \cdot \frac{1}{\dsrf[l]}
+\end{subgather}
+
+From \cref{subfig:lineplot__DSRF_l__iSER_n15__err_0}, we see that in the case $\Ly = 1$ both filters led to some distortion on the desired signal, given that their DSRF isn't zero. Also, with $\Ly = 10$ the STFT beamformer caused no distortion, while the SSBT beamformer led to some (although much less) distortion. This is due to the fact that when we consider only the current sample ($\Ly = 1$), previous samples of $X_{1,k}[l]$ interfere in the results, and increasing the number of samples ($\Ly = 10$) reduces this effect drastically.
+
+From the gSER results in \cref{subfig:lineplot__gSER_l__iSER_n15__err_0} it is noticeable that the STFT filter outperformed the SSBT beamformer for both number of samples, with a small margin for $\Ly = 1$ and a large margin for $\Ly = 10$. This effect can be explained by the fact that, to achieve a distortionless behavior, the SSBT beamformer has to enforce twice as many constraints as the STFT, therefore leaving less ``space'' for the noise reduction portion of the enhancement. A similar result can be seen in terms of gain in SNR, with the SSBT filter being strictly outperformed by the STFT one.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\subsection{Comparison over different input SERs}
+%
+%We now examine the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. For such, we will use the time-average metrics, as presented below. The other parameters and variables are maintained from the previous simulations, with only the SER being changed.
+%
+%\begin{subgather}{eq:sec4:time-average_metrics}
+%	\dsrf = \frac{\sum_{l,k}\abs{X_1[l,k]}^2}{\sum_{l,k}\abs{X_f[l,k]}^2} \\
+%	\erle = \frac{\sum_{l,k}\abs{S_1[l,k]}^2}{\sum_{l,k}\abs{S_f[l,k]}^2} \\
+%	\nsrf = \frac{\sum_{l,k}\abs{V_1[l,k]}^2}{\sum_{l,k}\abs{V_f[l,k]}^2}
+%\end{subgather}
+%
+%\input{figures/io_input/aux_data_32.tex}
+%\begin{figure}[!t]
+%	\centering
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__DSRF__iSER_var__Ly_10__err_0.tex}
+%		\caption{Time-average broadband DSRF.}
+%		\label{subfig:lineplot__DSRF__iSER_var__Ly_10__err_0}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__ERLE__iSER_var__Ly_10__err_0.tex}
+%		\caption{Time-average broadband ERLE.}
+%		\label{subfig:lineplot__ERLE__iSER_var__Ly_10__err_0}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__NSRF__iSER_var__Ly_10__err_0.tex}
+%		\caption{Time-average broadband NSRF.}
+%		\label{subfig:lineplot__NSRF__iSER_var__Ly_10__err_0}
+%	\end{subfigure}\\[1em]
+%	\ref*{timeplot_legend}
+%	\caption{Output metrics for the beamformers for varying input SERs.}
+%	\label{fig:lineplot__iSER_var__Ly_1__err_0}
+%\end{figure}
+%
+%As seen in \cref{subfig:lineplot__DSRF__iSER_var__Ly_1__err_0}, the STFT and DF-SSBT beamformers caused zero distortion, and the SF-SSBT beamformer led to some. We can also see that this distortion decreases as the loudspeaker SNR increases.
+%
+%In terms of ERLE, we see that the SF-SSBT is strictly worse than the two other beamformers, for all SER's. The DF-SSBT beamformer has a similar performance to that of the STFT beamformer for $\iser \lessapprox -20\dB$, but is outperformed for higher iSER's.
+%
+%For the NSRF we see the same results as were obtained previously, with the white-noise increase for the STFT beamformer being considerably lower than that for both SSBT-based beamformers. It is interesting that the performance of both SSBT beamformers worsens for higher iSER's, for both the ERLE and NSRF metrics.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\subsection{Comparison for different $L_Y$}
+%
+%Going back to observing only the case for $\iser = -15\dB$, we will now investigate the effects of varying $L_Y$ on the beamformers' performances.
+%
+%\begin{figure}[!t]
+%	\centering
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__DSRF__iSER_n15__Ly_var__err_0.tex}
+%		\caption{Per-window broadband DSRF.}
+%		\label{subfig:lineplot__DSRF__iSER_n15__Ly_var__err_0}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__ERLE__iSER_n15__Ly_var__err_0.tex}
+%		\caption{Per-window broadband ERLE.}
+%		\label{subfig:lineplot__ERLE__iSER_n15__Ly_var__err_0}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__NSRF__iSER_n15__Ly_var__err_0.tex}
+%		\caption{Per-window broadband NSRF.}
+%		\label{subfig:lineplot__NSRF__iSER_n15__Ly_var__err_0}
+%	\end{subfigure}\\[1em]
+%	\ref*{timeplot_legend}
+%	\caption{Output metrics for the beamformers for varying input $L_Y$'s.}
+%	\label{fig:lineplot__iSER_n15__Ly_var__err_0}
+%\end{figure}
+%
+%In this comparison, we have two different relevant effects that can be seen: firstly, we see that the SF-SSBT beamformer's performance deteriorates drastically, for both the desired signal's distortionless-ness behavior, and the ERLE. This is likely due to the mathematical results exposed in \cref{app:ssbt_convolution}, and since the SSBT transform doesn't respect the convolution, a convolutive filter doesn't work well with it. Note that this is not the case for the DF-SSBT beamformer, since these were appropriately designed to bypass this complication. The increase in the SF-SSBT's NSRF performance is due to it no not working correctly, and thus ``randomly".
+%
+%Another relevant result from this comparison is that increasing $L_Y$ doesn't seem to have much of an effect on neither the ERLE nor the NSRF, for both the STFT and DF-SSBT beamformers. We also see, in accordance with the previous results, that the STFT beamformer strictly outperforms the DF-SSBT one for both metrics.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Comparison with perturbation}
+%
+%\begin{figure}[!t]
+%	\centering
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__DSRF__iSER_n15__Ly_1__err_var.tex}
+%		\caption{Per-window broadband DSRF.}
+%		\label{subfig:lineplot__DSRF__iSER_n15__Ly_1__err_var}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSER__iSER_n15__Ly_1__err_var.tex}
+%		\caption{Per-window broadband gSER.}
+%		\label{subfig:lineplot__gSER__iSER_n15__Ly_1__err_var}
+%	\end{subfigure}\\[1em]
+%	\begin{subfigure}{\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSNR__iSER_n15__Ly_1__err_var.tex}
+%		\caption{Per-window broadband gSNR.}
+%		\label{subfig:lineplot__gSNR__iSER_n15__Ly_1__err_var}
+%	\end{subfigure}\\[1em]
+%	\ref*{timeplot_legend}
+%	\caption{Output metrics for the beamformers with error in the steering vectors.}
+%	\label{fig:lineplot__v7_iSER_n15__Ly_1__err_var}
+%\end{figure}
+%
+%As exposed in \cref{sec:perturbation_analysis}, it is also of interest to compare how robust the derived beamformers are, when the information regarding the desired signal's RIR isn't accurate. For such, we model the matrix $\bvA[u]{k}$ as
+%\begin{equation}
+%	\bvA[u]{k} = \bvA[u]{k}^\star + \Delta\bvA[u]{k}
+%\end{equation}
+%where $\bvA[u]{k}^\star$ is the accurate steering matrix, and $\Delta\bvA[u]{k}$ is a perturbation on it, which we assume is a zero-mean uniform white noise, with an adjustable variance.
+%
+%Since in this scenario the desired signal can suffer some distortion (given that its steering matrix isn't appropriately estimated), we will use the gain in SER and gain in SNR metrics instead of ERLE and NSRF, to take this distortion into account. These are defined as
+%\begin{subgather}
+%	\gser = \frac{\erle}{\dsrf} \\
+%	\gsnr = \frac{\nsrf}{\dsrf}
+%\end{subgather}
+%
+%The DSRF will still be showed, to give a sense of proportion on how much the beamformer distorts the desired signal. In the results of \cref{fig:lineplot__v7_iSER_n15__Ly_1__err_var}, the x-axis represents the standard deviation of $\Delta\bvA[u]{k}$, as a percentage of the standard deviation of $\bvA[u]{k}^\star$.
+%
+%Each metric showed a different result: differently than before, the SF-SSBT beamformer led to the least distortion on the desired signal, out of all three beamformers, and the DF-SSBT led to the most distortion. Meanwhile, the gain in SER showed the STFT beamformer to be the (overall) more robust, and the one that led to the best results, with the DF-SSBT again being the worse one. A similar result can be seen for the gain in SNR, with the STFT beamformer being the best, but in this regard the SF-SSBT beamformer led to the worst results, although marginally.
