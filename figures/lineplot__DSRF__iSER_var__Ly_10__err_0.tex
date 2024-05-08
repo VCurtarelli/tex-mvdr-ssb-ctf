@@ -1,0 +1,23 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+%\begin{subfigure}{\linewidth}
+%\centering
+%\tikzsetnextfilename{dsrf_lineplot_32_var_acc_v7}
+\begin{tikzpicture}
+	\begin{snrplot}{DSRF (dB)}[ymin=-3, ymax=0.03, ytick={-3, -2, -1, 0}]
+		\addplot [style=resA]
+		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF__STFT__N_32__iSER_var__Ly_10__err_0.csv};
+		
+		\addplot [style=resC]
+		table [col sep=comma, y=val] {figures/io_input/NSSBT/DSRF__NSSBT__N_32__iSER_var__Ly_10__err_0.csv};
+		
+		\addplot [style=resE]
+		table [col sep=comma, y=val] {figures/io_input/SSBT/DSRF__h____TSSBT__N_32__iSER_var__Ly_10__err_0.csv};
+	\end{snrplot}
+\end{tikzpicture}
+%	\caption{}
+%	\label{subfig:1_gain_lineplot}
+%\end{subfigure}

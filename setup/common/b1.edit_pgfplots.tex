@@ -105,7 +105,8 @@
 			text opacity=1,
 			%			at={(1.05, 0.5)},
 			%			anchor=west,
-			legend columns=6
+			legend columns=2,
+			/tikz/every even column/.append style={column sep=1em}
 		},
 		#5,
 		]
@@ -115,7 +116,7 @@
 }
 %BEGIN_FOLD
 \NewDocumentEnvironment{timeplot}{m O{}}{
-	\begin{lineplot}{Time ($\si{\second}$)}{#1}{0}{7.4}{#2}
+	\begin{lineplot}{Time ($\si{\second}$)}{#1}{0}{7.2}{#2}
 	}{
 	\end{lineplot}
 }
@@ -144,6 +145,36 @@
 \tikzstyle{axis} = [
 black
 ]
+\tikzstyle{resA1} = [
+thick, ColA, dash pattern = {on 1pt off 0pt},
+%mark=square*, mark size=1, mark options={
+	%	rotate=0,
+	%	solid,
+	%}
+]
+\tikzstyle{resA2} = [
+thick, ColA, dash pattern = {on 4pt off 2pt},
+%mark=square*, mark size=1, mark options={
+	%	rotate=0,
+	%	solid,
+	%}
+]
+\tikzstyle{resC1} = [
+thick, ColC, dash pattern = {on 1pt off 0pt},
+%mark=square*, mark size=1, mark options={
+	%	rotate=0,
+	%	solid,
+	%}
+]
+\tikzstyle{resC2} = [
+thick, ColC, dash pattern = {on 4pt off 2pt},
+%mark=square*, mark size=1, mark options={
+	%	rotate=0,
+	%	solid,
+	%}
+]
+
+
 \tikzstyle{resA} = [
 thick, ColA, dash pattern = {on 1pt off 0pt},
 %mark=square*, mark size=1, mark options={
