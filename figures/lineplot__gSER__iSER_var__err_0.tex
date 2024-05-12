@@ -1,0 +1,26 @@
+%% Requires:
+% pgfplots.sty
+% edit_pgfplots.tex
+
+\pgfplotsset{compat=1.18}
+%\begin{subfigure}{\linewidth}
+%\centering
+%\tikzsetnextfilename{erle_lineplot_32_var_acc_v7}
+\begin{tikzpicture}
+	\begin{snrplot}{gSER (dB)}%[ymin=10, ymax=30, ytick={12, 18, 24, 30}]
+		\addplot [style=resA1]
+		table [col sep=comma, y=val] {figures/io_input/STFT/gSER__h__STFT__N_32__iSER_var__Ly_1__err_0.csv};
+		
+		\addplot [style=resA2]
+		table [col sep=comma, y=val] {figures/io_input/STFT/gSER__h__STFT__N_32__iSER_var__Ly_15__err_0.csv};
+		
+		\addplot [style=resC1]
+		table [col sep=comma, y=val] {figures/io_input/SSBT/gSER__h__SSBT__N_32__iSER_var__Ly_1__err_0.csv};
+		
+		\addplot [style=resC2]
+		table [col sep=comma, y=val] {figures/io_input/SSBT/gSER__h__SSBT__N_32__iSER_var__Ly_15__err_0.csv};
+	\end{snrplot}
+\end{tikzpicture}
+%	\caption{}
+%	\label{subfig:1_gain_lineplot}
+%\end{subfigure}
