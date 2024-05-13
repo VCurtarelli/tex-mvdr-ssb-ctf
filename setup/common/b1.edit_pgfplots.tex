@@ -139,6 +139,12 @@
 	\end{lineplot}
 }
 
+\NewDocumentEnvironment{nbinsplot}{m O{}}{
+\begin{lineplot}{Number of bins}{#1}{32}{512}{xtick={32, 128, ..., 512}, #2}
+}{
+\end{lineplot}
+}
+
 %END_FOLD
 
 %BEGIN_FOLD
@@ -147,31 +153,31 @@ black
 ]
 \tikzstyle{resA1} = [
 thick, ColA, dash pattern = {on 1pt off 0pt},
-%mark=square*, mark size=1, mark options={
-	%	rotate=0,
-	%	solid,
-	%}
+	mark=square*, mark size=1.2, mark options={
+		rotate=0,
+		solid,
+	}
 ]
 \tikzstyle{resA2} = [
-thick, ColA, dash pattern = {on 4pt off 2pt},
-%mark=square*, mark size=1, mark options={
-	%	rotate=0,
-	%	solid,
-	%}
+thick, ColA, dash pattern = {on 4pt off 4pt},
+	mark=square*, mark size=1.2, mark options={
+		rotate=0,
+		solid,
+	}
 ]
 \tikzstyle{resC1} = [
 thick, ColC, dash pattern = {on 1pt off 0pt},
-%mark=square*, mark size=1, mark options={
-	%	rotate=0,
-	%	solid,
-	%}
+	mark=triangle*, mark size=1.5, mark options={
+		rotate=0,
+		solid,
+	}
 ]
 \tikzstyle{resC2} = [
-thick, ColC, dash pattern = {on 4pt off 2pt},
-%mark=square*, mark size=1, mark options={
-	%	rotate=0,
-	%	solid,
-	%}
+thick, ColC, dash pattern = {on 4pt off 4pt},
+	mark=triangle*, mark size=1.5, mark options={
+		rotate=0,
+		solid,
+	}
 ]
 
 

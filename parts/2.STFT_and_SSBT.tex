@@ -183,24 +183,24 @@ We now let $X_1'(f) = X_1(f)$ and $X_1''(f) = X_1(\-f)$, as our new system input
 	X_1(f) = A_1'(f) X_1'(f) + A_1''(f) X_1''(f) \\
 	X_2(f) = A_2'(f) X_1'(f) + A_2''(f) X_1''(f)
 \end{subgather}
-where $A_m'(f)$ and $A_m''(f)$ are the relative frequency responses between the new inputs $X_1'(f)$ and $X_1''(f)$ and the output $X_m(f)$. Trivially, we have that $A_1'(f) = 1$ and $A_1''(f) = 0$.
+where $A_m'(f)$ and $A_m''(f)$ are the relative frequency responses between the new inputs $X_1'(f)$ and $X_1''(f)$ and the output $X_m(f)$. Trivially, we easily see that $A_1'(f) = 1$ and $A_1''(f) = 0$.
 
 Using \cref{eqs:sec2:def_Hm'_Hm''_rft,eqs:sec2:system_eqs_X1f_X2f_H:subeq1}, we have that
 \begin{equation}
-	X_2(f) = \pts{A_m'(f) H_1'(f) - A_m''(f) H_1''(f)} X'(f) + \pts{A_m'(f) H_1''(f) + A_m''(f) H_1'(f)} X''(f)
+	X_2(f) = \pts{A_2'(f) H_1'(f) - A_2''(f) H_1''(f)} X'(f) + \pts{A_2'(f) H_1''(f) + A_2''(f) H_1'(f)} X''(f)
 \end{equation}
 and, by comparing with $X_2(f)$ from \cref{eqs:sec2:system_eqs_X1f_X2f_H:subeq2}, we have a system of equations (omitting the frequency index for simplicity)
 \begin{subgather}
-	A_m' H_1' - A_m'' H_1'' = H_m' \\
-	A_m' H_1'' + A_m'' H_1' = H_m''
+	A_2' H_1' - A_2'' H_1'' = H_2' \\
+	A_2' H_1'' + A_2'' H_1' = H_2''
 \end{subgather}
 whose solution is
 \begin{subgather}
-	A_m' = \frac{H_1' H_m' + H_1'' H_m''}{{H_1'}^2 + {H_1''}^2} \\
-	A_m'' = \frac{H_1' H_m'' - H_1'' H_m'}{{H_1'}^2 + {H_1''}^2}
+	A_2' = \frac{H_1' H_2' + H_1'' H_2''}{{H_1'}^2 + {H_1''}^2} \\
+	A_2'' = \frac{H_1' H_2'' - H_1'' H_2'}{{H_1'}^2 + {H_1''}^2}
 \end{subgather}
 
-Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
+Through the properties of the RFT exposed in \cref{app:properties_rft}, we have that
 \begin{subalign}{eqs:sec2:system_equations}
 	\expec{X_{1}(f) X_{1}(f)}   & = \pts{ {H_1'}^2(f)       + {H_1''}^2(f)     } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
 	\expec{X_{1}(f) X_{2}(f)}   & = \pts{  H_1'(f) H_2'(f)  +  H_1'(f) H_2'(f) } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
@@ -208,11 +208,18 @@ Through the properties of the RFT exposed in \cref{app:properties_rft}, we can b
 \end{subalign}
 where $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$. With this, it is trivial to see that
 \begin{subgather}
+	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \\
+	A_2''(f) = \frac{\expec{X_1(f) X_2(\-f)}}{\expec{X_1^2(f)}}
+\end{subgather}
+which is strikingly similar to the usual result used for the STFT, from \cref{eq:sec2:calc_RTF_ft_expec}.
+
+Going to a more generic situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
+\begin{subgather}
 	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \\
 	A_m''(f) = \frac{\expec{X_1(f) X_m(\-f)}}{\expec{X_1^2(f)}}
 \end{subgather}
 
-The FT formulation can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$ and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output}, as it is a less restricting model.
+Note that the FT formulation can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT we will use the considerations stated before.
 
 \subsection{Discrete time-frequency transforms}
 
