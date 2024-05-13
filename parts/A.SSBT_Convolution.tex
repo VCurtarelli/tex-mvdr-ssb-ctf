@@ -215,7 +215,7 @@ with an inverse
 	\end{equation}
 \end{Property}
 
-\begin{Property}{Relative transfer functions are even on frequency.}[\label{prop:rtfs_are_even-func_of_frequency}]
+\begin{Property}{Relative transfer functions with the RFT are even for frequency-to-frequency and odd for conjugate-frequency.}[\label{prop:rtfs_are_even-odd_on_frequency}]
 	First, given two real systems with a shared input $x(t)$, each with an impulse response $h_m(t)$ and an output $y_m(t)$, such that
 	\begin{equations}
 		Y_{1}(f) = X(f) \Re{H_{1,\F}}(f) + X(\-f) \Im{H_{1,\F}}(f) \\
@@ -228,44 +228,94 @@ with an inverse
 	\end{equations}
 	where we are omitting the transform index when it is an RFT's domain value, for compactness. If we define $X_1'(f)$ and $X_1''(f)$ as
 	\begin{equations}
-		X_1'(f) = \Re{H_{1,\F}}(f) X(f) \\
-		X_1''(f) = \Im{H_{1,\F}}(f) X(\-f)
+		X_1'(f) = Y_1(f) \\
+		X_1''(f) = Y_1(\-f)
 	\end{equations}
 	then
 	\begin{equations}
-		Y_m(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)}X_1'(f) + \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)} X_1''(f) \\
-		Y_m(\-f) = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)}X_1'(\-f) + \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} X_1''(\-f)
+		Y_m(f) = A_m'(f) X_1'(f) + A_m''(f) X_1''(f) \\
+		Y_m(\-f) =  A_m'(\-f) X_1'(\-f) + A_m''(\-f) X_1''(\-f)
 	\end{equations}
-	By defining $A_m'(f)$ and $A_m''(f)$ as
+	where $A_m'(f)$ and $A_m''(f)$ are given by
 	\begin{equations}
-		A_m'(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
-		A_m''(f) = \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)}
+		A_m'(f)  = \frac{H_1'(f)H_m'(f) + H_1''(f)H_m''(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
+		A_m''(f) = \frac{H_1'(f)H_m''(f) - H_1''(f)H_m'(f)}{{H_1'}^2(f) + {H_1''}^2(f)}
 	\end{equations}
-	then, by analyzing these for negative frequencies, we have
+	and, for their conjugate frequencies,
 	\begin{equations}
-		A_m'(\-f)
-		& = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)} = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
-		& = A_m'(f)
+		A_m'(\-f)  = \frac{H_1'(\-f)H_m'(\-f) + H_1''(\-f)H_m''(\-f)}{{H_1'}^2(\-f) + {H_1''}^2(\-f)} \\
+		A_m''(\-f) = \frac{H_1'(\-f)H_m''(\-f) - H_1''(\-f)H_m'(\-f)}{{H_1'}^2(\-f) + {H_1''}^2(\-f)}
 	\end{equations}
+	Assuming that $h(t)$ is real-valued, then $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, and therefore $H_m'(f) = H_m'(\-f)$, and $H_m''(f) = -H_m''(\-f)$. With this,
 	\begin{equations}
-	A_m''(\-f)
-	& = \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} = \frac{-\Im{H_{m,\F}}(f)}{-\Im{H_{1,\F}}(f)} \\
-	& = A_m''(f)
+		\begin{split}
+			A_m'(\-f)
+			& = \frac{H_1'(f) H_m'(f) + \bts{-H_1''(f)}\bts{-H_m''(f)}}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
+			& = \frac{H_1'(f)H_m'(f) + H_1''(f)H_m''(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
+			& = A_m'(f)
+		\end{split}\\[0.5cm]
+		%
+		\begin{split}
+			A_m''(\-f)
+			& = \frac{H_1'(f) \bts{-H_m''(f)} - \bts{-H_1''(f)}H_m'(f)}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
+			& = \frac{- H_1'(f)H_m''(f) + H_1''(f)H_m'(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
+			& = -A_m''(f)
+		\end{split}\\
 	\end{equations}
-	where we used that $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, if $h_m(t)$ is real-valued.
-	
-	If we instead define one relative transfer function $A_m(f)$ such that
-	\begin{equations}{eq:propVII:new_bva_vector_element_def}
-		A_m(f) = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)}
-	\end{equations}
-	it is easy to see that
-	\begin{equations}
-		A_m(\-f)
-		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \bts{- \Im{H_{m,\F}}(f)} \bts{-\Im{H_{1,\F}}(f)}}{{\Re{H_{1,\F}}}^2(f) + \bts{-\Im{H_{1,\F}}}^2(f)} \\
-		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)} \\
-		& = A_m(f)
-	\end{equations}
-	
-	With this, $A_m'(f) = A_m'(\-f)$ and $A_m''(f) = A_m''(\-f)$, and also $A_m(f) = A_m(\-f)$, and therefore all defined relative transfer functions are even in terms of conjugate frequencies.
-	
+	Therefore, our frequency-to-frequency RTF $A_m'(f)$ is even, since $A_m'(f) = A_m'(\-f)$, and our conjugate-frequency RTF is odd, since $A_m''(f) = -A_m''(\-f)$.
 \end{Property}
+
+%\begin{Property}{Relative transfer functions are even on frequency.}[\label{prop:rtfs_are_even-func_of_frequency}]
+%	First, given two real systems with a shared input $x(t)$, each with an impulse response $h_m(t)$ and an output $y_m(t)$, such that
+%	\begin{equations}
+%		Y_{1}(f) = X(f) \Re{H_{1,\F}}(f) + X(\-f) \Im{H_{1,\F}}(f) \\
+%		Y_{2}(f) = X(f) \Re{H_{2,\F}}(f) + X(\-f) \Im{H_{2,\F}}(f)
+%	\end{equations}
+%	and, for their conjugate frequencies,
+%	\begin{equations}
+%		Y_{1}(\-f) = X(\-f) \Re{H_{1,\F}}(\-f) + X(f) \Im{H_{1,\F}}(\-f) \\
+%		Y_{2}(\-f) = X(\-f) \Re{H_{2,\F}}(\-f) + X(f) \Im{H_{2,\F}}(\-f)
+%	\end{equations}
+%	where we are omitting the transform index when it is an RFT's domain value, for compactness. If we define $X_1'(f)$ and $X_1''(f)$ as
+%	\begin{equations}
+%		X_1'(f) = \Re{H_{1,\F}}(f) X(f) \\
+%		X_1''(f) = \Im{H_{1,\F}}(f) X(\-f)
+%	\end{equations}
+%	then
+%	\begin{equations}
+%		Y_m(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)}X_1'(f) + \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)} X_1''(f) \\
+%		Y_m(\-f) = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)}X_1'(\-f) + \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} X_1''(\-f)
+%	\end{equations}
+%	By defining $A_m'(f)$ and $A_m''(f)$ as
+%	\begin{equations}
+%		A_m'(f) = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
+%		A_m''(f) = \frac{\Im{H_{m,\F}}(f)}{\Im{H_{1,\F}}(f)}
+%	\end{equations}
+%	then, by analyzing these for negative frequencies, we have
+%	\begin{equations}
+%		A_m'(\-f)
+%		& = \frac{\Re{H_{m,\F}}(\-f)}{\Re{H_{1,\F}}(\-f)} = \frac{\Re{H_{m,\F}}(f)}{\Re{H_{1,\F}}(f)} \\
+%		& = A_m'(f)
+%	\end{equations}
+%	\begin{equations}
+%	A_m''(\-f)
+%	& = \frac{\Im{H_{m,\F}}(\-f)}{\Im{H_{1,\F}}(\-f)} = \frac{-\Im{H_{m,\F}}(f)}{-\Im{H_{1,\F}}(f)} \\
+%	& = A_m''(f)
+%	\end{equations}
+%	where we used that $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, if $h_m(t)$ is real-valued.
+%	
+%	If we instead define one relative transfer function $A_m(f)$ such that
+%	\begin{equations}{eq:propVII:new_bva_vector_element_def}
+%		A_m(f) = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)}
+%	\end{equations}
+%	it is easy to see that
+%	\begin{equations}
+%		A_m(\-f)
+%		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \bts{- \Im{H_{m,\F}}(f)} \bts{-\Im{H_{1,\F}}(f)}}{{\Re{H_{1,\F}}}^2(f) + \bts{-\Im{H_{1,\F}}}^2(f)} \\
+%		& = \frac{\Re{H_{m,\F}}(f) \Re{H_{1,\F}}(f) + \Im{H_{m,\F}}(f) \Im{H_{1,\F}}(f)}{{\Re{H_{1,\F}}}^2(f) + {\Im{H_{1,\F}}}^2(f)} \\
+%		& = A_m(f)
+%	\end{equations}
+%	
+%	With this, $A_m'(f) = A_m'(\-f)$ and $A_m''(f) = A_m''(\-f)$, and also $A_m(f) = A_m(\-f)$, and therefore all defined relative transfer functions are even in terms of conjugate frequencies.
+%	
+%\end{Property}

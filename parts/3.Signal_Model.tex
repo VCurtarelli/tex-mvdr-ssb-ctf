@@ -158,16 +158,16 @@ where we expose each component of our desired signal. The distortionless constra
 which is equivalent to requiring that each component of $X_{1,k}[l]$ is distortionlessly recovered. From \cref{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}, we have that the desired signal on the current instant is the $(\Delta+1)$-th element of $\bvx[b]{1,k}^n[l]$. Therefore, our distortionless constraint can be written as
 \begin{subgather}{eq:sec3:hard_distortionless_constraint_separate}
 	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq1} \\
-	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
+	\he{\bvf{k}}[l] \bvD{k}'' = \tr{\bv{0}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
 \end{subgather}
-where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is a $1$.
+where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is a $1$, and $\bv{0}$ is a $\sz{L}{1}$ vector of zeros.
 
-For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered, since then we have that $\bvD{k}'' = \bv{0}$ by definition, and thus the second condition is unreachable. With this, we write our constraint matrix as
+For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered, since then we have that $\bvD{k}'' = \bv{0}$ by definition. With this, we write our constraint matrix as
 \begin{equation}
 	\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
 \end{equation}
 where, for the STFT, $\bvC{k} = \bvD{k}'$ and $\bvi = \bvi{\Delta}$; and, for the SSBT, $\bvC{k} = \bts{\bvD{k}'\,,~\bvD{k}''}$, and $\bvi = \begin{bmatrix}
-	\bvi{\Delta} \\ \bvi{\Delta}
+	\bvi{\Delta} \\ \bv{0}
 \end{bmatrix}$.
 
 To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
@@ -183,36 +183,12 @@ where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy
 
 Obviously, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued. Although this approach is favorable, it comes with its limitations, since following what was achieved in \cref{subsec:sec2:relative_transfer_functions} we can't directly estimate the coefficients that comprise $A_{m,k}'[l]$ and $A_{m,k}''[l]$, and therefore having an accurate estimate of $\bvC{k}$ can be hard with the SSBT.
 
-%One alternative is to impose a lesser requirement when defining the distortionless condition (which will be the ``soft'' constraint). One such constraint is
-%\begin{equation}
-%	\label{eq:sec3:soft_distortionless_constriant}
-%	\expec{X_{f,k}^2[l]} = \expec{X_{1,k}^2[l]}
-%\end{equation}
-%where we ensure only that the estimate's magnitude is the same as that of the original signal, for each frequency bin. Naturally, this implies a loss of information, specifically about the phase. For such, we define a new vector $\bvd{m,k}$ (not to be confused with $\bvd{m,k}'$ or $\bvd{m,k}''$), given by
-%\begin{equation}
-%	\bvd{m,k} = \tr{\tup{ A_{m,k}[-\Delta] ,, A_{m,k}[0] ,, A_{m,k}[\Ld*] }}
-%\end{equation}
-%in which $A_{m,k}[\lambda]$ is
-%\begin{equation}
-%	\label{eq:sec3:def_Amk-l_ssbt_soft-distortionless}
-%	A_{m,k}[\lambda] = \frac{ \expec{X_{m,k}[l+\lambda] X_{1,k}[l]} }{ \expec{X_{1,k}^2[l] } }
-%\end{equation}
-%
-%It is trivial that $A_{m,k}$ is independent of $\ar$ and $\ai$, depending only on the statistics of the signals. We also see that \cref{eq:sec3:def_Amk-l_ssbt_soft-distortionless} has the same format as \cref{eq:sec2:calc_RTF_ft_expec} (except for a complex-conjugate), which is used with the STFT for estimating the coefficients of the steering vector. From $\bvd{m,k}$, we define $\bvD{k}$ following the exact same steps as those in \cref{eq:sec3:def_bvDk_n,eq:sec3:sample-stacking_bvDb_bvxb:subeq1}. It is easy to see that $\he{\bvf{k}}[l] \bvD{k} = \tr{\bvi{\Delta}}$ implies \cref{eq:sec3:soft_distortionless_constriant}. The advantage of this approach is that 
-%
-%To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
-%\begin{equation}
-%	\label{eq:sec3:minimization_problem_mpdr_soft}
-%	\bvf{\mpdr_2;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \Corr{\bvy{k}}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvD{k} = \tr{\bvi{\Delta}}
-%\end{equation}
-%where $\Corr{\bvy{k}}[l]$ is the correlation matrix of the observed signal $\bvy{k}[l]$. The solution to this minimization problem 
-%\begin{equation}
-%	\label{eq:sec3:solution_mpdr_beamformer_soft}
-%	\bvf{\mpdr_2;k}[l] = \iCorr{\bvy{k}}[l] \bvD{k} \inv{\bts{ \he{\bvD{k}} \iCorr{\bvy{k}}[l] \bvD{k} }} \bvi{\Delta}
-%\end{equation}
-%
-%It is obvious that the beamformer from \cref{eq:sec3:solution_mpdr_beamformer_hard} also satisfies the soft constraint from \cref{eq:sec3:soft_distortionless_constriant}, since by definition we are imposing a more restricting distortionless behavior on our signal. 
-%%Thus, since we are using a less restricting constraint to obtain $\bvf{\mpdr_2;k}[l]$ compared to $\bvf{\mpdr_1;k}[l]$, it is expected that the noise reduction capabilities of the former would exceed those of the latter, at the cost of some distortion (at least in terms of phase) on the desired signal. 
-%With the STFT, this formulation is strictly equivalent to that in \cref{eq:sec3:solution_mpdr_beamformer_hard}, by definition of the variables, and thus both beamformers for the STFT are equivalent.
+\subsection{Conjugate-frequency filtering}
+It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that relative transfer functions are an even function on frequency for the frequency-to-frequency portion and odd for the conjugate-frequency (that is, with the SSBT we have that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$). Using this, then from our constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have
+\begin{equations}{eq:sec3:conjugate-frequency_null_constriant_equivalence}
+	\he{\bvf{K-k}}[l] \bvD{K-k}''
+	& = \he{\bvf{K-k}}[l] -\bvD{k}'' \\
+	& = 0
+\end{equations}
 
-It is useful to bring \cref{prop:rtfs_are_even-func_of_frequency} to light. Since the relative transfer functions are an even function on frequency (that is, for the SSBT $A_{m,k}^n[l] = A_{m,(K-k)}^n[l]$), then we trivially don't have to calculate the filter for both frequencies, given that they should be equal. Therefore, we have a behavior similar to that of the STFT, where we only have to estimate the desired signal for half of the spectrum (for a real time-domain signal), and the other half would come implicitly from the complex-conjugate property.
+It is also easy to see that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$ (for the SSBT), given all the properties from \cref{app:properties_rft}. Therefore we have that $\bvf{k}[l]$: achieves the non-distortionality constraint for the bin $K-k$, given that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$; it also achieves the null of the conjugate-frequency portion, given the results from \cref{eq:sec3:conjugate-frequency_null_constriant_equivalence}; and it also minimizes the power of the output signal, given that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$. Therefore, it is unnecessary to calculate $\bvf{K-k}[l]$, given that $\bvf{k}[l]$ fulfills the minimization problem from \cref{eq:sec3:minimization_problem_mpdr_hard} for the conjugate bin $K-k$ as well.
