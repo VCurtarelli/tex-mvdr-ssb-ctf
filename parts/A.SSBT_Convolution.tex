@@ -248,19 +248,14 @@ with an inverse
 	\end{equations}
 	Assuming that $h(t)$ is real-valued, then $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, and therefore $H_m'(f) = H_m'(\-f)$, and $H_m''(f) = -H_m''(\-f)$. With this,
 	\begin{equations}
-		\begin{split}
-			A_m'(\-f)
-			& = \frac{H_1'(f) H_m'(f) + \bts{-H_1''(f)}\bts{-H_m''(f)}}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
-			& = \frac{H_1'(f)H_m'(f) + H_1''(f)H_m''(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
-			& = A_m'(f)
-		\end{split}\\[0.5cm]
-		%
-		\begin{split}
-			A_m''(\-f)
-			& = \frac{H_1'(f) \bts{-H_m''(f)} - \bts{-H_1''(f)}H_m'(f)}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
-			& = \frac{- H_1'(f)H_m''(f) + H_1''(f)H_m'(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
-			& = -A_m''(f)
-		\end{split}\\
+		A_m'(\-f)
+		& = \frac{H_1'(f) H_m'(f) + \bts{-H_1''(f)}\bts{-H_m''(f)}}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
+		& = \frac{H_1'(f)H_m'(f) + H_1''(f)H_m''(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
+		& = A_m'(f)\\[0.5cm]
+		A_m''(\-f)
+		& = \frac{H_1'(f) \bts{-H_m''(f)} - \bts{-H_1''(f)}H_m'(f)}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
+		& = \frac{- H_1'(f)H_m''(f) + H_1''(f)H_m'(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
+		& = -A_m''(f)
 	\end{equations}
 	Therefore, our frequency-to-frequency RTF $A_m'(f)$ is even, since $A_m'(f) = A_m'(\-f)$, and our conjugate-frequency RTF is odd, since $A_m''(f) = -A_m''(\-f)$.
 \end{Property}
