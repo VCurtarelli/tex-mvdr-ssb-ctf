@@ -1,10 +1,8 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
-%In this study, we investigated the application of the Single-Sideband Transform in beamforming within a reverberant environment, utilizing the convolutive transfer function model for filter bank (i.e., the beamformer) estimation. We implemented a Minimum-Variance Distortionless-Response beamformer to enhance signals in a real-life-like scenario, elucidating the process to achieve a truly-distortionless MVDR beamformer when employing the SSB transform.
-%
-%The true-MVDR SSBT beamformer strictly and consistently outperformed the beamformer obtained with the traditional STFT in terms of SNR gain, matching it regarding the distortionlessness. The naive-MVDR SSBT beamformer's SNR gain performance was slightly better than that of the true-MVDR one, and in all situations causing distortion in the desired signal.
-%
-%Future research avenues may explore the integration of this transform into different beamformers, or undertake further comparisons of the proposed SSBT beamformer (following the considerations exposed in here) against the established and reliable STFT methodology.
+In this study, we investigated the Single-Sideband Transform, examining and mathematically exploring its properties. We employed it within a reverberant environment utilizing the convolutive transfer function model for the design of a filter bank (i.e., a beamformer). We implemented a Minimum-Power Distortionless Response filter to enhance the input signals of a sensor array in a real-life-like scenario, comparing the results of a filter obtained using the SSB transform for time-frequency signal analysis, with those obtained when this process is done via the Short-Time Fourier Transform.
 
-\lipsum[1-2]
+The results show that, considering sufficient frames for the CTF model to be effective, both filters achieved a distortionless response, as well as decreased the undesired echo signal by a good margin, while maintaining an acceptable distortion index, and unfortunately increasing the white noise. In general, the STFT filter outmatched the proposed SSBT one for almost all metrics, sometimes being marginally surpassed by the latter, specially in terms of desired signal reduction factor.
+
+Future research avenues may explore the integration of this transform into different beamformers, or undertake further comparisons of the proposed SSBT beamformer (following the considerations and properties exposed in here) against the established and reliable STFT methodology.
