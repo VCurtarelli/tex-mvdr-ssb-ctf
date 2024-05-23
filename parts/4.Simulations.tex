@@ -25,7 +25,7 @@ The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\t
 
 All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$. For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. We also the regularization parameter $\alpha = 1e^{-4}$, just enough to control the WNG. The beamformers were calculated once for the whole signal, for faster processing and ease to compare the results. We will compare the two transforms exposed, the STFT and the SSBT, for a varying set of conditions on the signals and variables considered.
 
-In the line plots, STFT results are presented in red lines with circles and SSBT results in green lines with triangles. The output metrics were averaged over 200 frames and presented every 100 windows, for a smoother visualization.
+In the line plots, STFT results are presented in red lines with circles and SSBT results in green lines with triangles. Results for an accurate RFR (that is, assuming we know precisely all $A_{m,k}'[l]$ and $A_{m,k}''[l]$) are in continuous lines, and for estimate RFR (via \cref{eq:sec2:calc_RTF_ft_expec,eqs:sec2:calc_RTF_rft_expec}) are in darker dashed lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a smoother visualization.
 
 \begin{figure}[!ht]
 	\centering
@@ -58,102 +58,71 @@ In this scenario, at the reference sensor (assumed to be the one at $(3\m,~1.92\
 \input{figures/io_input/aux_data_32.tex}
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__DSRF_l__iSER_n15.tex}
-		\caption{Per-window broadband DSRF.}
-		\label{subfig:lineplot__DSRF_l__iSER_n15}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband DSRF, $\Ly = 1$.}
+		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE_l__iSER_n15.tex}
-		\caption{Per-window broadband ERLE.}
-		\label{subfig:lineplot__ERLE_l__iSER_n15}
+		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_16.tex}
+		\caption{Per-window broadband DSRF, $\Ly = 16$.}
+		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_16}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+	%
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__WNG_l__iSER_n15.tex}
-		\caption{Per-window broadband WNG.}
-		\label{subfig:lineplot__WNG_l__iSER_n15}
+		\input{figures/lineplot__ERLE_l__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband ERLE, $\Ly = 1$.}
+		\label{subfig:lineplot__ERLE_l__iSER_n15__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__ERLE_l__iSER_n15__Ly_16.tex}
+		\caption{Per-window broadband ERLE, $\Ly = 16$.}
+		\label{subfig:lineplot__ERLE_l__iSER_n15__Ly_16}
 	\end{subfigure}\\[1em]
+	%
+		\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__WNG_l__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband WNG, $\Ly = 1$.}
+		\label{subfig:lineplot__WNG_l__iSER_n15__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__WNG_l__iSER_n15__Ly_16.tex}
+		\caption{Per-window broadband WNG, $\Ly = 16$.}
+		\label{subfig:lineplot__WNG_l__iSER_n15__Ly_16}
+	\end{subfigure}\\[1.5em]
 	\ref*{timeplot_legend}
 	\caption{Output metrics for the beamformers over time, in the base scenario.}
 	\label{fig:lineplot__iSER_n15__Ly_1}
 \end{figure}
 
-
-From \cref{subfig:lineplot__DSRF_l__iSER_n15}, we see that in the case $\Ly = 1$ both filters led to some distortion on the desired signal, given that $\dsrf[l] \neq 0$, with the SSBT filter having marginally better distortion overall. When $\Ly = 16$, both beamformers led to no distortion whatsoever, indicating the correct formulation and modeling of the problem. This is due to the fact that when we consider only the current sample ($\Ly = 1$), previous samples of $X_{1,k}[l]$ interfere in the results, and increasing the number of samples ($\Ly = 16$) reduces this effect drastically.
-
-From the ERLE results in \cref{subfig:lineplot__ERLE_l__iSER_n15} it is noticeable that the STFT filter outperformed the SSBT beamformer for both number of samples, marginally for $\Ly = 1$ (by about $1.5\dB$) and a larger margin for $\Ly = 16$ (around $5.5 \dB$). The reason is that, to achieve a distortionless behavior, the SSBT beamformer has to enforce twice as many constraints as the STFT (one for the same-frequency and one for the cross-frequency RTFs), therefore having less ``freedom'' for the noise reduction portion of the enhancement. A similar result can be seen in terms of WNG in \cref{subfig:lineplot__WNG_l__iSER_n15}, where the STFT beamformer again outperformed the SSBT, by some small margin.
-
-\subsection{Comparison over different input SERs}
-
-We now examine the results with a varying input SERs, to assess the beamformer's performances for different loudspeaker signal levels. The results will be again presented for $\Ly = 1$ and $\Ly = 16$, representing two contrasting situations in terms of distortionless-ness and performance for the beamformers.
-
-\input{figures/io_input/aux_data_32.tex}
-\begin{figure}[!t]
+\subsection{Comparison for different $\Ly$}
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot__DSRF__iSER_var.tex}
-		\caption{Time-average broadband DSRF for varying $\iser$.}
-		\label{subfig:lineplot__DSRF__iSER_var}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot__ERLE__iSER_var.tex}
-		\caption{Time-average broadband ERLE for varying $\iser$.}
-		\label{subfig:lineplot__ERLE__iSER_var}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot__WNG__iSER_var.tex}
-		\caption{Time-average broadband WNG for varying $\iser$.}
-		\label{subfig:lineplot__WNG__iSER_var}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
-		\centering
-		\input{figures/lineplot__DI__iSER_var.tex}
-		\caption{Time-average broadband DI for varying $\iser$.}
-		\label{subfig:lineplot__DI__iSER_var}
-	\end{subfigure}\\[1em]
-	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers for varying input SERs.}
-	\label{fig:lineplot__iSER_var__Ly_1}
-\end{figure}
-
-From \cref{subfig:lineplot__DSRF__iSER_var}, we see that for $\Ly = 1$ the distortion on the desired signal increases as the input SER increases, and that the distortion is null for $\Ly = 16$, which is in line with the results previously obtained, as well as with the explanations found. Also, we see that over the studied range the SSBT filter has less distortion than the STFT one, except when $\iser = -30\dB$.
-
-For the ERLE, we see that it decreases as the input SER increases, which is again on par with what would be expected. However, we see that for higher input SERs the performance gap between the two filters diminishes, leading to practically identical results. We also see that with $\Ly = 1$ and higher input SERs, the SSBT filter has a better performance than the STFT one.
-
-In terms of WNG, for $\Ly = 1$ the STFT filter is mostly better (except for lower input SERs). For $\Ly = 16$, both have an overall similar result, also converging for higher input SERs. We also see that, for higher input SERs, both STFT filters with $\Ly = 1$ and $\Ly = 16$ also converge, leading to a similar white noise enhancement. In the DI we again see that the STFT filter led to better performances, for both $\Ly$ values. With the STFT transform, we see that the multiplicative filter led to better results for lower iSER and the convolutive one for higher iSER, the opposite being true for the SSBT filter.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Comparison over different frame samples}
-\label{subsec:sec4:comparison_different_Ly}
-
-\begin{figure}[!ht]
-	\centering
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\input{figures/lineplot__DSRF__iSER_n15__Ly_var.tex}
 		\caption{Time-average broadband DSRF for varying $\Ly$.}
 		\label{subfig:lineplot__DSRF__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\input{figures/lineplot__ERLE__iSER_n15__Ly_var.tex}
 		\caption{Time-average broadband ERLE for varying $\Ly$.}
 		\label{subfig:lineplot__ERLE__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\input{figures/lineplot__WNG__iSER_n15__Ly_var.tex}
 		\caption{Time-average broadband WNG for varying $\Ly$.}
 		\label{subfig:lineplot__WNG__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
 		\input{figures/lineplot__DI__iSER_n15__Ly_var.tex}
 		\caption{Time-average broadband DI for varying $\Ly$.}
@@ -164,102 +133,107 @@ In terms of WNG, for $\Ly = 1$ the STFT filter is mostly better (except for lowe
 	\label{fig:lineplot__iSER_n15__Ly_var}
 \end{figure}
 
-We also compare the two filters for a range of values of $\Ly$. In all plots of \cref{fig:lineplot__iSER_n15__Ly_var} we can see a behavior similar to that previously achieved. In the DSRF, we see that for both filters the distortion goes to zero as we increase $\Ly$, with the SSBT beamformer being barely better. We also see in \cref{subfig:lineplot__ERLE__iSER_n15__Ly_var} that in terms of ERLE the STFT beamformer consistently outperformed the SSBT one for all values of $\Ly$, in line with the result from the previous simulation.
-
-On the other hand, in general we see that for small values of $\Ly$ the SSBT beamformer had a better performance in terms of white noise enhancement, although for an increased number of frames the STFT beamformer regains the lead. Overall, this enhancement in the white noise (which could also be seen in \cref{subfig:lineplot__WNG_l__iSER_n15}) indicates a lack of regularization, and could be solved by tweaking the constraints in the minimization problem of \cref{eq:sec3:minimization_problem_mpdr_hard} to also ensure a minimum WNG. This wasn't done here, since our focus is on the minimization of the undesired signal, which is majorly comprised of $\bvs{k}[l]$.
-
-In terms of directivity index as exposed in \cref{subfig:lineplot__DI__iSER_n15__Ly_var}, it is clear that the STFT filter had a better DI than the SSBT filter overall, by about $3 \dB$ on average. This can also be attributed to the SSBT beamformer having two constraints to achieve the non-distortionality, while the STFT only had one. We can also see that the DI didn't increase meaningfully as we increased the number of frames considered, differently to the ERLE and even the WNG.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\subsection{Comparison over different number of bins}
-
-Previously on \cref{subsec:sec4:comparison_different_Ly} we compared the filters for different $\Ly$, increasing the number of samples considered for each frequency bin. Now, we will compare the filters for different numbers of frequency bins, going from $N = 32$ to $N = 512$, for $\Ly = 1$ only. That is, we will consider only a multiplicative filter, instead of a convolutive one, for an increasing number of time samples used for the transforms.
-
-\input{figures/io_input/aux_data_32.tex}
-\begin{figure}[!t]
+\subsection{Comparison for different iSER}
+\begin{figure}[H]
 	\centering
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__DSRF__N_var__iSER_n15.tex}
-		\caption{Time-average broadband DSRF for varying $N$.}
-		\label{subfig:lineplot__DSRF__N_var__iSER_n15}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+		\input{figures/lineplot__DSRF__iSER_var__Ly_1.tex}
+		\caption{Time-average broadband DSRF for varying $\iser$.}
+		\label{subfig:lineplot__DSRF__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE__N_var__iSER_n15.tex}
-		\caption{Time-average broadband ERLE for varying $N$.}
-		\label{subfig:lineplot__ERLE__N_var__iSER_n15}
+		\input{figures/lineplot__DSRF__iSER_var__Ly_16.tex}
+		\caption{Time-average broadband DSRF for varying $\iser$.}
+		\label{subfig:lineplot__DSRF__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+	%
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__WNG__N_var__iSER_n15.tex}
-		\caption{Time-average broadband WNG for varying $N$.}
-		\label{subfig:lineplot__WNG__N_var__iSER_n15}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{\textwidth}
+		\input{figures/lineplot__ERLE__iSER_var__Ly_1.tex}
+		\caption{Time-average broadband ERLE for varying $\iser$.}
+		\label{subfig:lineplot__ERLE__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
 		\centering
-		\input{figures/lineplot__DI__N_var__iSER_n15.tex}
-		\caption{Time-average broadband DI for varying $N$.}
-		\label{subfig:lineplot__DI__N_var__iSER_n15}
+		\input{figures/lineplot__ERLE__iSER_var__Ly_16.tex}
+		\caption{Time-average broadband ERLE for varying $\iser$.}
+		\label{subfig:lineplot__ERLE__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
-	\ref*{lyplot_legend}
-	\caption{Output metrics for the beamformers for varying number of bins.}
+	%
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__WNG__iSER_var__Ly_1.tex}
+		\caption{Time-average broadband WNG for varying $\iser$.}
+		\label{subfig:lineplot__WNG__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__WNG__iSER_var__Ly_16.tex}
+		\caption{Time-average broadband WNG for varying $\iser$.}
+		\label{subfig:lineplot__WNG__iSER_var__Ly_16}
+	\end{subfigure}\\[1em]
+	%
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__DI__iSER_var__Ly_1.tex}
+		\caption{Time-average broadband DI for varying $\iser$.}
+		\label{subfig:lineplot__DI__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__DI__iSER_var__Ly_16.tex}
+		\caption{Time-average broadband DI for varying $\iser$.}
+		\label{subfig:lineplot__DI__iSER_var__Ly_16}
+	\end{subfigure}\\[1em]
+	\ref*{timeplot_legend}
+	\caption{Output metrics for the beamformers for varying input SERs.}
+	\label{fig:lineplot__iSER_var__Ly_1}
+\end{figure}
+
+\subsection{Comparison for different $N$}
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__DSRF__N_var__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband DSRF, $\Ly = 1$.}
+		\label{subfig:lineplot__DSRF__N_var__iSER_n15__Ly_1}
+	\end{subfigure}\\[1em]
+	%
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__ERLE__N_var__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband ERLE, $\Ly = 1$.}
+		\label{subfig:lineplot__ERLE__N_var__iSER_n15__Ly_1}
+	\end{subfigure}\\[1em]
+	%
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__WNG__N_var__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband WNG, $\Ly = 1$.}
+		\label{subfig:lineplot__WNG__N_var__iSER_n15__Ly_1}
+	\end{subfigure}\\[1em]
+	%
+	\begin{subfigure}{0.48\textwidth}
+		\centering
+		\input{figures/lineplot__DI__N_var__iSER_n15__Ly_1.tex}
+		\caption{Per-window broadband WNG, $\Ly = 1$.}
+		\label{subfig:lineplot__DI__N_var__iSER_n15__Ly_1}
+	\end{subfigure}\\[1.5em]
+	\ref*{timeplot_legend}
+	\caption{Output metrics for the beamformers over time, in the base scenario.}
 	\label{fig:lineplot__N_var__iSER_n15__Ly_1}
 \end{figure}
 
-When working with $N = 32$ and $\Ly = 16$, we are effectively using information regarding the last $272$ time samples, considering the $50\%$ overlap. Therefore, it is also interesting to compare these result to those obtained via varying $\Ly$, which will fare a multiplicative filter ($\Ly = 1$ and varying $N$) and a convolutive one (in this case with $\Ly = 16$ and $N = 32$). On each plot from \cref{fig:lineplot__N_var__iSER_n15__Ly_1}, the best performance from \cref{fig:lineplot__iSER_n15__Ly_var} for each filter will be denoted as a dashed gray line for the STFT and a dotted light gray line for the SSBT.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Overall, we see a similar behavior as previously obtained. From \cref{subfig:lineplot__DSRF__N_var__iSER_n15}, we see that neither filter was able to achieve a truly null distortion, although both got considerably close to it, with the SSBT filter having a small margin over the STFT one. Regarding the ERLE, the STFT filter had the best performance out of the two of them, however we see that while the SSBT beamformer ultimately achieved the same performance by increasing the number of bins as was achieved by increasing the number of frames (although with double the amount of time samples), this wasn't the case for the STFT filter, being worse by about $3\dB$ compared to its convolutive counterpart.
+\subsection{Result analysis}
 
-The same can be seen regarding the WNG, where although the SSBT filter had less white noise enhancement than the STFT one, neither of them achieved the same performance as their convolutive equivalents. In terms of the DI, in \cref{subfig:lineplot__DI__iSER_n15__Ly_var} we see that the filters' performances kept close to their peak performance, while now (as in \cref{subfig:lineplot__DI__N_var__iSER_n15}) the filters' performances are generally much worse than their peaks, and also than the best performance when varying $\Ly$.
+In all figures, we see that the STFT filter had a better performance than the SSBT one, either comparing estimate-on-estimate or accurate-on-accurate, or strictly outperforming it. The only situation in which the opposite occurs is in terms of ERLE, for high input SER, and $\Ly = 1$ (\cref{subfig:lineplot__ERLE__iSER_var__Ly_1}). 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For the STFT, the accurate RFR and estimate RFR (light and dark red results respectively) are usually similar, with each having better performances for different conditions. Unfortunately, the same isn't truee for the SSBT results.
 
-%\subsection{Filtering with regularization}
-%
-%We now change our matrix to ....
-%With this, our filter will having a small tradeoff between minimization of the undesired signal and WNG, through the parameter $\epsilon$.
-%Maybe move this to a new subsection 3.2 after 3.1, and explain the robust MPDR with regularization. Consider for the first sims here (4.1 to 4.5) that $\epsilon = 0$, and in this last one $\epsilon \neq 0$, and fare the results. Compare different $\Ly$ with $\epsilon = 0$ and $\epsilon = ??$? Still to do, needs more thought, needs implementation.
-%\subsection{Comparison with perturbation}
-%
-%\begin{figure}[!t]
-%	\centering
-%	\begin{subfigure}{\textwidth}
-	%		\centering
-	%		\input{figures/lineplot__DSRF__iSER_n15__Ly_1__err_var.tex}
-	%		\caption{Per-window broadband DSRF.}
-	%		\label{subfig:lineplot__DSRF__iSER_n15__Ly_1__err_var}
-	%	\end{subfigure}\\[1em]
-%	\begin{subfigure}{\textwidth}
-	%		\centering
-	%		\input{figures/lineplot__ERLE__iSER_n15__Ly_1__err_var.tex}
-	%		\caption{Per-window broadband ERLE.}
-	%		\label{subfig:lineplot__ERLE__iSER_n15__Ly_1__err_var}
-	%	\end{subfigure}\\[1em]
-%	\begin{subfigure}{\textwidth}
-	%		\centering
-	%		\input{figures/lineplot__WNG__iSER_n15__Ly_1__err_var.tex}
-	%		\caption{Per-window broadband WNG.}
-	%		\label{subfig:lineplot__WNG__iSER_n15__Ly_1__err_var}
-	%	\end{subfigure}\\[1em]
-%	\ref*{timeplot_legend}
-%	\caption{Output metrics for the beamformers with error in the steering vectors.}
-%	\label{fig:lineplot__v7_iSER_n15__Ly_1__err_var}
-%\end{figure}
-%
-%As exposed in \cref{sec:perturbation_analysis}, it is also of interest to compare how robust the derived beamformers are, when the information regarding the desired signal's RIR isn't accurate. For such, we model the matrix $\bvA[u]{k}$ as
-%\begin{equation}
-%	\bvA[u]{k} = \bvA[u]{k}^\star + \Delta\bvA[u]{k}
-%\end{equation}
-%where $\bvA[u]{k}^\star$ is the accurate steering matrix, and $\Delta\bvA[u]{k}$ is a perturbation on it, which we assume is a zero-mean uniform white noise, with an adjustable variance.
-%
-%Since in this scenario the desired signal can suffer some distortion (given that its steering matrix isn't appropriately estimated), we will use the gain in SER and gain in SNR metrics instead of ERLE and NSRF, to take this distortion into account. These are defined as
-%\begin{subgather}
-%	\gser = \frac{\erle}{\dsrf} \\
-%	\gsnr = \frac{\nsrf}{\dsrf}
-%\end{subgather}
-%
-%The DSRF will still be showed, to give a sense of proportion on how much the beamformer distorts the desired signal. In the results of \cref{fig:lineplot__v7_iSER_n15__Ly_1__err_var}, the x-axis represents the standard deviation of $\Delta\bvA[u]{k}$, as a percentage of the standard deviation of $\bvA[u]{k}^\star$.
-%
-%Each metric showed a different result: differently than before, the SF-SSBT beamformer led to the least distortion on the desired signal, out of all three beamformers, and the DF-SSBT led to the most distortion. Meanwhile, the gain in SER showed the STFT beamformer to be the (overall) more robust, and the one that led to the best results, with the DF-SSBT again being the worse one. A similar result can be seen for the gain in SNR, with the STFT beamformer being the best, but in this regard the SF-SSBT beamformer led to the worst results, although marginally.
+While the SSBT performance for an accurate RFR is similar to that of the STFT for the same condition for most results (mostly being outperformed, but usually not by much), the same isn't true for an estimated RFR. In fact, we can see that for all DSRF results the estimated RFR SSBT results are completely subpar, only geting close to acceptable levels for high $N$ (\cref{subfig:lineplot__DSRF__N_var__iSER_n15__Ly_1}). This corroborates that which was exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} where, with high number of samples in the transform, the impact of neighboring frequencies on the RFR estimation decreases, as well as the impact of different frames is nullified by considering $N = 1$ (that is, a multiplicative filter, instead of a convolutive one).

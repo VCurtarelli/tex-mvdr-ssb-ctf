@@ -187,7 +187,7 @@ where $A_m'(f)$ and $A_m''(f)$ are the relative frequency responses between the 
 
 Using \cref{eqs:sec2:def_Hm'_Hm''_rft,eqs:sec2:system_eqs_X1f_X2f_H:subeq1}, we have that
 \begin{equation}
-	X_2(f) = \pts{A_2'(f) H_1'(f) - A_2''(f) H_1''(f)} X'(f) + \pts{A_2'(f) H_1''(f) + A_2''(f) H_1'(f)} X''(f)
+	X_2(f) = \bts{A_2'(f) H_1'(f) - A_2''(f) H_1''(f)} X'(f) + \bts{A_2'(f) H_1''(f) + A_2''(f) H_1'(f)} X''(f)
 \end{equation}
 and, by comparing with $X_2(f)$ from \cref{eqs:sec2:system_eqs_X1f_X2f_H:subeq2}, we have a system of equations (omitting the frequency index for simplicity)
 \begin{subgather}
@@ -202,24 +202,26 @@ whose solution is
 
 Through the properties of the RFT exposed in \cref{app:properties_rft}, we have that
 \begin{subalign}{eqs:sec2:system_equations}
-	\expec{X_{1}(f) X_{1}(f)}   & = \pts{ {H_1'}^2(f)       + {H_1''}^2(f)     } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
-	\expec{X_{1}(f) X_{2}(f)}   & = \pts{  H_1'(f) H_2'(f)  +  H_1'(f) H_2'(f) } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
-	\expec{X_{1}(f) X_{2}(\-f)} & = \pts{- H_1'(f) H_2''(f) +  H_1''(f) H_2'(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
+	\expec{X_{1}(f) X_{1}(f)}   & = \pts{ {H_1'}^2(f)      + {H_1''}^2(f)     } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
+	\expec{X_{1}(f) X_{2}(f)}   & = \pts{ H_1'(f) H_2'(f)  +  H_1'(f) H_2'(f) } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
+	\expec{X_{1}(\-f) X_{2}(f)} & = \pts{ H_1'(f) H_2''(f) -  H_1''(f) H_2'(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
 \end{subalign}
 where $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$. With this, it is trivial to see that
-\begin{subgather}
-	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \\
-	A_2''(f) = \frac{\expec{X_1(f) X_2(\-f)}}{\expec{X_1^2(f)}}
+\begin{subgather}{eqs:sec2:calc_RTF_rft_expec}
+	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RTF_rft_expec:subeq1} \\
+	A_2''(f) = \frac{\expec{X_1(\-f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RTF_rft_expec:subeq2}
 \end{subgather}
-which is strikingly similar to the usual result used for the STFT, from \cref{eq:sec2:calc_RTF_ft_expec}.
+These formulations are the same as those in \cref{eq:sec2:calc_RTF_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RTF_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$.
 
-Going to a more generic situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
-\begin{subgather}
-	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \\
-	A_m''(f) = \frac{\expec{X_1(f) X_m(\-f)}}{\expec{X_1^2(f)}}
+Generalizing to a situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
+\begin{subgather}{eqs:sec2:calc_RTF_rft_expec_generic}
+	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RTF_rft_expec_generic:subeq1} \\
+	A_m''(f) = \frac{\expec{X_1(\-f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RTF_rft_expec_generic:subeq2} 
 \end{subgather}
 
-Note that the FT formulation can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT we will use the considerations stated before.
+This also works for $m = 1$. Trivially, \cref{eqs:sec2:calc_RTF_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
+
+Note that the FT formulation from \cref{eq:output_sys1_ft} can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT we will use the considerations stated before.
 
 \subsection{Discrete time-frequency transforms}
 
@@ -267,9 +269,24 @@ or, with the convolutive transfer function (CTF) model \cite{talmon_relative_200
 \end{equation}
 in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$.
 
+\subsection{RFR estimation for time-frequency transforms}
+\label{subsec:sec2:rfr_estimation_time-freq_transforms}
 Under the same assumptions as in \cref{subsec:sec2:relative_transfer_functions}, we can write the output of our systems with the CTF model in the SSBT domain as
 \begin{equation}
 	\label{eq:sec2:system_ctf_ssbt_output}
 	X_{m;\sS}[l,k] = X_{1;\sS}[l,k] \ast A_{m;\sS}'[l,k] + X_{1;\sS}[l,K-k] \ast A_{m;\sS}''[l,k]
 \end{equation}
-where $A_{m;\sS}'[l,k]$ and $A_{m;\sS}''[l,k]$ are calculated in a similar way to $A_m'(f)$ and $A_m''(f)$ from \cref{subsec:sec2:relative_transfer_functions}.
+where $A_{m;\sS}'[l,k]$ and $A_{m;\sS}''[l,k]$ are calculated in a similar way to $A_m'(f)$ and $A_m''(f)$ from \cref{subsec:sec2:relative_transfer_functions}. While it was shown in \cref{subsec:sec2:relative_transfer_functions} that, for the FT and RFT, the relative transfer functions could be estimated from the frequency signals, this also needs to be shown for the time-frequency transforms. In particular, under the STFT, given $X_{m;\sF}[l,k]$ and $X_{1;\sF}[l,k]$, we have that
+\begin{equations}
+	\expec{X_{m;\sF}[l+\lambda,k] X_{1;\sF}^*[l,k]}
+	& = \expec{\sum_{\tau}A_{m;\sF}[\tau,k] X_{1;\sF}[l+\lambda-\tau,k] X_{1;\sF}^*[l,k]} \\
+	& = \sum_{\tau} A_{m;\sF}[\tau,k] \expec{X_{1;\sF}[l+\lambda-\tau,k] X_{1;\sF}^*[l,k]} \\
+	& = \sum_{\tau} A_{m;\sF}[\tau,k] \sigma_{X,\lambda-\tau}^2
+\end{equations}
+which is only equal to $A_{m;\sF}[\lambda]$ if $\sigma_{X,\gamma-\tau} = 0$ for $\lambda \neq \tau$; that is, different samples of our desired signal are uncorrelated. This is untrue for time-frequency transforms, given their overlap and windowing processes, but also since our desired signal is the signal observed on the reference sensor $X_{1;\sF}[l,k] = H_{1;\sF}[l,k] \ast X_{\sF}[l,k]$.
+
+Applying this same process for the SSBT, we have that
+\begin{equation}
+	\expec{X_{m;\sS}[l+\lambda,k] X_{1;\sS}[l,k]} = \sum_{\tau} A_{m;\sS}'[\tau,k] \sigma_{X,\lambda-\tau}^2 + \sum_{\gamma} A_{m;\sS}''[\gamma,k] \sigma_{X,\lambda-\gamma}^2
+\end{equation}
+where, even though we have shown that conjugate frequencies are independent, this isn't true for conjugate frequencies on different frames. Therefore, applying this process for the SSBT adds errors not only given correlation of different frames in the desired signal, but for conjugate frequencies as well.

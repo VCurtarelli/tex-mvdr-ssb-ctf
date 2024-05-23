@@ -79,8 +79,8 @@
 
 \NewDocumentEnvironment{lineplot}{m m m m m}{ % xlabel | ylabel | xmin | xmax | other arguments
 	\begin{axis}[
-		width=0.6\linewidth,
-		height=0.36\linewidth,
+		width=\linewidth,
+		height=0.65\linewidth,
 		%
 		%		xtick = {1, 2 ,..., 7},
 		xtick pos=bottom,
@@ -152,28 +152,28 @@
 black
 ]
 \tikzstyle{resA1} = [
-thick, ColA, dash pattern = {on 1pt off 0pt},
+thick, ColA!90!white, dash pattern = {on 1pt off 0pt},
 	mark=square*, mark size=1.2, mark options={
 		rotate=0,
 		solid,
 	}
 ]
 \tikzstyle{resA2} = [
-thick, ColA, dash pattern = {on 4pt off 4pt},
+thick, ColA!70!black, dash pattern = {on 4pt off 4pt},
 	mark=square*, mark size=1.2, mark options={
 		rotate=0,
 		solid,
 	}
 ]
 \tikzstyle{resC1} = [
-thick, ColC, dash pattern = {on 1pt off 0pt},
+thick, ColC!90!white, dash pattern = {on 1pt off 0pt},
 	mark=triangle*, mark size=1.5, mark options={
 		rotate=0,
 		solid,
 	}
 ]
 \tikzstyle{resC2} = [
-thick, ColC, dash pattern = {on 4pt off 4pt},
+thick, ColC!70!black, dash pattern = {on 4pt off 4pt},
 	mark=triangle*, mark size=1.5, mark options={
 		rotate=0,
 		solid,

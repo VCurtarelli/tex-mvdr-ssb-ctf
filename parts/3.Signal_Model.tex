@@ -119,9 +119,7 @@ where $\bvy{k}[l]$ is a $\sz{(M\Ly)}{1}$ vector, and $\bvD{k}^n$ is a $\sz{(M\Ly
 \begin{equation}
 	\bvy{k}[l] = \tr{ \tup{ Y_{1,k}[l] ,, Y_{1,k}[l-\Ly+1] , Y_{2,k}[l] ,, Y_{M,k}[l-\Ly+1] } }
 \end{equation}
-%\end{changingto}
 
-%TODO: Rewrite the filtering part to consider the new modeling.
 \subsection{Filtering and the MPDR beamformer}
 
 We want to recover the desired signal at the reference sensor, $X_{1,k}[l] = X_{1,k}'[l] + X_{1,k}''[l]$ (see \cref{eq:sec3:def_ctf_ssbt,eqs:sec3:def_desired_signals_ssbt} with $m=1$), without any distortion. For this, a linear filter $\bvf{k}[l]$ will be employed, producing an estimate $Z_{k}[l]$ of our desired signal, such that
