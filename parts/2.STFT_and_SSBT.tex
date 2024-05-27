@@ -58,10 +58,10 @@ However, it is possible to prove that there is an equivalent of the convolution 
 \end{equation}
 where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$.
 
-\subsection{Relative transfer functions}
+\subsection{Relative frequency responses}
 \label{subsec:sec2:relative_transfer_functions}
 
-Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative transfer functions (RTF's), respective to a common input. We denote these RTF's $A_1(f)$ and $A_2(f)$, respective for each system.
+Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative frequency responses (RFR's), respective to a common input. We denote these RFR's $A_1(f)$ and $A_2(f)$, respective for each system.
 
 Let us denote $Y_1(f)$ as the first system's output, given by
 \begin{equation}
@@ -72,9 +72,9 @@ and similarly for $Y_2(f)$. With the FT, we write $X_1(f) = H_1(f) X(f)$, and th
 \begin{equation}
 	A_2(f) = \frac{H_2(f)}{H_1(f)}
 \end{equation}
-which trivially satisfies that $A_2(f) X_1(f) = H_2(f) X(f)$. These RTF's can be calculated as
+which trivially satisfies that $A_2(f) X_1(f) = H_2(f) X(f)$. These RFR's can be calculated as
 \begin{equation}
-	\label{eq:sec2:calc_RTF_ft_expec}
+	\label{eq:sec2:calc_RFR_ft_expec}
 	A_m(f) = \frac{\expec{X_m(f) X_1^*(f)}}{\expec{X_1(f) X_1^*(f)}}
 \end{equation}
 where $\expec{\cdot}$ is the expectation operator.
@@ -111,7 +111,7 @@ where $\expec{\cdot}$ is the expectation operator.
 %		\label{eq:sec2:rtf_form_rft}
 %		A_m^{n}(f) = \frac{H_m^{n}(f)}{H_1^{n}(f)}
 %	\end{equation}
-%	are the RTF's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'(f) = A_1''(f) = 1$. Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
+%	are the RFR's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'(f) = A_1''(f) = 1$. Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
 %	\begin{subalign}{eqs:sec2:system_equations}
 %		\expec{X_{1}(f) X_{1}(f)}   & = \pts{  {\Re{H_{1\F}}}^2(f)             + {\Im{H_{1\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
 %		\expec{X_{1}(f) X_{2}(f)}   & = \pts{   \Re{H_{1\F}}(f) H_{2\F}^\re(f) +  \Im{H_{1\F}} H_{2\F}^\im(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
@@ -159,7 +159,7 @@ where $\expec{\cdot}$ is the expectation operator.
 %			& = \ar^2 \gr^2 + \ai^2 \gi^2
 %		\end{split}
 %	\end{subgather}
-%	not being useful to solve this problem since they're dependent equations. Other possibilities include trying to use the FT's RTF, however it is also easy to check that 
+%	not being useful to solve this problem since they're dependent equations. Other possibilities include trying to use the FT's RFR, however it is also easy to check that 
 %	\begin{subgather}
 %		\abs{A_{m;\F}(f)}^2 = \frac{\E{22}}{\E{11}} \\
 %		\angle{A_{m;\F}(f)} = \atan{\frac{\E*{12}}{\E{12}}}
@@ -207,19 +207,19 @@ Through the properties of the RFT exposed in \cref{app:properties_rft}, we have 
 	\expec{X_{1}(\-f) X_{2}(f)} & = \pts{ H_1'(f) H_2''(f) -  H_1''(f) H_2'(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
 \end{subalign}
 where $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$. With this, it is trivial to see that
-\begin{subgather}{eqs:sec2:calc_RTF_rft_expec}
-	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RTF_rft_expec:subeq1} \\
-	A_2''(f) = \frac{\expec{X_1(\-f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RTF_rft_expec:subeq2}
+\begin{subgather}{eqs:sec2:calc_RFR_rft_expec}
+	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RFR_rft_expec:subeq1} \\
+	A_2''(f) = \frac{\expec{X_1(\-f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RFR_rft_expec:subeq2}
 \end{subgather}
-These formulations are the same as those in \cref{eq:sec2:calc_RTF_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RTF_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$.
+These formulations are the same as those in \cref{eq:sec2:calc_RFR_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RFR_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$.
 
 Generalizing to a situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
-\begin{subgather}{eqs:sec2:calc_RTF_rft_expec_generic}
-	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RTF_rft_expec_generic:subeq1} \\
-	A_m''(f) = \frac{\expec{X_1(\-f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RTF_rft_expec_generic:subeq2} 
+\begin{subgather}{eqs:sec2:calc_RFR_rft_expec_generic}
+	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} \\
+	A_m''(f) = \frac{\expec{X_1(\-f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq2} 
 \end{subgather}
 
-This also works for $m = 1$. Trivially, \cref{eqs:sec2:calc_RTF_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
+This also works for $m = 1$. Trivially, \cref{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
 
 Note that the FT formulation from \cref{eq:output_sys1_ft} can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT we will use the considerations stated before.
 
