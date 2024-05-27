@@ -110,7 +110,7 @@
 		},
 		#5,
 		]
-		\draw[ultra thin, dotted] (axis cs:\pgfkeysvalueof{/pgfplots/xmin},0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0);
+		\draw[thin, dash pattern = {on 4pt off 1pt}] (axis cs:\pgfkeysvalueof{/pgfplots/xmin},0) -- (axis cs:\pgfkeysvalueof{/pgfplots/xmax},0);
 	}{
 	\end{axis}
 }
@@ -159,9 +159,9 @@ thick, ColA!90!white, dash pattern = {on 1pt off 0pt},
 	}
 ]
 \tikzstyle{resA2} = [
-thick, ColA!70!black, dash pattern = {on 4pt off 4pt},
+thick, ColA!70!black, dash pattern = {on 1pt off 1pt},
 	mark=square*, mark size=1.2, mark options={
-		rotate=0,
+		rotate=45,
 		solid,
 	}
 ]
@@ -173,9 +173,9 @@ thick, ColC!90!white, dash pattern = {on 1pt off 0pt},
 	}
 ]
 \tikzstyle{resC2} = [
-thick, ColC!70!black, dash pattern = {on 4pt off 4pt},
+thick, ColC!70!black, dash pattern = {on 1pt off 1pt},
 	mark=triangle*, mark size=1.5, mark options={
-		rotate=0,
+		rotate=180,
 		solid,
 	}
 ]

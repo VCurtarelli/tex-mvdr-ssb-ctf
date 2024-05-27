@@ -2,13 +2,14 @@
 \NewDocumentCommand{\filename}{m}{%
 	\small{\texttt{#1}}
 }
+\input{figures/io_input/aux_data_32.tex}
 \let\mc\multicolumn
 \section{Comparisons and simulations}
 \label{sec:results}
 
 In the simulations\footnote{Code is available at \url{https://github.com/VCurtarelli/py-ssb-ctf-bf}.}, we employ a sampling frequency of $16\si{\kilo\hertz}$. Room impulse responses were generated using Habets' RIR generator \cite{habets_rir-generator}, and signals were selected from the SMARD database \cite{smard_database}. In all cases we will use $\Ld = \Ly$ and $\Delta = 0$; that is, we don't use any non-causal frames, and we consider as many frame samples as RIR samples.
 
-The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(3\m,~4\m,~1\m)$, being comprised of $M=8$ sensors arranged in a circular array with radius of $8\si{\centi\meter}$, and all are omnidirectional of flat frequency response. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. The room's layout is in \cref{fig:room_layout}, where in green we have the desired source (assumed to be omnidirectional), and in red the device, with the $8$ sensors and the loudspeaker on the center.
+The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\times$ height), with a reverberation time of $0.3\si{\second}$. The device composed of the loudspeaker + sensors is centered at $(3\m,~4\m,~1\m)$, being comprised of $M=8$ sensors arranged in a circular array with radius of $8\si{\centi\meter}$, and all are omnidirectional of flat frequency response. We assume that the reference sensor is the one positioned at $(3\m,~1.92\m,~1\m)$. The positions and signals used for the sources are in \cref{tab:sec4:information_position_sources}. The room's layout is in \cref{fig:room_layout}, where in green we have the desired source (assumed to be omnidirectional), and in red the device, with the $8$ sensors and the loudspeaker on the center. Unless stated otherwise, we consider $\iser = -15\dB$, and $\isnr = 30\dB$.
 
 \begin{table}[H]
 	\centering
@@ -23,9 +24,9 @@ The room's dimensions are $4\m \times 6\m \times 3\m$ (width $\times$ length $\t
 	\label{tab:sec4:information_position_sources}
 \end{table}\vspace*{-2em}
 
-All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$. For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. We also the regularization parameter $\alpha = 1e^{-4}$, just enough to control the WNG. The beamformers were calculated once for the whole signal, for faster processing and ease to compare the results. We will compare the two transforms exposed, the STFT and the SSBT, for a varying set of conditions on the signals and variables considered.
+All signals were resampled to the desired sampling frequency of $16\si{\kilo\hertz}$. For the transforms, Hamming windows were used, with a length of 32 samples/window and an overlap of $50\%$. We also the regularization parameter $\alpha = 1e^{-4}$, just enough to control the gSNR. The beamformers were calculated once for the whole signal, for faster processing and ease to compare the results. We will compare the two transforms exposed, the STFT and the SSBT, for a varying set of conditions on the signals and variables considered.
 
-In the line plots, STFT results are presented in red lines with circles and SSBT results in green lines with triangles. Results for an accurate RFR (that is, assuming we know precisely all $A_{m,k}'[l]$ and $A_{m,k}''[l]$) are in continuous lines, and for estimate RFR (via \cref{eq:sec2:calc_RTF_ft_expec,eqs:sec2:calc_RTF_rft_expec}) are in darker dashed lines. The output metrics were averaged over 200 frames and presented every 100 windows, for a smoother visualization.
+In the line plots, STFT results are presented in red lines with squares and SSBT results in green lines with triangles. Results for an accurate RFR (that is, assuming we know precisely all $A_{m,k}'[l]$ and $A_{m,k}''[l]$) are in continuous lines, and for estimate RFR (via \cref{eq:sec2:calc_RTF_ft_expec,eqs:sec2:calc_RTF_rft_expec}) are in darker dotted lines. For simplicity, the STFT for an accurate RFR will be labeled STFT-A, and for an estimated RFR will be STFT-E. The same logic is applied for SSBT-A and SSBT-E. We will focus our efforts in comparing the results between the two different transforms, for the two conditions (accurate and estimate RFRs), and not so much in comparing the results between the two conditions.
 
 \begin{figure}[!ht]
 	\centering
@@ -37,203 +38,223 @@ In the line plots, STFT results are presented in red lines with circles and SSBT
 
 \subsection{Metrics of interest}
 
-The main objective of the filters compared is the reduction of the loudspeaker's signal, while preserving the desired signal without distortion. Along this, although our filter isn't designed to reduce the white noise, a minimal enhancement of it would also be of interest. The loudspeaker's signal minimization will be measured through the echo reduction loss enhancement (ERLE, or $\erle$), the maintenance of the desired signal through the desired signal reduction factor (DSRF, or $\dsrf$), and the reduction of the white noise through the white noise gain (WNG, or $\wng$). We are will also observe the directivity index (DI, or $\di$), which measures the behavior of the beamformer when it would be located in a spherical anisotropic noise field. Respectively, these metrics in their time-dependent broadband formulations are given by
+The main objective of the filters compared is the reduction of the loudspeaker's signal, while preserving the desired signal without distortion. Along this, although our filter isn't designed to reduce the white noise, a minimal enhancement of it would also be of interest. The loudspeaker's signal minimization will be measured through the echo reduction loss enhancement (gSER, or $\gser$), the maintenance of the desired signal through the desired signal reduction factor (DSRF, or $\dsrf$), and the reduction of the white noise through the white noise gain (gSNR, or $\gsnr$). We are will also observe the directivity index (DI, or $\di$), which measures the behavior of the beamformer when it would be located in a spherical anisotropic noise field. Respectively, these metrics in their time-dependent broadband formulations are given by
 \begin{subgather}
 	\dsrf[l] = \frac{\sum_{k}\abs{X_{1,k}[l]}^2}{\sum_{k}\abs{X_{f,k}[l]}^2} \\
-	\erle[l] = \frac{\sum_{k}\abs{S_{1,k}[l]}^2}{\sum_{k}\abs{S_{f,k}[l]}^2} \\
-	\wng[l] = \frac{\sum_{k}\abs{R_{1,k}[l]}^2}{\sum_{k}\abs{R_{f,k}[l]}^2} \\
+	\gser[l] = \frac{\sum_{k}\abs{S_{1,k}[l]}^2}{\sum_{k}\abs{S_{f,k}[l]}^2} \cdot \frac{1}{\dsrf[l]}\\
+	\gsnr[l] = \frac{\sum_{k}\abs{R_{1,k}[l]}^2}{\sum_{k}\abs{R_{f,k}[l]}^2} \cdot \frac{1}{\dsrf[l]} \\
 	\di[l] = \frac{\sum_{k} \abs{\he{\bvf{k}}[l] \bvd{k}[l]}^2}{\sum_{k} \he{\bvf{k}}[l] \bvGa[b]{k}[l] \bvf{k}[l]}
 \end{subgather}
 in which $\bvGa[b]{k}[l]$ is the spherical anisotropic noise field correlation matrix \cite{habets_generating_2007} and $\bvd{k}[l]$ is the steering vector between the desired source and the sensor array, both assuming a far-end free field environment. We are also interested in a time-average broadband formulation for these metrics, this being given by
 \begin{subgather}
 	\dsrf = \frac{\sum_{l,k}\abs{X_{1,k}[l]}^2}{\sum_{l,k}\abs{X_{f,k}[l]}^2} \\
-	\erle = \frac{\sum_{l,k}\abs{S_{1,k}[l]}^2}{\sum_{l,k}\abs{S_{f,k}[l]}^2} \\
-	\wng = \frac{\sum_{l,k}\abs{R_{1,k}[l]}^2}{\sum_{l,k}\abs{R_{f,k}[l]}^2} \\
+	\gser = \frac{\sum_{l,k}\abs{S_{1,k}[l]}^2}{\sum_{l,k}\abs{S_{f,k}[l]}^2} \cdot \frac{1}{\dsrf} \\
+	\gsnr = \frac{\sum_{l,k}\abs{R_{1,k}[l]}^2}{\sum_{l,k}\abs{R_{f,k}[l]}^2} \cdot \frac{1}{\dsrf} \\
 	\di = \frac{\sum_{l,k} \abs{\he{\bvf{k}}[l] \bvd{k}[l]}^2}{\sum_{l,k} \he{\bvf{k}}[l] \bvGa[b]{k}[l] \bvf{k}[l]}
 \end{subgather}
 
-\subsection{Basic comparison}
-In this scenario, at the reference sensor (assumed to be the one at $(3\m,~1.92\m,~1\m)$), the SNR for the loudspeaker's and noise signals are respectively $-15\dB$ and $30\dB$. These will be referred as Signal-to-Echo and Signal-to-Noise Ratios (SER and SNR) in that order. We will use $\Ly = 1$ and $\Ly = 16$ to illustrate two different cases in terms of samples used, one where we consider only the latest sample for each sensor, and another where we have sufficient samples for a (empirically) good enough performance.
+Although it is more usual to use the ERLE and WNG metrics in situations like this \cite{??1,??2}, using ahead of time the knowledge that there will be distortion on the desired signal, the choice on gain in SER and in SNR becomes more appealing and interesting.
 
-\input{figures/io_input/aux_data_32.tex}
-\begin{figure}[!ht]
-	\centering
-	\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband DSRF, $\Ly = 1$.}
-		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_1}
-	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_16.tex}
-		\caption{Per-window broadband DSRF, $\Ly = 16$.}
-		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_16}
-	\end{subfigure}\\[1em]
-	%
-	\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__ERLE_l__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband ERLE, $\Ly = 1$.}
-		\label{subfig:lineplot__ERLE_l__iSER_n15__Ly_1}
-	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__ERLE_l__iSER_n15__Ly_16.tex}
-		\caption{Per-window broadband ERLE, $\Ly = 16$.}
-		\label{subfig:lineplot__ERLE_l__iSER_n15__Ly_16}
-	\end{subfigure}\\[1em]
-	%
-		\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__WNG_l__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband WNG, $\Ly = 1$.}
-		\label{subfig:lineplot__WNG_l__iSER_n15__Ly_1}
-	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
-		\centering
-		\input{figures/lineplot__WNG_l__iSER_n15__Ly_16.tex}
-		\caption{Per-window broadband WNG, $\Ly = 16$.}
-		\label{subfig:lineplot__WNG_l__iSER_n15__Ly_16}
-	\end{subfigure}\\[1.5em]
-	\ref*{timeplot_legend}
-	\caption{Output metrics for the beamformers over time, in the base scenario.}
-	\label{fig:lineplot__iSER_n15__Ly_1}
-\end{figure}
+%\subsection{Basic comparison}
+%In this scenario, at the reference sensor (assumed to be the one at $(3\m,~1.92\m,~1\m)$), the SNR for the loudspeaker's and noise signals are respectively $-15\dB$ and $30\dB$. These will be referred as Signal-to-Echo and Signal-to-Noise Ratios (SER and SNR) in that order. We will use $\Ly = 1$ and $\Ly = 16$ to illustrate two different cases in terms of samples used, one where we consider only the latest sample for each sensor, and another where we have sufficient samples for a (empirically) good enough performance.
+%
+%\begin{figure}[!ht]
+%	\centering
+%	\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_1.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband DSRF, $\Ly = 1$.}
+%		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_1}
+%	\end{subfigure}\hfill
+%	\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__DSRF_l__iSER_n15__Ly_16.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband DSRF, $\Ly = 16$.}
+%		\label{subfig:lineplot__DSRF_l__iSER_n15__Ly_16}
+%	\end{subfigure}\\[1em]
+%	%
+%	\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSER_l__iSER_n15__Ly_1.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband gSER, $\Ly = 1$.}
+%		\label{subfig:lineplot__gSER_l__iSER_n15__Ly_1}
+%	\end{subfigure}\hfill
+%	\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSER_l__iSER_n15__Ly_16.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband gSER, $\Ly = 16$.}
+%		\label{subfig:lineplot__gSER_l__iSER_n15__Ly_16}
+%	\end{subfigure}\\[1em]
+%	%
+%		\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSNR_l__iSER_n15__Ly_1.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband gSNR, $\Ly = 1$.}
+%		\label{subfig:lineplot__gSNR_l__iSER_n15__Ly_1}
+%	\end{subfigure}\hfill
+%	\begin{subfigure}{0.49\textwidth}
+%		\centering
+%		\input{figures/lineplot__gSNR_l__iSER_n15__Ly_16.tex}
+%		\vspace*{-0.5em}\caption{Per-window broadband gSNR, $\Ly = 16$.}
+%		\label{subfig:lineplot__gSNR_l__iSER_n15__Ly_16}
+%	\end{subfigure}\\[1.5em]
+%	\ref*{timeplot_legend}
+%	\caption{Output metrics for the beamformers over time, in the base scenario.}
+%	\label{fig:lineplot__iSER_n15__Ly_1}
+%\end{figure}
+%
+%In all figures, we see that the results with the STFT are better than those with the SSBT, when comparing accurate-to-accurate and estimate-to-estimate, or at most equal. Although the results in gSER and gSNR seem similar, from the DSRF results we see that the SSBT beamformer led to upwards of $20\dB$ of distortion with $\Ly = 1$ and $10\dB$ with $\Ly = 16$, for the estimate case.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Comparison for different $\Ly$}
+\subsection{Comparison for different observed frames}
+
+In this simulation, we compare our filters for both the accurate and estimate RFR, for a range of considered observed frames $\Ly$. That is, we compare the results for different number of observed samples considered in the convolutive filter, where $\Ly = 1$ reduces to the MTF model.
+
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DSRF__iSER_n15__Ly_var.tex}
-		\caption{Time-average broadband DSRF for varying $\Ly$.}
+		\caption{DSRF.}
 		\label{subfig:lineplot__DSRF__iSER_n15__Ly_var}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{0.48\textwidth}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE__iSER_n15__Ly_var.tex}
-		\caption{Time-average broadband ERLE for varying $\Ly$.}
-		\label{subfig:lineplot__ERLE__iSER_n15__Ly_var}
+		\input{figures/lineplot__gSER__iSER_n15__Ly_var.tex}
+		\caption{gSER.}
+		\label{subfig:lineplot__gSER__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__WNG__iSER_n15__Ly_var.tex}
-		\caption{Time-average broadband WNG for varying $\Ly$.}
-		\label{subfig:lineplot__WNG__iSER_n15__Ly_var}
-	\end{subfigure}\\[1em]
-	\begin{subfigure}{0.48\textwidth}
+		\input{figures/lineplot__gSNR__iSER_n15__Ly_var.tex}
+		\caption{gSNR.}
+		\label{subfig:lineplot__gSNR__iSER_n15__Ly_var}
+	\end{subfigure}\hfill
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DI__iSER_n15__Ly_var.tex}
-		\caption{Time-average broadband DI for varying $\Ly$.}
+		\caption{DI.}
 		\label{subfig:lineplot__DI__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
 	\ref*{lyplot_legend}
-	\caption{Output metrics for the beamformers for varying input $L_Y$'s.}
+	\caption{Time-average broadband output metrics for the beamformers with varying input $L_Y$'s.}
 	\label{fig:lineplot__iSER_n15__Ly_var}
 \end{figure}
 
+For all metrics except DI, the accurate results are better than those achieved for an estimated RFR. We also see that, overall, the SSBT-A results are worse than the accurate STFT-A ones, specially in terms of gSER, but not by too much of a margin (around $4\dB$). This is also the case between SSBT-E and STFT-E, however for the estimate case we also have a much higher desired signal distortion, which considerably adds to the performance loss of the former when compared to the latter, for all metrics. That is, if one were to compare the gain in SER, it would be comparably lower for the SSBT-E in contrast with the STFT-E.
+
+Also note that, in this situation, overall the best estimate results are obtained with the STFT for $\Ly = 1$. With $\Ly = 2$ both the desired signal's distortion increases but also the gSER sharply decreases, increasing again as we increase $\Ly$, but never achieving the same performance. This is likely related to errors in the RFR estimation for frames other than the main one being more prevalent, given that these windows carry less information, and these errors are such that they deteriorate the filter more than the addition of new frames help it.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Comparison for different iSER}
+
+We now compare our results for different values of input SER; that is, we change the power of the signal in the source within the device, right next to the sensors.
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DSRF__iSER_var__Ly_1.tex}
-		\caption{Time-average broadband DSRF for varying $\iser$.}
+		\caption{DSRF - $\Ly = 1$.}
 		\label{subfig:lineplot__DSRF__iSER_var__Ly_1}
 	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DSRF__iSER_var__Ly_16.tex}
-		\caption{Time-average broadband DSRF for varying $\iser$.}
+		\caption{DSRF - $\Ly = 16$.}
 		\label{subfig:lineplot__DSRF__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE__iSER_var__Ly_1.tex}
-		\caption{Time-average broadband ERLE for varying $\iser$.}
-		\label{subfig:lineplot__ERLE__iSER_var__Ly_1}
+		\input{figures/lineplot__gSER__iSER_var__Ly_1.tex}
+		\caption{gSER - $\Ly = 1$.}
+		\label{subfig:lineplot__gSER__iSER_var__Ly_1}
 	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE__iSER_var__Ly_16.tex}
-		\caption{Time-average broadband ERLE for varying $\iser$.}
-		\label{subfig:lineplot__ERLE__iSER_var__Ly_16}
+		\input{figures/lineplot__gSER__iSER_var__Ly_16.tex}
+		\caption{gSER - $\Ly = 16$.}
+		\label{subfig:lineplot__gSER__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__WNG__iSER_var__Ly_1.tex}
-		\caption{Time-average broadband WNG for varying $\iser$.}
-		\label{subfig:lineplot__WNG__iSER_var__Ly_1}
+		\input{figures/lineplot__gSNR__iSER_var__Ly_1.tex}
+		\caption{gSNR - $\Ly = 1$.}
+		\label{subfig:lineplot__gSNR__iSER_var__Ly_1}
 	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__WNG__iSER_var__Ly_16.tex}
-		\caption{Time-average broadband WNG for varying $\iser$.}
-		\label{subfig:lineplot__WNG__iSER_var__Ly_16}
+		\input{figures/lineplot__gSNR__iSER_var__Ly_16.tex}
+		\caption{gSNR - $\Ly = 16$.}
+		\label{subfig:lineplot__gSNR__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DI__iSER_var__Ly_1.tex}
-		\caption{Time-average broadband DI for varying $\iser$.}
+		\caption{DI - $\Ly = 1$.}
 		\label{subfig:lineplot__DI__iSER_var__Ly_1}
 	\end{subfigure}\hfill
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DI__iSER_var__Ly_16.tex}
-		\caption{Time-average broadband DI for varying $\iser$.}
+		\caption{DI - $\Ly = 16$.}
 		\label{subfig:lineplot__DI__iSER_var__Ly_16}
 	\end{subfigure}\\[1em]
-	\ref*{timeplot_legend}
+	\ref*{lyplot_legend}
 	\caption{Output metrics for the beamformers for varying input SERs.}
 	\label{fig:lineplot__iSER_var__Ly_1}
 \end{figure}
 
+For high SER and $\Ly = 1$, SSBT-A has a better gSER performance than STFT-A, however this isn't followed by a better gSNR or DI, though they are similar in these two as well. For $\Ly = 16$ the STFT-A results are still strictly better than those for SSBT-A, however they are similar between the two filters (as was also the case previously), getting closer as we increase the input SER.
+
+For the estimate RFR outputs, we see that the STFT-E results are strictly superior with $\Ly = 1$, being substantially better for gain in SER and SNR. Also, the SSBT-E and STFT-E results are similar for high input SERs and $\Ly = 16$, similar to the accurate RFR comparison.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \subsection{Comparison for different $N$}
 
+In this simulation, we now compare the beamformers in a scenario where we consider only the multiplicative transfer function model, and increase the number of samples per window. This effectively minimizes the problems exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, since here we don't consider different windows. Also, by increasing the number of samples per window, we minimize the frequency aliasing effects between frames due to the windowing process of the time-frequency transforms, as well as contemplating more of the desired signal on each window.
 \begin{figure}[!ht]
 	\centering
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DSRF__N_var__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband DSRF, $\Ly = 1$.}
+		\caption{DSRF.}
 		\label{subfig:lineplot__DSRF__N_var__iSER_n15__Ly_1}
-	\end{subfigure}\\[1em]
+	\end{subfigure}\hfill
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__ERLE__N_var__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband ERLE, $\Ly = 1$.}
-		\label{subfig:lineplot__ERLE__N_var__iSER_n15__Ly_1}
+		\input{figures/lineplot__gSER__N_var__iSER_n15__Ly_1.tex}
+		\caption{gSER.}
+		\label{subfig:lineplot__gSER__N_var__iSER_n15__Ly_1}
 	\end{subfigure}\\[1em]
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
-		\input{figures/lineplot__WNG__N_var__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband WNG, $\Ly = 1$.}
-		\label{subfig:lineplot__WNG__N_var__iSER_n15__Ly_1}
-	\end{subfigure}\\[1em]
+		\input{figures/lineplot__gSNR__N_var__iSER_n15__Ly_1.tex}
+		\caption{gSNR.}
+		\label{subfig:lineplot__gSNR__N_var__iSER_n15__Ly_1}
+	\end{subfigure}\hfill
 	%
-	\begin{subfigure}{0.48\textwidth}
+	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DI__N_var__iSER_n15__Ly_1.tex}
-		\caption{Per-window broadband WNG, $\Ly = 1$.}
+		\caption{DI.}
 		\label{subfig:lineplot__DI__N_var__iSER_n15__Ly_1}
-	\end{subfigure}\\[1.5em]
-	\ref*{timeplot_legend}
+	\end{subfigure}\\[1em]
+	\ref*{lyplot_legend}
 	\caption{Output metrics for the beamformers over time, in the base scenario.}
 	\label{fig:lineplot__N_var__iSER_n15__Ly_1}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The first effect that we see is that, as expected, the desired signal's distortion for SSBT-E reduces as we increase the number of windows considered. Along that, we see that for all other metrics the SSBT-E performance approaches that of the SSBT-A as we increase $N$. The same happens for the STFT filters, however for these the different is negligible with far fewer samples. Also, in this scenario we see that for high $N$, the SSBT results are only slightly worse than the STFT ones, for both the accurate and estimate RFR cases. This supports the previous theoretical claims, where we stated that increasing the number of samples per frame reduces the RFR estimation errors.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Result analysis}
+\subsection{General results}
 
-In all figures, we see that the STFT filter had a better performance than the SSBT one, either comparing estimate-on-estimate or accurate-on-accurate, or strictly outperforming it. The only situation in which the opposite occurs is in terms of ERLE, for high input SER, and $\Ly = 1$ (\cref{subfig:lineplot__ERLE__iSER_var__Ly_1}). 
+From the results presented, we see that in all scenarios the SSBT-A results are similar (although mostly slightly worse) to the STFT-A results. Given that the SSBT beamformer is a strictly real-valued filter, this could be a viable tradeoff between a small loss of performance, and a possibly faster algorithm for beamforming, which could also be implemented on simpler (thus cheaper) hardware.
 
-For the STFT, the accurate RFR and estimate RFR (light and dark red results respectively) are usually similar, with each having better performances for different conditions. Unfortunately, the same isn't truee for the SSBT results.
-
-While the SSBT performance for an accurate RFR is similar to that of the STFT for the same condition for most results (mostly being outperformed, but usually not by much), the same isn't true for an estimated RFR. In fact, we can see that for all DSRF results the estimated RFR SSBT results are completely subpar, only geting close to acceptable levels for high $N$ (\cref{subfig:lineplot__DSRF__N_var__iSER_n15__Ly_1}). This corroborates that which was exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} where, with high number of samples in the transform, the impact of neighboring frequencies on the RFR estimation decreases, as well as the impact of different frames is nullified by considering $N = 1$ (that is, a multiplicative filter, instead of a convolutive one).
+However, generally we also saw that these results weren't followed when we tried to estimate the RFR from the desired signal samples, in which case the SSBT results were drastically worse when compared to those obtained through the STFT, except for the case with a multiplicative filter (instead of a convolutive one) with a sufficiently large number of samples per frame. In this instance, the SSBT-E results were again comparable to the STFT-E ones, being close to the accurate RFR metrics.

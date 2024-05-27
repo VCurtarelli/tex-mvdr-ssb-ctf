@@ -281,12 +281,19 @@ where $A_{m;\sS}'[l,k]$ and $A_{m;\sS}''[l,k]$ are calculated in a similar way t
 	\expec{X_{m;\sF}[l+\lambda,k] X_{1;\sF}^*[l,k]}
 	& = \expec{\sum_{\tau}A_{m;\sF}[\tau,k] X_{1;\sF}[l+\lambda-\tau,k] X_{1;\sF}^*[l,k]} \\
 	& = \sum_{\tau} A_{m;\sF}[\tau,k] \expec{X_{1;\sF}[l+\lambda-\tau,k] X_{1;\sF}^*[l,k]} \\
-	& = \sum_{\tau} A_{m;\sF}[\tau,k] \sigma_{X,\lambda-\tau}^2
+	& = \sum_{\tau} A_{m;\sF}[\tau,k] \sigma_{X,\lambda-\tau}^2[k]
 \end{equations}
-which is only equal to $A_{m;\sF}[\lambda]$ if $\sigma_{X,\gamma-\tau} = 0$ for $\lambda \neq \tau$; that is, different samples of our desired signal are uncorrelated. This is untrue for time-frequency transforms, given their overlap and windowing processes, but also since our desired signal is the signal observed on the reference sensor $X_{1;\sF}[l,k] = H_{1;\sF}[l,k] \ast X_{\sF}[l,k]$.
+which is only equal to $A_{m;\sF}[\lambda] \sigma_{X}^2$ (as in \cref{eq:sec2:system_equations:subeq2}) if $\sigma_{X,\gamma-\tau} = 0$ for $\lambda \neq \tau$; that is, different samples of our desired signal are uncorrelated. This is untrue for time-frequency transforms, given their overlap and windowing processes, but also since our desired signal is the signal observed on the reference sensor $X_{1;\sF}[l,k] = H_{1;\sF}[l,k] \ast X_{\sF}[l,k]$.
 
 Applying this same process for the SSBT, we have that
 \begin{equation}
-	\expec{X_{m;\sS}[l+\lambda,k] X_{1;\sS}[l,k]} = \sum_{\tau} A_{m;\sS}'[\tau,k] \sigma_{X,\lambda-\tau}^2 + \sum_{\gamma} A_{m;\sS}''[\gamma,k] \sigma_{X,\lambda-\gamma}^2
+	\expec{X_{m;\sS}[l+\lambda,k] X_{1;\sS}[l,k]} = \sum_{\tau} A_{m;\sS}'[\tau,k] \sigma_{X',\lambda-\tau}^2[k] + \sum_{\gamma} A_{m;\sS}''[\gamma,k] \sigma_{X'X'',\lambda-\gamma}^2[k]
 \end{equation}
-where, even though we have shown that conjugate frequencies are independent, this isn't true for conjugate frequencies on different frames. Therefore, applying this process for the SSBT adds errors not only given correlation of different frames in the desired signal, but for conjugate frequencies as well.
+
+Through a similar development as done before, but now on $\expec{X_{1;\sS}[l+\lambda-\gamma,k] X_{1;\sS}[l,k]}$, we get that
+\begin{equations}
+	\sigma_{X'X'',\lambda-\gamma}^2[k]
+	& = \expec{X'_{1;\sS}[l+\gamma - \lambda,k] X''_{1;\sS}[l,k]} \\
+	& = \sum_{\mu \geq 0} (H'_{1,\mu} - H'_{1,-\mu})(H''_{1,\mu + (\lambda - \gamma)} - H''_{1,\mu - (\lambda - \gamma)}) \sigma_{X}^2[k]
+\end{equations}
+with $\sigma_{X}^2[k]$ being the desired signal's variance at source. Note that for $\mu = 0$ the sum's is 0, which reflects the independence between $X_1'[l,k]$ and $X_1''[l,k]$, but this isn't strictly the case for $\mu \neq 0$. Thus, even though we have shown that conjugate frequencies are independent, this isn't true for conjugate frequencies on different frames. Therefore, applying this process for the SSBT adds errors not only due to correlation of different frames in the desired signal, but for conjugate frequencies as well. This decreases its robustness of the beamformer through this transform, making it more prone to output distortion due to mismatch in the estimation of the relative frequency response.

@@ -7,7 +7,7 @@
 %\centering
 %\tikzsetnextfilename{dsrf_lineplot_32_var_acc_v7}
 \begin{tikzpicture}
-	\begin{snrplot}{DSRF (dB)}%[ymin=-3, ymax=0.03, ytick={-3, -2, -1, 0}]
+	\begin{snrplot}{DSRF (dB)}[ymin=-0.5, ymax=25, ytick={0, 8, ..., 24}]
 		\addplot [style=resA1]
 		table [col sep=comma, y=val] {figures/io_input/STFT/DSRF__h__STFT__N_32__iSER_var__Ly_1__err_0__acc.csv};
 		

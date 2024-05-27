@@ -166,7 +166,7 @@ For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_con
 \end{equation}
 where, for the STFT, $\bvC{k} = \bvD{k}'$ and $\bvi = \bvi{\Delta}$; and, for the SSBT, $\bvC{k} = \bts{\bvD{k}'\,,~\bvD{k}''}$, and $\bvi = \begin{bmatrix}
 	\bvi{\Delta} \\ \bv{0}
-\end{bmatrix}$.
+\end{bmatrix}$. This shows us the second problem with beamforming with the SSBT: while with the STFT only one constraint is necessary to achieve the non-distortionality, two constraints are needed with the SSBT, increasing the beamformer complexity. Furthermore, it is trivial to see that each additional constraint (such as with an LCMV beamformer) on the problem will translate into two constraints for the SSBT.
 
 To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
 \begin{equation}
@@ -177,7 +177,7 @@ where
 \begin{equation}
 	\bvGa{\alpha;k}[l] = (1-\alpha)\bvGa{\bvy{k}}[l] + \alpha \bv{I}
 \end{equation}
-with $\Corr{\bvy{k}}[l]$ being the pseudo-correlation matrix of the observed signal $\bvy{k}[l]$ of size $\sz{M\Ly}{M\Ly}$, and $\alpha$ is a regularization parameter. The solution to this minimization problem 
+with $\bvGa{\bvy{k}}[l]$ being the pseudo-correlation matrix of the observed signal $\bvy{k}[l]$ of size $\sz{M\Ly}{M\Ly}$, and $\alpha$ is a regularization parameter. The solution to this minimization problem 
 \begin{equation}
 	\label{eq:sec3:solution_mpdr_beamformer_hard}
 	\bvf{\mpdr_1;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi
