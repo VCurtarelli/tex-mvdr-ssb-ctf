@@ -53,7 +53,7 @@ where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this 
 
 However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT} in \cref{app:properties_rft}), where
 \begin{equation}
-	\label{eq:sec2:convolution_equiv_rft}
+    \label{eq:sec2:convolution_equiv_rft}
 	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) + X_{\R}(\-f) \Im{H}_{\F}(f)
 \end{equation}
 where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$.
@@ -267,7 +267,7 @@ or, with the convolutive transfer function (CTF) model \cite{talmon_relative_200
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$.
+in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as for the real convolution theorem one would need to consider cross-band interference \cite{??}, however this effect wasn't considered here, neither for the STFT nor the SSBT. Also note that the presence of the conjugate frequency is a byproduct different to the cross-band interference, which happens due to aliasing.
 
 \subsection{RFR estimation for time-frequency transforms}
 \label{subsec:sec2:rfr_estimation_time-freq_transforms}
