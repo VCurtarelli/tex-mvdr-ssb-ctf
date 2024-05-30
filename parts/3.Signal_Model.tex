@@ -19,7 +19,7 @@ Treating the multiple paths between the desired source and the $m$-th sensor as 
 	X_{1,k}'[l] = H_{1,k}'[l] \ast X_k[l] \\
 	X_{1,k}''[l] = H_{1,k}''[l] \ast X_{K-k}[l]
 \end{subgather}
-where $X_{1,k}'[l]$ is the portion of the desired signal at the reference sensor of the direct frequency, $X_{1,k}''[l]$ is the desired signal on the conjugate frequency $(K-k)$, $H^n_{1,k}[l]$ are the desired signal's transfer functions between source and reference, and $A^n_{m,k}[l]$ are the RFR's between each sensor and the reference. This formulation models both the STFT and the SSBT, as with the STFT we just take $A_{m,k}''[l] = H_{m,k}''[l] = 0$, as there is no cross-over between conjugate frequencies.
+where $X_{1,k}'[l]$ is the portion of the desired signal at the reference sensor of the direct frequency, $X_{1,k}''[l]$ is the desired signal on the conjugate frequency $(K-k)$, $H^n_{1,k}[l]$ are the desired signal's frequency responses between source and reference, and $A^n_{m,k}[l]$ are the RFR's between each sensor and the reference. This formulation models both the STFT and the SSBT, as with the STFT we just take $A_{m,k}''[l] = H_{m,k}''[l] = 0$, as there is no cross-over between conjugate frequencies.
 
 Note that $A_{m,k}[l]$ isn't strictly a causal response, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. We will assume that there are $\Delta$ non-causal samples in $A_{m,k}[l]$. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
 

@@ -166,7 +166,7 @@ where $\expec{\cdot}$ is the expectation operator.
 %	\end{subgather}
 %	thus again not being independent relationships between the variables at hand. This is an under-determined system with $3$ equations and $4$ variables, which has infinite solutions. Given any choice of $\ar$ such that $\abs{\ar} \leq \E{11}$, we can find $\ai$ through \cref{eq:sec2:system_equations_gamma:subeq1}, and $\gr$ and $\gi$ (which are equivalent to $A_{2,\R}'$ and $A_{2,\R}''$) via \cref{eq:sec2:system_equations_gamma:sol_gr_gi}.
 %\end{changingfrom}
-This isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two transfer functions $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index). Then, our outputs can be described as
+This isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two frequency responses $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index). Then, our outputs can be described as
 \begin{subgather}{eqs:sec2:system_eqs_X1f_X2f_H}
 	X_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq1}\\
 	X_2(f) = H_2'(f) X'(f) + H_2''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq2}
@@ -257,17 +257,17 @@ Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:eq
 	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{\j\frac{3\pi}{4}} X_{\sS}[l,K-k] }
 \end{equation}
 
-As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain as
+As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain through the MTF model \cite{talmon_relative_2009} as
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_mtf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] H_{\sS}'[k] + X_{\sS}[l,K-k] H_{\sS}''[k]
 \end{equation}
-or, with the convolutive transfer function (CTF) model \cite{talmon_relative_2009},
+or, with the CTF model,
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as for the real convolution theorem one would need to consider cross-band interference \cite{??}, however this effect wasn't considered here, neither for the STFT nor the SSBT. Also note that the presence of the conjugate frequency is a byproduct different to the cross-band interference, which happens due to aliasing.
+in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as for the real convolution theorem one would need to consider cross-band interference \cite{avargel_system_2007}, however this effect wasn't considered here, neither for the STFT nor the SSBT. Also note that the presence of the conjugate frequency is a byproduct different to the cross-band interference, which happens due to aliasing.
 
 \subsection{RFR estimation for time-frequency transforms}
 \label{subsec:sec2:rfr_estimation_time-freq_transforms}

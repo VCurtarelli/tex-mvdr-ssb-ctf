@@ -126,7 +126,7 @@ $^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineer
 \abstract{%
 	% In order to explore different beamforming applicaitons, this paper investigates the application of the Single-Sideband Transform (SSBT) for constructing a Minimum-Power Distortionless-Response (MVDR) beamformer in the context of the convolutive transfer function (CTF) model for short-window time-frequency transforms by making use of filter-banks and their properties. Our study aims to optimize the appropriate utilization of SSBT in this endeavor, by examining its characteristics and traits. We address a reverberant scenario with multiple noise sources, aiming to minimize both undesired interference and reverberation in the output. Through simulations reflecting real-life scenarios, we show that employing the SSBT correctly leads to a beamformer that outperforms the one obtained when via the Short-Time Fourier Transform (STFT), while exploiting the SSBT's property of it being real-valued. Two approaches were developed with the SSBT, one naive and one refined, with the later being able to ensure the desired distortionless behavior, which is not achieved by the former.
 %
-    In this paper, we employ a real-valued time-frequency transform based on the Short-Time Fourier Transform to achieve an MPDR beamformer within an echoic environment and a device which contains both interference and the sensor array. For such, we properly define this transform, while also exploring its properties and how those can influence any real-life applications. We show that, while the feature of having real coefficients could be advantageous of an application standpoint, it also makes basic properties such as the convolution theorem much harder to deal with, such that each frequency is also influenced by its conjugate counterpart, which isn’t the case with the STFT, for example. This hinders basic beamforming premises, such as the non-distortionality of the desired signal. We also show that a real-valued transform is more prone to errors and more sensible to mismatch and modeling noise, such as in the estimation of relative transfer functions from the observed desired signals. Through simulations emulating real-life-like scenarios, the practical results corroborate the theoretical claims, showing that a real-valued transform is marginally worse than its complex-valued counterpart in an ideal scenario where mismatch is not present, and drastically worse in a case with estimated frequency responses. The only scenario where the estimation approaches the ideal scenario is for a high number of samples per window in the transform, where window-to-window interference is minor and mismatch is minimized.
+    In this paper, we employ a real-valued time-frequency transform based on the Short-Time Fourier Transform to achieve an MPDR beamformer within an echoic environment and a device which contains both interference and the sensor array. For such, we properly define this transform, while also exploring its properties and how those can influence any real-life applications. We show that, while the feature of having real coefficients could be advantageous of an application standpoint, it also makes basic properties such as the convolution theorem much harder to deal with, such that each frequency is also influenced by its conjugate counterpart, which isn’t the case with the STFT, for example. This hinders basic beamforming premises, such as the non-distortionality of the desired signal. We also show that any real-valued transform is more prone to errors and more sensible to mismatch and modeling noise, such as in the estimation of relative frequency responses from the observed desired signals. Through simulations emulating real-life-like scenarios, the practical results corroborate the theoretical claims, showing that a real-valued transform is marginally worse than its complex-valued counterpart in an ideal scenario where mismatch is not present, and drastically worse in a case with estimated frequency responses. The only scenario where the estimation approaches the ideal scenario is for a high number of samples per window in the transform, where window-to-window interference is dismissible and mismatch is minimized.
 }
 
 % Keywords
@@ -182,13 +182,15 @@ The following abbreviations are used in this manuscript:
 \begin{tabular}{@{}ll} %%TODO: Abbreviations used
 %CB & Constant-beamwidth \\
 CTF & Convolutive Transfer Function \\
+DI & Directivity Index \\
 DSRF & Desired Signal Reduction Factor \\
 FT & Fourier Transform \\
 MPDR & Minimum-Power Distortionless-Response \\
 % MVDR & Minimum-Variance Distortionless-Response \\
 MTF & Multiplicative Transfer Function \\
+RFR & Relative Frequency Response \\
 RFT & Real Fourier Transform \\
-RTF & Relative Transfer Function \\
+SER & Signal-to-Echo Ratio \\
 SNR & Signal-to-Noise Ratio \\
 SSBT & Single-Sideband Transform \\
 STFT & Short-Time Fourier Transform
