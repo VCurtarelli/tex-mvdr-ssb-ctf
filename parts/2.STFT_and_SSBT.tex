@@ -41,27 +41,22 @@ from which we deduce that
 \end{equation}
 
 \subsection{Convolution}
-
+\label{subsec:sec2:convolution}
 Given an impulse response $h(t)$ for a LIT system, the FT the convolution theorem states that
 \begin{equation}
 	h(t) \ast x(t) \hrel{\F} H_{\F}(f) X_{\F}(f)
 \end{equation}
-where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this theorem isn't strictly valid for the RFT (see \cref{prop:conv_theorem_RFT} in \cref{app:properties_rft}). That is, if $H_{\R}(f)$ and $X_{\R}(f)$ are the RFT's of $h(t)$ and $x(t)$ respectively, then
-\begin{equation}
-	h(t) \ast x(t) \centernot{\hrel{\R}} H_{\R}(f) X_{\R}(f)
-\end{equation}
-
-However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT} in \cref{app:properties_rft}), where
+where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this theorem isn't strictly valid for the RFT (see \cref{prop:conv_theorem_RFT} in \cref{app:properties_rft}). However, it is possible to prove that there is an equivalent of the convolution theorem for the RFT (see \cref{prop:equivalent_conv_theorem_RFT} in \cref{app:properties_rft}), where
 \begin{equation}
     \label{eq:sec2:convolution_equiv_rft}
 	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) + X_{\R}(\-f) \Im{H}_{\F}(f)
 \end{equation}
-where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$.
+where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$. This makes intuitive sense, since given that the RFT is a real-valued transform, it is impossible to correctly encompass the phase information of each frequency only through it, and therefore if one wants to correctly encompass the phase information after the convolution, both frequencies are necessary.
 
 \subsection{Relative frequency responses}
 \label{subsec:sec2:relative_transfer_functions}
 
-Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative frequency responses (RFR's), respective to a common input. We denote these RFR's $A_1(f)$ and $A_2(f)$, respective for each system.
+Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative frequency responses (RFR's), respective to the output of one of the systems (assumed to be the first for simplicity). We denote these RFR's $A_1(f)$ and $A_2(f)$, respective for each system.
 
 Let us denote $Y_1(f)$ as the first system's output, given by
 \begin{equation}
@@ -70,6 +65,7 @@ Let us denote $Y_1(f)$ as the first system's output, given by
 \end{equation}
 and similarly for $Y_2(f)$. With the FT, we write $X_1(f) = H_1(f) X(f)$, and thus $Y_1(f) = A_1(f) X_1(f)$ with $A_1(f) = 1$. We can obtain $A_2(f)$ as
 \begin{equation}
+    \label{eq:sec2:calc_RFR_ft_ideal}
 	A_2(f) = \frac{H_2(f)}{H_1(f)}
 \end{equation}
 which trivially satisfies that $A_2(f) X_1(f) = H_2(f) X(f)$. These RFR's can be calculated as
@@ -77,96 +73,9 @@ which trivially satisfies that $A_2(f) X_1(f) = H_2(f) X(f)$. These RFR's can be
 	\label{eq:sec2:calc_RFR_ft_expec}
 	A_m(f) = \frac{\expec{X_m(f) X_1^*(f)}}{\expec{X_1(f) X_1^*(f)}}
 \end{equation}
-where $\expec{\cdot}$ is the expectation operator.
+where $\expec{\cdot}$ is the expectation operator. It is trivial to see that \cref{eq:sec2:calc_RFR_ft_ideal} and \cref{eq:sec2:calc_RFR_ft_expec} are equivalent.
 
-%\begin{changingfrom}
-%	This isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. However, by considering each system to have two inputs $X'(f) = X(f)$ and $X''(f) = X(\-f)$ and two transfer functions $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index), then our outputs can be described as
-%	\begin{equation}
-%		\label{eq:output_sys1_rft}
-%		Y_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f)
-%	\end{equation}
-%	and in the same way for $Y_2(f)$ under the RFT. From \cref{eq:sec2:convolution_equiv_rft}, we easily see that
-%	\begin{subgather}{eqs:sec2:def_Hm'_Hm''_rft}
-%		H_m'(f) = H_m'(\-f) = \Re{H}_{\sF;m}(f) \\
-%		H_m''(f) = - H_m''(\-f) = \Im{H}_{\sF;m}(f)
-%	\end{subgather}
-%	We let
-%	\begin{subgather}{eqs:sec2:def_X1'_and_X1''_rft}
-%		X_1'(f) = H_1'(f)X'(f) \\X_1''(f) = H_1''(f) X''(f)
-%	\end{subgather}
-%	and therefore
-%	\begin{equations}{eq:sec2:definition_X1_rft}
-%		X_1(f)
-%		& = H_1'(f) X'(f) + H_1''(f) X''(f) \\
-%		& = X_1'(f) + X_1''(f)
-%	\end{equations}
-%	in which $X_1'(f)$ and $X_1''(f)$ are the inputs processed by the first system, and $X_1(f)$ is the observable input signal.
-%	Through these, we get that
-%	\begin{subgather}{eqs:sec2:rtf_systems_rft}
-%		Y_1(f) = A_1'(f) X_1'(f) + A_1''(f) X_1''(f) \\
-%		Y_2(f) = A_2'(f) X_1'(f) + A_2''(f) X_1''(f)
-%	\end{subgather}
-%	where
-%	\begin{equation}
-%		\label{eq:sec2:rtf_form_rft}
-%		A_m^{n}(f) = \frac{H_m^{n}(f)}{H_1^{n}(f)}
-%	\end{equation}
-%	are the RFR's for the $n$-th input, between the $m$-th system and the reference (assumed to be $m=1$). Trivially, $A_1'(f) = A_1''(f) = 1$. Through the properties of the RFT exposed in \cref{app:properties_rft}, we can build the following system of equations:
-%	\begin{subalign}{eqs:sec2:system_equations}
-%		\expec{X_{1}(f) X_{1}(f)}   & = \pts{  {\Re{H_{1\F}}}^2(f)             + {\Im{H_{1\F}}}^2(f)         } \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq1} \\
-%		\expec{X_{1}(f) X_{2}(f)}   & = \pts{   \Re{H_{1\F}}(f) H_{2\F}^\re(f) +  \Im{H_{1\F}} H_{2\F}^\im(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq2} \\
-%		\expec{X_{1}(f) X_{2}(\-f)} & = \pts{- \Re{H_{1\F}}(f) H_{2\F}^\im(f) +  \Im{H_{1\F}} H_{2\F}^\re(f)} \sigma_{X}^2(f) \label{eq:sec2:system_equations:subeq3}
-%	\end{subalign}
-%	where $H_{m\F}(f) = \Re{H_{m\F}}(f) + \j\Im{H_{m\F}}(f)$ is the FT of $h_m(t)$, and $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$.
-%	
-%	Note that, we have 3 equations and 5 variables. We define the following variables
-%	\begin{equations}
-%		\ar & 	= \Re{H_{1\F}}(f) \sigma_X(f) \\
-%		\ai & 	= \Im{H_{1\F}}(f) \sigma_X(f) \\
-%		\gr & 	= \frac{\Re{H_{2\F}}(f) \sigma_X(f)}{\ar} \\
-%		\gi & 	= \frac{\Im{H_{2\F}}(f) \sigma_X(f)}{\ai}
-%	\end{equations}
-%	\begin{equations}
-%		\E{11} 	& 	= \expec{X_{1}(f) X_{1}(f)} \\
-%		\E{12}	& 	= \expec{X_{1}(f) X_{2}(f)} \\
-%		\E*{12} &   = \expec{X_{1}(f) X_{2}(\-f)}
-%	\end{equations}
-%	where we will be omitting the $(f)$ index for clarity in these newly defined variables, however they are frequency-dependent. With this, \cref{eqs:sec2:system_equations} becomes	
-%	\begin{subalign}{eqs:sec2:system_equations_gamma}
-%		\ar^2 + \ai^2 & = \E{11} \label{eq:sec2:system_equations_gamma:subeq1} \\
-%		\ar^2 \gr + \ai^2 \gi & = \E{12} \label{eq:sec2:system_equations_gamma:subeq2} \\
-%		\ar\ai\pts{\gr - \gi} & = \E*{12} \label{eq:sec2:system_equations_gamma:subeq3}
-%	\end{subalign}
-%	
-%	In this new scenario our objective is to calculate $\gr$ and $\gi$, since
-%	\begin{subgather}
-%		A_{2,\R}'(f) = \gr \\
-%		A_{2,\R}''(f) = \gi
-%	\end{subgather}
-%	
-%	Firstly, from \cref{eq:sec2:system_equations_gamma:subeq2,eq:sec2:system_equations_gamma:subeq2} we can find $\gr$ and $\gi$ in terms of the expectations, $\ar$ and $\ai$. Solving it gives us
-%	\begin{subalign}{eq:sec2:system_equations_gamma:sol_gr_gi}
-%		\gr & = \frac{\E{12}}{\E{11}} + \frac{\frac{\ai}{\ar} \E*{12}}{\E{11}} \\
-%		\gi & = \frac{\E{12}}{\E{11}} - \frac{\frac{\ar}{\ai} \E*{12}}{\E{11}}
-%	\end{subalign}
-%	
-%	It is easy to verify that
-%	\begin{subgather}
-%		\expec{X_2(f) X_1(\-f)} = -\E*{12} \\
-%		\begin{split}
-%			\expec{X_2(f)^2}
-%			& = \frac{\E*{12}^2 + \E{12}^2}{\E{11}} \\
-%			& = \ar^2 \gr^2 + \ai^2 \gi^2
-%		\end{split}
-%	\end{subgather}
-%	not being useful to solve this problem since they're dependent equations. Other possibilities include trying to use the FT's RFR, however it is also easy to check that 
-%	\begin{subgather}
-%		\abs{A_{m;\F}(f)}^2 = \frac{\E{22}}{\E{11}} \\
-%		\angle{A_{m;\F}(f)} = \atan{\frac{\E*{12}}{\E{12}}}
-%	\end{subgather}
-%	thus again not being independent relationships between the variables at hand. This is an under-determined system with $3$ equations and $4$ variables, which has infinite solutions. Given any choice of $\ar$ such that $\abs{\ar} \leq \E{11}$, we can find $\ai$ through \cref{eq:sec2:system_equations_gamma:subeq1}, and $\gr$ and $\gi$ (which are equivalent to $A_{2,\R}'$ and $A_{2,\R}''$) via \cref{eq:sec2:system_equations_gamma:sol_gr_gi}.
-%\end{changingfrom}
-This isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two frequency responses $H_m'(f)$ and $H_m''(f)$ (where $m$ represents the system's index). Then, our outputs can be described as
+This process isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two frequency responses $H_m'(f)$ and $H_m''(f)$. Then, our outputs can be described as
 \begin{subgather}{eqs:sec2:system_eqs_X1f_X2f_H}
 	X_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq1}\\
 	X_2(f) = H_2'(f) X'(f) + H_2''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq2}
@@ -183,9 +92,7 @@ We now let $X_1'(f) = X_1(f)$ and $X_1''(f) = X_1(\-f)$, as our new system input
 	X_1(f) = A_1'(f) X_1'(f) + A_1''(f) X_1''(f) \\
 	X_2(f) = A_2'(f) X_1'(f) + A_2''(f) X_1''(f)
 \end{subgather}
-where $A_m'(f)$ and $A_m''(f)$ are the relative frequency responses between the new inputs $X_1'(f)$ and $X_1''(f)$ and the output $X_m(f)$. Trivially, we easily see that $A_1'(f) = 1$ and $A_1''(f) = 0$.
-
-Using \cref{eqs:sec2:def_Hm'_Hm''_rft,eqs:sec2:system_eqs_X1f_X2f_H:subeq1}, we have that
+where $A_m'(f)$ and $A_m''(f)$ are the relative frequency responses between the new inputs $X_1'(f)$ and $X_1''(f)$ and the output $X_m(f)$. Trivially, we easily see that $A_1'(f) = 1$ and $A_1''(f) = 0$. Using \cref{eqs:sec2:def_Hm'_Hm''_rft,eqs:sec2:system_eqs_X1f_X2f_H:subeq1}, we have that
 \begin{equation}
 	X_2(f) = \bts{A_2'(f) H_1'(f) - A_2''(f) H_1''(f)} X'(f) + \bts{A_2'(f) H_1''(f) + A_2''(f) H_1'(f)} X''(f)
 \end{equation}
@@ -211,21 +118,20 @@ where $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$. With this, it
 	A_2'(f) = \frac{\expec{X_1(f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RFR_rft_expec:subeq1} \\
 	A_2''(f) = \frac{\expec{X_1(\-f) X_2(f)}}{\expec{X_1^2(f)}} \label{eq:sec2:calc_RFR_rft_expec:subeq2}
 \end{subgather}
-These formulations are the same as those in \cref{eq:sec2:calc_RFR_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RFR_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$.
+These formulations are the same as those in \cref{eq:sec2:calc_RFR_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RFR_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$. Again, the results in \cref{eqs:sec2:calc_RFR_rft_expec} have an intuitive sense to them, where $A_2'(f)$ is the RFR between $X_2(f)$ and $X_1'(f)$ (same frequency), and $A_2''(f)$ is the RFR between $X_2(f)$ and $X_1'(\-f) = X_1''(f)$ (conjugate frequency), which is in line with \cref{eqs:sec2:system_eqs_X1f_X2f_G}.
 
 Generalizing to a situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
 \begin{subgather}{eqs:sec2:calc_RFR_rft_expec_generic}
 	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} \\
 	A_m''(f) = \frac{\expec{X_1(\-f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq2} 
 \end{subgather}
+this also working for $m = 1$. Trivially, \cref{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
 
-This also works for $m = 1$. Trivially, \cref{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
-
-Note that the FT formulation from \cref{eq:output_sys1_ft} can be seen as a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. Therefore, from now on we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT we will use the considerations stated before.
+The FT formulation from \cref{eq:output_sys1_ft} can be considered a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. With this, henceforth we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT the necessary considerations will be considered.
 
 \subsection{Discrete time-frequency transforms}
 
-Given a time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microphone_2021} is
+Given a discrete-time-domain signal $x[n]$, its Short-time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microphone_2021} is
 \begin{equation}
 	\label{eq:sec2:def_stft_xn}
 	X_{\sF}[l,k] = \sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K}}
@@ -267,7 +173,7 @@ or, with the CTF model,
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as for the real convolution theorem one would need to consider cross-band interference \cite{avargel_system_2007}, however this effect wasn't considered here, neither for the STFT nor the SSBT. Also note that the presence of the conjugate frequency is a byproduct different to the cross-band interference, which happens due to aliasing.
+in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, cross-band interference \cite{avargel_system_2007} to correctly model the convolution, however this effect wasn't considered here for neither transform. Also note that the presence of the conjugate frequency is a byproduct distinct of the cross-band interference, the latter happening due to aliasing, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
 
 \subsection{RFR estimation for time-frequency transforms}
 \label{subsec:sec2:rfr_estimation_time-freq_transforms}
@@ -294,6 +200,6 @@ Through a similar development as done before, but now on $\expec{X_{1;\sS}[l+\la
 \begin{equations}
 	\sigma_{X'X'',\lambda-\gamma}^2[k]
 	& = \expec{X'_{1;\sS}[l+\gamma - \lambda,k] X''_{1;\sS}[l,k]} \\
-	& = \sum_{\mu \geq 0} (H'_{1,\mu} - H'_{1,-\mu})(H''_{1,\mu + (\lambda - \gamma)} - H''_{1,\mu - (\lambda - \gamma)}) \sigma_{X}^2[k]
+	& = \sigma_{X}^2[k] \sum_{\mu \geq 0} (H'_{1,\mu} - H'_{1,-\mu})(H''_{1,\mu + (\lambda - \gamma)} - H''_{1,\mu - (\lambda - \gamma)}) 
 \end{equations}
-with $\sigma_{X}^2[k]$ being the desired signal's variance at source. Note that for $\mu = 0$ the sum's is 0, which reflects the independence between $X_1'[l,k]$ and $X_1''[l,k]$, but this isn't strictly the case for $\mu \neq 0$. Thus, even though we have shown that conjugate frequencies are independent, this isn't true for conjugate frequencies on different frames. Therefore, applying this process for the SSBT adds errors not only due to correlation of different frames in the desired signal, but for conjugate frequencies as well. This decreases its robustness of the beamformer through this transform, making it more prone to output distortion due to mismatch in the estimation of the relative frequency response.
+with $\sigma_{X}^2[k]$ being the desired signal's variance at source. Note that for $\mu = 0$ the summation's term is 0, which reflects the independence between $X_1'[l,k]$ and $X_1''[l,k]$, but this isn't strictly the case for $\mu \neq 0$. Thus, even though we have independence for conjugate frequencies on the same frame, this isn't true for different frames. Therefore, this estimation through the SSBT adds errors not only due to correlation of different frames in the desired signal, but for conjugate frequencies as well. This decreases its robustness of the beamformer through this transform, making it more prone to output distortion due to mismatch in the estimation of the relative frequency response.
