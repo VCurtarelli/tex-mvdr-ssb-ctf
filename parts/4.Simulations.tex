@@ -53,13 +53,13 @@ in which $\bvGa[b]{k}[l]$ is the spherical anisotropic noise field correlation m
 	\di = \frac{\sum_{l,k} \abs{\he{\bvf{k}}[l] \bvd{k}[l]}^2}{\sum_{l,k} \he{\bvf{k}}[l] \bvGa[b]{k}[l] \bvf{k}[l]}
 \end{subgather}
 
-We chose to use the gains in SER and SNR metrics rather than the more common ERLE and WNG \cite{wada_enhancement_2012} based on \textit{a priori} knowledge of distortion on the desired signal, and therefore the relative metrics become more faithfully representative of the results.
+We chose to use the gains in SER and SNR metrics rather than the more common ERLE and WNG \cite{wada_enhancement_2012} given an a priori knowledge of distortion on the desired signal, and therefore the gains become more representative of the results.
 
 \subsection{Comparison for different observed frames}
 
 In this simulation, we compare our filters for both the accurate and estimate RFR, for a range of considered observed frames $\Ly$. That is, we compare the results for different number of observed samples considered in the convolutive filter, where $\Ly = 1$ reduces to the MTF model.
 
-\begin{figure}[!ht]
+\begin{figure}[t]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -200,13 +200,50 @@ We now compare our results for different values of input SER; that is, we change
 
 For high SER and $\Ly = 1$, the SSBT-A filter has a better gSER performance than the STFT-A one, however this isn't followed by a better gSNR or DI, though they are similar in these two as well. For $\Ly = 16$ the STFT-A results are still strictly better than those for SSBT-A, however they are similar between the two filters (as was also the case previously), getting closer as we increase the input SER.
 
-For the estimate RFR outputs, we see that the STFT-E results are strictly superior with $\Ly = 1$, being substantially better for gain in SER and SNR. Also, the SSBT-E and STFT-E results are similar for high input SERs and $\Ly = 16$, similar to the accurate RFR comparison.
+For the estimate RFR outputs, we see that the STFT-E results are strictly superior with $\Ly = 1$, being substantially better for gain in SER and SNR. Also, the SSBT-E and STFT-E results are similar for high input SERs and $\Ly = 16$, similar to the accurate RFR comparison. These results lead us to another niche where the SSBT has a comparable (or somewhat even better) performance than the STFT, with $\Ly = 1$ and input SERs above $-15\dB$. This, allied with the results from the previous comparison, could lead us to some scenarios where the SSBT filter's results could surpass those with the STFT.
 
-These results lead us to another niche where the SSBT has a comparable (or somewhat even better) performance than the STFT, with $\Ly = 1$ and input SERs above $-15\dB$. This, allied with the results from the previous comparison, could lead us to some scenarios where the SSBT filter's results could surpass those with the STFT.
+The following simulations are also for a varying input SER, however now we set $N = 512$ samples per window, and use only the MTF model (since here we have a sufficiently high number of samples). This was chosen using the knowledge from \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, where we theoretically had that higher number of frames would minimize the effects of estimation error, which was confirmed with the practical results from \cref{fig:lineplot__N_var__iSER_n15__Ly_1}.
+
+\begin{figure}[!ht]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\input{figures/lineplot__DSRF__N_512__iSER_var__Ly_1.tex}
+		\caption{DSRF - $\Ly = 1$, $N = 512$.}
+		\label{subfig:lineplot__DSRF__N_512__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	%
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\input{figures/lineplot__gSER__N_512__iSER_var__Ly_1.tex}
+		\caption{gSER - $\Ly = 1$, $N = 512$.}
+		\label{subfig:lineplot__gSER__N_512__iSER_var__Ly_1}
+	\end{subfigure}\\[1em]
+	%
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\input{figures/lineplot__gSNR__N_512__iSER_var__Ly_1.tex}
+		\caption{gSNR - $\Ly = 1$, $N = 512$.}
+		\label{subfig:lineplot__gSNR__N_512__iSER_var__Ly_1}
+	\end{subfigure}\hfill
+	%
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\input{figures/lineplot__DI__N_512__iSER_var__Ly_1.tex}
+		\caption{DI - $\Ly = 1$, $N = 512$.}
+		\label{subfig:lineplot__DI__N_512__iSER_var__Ly_1}
+	\end{subfigure}\\[1em]
+	\ref*{lyplot_legend}
+	\caption{Output metrics for the beamformers for varying input SERs.}
+	\label{fig:lineplot__N_512__iSER_var__Ly_1}
+\end{figure}
+
+In this scenario, for the accurate results we see a behavior similar to those obtained in \cref{fig:lineplot__iSER_var__Ly_1}. For lower input SERs, the SSBT-A results were slightly worse than the STFT-A ones, although similarly to what was previously seen, and for higher input SERs the SSBT-A results approached those of the STFT-A filter, even surpassing them in terms of DI here. On the other hand, this isn't seen in the estimate RFR results. Even though a high $N$ was used here, which would lead us to believe that the estimate and accurate results would be similar for the SSBT (in accordance to \cref{fig:lineplot__N_var__iSER_n15__Ly_1}), we see that increasing the input SER leads to a worse performance, similar to the results seen in \cref{fig:lineplot__iSER_var__Ly_1}. However, here we see a different result, where with a very low input SER (below approx. $-20 \dB$), the SSBT-E results were identical to the SSBT-A ones, and these were just marginally worse when compared to the STFT ones (both accurate and estimate). This indicates one range of operation where the practical SSBT results (i.e., the SSBT-E ones) are comparable to the STFT ones, and in which it could be employed and have a sufficiently high performance, such that the tradeoff between cost of implementation and loss of performance could be discussed.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{General results}
 
 From the results presented, we see that in all scenarios the SSBT-A results are similar (although mostly slightly worse) to the STFT-A results. Given that the SSBT beamformer is a strictly real-valued filter, this could be a viable tradeoff between a small loss of performance, and a possibly faster algorithm for beamforming, which could also be implemented on simpler (thus cheaper) hardware.
 
-However, generally we also saw that these patterns weren't followed when we tried to estimate the RFR from the desired signal samples, in which case the SSBT results were drastically worse when compared to those obtained through the STFT, except for the case with a multiplicative filter (instead of a convolutive one) with a sufficiently large number of samples per frame. In this instance, the SSBT-E results were again comparable to the STFT-E ones, being close to the accurate RFR metrics.
+However, generally we also saw that these patterns weren't followed when we tried to estimate the RFR from the desired signal samples, in which case the SSBT results were drastically worse when compared to those obtained through the STFT, except for the case with a multiplicative filter (instead of a convolutive one), with a sufficiently large number of samples per frame, and a low input SER. In this instance, the SSBT-E results were again comparable to the STFT-E ones, being close to the accurate RFR metrics.
