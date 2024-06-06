@@ -1,21 +1,21 @@
 \section{Signal Model and Beamforming}
 \label{sec:signal_model}
 
-Let there be a device that consists of $M$ sensors and a loudspeaker in a reverberant environment, in which there also is a desired source, both traveling with a speed $c$. We also assume the presence of undesired noise at each sensor. For simplicity we assume that all sources are spatially stationary, although this condition can be easily removed.
+Let a device consist of $M$ sensors and a loudspeaker in a reverberant environment, in which there also is a desired source, both traveling with a speed $c$. We also assume the presence of undesired noise at each sensor. For simplicity, we assume that all sources are spatially stationary, although this condition can be easily removed.
 
 We denote $Y_{m,k}[l]$ as the signal at the $m$-th sensor on the time-frequency domain, being represented by
 \begin{equation}
 	\label{eq:sec3:system_time-freq_domain_base}
 	Y_{m,k}[l] = X_{m,k}[l] + S_{m,k}[l] + R_{m,k}[l]
 \end{equation}
-where $X_{m,k}[l]$ is a desired signal component, $S_{m,k}[l]$ is the undesired interfering signal (from the loudspeaker) that is captured by the sensors, and $R_{m,k}[l]$ is uncorrelated (white) noise present in the sensors. $m$ is the sensor index ($1 \leq m \leq M$), $k$ is the frequency bin index ($0 \leq k < K$), and $l$ is the decimated-time index. We will use a notation different to the previous sections for ease of reading, and to emphasize the frame index $l$.
+where $X_{m,k}[l]$ is a desired signal component, $S_{m,k}[l]$ is the undesired interfering signal (from the loudspeaker) that is captured by the sensors, and $R_{m,k}[l]$ is uncorrelated (white) noise present in the sensors. $m$ is the sensor index ($1 \leq m \leq M$), $k$ is the frequency bin index ($0 \leq k < K$), and $l$ is the decimated-time index. We will use a notation different from the previous sections to ease reading and emphasize the frame index $l$.
 
 Treating the multiple paths between the desired source and the $m$-th sensor as a system, $X_{m,k}[l]$ can (assuming the CTF model) be represented using \cref{eq:sec2:system_ctf_ssbt_output} 
 \begin{equation}
 	\label{eq:sec3:def_ctf_ssbt}
 	X_{m,k}[l] = A_{m,k}'[l] \ast X_{1,k}'[l] + A_{m,k}''[l] \ast X_{1,k}''[l]
 \end{equation}
-with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$ , and $A^n_{m,k}[l]$ being the RFR's between each sensor and the reference for same- and conjugate-frequencies.
+with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$, and $A^n_{m,k}[l]$ being the RFR's between each sensor and the reference for same- and conjugate-frequencies.
 
 Note that $A_{m,k}^n[l]$ isn't strictly a causal response, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. We will assume that there are $\Delta$ non-causal samples in the RFR. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
 
@@ -109,7 +109,7 @@ which is equivalent to requiring that each component of $X_{1,k}[l]$ is distorti
 	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq1} \\
 	\he{\bvf{k}}[l] \bvD{k}'' = \tr{\bv{0}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
 \end{subgather}
-where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is a $1$, and $\bv{0}$ is a $\sz{L}{1}$ vector of zeros. For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered, since $\bvD{k}''$ is identically zero by definition, and therefore the second condition is trivially satisfied. With this, we write our constraint matrix as
+where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is a $1$, and $\bv{0}$ is a $\sz{L}{1}$ vector of zeros. For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered since $\bvD{k}''$ is identically zero by definition, and therefore the second condition is trivially satisfied. With this, we write our constraint matrix as
 \begin{equation}
 	\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
 \end{equation}
@@ -117,7 +117,7 @@ where, for the STFT, $\bvC{k} = \bvD{k}'$ and $\bvi = \bvi{\Delta}$; and, for th
 	\bvi{\Delta} \\ \bv{0}
 \end{bmatrix}$.
 
-To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used, it being defined as
+To minimize the variance of the output signal while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer will be used; it is defined as
 \begin{equation}
 	\label{eq:sec3:minimization_problem_mpdr_hard}
 	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \bvGa{\alpha;k}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
@@ -132,22 +132,22 @@ with $\bvGa{\bvy{k}}[l]$ being the pseudo-correlation matrix of the observed sig
 	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi
 \end{equation}
 
-Logically, with the SSBT all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued.
+Logically, with the SSBT, all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued.
 
 \subsection{Conjugate-frequency filtering with the SSBT}
-It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that RFR's are an even function on frequency for the frequency-to-frequency portion and odd for the conjugate-frequency (that is, with the SSBT we have that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$). Using this, then from our constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have
+It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that RFRs are an even function on frequency for the frequency-to-frequency portion and odd for the conjugate-frequency (that is, with the SSBT we have that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$). Using this, then from our constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have
 \begin{equations}{eq:sec3:conjugate-frequency_null_constraint_equivalence}
 	\he{\bvf{K-k}}[l] \bvD{K-k}''
 	& = \he{\bvf{K-k}}[l] \pts{-\bvD{k}''} \\
 	& = 0
 \end{equations}
 
-It is also easy to see that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$ (for the SSBT), given all the properties from \cref{app:properties_rft}. Therefore we have that $\bvf{k}[l]$: achieves the non-distortionality constraint for the bin $K-k$, given that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$; it also achieves the null of the conjugate-frequency portion, given the results from \cref{eq:sec3:conjugate-frequency_null_constraint_equivalence}; and it also minimizes the power of the output signal, given that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$. Therefore, it is unnecessary to calculate $\bvf{K-k}[l]$, given that $\bvf{k}[l]$ fulfills the minimization problem from \cref{eq:sec3:minimization_problem_mpdr_hard} for the conjugate bin $K-k$ as well. Although with the STFT it is necessary to operate only with half the spectrum (given its complex-conjugate properties), with the SSBT the filter only needs to be calculated for half the spectrum (even though it needs to be applied to the whole spectrum), putting it on a similar footing as the STFT in this regard.
+It is also easy to see that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$ (for the SSBT), given all the properties from \cref{app:properties_rft}. Therefore we have that $\bvf{k}[l]$: achieves the distortionless constraint for the bin $K-k$, given that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$; it also achieves the null of the conjugate-frequency portion, given the results from \cref{eq:sec3:conjugate-frequency_null_constraint_equivalence}; and it also minimizes the power of the output signal, given that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$. Therefore, it is unnecessary to calculate $\bvf{K-k}[l]$, given that $\bvf{k}[l]$ fulfills the minimization problem from \cref{eq:sec3:minimization_problem_mpdr_hard} for the conjugate bin $K-k$ as well. Although with the STFT, it is necessary to operate only with half the spectrum (given its complex-conjugate properties), with the SSBT, the filter only needs to be calculated for half the spectrum (even though it needs to be applied to the whole spectrum), putting it on a similar footing as the STFT in this regard.
 
 \subsection{Theoretical disadvantages}
 
-Note that we have two clear weaknesses with the SSBT: the first one is a byproduct of working with a real-valued transform, where each frequency is influenced by its conjugate as well, when dealing with the convolution. This isn't inherent to the SSBT, but would also be relevant for any time-frequency transform that operates on a real-valued frequency domain, assuming a correct model that doesn't disregard the phase. The need to work with two frequencies simultaneously implies that, for each constraint on the problem, two constraints are needed in the mathematical model, even in an ideal scenario. This adds further load in the minimization problem, limiting how much it can minimize noise.
+Note that we have two apparent weaknesses with the SSBT: the first is a byproduct of working with a real-valued transform, where each frequency is influenced by its conjugate when dealing with convolution. This isn't inherent to the SSBT and would also be relevant for any time-frequency transform that operates on a real-valued frequency domain, assuming a correct model that doesn't disregard the phase. The need to work with two frequencies simultaneously implies that, for each constraint on the problem, two constraints are needed in the mathematical model, even in an ideal scenario. This adds further load to the minimization problem, limiting how much noise it can minimize.
 
-The second disadvantage is a direct consequence of the first. As exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, the SSBT transform is less robust than the STFT, in terms of error and mismatch of relative frequency responses, when those are calculated based on the observed signals. This is mostly caused by non-independence effects between conjugate frequencies on different frames (see \cref{subsec:sec2:rfr_estimation_time-freq_transforms}), which adds more error terms when we calculate the RFRs if compared to the STFT.
+The second disadvantage is a direct consequence of the first. As exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, the SSBT transform is less robust than the STFT in terms of error and mismatch of relative frequency responses when those are calculated based on the observed signals. This is mainly caused by non-independence effects between conjugate frequencies on different frames (see \cref{subsec:sec2:rfr_estimation_time-freq_transforms}), which adds more error terms to the estimated RFRs when compared to the STFT.
 
-While it is impossible to bypass the first one, since it is a modeling obstacle, the second can be worked around as it is an outcome of non-ideal considerations. For example, by minimizing the effects different windows of the CTF model have on eachother (or by ignoring the CTF model altogether and using an MTF model), these lack of robustness effects are lessened.
+While it is impossible to bypass the first one since it is a modeling obstacle, the second can be worked around as it is an outcome of non-ideal considerations. For example, by minimizing the impact different windows of the CTF model have on each other (or by ignoring the CTF model altogether and using an MTF model), these effects of lack of robustness are lessened.

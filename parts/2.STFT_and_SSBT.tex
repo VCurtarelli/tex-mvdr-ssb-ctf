@@ -1,7 +1,7 @@
 \section{Frequency and Time-Frequency Transforms}
 \label{sec:stft_and_ssbt}
 
-When studying signals and systems, often frequency and time-frequency transforms are used in order to change the signal domain \cite{demuth_frequency_1977}, allowing the exploitation of different patterns and informations inherent to the signal. We from now on assume that all time-domain signals are real-valued.
+When studying signals and systems, frequency and time-frequency transforms are often used to change the signal domain \cite{demuth_frequency_1977}, allowing the exploitation of different patterns and information inherent to the signal. From now on, we assume that all time-domain signals are real-valued.
 
 For continuous time and frequency domains, the Fourier Transform (FT) is defined as
 \begin{equations}{eq:sec2:def_fourier_transform}
@@ -10,7 +10,7 @@ For continuous time and frequency domains, the Fourier Transform (FT) is defined
 	& = \int\limits_{-\infty}^{\infty} x(t) e^{-\j 2\pi f t}\dd t
 \end{equations}
 
-We define the Real Fourier Transform (RFT) similarly, being cleverly constructed such that its frequency spectrum is real-valued without loss of information, as
+We define the Real Fourier Transform (RFT) similarly, being cleverly constructed such that its frequency spectrum is real-valued without loss of information, being given by
 \begin{equations}{eq:sec2:def_real_fourier_transform}
 	X_{\R}(f)
 	& \equiv \RFT{x(t)} \\
@@ -27,7 +27,6 @@ and the Inverse Real Fourier Transform (IRFT) as (see \cref{prop:RFT_IRFT_invers
 We can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform} (see \cref{prop:FT_RFT_equivalence} in \cref{app:properties_rft}), such that
 \begin{equations}{eq:sec2:equivalence_ft_rft}
 	X_{\R}(f)
-	& = \Sqrt{2} \real{X_{\F}(f) e^{\j\frac{3\pi}{4}}} \\
 	& = -\Re{X}_{\F}(f) - \Im{X}_{\F}(f)
 \end{equations}
 
@@ -42,7 +41,7 @@ from which we deduce that
 
 \subsection{Convolution}
 \label{subsec:sec2:convolution}
-Given an impulse response $h(t)$ for a LIT system, the FT the convolution theorem states that
+Given an impulse response $h(t)$ for a LIT system, the FT convolution theorem states that
 \begin{equation}
 	h(t) \ast x(t) \hrel{\F} H_{\F}(f) X_{\F}(f)
 \end{equation}
@@ -51,12 +50,12 @@ where $\hrel{\F}$ indicates a Fourier transform pair. It can be shown that this 
     \label{eq:sec2:convolution_equiv_rft}
 	h(t) \ast x(t) \hrel{\R} X_{\R}(f) \Re{H}_{\F}(f) + X_{\R}(\-f) \Im{H}_{\F}(f)
 \end{equation}
-where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$. This makes intuitive sense, since given that the RFT is a real-valued transform, it is impossible to correctly encompass the phase information of each frequency only through it, and therefore if one wants to correctly encompass the phase information after the convolution, both frequencies are necessary.
+where, for a given frequency $f$, the convolution's output on the RFT domain depends on both it and its dual frequency $\-f$. This makes intuitive sense since, given that the RFT is a real-valued transform, it is impossible to correctly encompass the phase information of each frequency only through it and therefore, if one wants to encompass the phase information after the convolution correctly, both frequencies are necessary.
 
 \subsection{Relative frequency responses}
 \label{subsec:sec2:relative_transfer_functions}
 
-Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative frequency responses (RFR's), respective to the output of one of the systems (assumed to be the first for simplicity). We denote these RFR's $A_1(f)$ and $A_2(f)$, respective for each system.
+Given two systems that share an input $x(t)$, each with an impulse response $h_1(t)$ and $h_2(t)$, on the FT domain $H_1(f)$ and $H_2(f)$, we can calculate their relative frequency responses (RFR's), respective to the output of one of the systems (assumed to be the first for simplicity). We denote these RFRs $A_1(f)$ and $A_2(f)$, respective for each system.
 
 Let us denote $Y_1(f)$ as the first system's output, given by
 \begin{equation}
@@ -75,7 +74,7 @@ which trivially satisfies that $A_2(f) X_1(f) = H_2(f) X(f)$. These RFR's can be
 \end{equation}
 where $\expec{\cdot}$ is the expectation operator. It is trivial to see that \cref{eq:sec2:calc_RFR_ft_ideal} and \cref{eq:sec2:calc_RFR_ft_expec} are equivalent.
 
-This process isn't as straight-forward with the RFT, since after the convolution each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two frequency responses $H_m'(f)$ and $H_m''(f)$. Then, our outputs can be described as
+This process is more complex with the RFT since, after the convolution, each frequency depends on its conjugate as well. We consider each system to have two inputs $X'(f) = X(f)$ and $X''(f)= X(\-f)$ and two frequency responses $H_m'(f)$ and $H_m''(f)$. Then, our outputs can be described as
 \begin{subgather}{eqs:sec2:system_eqs_X1f_X2f_H}
 	X_1(f) = H_1'(f) X'(f) + H_1''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq1}\\
 	X_2(f) = H_2'(f) X'(f) + H_2''(f) X''(f) \label{eqs:sec2:system_eqs_X1f_X2f_H:subeq2}
@@ -120,14 +119,14 @@ where $\sigma_X^2(f) = \expec{X_{\F}(f)^2} = \expec{X_{\R}(f)^2}$. With this, it
 \end{subgather}
 These formulations are the same as those in \cref{eq:sec2:calc_RFR_ft_expec}, but without the complex-conjugate operation (given that here all signals are real-valued), and for \cref{eq:sec2:calc_RFR_rft_expec:subeq2} we calculate the correlation with the cross-frequency signal $X_{1}(\-f)$. \cref{prop:RFT_same-variance_FT} was also used, such that $\expec{X_1(f)^2} = \expec{X_1(\-f)^2}$. Again, the results in \cref{eqs:sec2:calc_RFR_rft_expec} have an intuitive sense to them, where $A_2'(f)$ is the RFR between $X_2(f)$ and $X_1'(f)$ (same frequency), and $A_2''(f)$ is the RFR between $X_2(f)$ and $X_1'(\-f) = X_1''(f)$ (conjugate frequency), which is in line with \cref{eqs:sec2:system_eqs_X1f_X2f_G}.
 
-Generalizing to a situation with $M$ sensors, one can follow the same steps and achieve that, for each $m$-th sensor, we have
+Generalizing to a situation with $M$ sensors, one can follow the same steps and achieve that for each $m$-th sensor; we have
 \begin{subgather}{eqs:sec2:calc_RFR_rft_expec_generic}
 	A_m'(f) = \frac{\expec{X_1(f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} \\
 	A_m''(f) = \frac{\expec{X_1(\-f) X_m(f)}}{\expec{X_1^2(f)}} \label{eqs:sec2:calc_RFR_rft_expec_generic:subeq2} 
 \end{subgather}
 this also working for $m = 1$. Trivially, \cref{eqs:sec2:calc_RFR_rft_expec_generic:subeq1} reduces to $A_1'(f) = 1$, and using that $X_1(f)$ and $X_1(\-f)$ are uncorrelated (see \cref{prop:conjugate-freqs_independent_RFT}), then $A_1''(f) = 0$, as expected.
 
-The FT formulation from \cref{eq:output_sys1_ft} can be considered a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. With this, henceforth we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model, and when particularizing the equations for the STFT the necessary considerations will be considered.
+The FT formulation from \cref{eq:output_sys1_ft} can be considered a particular case of the RFT (comparing \cref{eq:output_sys1_ft} with \cref{eqs:sec2:system_eqs_X1f_X2f_H}), where $A_{m}'(f) = A_{m;\F}(f)$, and $A_{m}''(f) = 0$. With this, subsequently, we will use the SSBT formulation from \cref{eq:sec2:system_ctf_ssbt_output} for both the SSBT and the STFT, as it is a less restricting model. The necessary considerations will be taken when particularizing the equations for the STFT.
 
 \subsection{Discrete time-frequency transforms}
 
@@ -136,9 +135,7 @@ Given a discrete-time-domain signal $x[n]$, its Short-time Fourier Transform (ST
 	\label{eq:sec2:def_stft_xn}
 	X_{\sF}[l,k] = \sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K}}
 \end{equation}
-where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. The STFT can be seen as a discretization of the FT, while also applying it over different ``snippets'' of time.
-
-%Even though the STFT is the most traditionally used time-frequency transform, it isn't the only one available. Thus, exploring different possibilities for such an operation can be useful and lead to interesting results.
+where $w[n]$ is an analysis window of length $K$; and $O$ is the overlap between windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$. The STFT can be seen as a discretization of the FT while also being applied over different time ``snippets''.
 
 The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is similarly defined, being the RFT's windowed discrete-time adaptation. The SSB transform of $x[n]$ is defined as
 \begin{equation}
@@ -146,7 +143,7 @@ The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is similarl
 	X_{\sS}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K} + \j\frac{3\pi}{4} } }
 \end{equation}
 
-One advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$, however it is real-valued.
+One advantage of using the STFT is that we only need to work with $\floor{\nicefrac{(K+1)}{2}}+1$ frequency bins, given its complex-conjugate behavior. Meanwhile, the SSBT requires all $K$ bins to correctly capture all information of $x[n]$; however, it is real-valued.
 
 Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:equivalence_ft_rft,eq:sec2:equivalence_pair_ft_to_rft,eq:sec2:equivalence_pair_rft_to_ft} we have\footnote{For the abuse of notation, we let $X_{\sS}[l,K] \equiv X_{\sS}[l,0]$, and equally for $X_{\sF}[l,K]$.}
 \begin{equations}
@@ -163,7 +160,7 @@ Assuming that all $K$ bins of the STFT are available, like with \cref{eq:sec2:eq
 	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{\j\frac{3\pi}{4}} X_{\sS}[l,K-k] }
 \end{equation}
 
-As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT does. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain through the MTF model \cite{talmon_relative_2009} as
+As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain through the MTF model \cite{talmon_relative_2009} as
 \begin{equation}
 	\label{eq:sec2:convolution_on_ssbt_mtf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] H_{\sS}'[k] + X_{\sS}[l,K-k] H_{\sS}''[k]
@@ -173,7 +170,7 @@ or, with the CTF model,
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, cross-band interference \cite{avargel_system_2007} to correctly model the convolution, however this effect wasn't considered here for neither transform. Also note that the presence of the conjugate frequency is a byproduct distinct of the cross-band interference, the latter happening due to aliasing, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
+in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, cross-band interference \cite{avargel_system_2007} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. Also, note that the presence of the conjugate frequency is a byproduct distinct to the cross-band interference, the latter happening due to aliasing, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
 
 \subsection{RFR estimation for time-frequency transforms}
 \label{subsec:sec2:rfr_estimation_time-freq_transforms}
@@ -202,4 +199,4 @@ Through a similar development as done before, but now on $\expec{X_{1;\sS}[l+\la
 	& = \expec{X'_{1;\sS}[l+\gamma - \lambda,k] X''_{1;\sS}[l,k]} \\
 	& = \sigma_{X}^2[k] \sum_{\mu \geq 0} (H'_{1,\mu} - H'_{1,-\mu})(H''_{1,\mu + (\lambda - \gamma)} - H''_{1,\mu - (\lambda - \gamma)}) 
 \end{equations}
-with $\sigma_{X}^2[k]$ being the desired signal's variance at source. Note that for $\mu = 0$ the summation's term is 0 (given that in this case $H_{1,\mu}' = H_{1,-\mu}'$, which reflects the independence between $X_1'[l,k]$ and $X_1''[l,k]$. This isn't strictly the case for $\mu \neq 0$, since we don't necessarily have that the RFR's is even on time (with or without an offset). With this, we reach that even though we have independence for conjugate frequencies on the same frame, this isn't true for different frames. This notably isn't the case with the STFT up to the degree of approximation we are bearing, not considering cross-band interference. Therefore, when compared to the STFT, this estimation through the SSBT adds errors not only due to correlation of different frames in the desired signal, but for conjugate frequencies as well. This decreases the beamformer's robustness through this transform, making it more prone to output distortion due to mismatch in the estimation of the relative frequency response.
+with $\sigma_{X}^2[k]$ being the desired signal's variance at source. Note that for $\mu = 0$, the summation's term is 0 (given that in this case $H_{1,\mu}' = H_{1,-\mu}'$), which reflects the independence between $X_1'[l,k]$ and $X_1''[l,k]$. This isn't strictly the case for $\mu \neq 0$ since we don't necessarily have that the RFR is even on time (with or without an offset). With this, we reach the point that even though we have independence for conjugate frequencies on the same frame, this isn't true for different frames. This notably is not a relevant effect with the STFT up to the degree of approximation we are bearing for both. Therefore, compared to the STFT, this estimation through the SSBT adds errors not only due to the correlation of different frames in the desired signal but also for conjugate frequencies. This decreases the beamformer's robustness through this transform, making it more prone to output distortion due to a mismatch in estimating the relative frequency response.

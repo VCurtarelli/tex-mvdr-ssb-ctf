@@ -58,10 +58,7 @@ with an inverse
 	\begin{equation}
 		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
 	\end{equation}
-	Since for each $X_{\F}(f)$ there exists one and only one $X_{\R}(f)$, and vice-versa, it is possible to define a bijective transformation $T$ such that
-	\begin{equation}
-		X_{\F}(f) \hrel{T} X_{\R}(f)
-	\end{equation}
+	Since for each $X_{\F}(f)$ there exists one and only one $X_{\R}(f)$, and vice-versa, then they form a bijective relationship.
 \end{Property}
 
 \begin{Property}{The IRFT is the inverse of the RFT.}[\label{prop:RFT_IRFT_inverses}]
@@ -82,7 +79,6 @@ with an inverse
 		& = \real{x(t) + \j x(\-t)} \\
 		& = x(t)
 	\end{equations}
-	thus concluding the proof.
 \end{Property}
 
 \begin{Property}{The convolution theorem doesn't apply for the RFT.}[\label{prop:conv_theorem_RFT}]
@@ -209,7 +205,7 @@ with an inverse
 		& = \Re{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)} - \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(f)^2} \\
 		& + \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(\-f)^2} + \Im{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)}
 	\end{equations}
-	Since $X_{\R}(f)$ and $X_{\R}(\-f)$ are independent and zero-mean, the first and lest terms are zero, and also the other two cancel each other out since $\expec{X_{\R}(f)^2} = \expec{X_{\R}(\-f)^2} = 2\sigma_f^2$. Therefore,
+	Since $X_{\R}(f)$ and $X_{\R}(\-f)$ are independent and zero-mean, the first and last terms are zero, and also the other two cancel each other out since $\expec{X_{\R}(f)^2} = \expec{X_{\R}(\-f)^2} = 2\sigma_f^2$. Therefore,
 	\begin{equation}
 		\expec{Y_{\R}(f) Y_{\R}(\-f)} = 0
 	\end{equation}
