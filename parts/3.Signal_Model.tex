@@ -1,7 +1,7 @@
 \section{Signal Model and Beamforming}
 \label{sec:signal_model}
 
-Let a device consist of $M$ sensors and a loudspeaker in a reverberant environment, in which there also is a desired source, both traveling with a speed $c$. We also assume the presence of undesired noise at each sensor. For simplicity, we assume that all sources are spatially stationary, although this condition can be easily removed.
+Let a device consist of $M$ sensors and a loudspeaker in a reverberant environment, where there is also a desired source, both traveling with a speed $c$. We also assume the presence of undesired noise at each sensor. For simplicity, we assume that all sources are spatially stationary, although this condition can be easily removed.
 
 We denote $Y_{m,k}[l]$ as the signal at the $m$-th sensor on the time-frequency domain, being represented by
 \begin{equation}
@@ -132,7 +132,7 @@ with $\bvGa{\bvy{k}}[l]$ being the pseudo-correlation matrix of the observed sig
 	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi
 \end{equation}
 
-Logically, with the SSBT, all conjugate-transpose operations are replaced with simple transposes, as in this transform all signals and matrices are real-valued.
+Logically, with the SSBT, all conjugate-transpose operations are replaced with simple transposes, as in this transform, all signals and matrices are real-valued.
 
 \subsection{Conjugate-frequency filtering with the SSBT}
 It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that RFRs are an even function on frequency for the frequency-to-frequency portion and odd for the conjugate-frequency (that is, with the SSBT we have that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$). Using this, then from our constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have

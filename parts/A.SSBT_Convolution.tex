@@ -23,6 +23,8 @@ with an inverse
 	x(t) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
 \end{equation}
 
+Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain signal.
+
 \begin{Property}{The FT and RFT are bijective transformations of one-another.}[\label{prop:FT_RFT_equivalence}]	
 	By manipulating \cref{eq:appA:def_real_fourier_transform} we can get
 	\begin{equation}\label{eq:propI:propI:manip_Xrf}
@@ -58,7 +60,7 @@ with an inverse
 	\begin{equation}
 		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
 	\end{equation}
-	Since for each $X_{\F}(f)$ there exists one and only one $X_{\R}(f)$, and vice-versa, then they form a bijective relationship.
+	Since for each $X_{\F}(f)$, there exists one and only one $X_{\R}(f)$, and vice-versa, then they form a bijective relationship.
 \end{Property}
 
 \begin{Property}{The IRFT is the inverse of the RFT.}[\label{prop:RFT_IRFT_inverses}]
@@ -79,14 +81,16 @@ with an inverse
 		& = \real{x(t) + \j x(\-t)} \\
 		& = x(t)
 	\end{equations}
+    Note that the invertibility of the RFT is a direct consequence of $x(t)$ being a real signal. Assuming the contrary, then obviously $\IRFT{\RFT{x(t)}} \neq x(t)$, given that the inverse RFT involves taking the real-part of the inverse, and therefore it will map the original signal to a different one.
+ 
 \end{Property}
 
 \begin{Property}{The convolution theorem doesn't apply for the RFT.}[\label{prop:conv_theorem_RFT}]
-	Let $h(t)$ be the impulse response of an LIT system, with input $x(t)$. It is trivial that the system's output, $y(t)$, is given by
+	Let $h(t)$ be the impulse response of an LTI system, with input $x(t)$. It is trivial that the system's output, $y(t)$, is given by
 	\begin{equation}
 		y(t) = h(t) \ast x(t)
 	\end{equation}
-	with $\ast$ being the convolution operator. For the Fourier transform, through the convolution theorem it is trivial that
+	with $\ast$ being the convolution operator. For the Fourier transform, through the convolution theorem, it is trivial that
 	\begin{equation}
 		Y_{\F}(f) = H_{\F}(f) X_{\F}(f)
 	\end{equation}
@@ -100,7 +104,7 @@ with an inverse
 		X_{\R}(f) & = -\Re{X_{\F}}(f) - \Im{X_{\F}}(f) \\
 		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f)
 	\end{equations}
-	Assuming the convolution theorem true for the RFT,
+	Assuming the convolution theorem is true for the RFT,
 	\begin{equation}
 		\label{eq:propIII:res_product_of_RFTs}
 		Y_{\R} = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}
@@ -110,7 +114,7 @@ with an inverse
 		\label{eq:propIII:res_RFT_of_convol}
 		\tilde{Y}_{\R} = - \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}
 	\end{equation}
-	where it is explicit that $Y_{\R}(f) \neq \tilde{Y}_{\R}(f)$. Therefore, the RFT of the convolution (\cref{eq:propIII:res_RFT_of_convol}) is not the product of the RFT's of the signals (\cref{eq:propIII:res_product_of_RFTs}), and thus the convolution theorem doesn't hold for the RFT.
+	where it is explicit that $Y_{\R}(f) \neq \tilde{Y}_{\R}(f)$. Therefore, the RFT of the convolution (\cref{eq:propIII:res_RFT_of_convol}) is not the product of the RFTs of the signals (\cref{eq:propIII:res_product_of_RFTs}), and thus the convolution theorem doesn't hold for the RFT.
 \end{Property}
 
 \begin{Property}{There is an equivalent of the convolution theorem for the RFT.}[\label{prop:equivalent_conv_theorem_RFT}]
@@ -166,7 +170,7 @@ with an inverse
 	\begin{equation}
 		\expec{X_{\F}(f) X_{\F}^*(f)} = 2\sigma_f^2
 	\end{equation}
-	Now in the RFT domain, we take the correlation of a given frequency \cref{eq:propI:equiv_FT_to_RFT},
+	Now, in the RFT domain, we take the correlation of a given frequency \cref{eq:propI:equiv_FT_to_RFT},
 	\begin{equation}
 		\expec{X_{\R}(f)^2} = \expec{\Re{X_{\F}}(f)^2 + 2 \Re{X_{\F}}(f) \Im{X_{\F}}(f) + \Im{X_{\F}}(f)^2}
 	\end{equation}
@@ -187,7 +191,7 @@ with an inverse
 	\begin{equation}
 		\expec{X_{\F}(f) X_{\F}^*(\-f)} = 0
 	\end{equation}
-	This result is known, but nonetheless it is useful to show it, since this same procedure will be used for the RFT.
+	This result is known, but it is useful to show it since this same procedure will be used for the RFT.
 	
 	\noindent We now consider \cref{eq:propI:equiv_FT_to_RFT,eq:propI:equiv_FT_to_RFT_neg}. Taking the correlation between the two conjugate frequencies yields
 	\begin{equation}
