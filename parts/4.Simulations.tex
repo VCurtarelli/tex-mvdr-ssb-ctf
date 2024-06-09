@@ -57,9 +57,9 @@ We chose to use the gains in SER and SNR metrics rather than the more common ERL
 
 \subsection{Comparison for different observed frames}
 
-In this simulation, we compare our filters for the accurate and estimated RFR for a range of considered observed frames $\Ly$. We compare the results for different observed samples in the convolutive filter, where $\Ly = 1$ reduces to the MTF model.
+In this simulation, we compare our filters for the accurate and estimated RFR for a range of considered observed frames $\Ly$, where $\Ly = 1$ reduces to the MTF model.
 
-\begin{figure}[t]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -86,20 +86,20 @@ In this simulation, we compare our filters for the accurate and estimated RFR fo
 		\label{subfig:lineplot__DI__iSER_n15__Ly_var}
 	\end{subfigure}\\[1em]
 	\ref*{lyplot_legend}
-	\caption{Time-average broadband output metrics for the beamformers with varying input $L_Y$'s.}
+	\caption{Output metrics for the beamformers over time, for varying $\Ly$.}
 	\label{fig:lineplot__iSER_n15__Ly_var}
 \end{figure}
 
-For all metrics except DI, the accurate results are consistently better than those achieved for an estimated RFR. We also see that the SSBT-A results are worse overall than the accurate STFT-A ones, but not by too much margin (around $3-4\dB$ for all metrics). This is also the case between SSBT-E and STFT-E; however, for the estimated case, we also have a much higher desired signal distortion, especially for the STFT output, which considerably adds to the performance loss of the former compared to the latter for all metrics. If one were to compare the gain in SER, it would be comparably lower for the SSBT-E than the STFT-E.
+For all metrics except DI, the accurate results are consistently better than those achieved for an estimated RFR. We also see that the SSBT-A results are worse overall than the accurate STFT-A ones, but not by too much margin (around $3-4\dB$ for all metrics). This is also the case between SSBT-E and STFT-E; however, SSBT-E also has a much higher desired signal distoriton, which considerably adds to the performance loss of the former compared to the latter for all metrics.
 
-Also, in this situation, the best estimate results are obtained with the STFT for $\Ly = 1$. With $\Ly = 2$, both the desired signal's distortion increases, and the gSER sharply decreases, increasing again as we increase $\Ly$, but never achieving the same performance. This is likely related to errors in the RFR estimation for frames other than the main one being more prevalent, given that these windows carry less information, and these errors are such that they deteriorate the filter more than the addition of new frames helps it. Also, when using the estimate RFR (at least with the STFT), the estimate with $\Ly = 1$ already takes into account some information about the different windows' correlations in regards to the desired signal, which explains the STFT-E results being better even than the STFT-A results for this exact situation.
+Also, in this situation, the best STFT-E results are obtained for $\Ly = 1$. With $\Ly = 2$ there is a sharp decrease in SER gain, increasing again for larger $\Ly$, but never achieving the same performance. This is likely related to errors in the RFR estimation for frames other than the main one being more prevalent, given that these windows carry less information, and these errors are such that they deteriorate the filter more than the addition of new frames helps it. Also, when using the estimate RFR (at least with the STFT), the estimate with $\Ly = 1$ already takes into account some information about the different windows' correlations in regards to the desired signal, which explains the STFT-E results being better even than the STFT-A results for this exact situation.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{Comparison for different number o frames}
+\subsection{Comparison for different number of frames}
 
-In this simulation, we now compare the beamformers in a scenario where we consider only the MTF model and increase the number of samples per window. This minimizes the problems exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} since we don't consider different windows. Also, by increasing the number of samples per window, we minimize the frequency aliasing effects between frames due to the windowing process of the time-frequency transform and contemplate more of the desired signal on each window.
-\begin{figure}[!ht]
+In this simulation, we now compare the beamformers in a scenario where we consider only the MTF model and increase the number of samples per window. This minimizes the problems exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} since we don't consider different windows. Also, by increasing the number of samples per window, we minimize the frequency aliasing effects due to the windowing process of the time-frequency transform and contemplate more of the desired signal on each window.
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -129,7 +129,7 @@ In this simulation, we now compare the beamformers in a scenario where we consid
 		\label{subfig:lineplot__DI__N_var__iSER_n15__Ly_1}
 	\end{subfigure}\\[1em]
 	\ref*{lyplot_legend}
-	\caption{Output metrics for the beamformers over time, in the base scenario.}
+	\caption{Output metrics for the beamformers over time, for varying $N$.}
 	\label{fig:lineplot__N_var__iSER_n15__Ly_1}
 \end{figure}
 
@@ -140,7 +140,7 @@ The first effect we see is that, as expected, the desired signal's distortion fo
 \subsection{Comparison for different iSER}
 
 We now compare our results for different values of input SER; that is, we change the signal's power in the source within the device, right next to the sensors.
-\begin{figure}[!ht]
+\begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -179,8 +179,9 @@ We now compare our results for different values of input SER; that is, we change
 		\input{figures/lineplot__gSNR__iSER_var__Ly_16.tex}
 		\caption{gSNR - $\Ly = 16$.}
 		\label{subfig:lineplot__gSNR__iSER_var__Ly_16}
-	\end{subfigure}\\[1em]
-	%
+	\end{subfigure}
+ \end{figure}
+ \begin{figure}\ContinuedFloat
 	\begin{subfigure}{0.49\textwidth}
 		\centering
 		\input{figures/lineplot__DI__iSER_var__Ly_1.tex}
@@ -244,6 +245,6 @@ For accurate results, we see behavior similar to those obtained in \cref{fig:lin
 
 \subsection{General results}
 
-The SSBT-A results are similar (although mostly slightly worse) to the STFT-A results. Given that the SSBT beamformer is a strictly real-valued filter, this could be a worthwhile tradeoff between a slight loss of performance and a faster algorithm for beamforming, which could also be implemented on simpler (thus cheaper) hardware.
+The ideal SSBT-A results are similar (although mostly slightly worse) to the STFT-A results. Given that the SSBT beamformer is a strictly real-valued filter, this could be a worthwhile tradeoff between a slight loss of performance and a faster beamforming algorithm, which could also be implemented on simpler (thus cheaper) hardware.
 
-However, we also saw that these outlines needed to be followed when the beamformer was designed with an estimated desired signal RFR. In this scenario, the SSBT results were drastically worse when compared to those obtained through the STFT, except for the case with a multiplicative filter (instead of a convolutive one), with a sufficiently large number of samples per frame and a low input SER. In this instance, the SSBT-E results were comparable to the STFT-E ones and were close to the accurate RFR metrics. This suggests that employing the SSBT with an inherently more robust beamformer could lead to viable applications. However, this is outside the scope of this work.
+However, for a useful implementation of the SSBT for beamforming, these results would need to be followed in the case of an estimated  RFR. In this case, the SSBT results were drastically worse when compared to those obtained through the STFT, except for the case with a multiplicative filter (instead of a convolutive one), with a sufficiently large number of samples per frame and a low input SER. In this instance, the SSBT-E results were comparable to the STFT-E ones and were close to the accurate RFR metrics. This suggests that employing the SSBT with an inherently more robust beamformer could lead to viable applications. This is still to be tested, as it is outside the scope of this work.
