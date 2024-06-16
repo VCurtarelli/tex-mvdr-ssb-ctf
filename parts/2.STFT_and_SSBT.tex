@@ -25,6 +25,8 @@ and the Inverse Real Fourier Transform (IRFT) as (see \cref{prop:RFT_IRFT_invers
 	& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
 \end{equations}
 
+The formulation in \cref{eq:sec2:def_real_fourier_transform} is similar to the single-sideband modulation, however for a better match we would need $x(t)$ to be an analytic signal \cite{marple_computing_1999}, which isn't the case since $x(t)$ is real.
+
 We can also define the RFT in terms of the FT through a simple substitution of \cref{eq:sec2:def_fourier_transform} in \cref{eq:sec2:def_real_fourier_transform} (see \cref{prop:FT_RFT_equivalence} in \cref{app:properties_rft}), such that
 \begin{equations}{eq:sec2:equivalence_ft_rft}
 	X_{\R}(f)
@@ -151,13 +153,6 @@ Assuming that all $K$ bins of the STFT are available (even though not all of the
 	& = \Sqrt{2} \real{X_{\sF}[l,k] e^{\j\frac{3\pi}{4}}} \\
 	& = - \real{X_{\sF}[l,k]} - \imag{X_{\sF}[l,k]}
 \end{equations}
-\begin{equation}
-	X_{\sS}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\sF}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\sF}[l,K-k] }
-\end{equation}
-\begin{equation}
-	\label{eq:sec2:equivalence_ssbt_stft}
-	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{\j\frac{3\pi}{4}} X_{\sS}[l,K-k] }
-\end{equation}
 
 As was the case for the RFT, the SSBT also doesn't hold the convolution theorem the same way as the STFT. However, similarly to what was shown in \cref{eq:sec2:convolution_equiv_rft} (and in \cref{prop:equivalent_conv_theorem_RFT}), we can write the convolution on the SSBT domain through the MTF model \cite{talmon_relative_2009} as
 \begin{equation}
@@ -170,6 +165,15 @@ or, with the CTF model,
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
 in which this convolution is done over the frames $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as cross-band interference \cite{avargel_system_2007} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. Also, note that the presence of the conjugate frequency is a byproduct distinct to the cross-band interference, the latter happening due to aliasing and the windowing processes, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
+
+In a similar way to the relationship between the FT and the RFT of \cref{eqs:sec2:equivalence_pair_ft_and_rft}, we here have
+%
+\begin{subgather}{eqs:sec2:equivalence_pair_stft_and_ssbt}
+	X_{\sS}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{\j\frac{3\pi}{4}} X_{\sF}[l,k] + e^{-\j\frac{3\pi}{4}} X_{\sF}[l,K-k] } \label{eqs:sec2:equivalence_pair_stft_and_ssbt:subeq1}\\
+	X_{\sF}[l,k] = \frac{1}{\Sqrt{2}} \pts{ e^{-\j\frac{3\pi}{4}} X_{\sS}[l,k] + e^{\j\frac{3\pi}{4}} X_{\sS}[l,K-k] } \label{eqs:sec2:equivalence_pair_stft_and_ssbt:subeq2}
+\end{subgather}
+
+\cref{eqs:sec2:equivalence_pair_stft_and_ssbt:subeq1,eqs:sec2:equivalence_pair_stft_and_ssbt:subeq2} give us a bijective relationship between time-frequency signals in the SSBT and STFT domains. That is, for the same transform parameters (window type and size, overlap, etc.), it is possible to convert from one to the other without having to use their inverses and go into the time-domain, which is resource consuming. This interchangeability means they can be used together, transforming from one to the other when it is more advantageous.
 
 \subsection{RFR estimation for time-frequency transforms}
 \label{subsec:sec2:rfr_estimation_time-freq_transforms}

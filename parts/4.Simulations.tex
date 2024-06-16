@@ -38,7 +38,7 @@ In all plots, STFT results are presented in red lines with squares, and SSBT res
 
 \subsection{Metrics of interest}
 
-The main objective of the compared filters is to reduce the loudspeaker's signal while preserving the desired signal without distortion. Along this, given the regularization parameter, $\alpha$ added to the problem, the minimal enhancement for white noise is also of interest. The maintenance of the desired signal through the desired signal reduction factor (DSRF, or $\dsrf$), the loudspeaker's signal minimization will be measured through the gain in SER (gSER), and the reduction of the white noise through the gain in SNR (gSNR, or $\gsnr$). We will also observe the directivity index (DI, or $\di$), which measures the beamformer's behavior when employed in a spherically anisotropic noise field. Respectively, these metrics in their time-dependent broadband formulations are given by
+The objective of the compared filters is to reduce the loudspeaker's signal while preserving the desired signal. Along this, given the regularization parameter $\alpha$ added to the problem, the minimal enhancement for white noise is also of interest. Respectively, these are measured by the desired signal reduction factor (DSRF, or $\dsrf$), gain in SER (gSER), and gain in SNR (gSNR, or $\gsnr$). We will also observe the directivity index (DI, or $\di$), which measures the beamformer's behavior when employed in a spherically anisotropic noise field. Their time-dependent broadband formulations are given by
 \begin{subgather}
 	\dsrf[l] = \frac{\sum_{k}\abs{X_{1,k}[l]}^2}{\sum_{k}\abs{X_{f,k}[l]}^2} \\
 	\gser[l] = \frac{\sum_{k}\abs{S_{1,k}[l]}^2}{\sum_{k}\abs{S_{f,k}[l]}^2} \cdot \frac{1}{\dsrf[l]}\\
@@ -243,7 +243,7 @@ For accurate results, we see behavior similar to those obtained in \cref{fig:lin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{General results}
+\subsection{General simulation results}
 
 The ideal SSBT-A results are similar (although mostly slightly worse) to the STFT-A results. Given that the SSBT beamformer is a strictly real-valued filter, this could be a worthwhile tradeoff between a slight loss of performance and a faster beamforming algorithm, which could also be implemented on simpler (thus cheaper) hardware.
 

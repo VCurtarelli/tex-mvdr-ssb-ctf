@@ -26,7 +26,7 @@ From \cref{eq:sec3:xmn_fr_rfr_forms}, using \cref{eq:sec2:system_ctf_ssbt_output
 	\label{eq:sec3:def_ctf_ssbt}
 	X_{m,k}[l] = A_{m,k}'[l] \ast X_{1,k}'[l] + A_{m,k}''[l] \ast X_{1,k}''[l]
 \end{equation}
-with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$, and $A^n_{m,k}[l]$ being the RFR's between each sensor and the reference for same- and conjugate-frequencies. Note that $A_{m,k}^n[l]$ isn't strictly causal, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. We will assume that there are $\Delta$ non-causal samples in the RFR. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
+with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$, and $A^n_{m,k}[l]$ being the RFRs between each sensor and the reference for same- and conjugate-frequencies. Note that $A_{m,k}^n[l]$ isn't strictly causal, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. We will assume that there are $\Delta$ non-causal samples in the RFR. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
 
 Let $D_{m,k}^n[l]$ be an RFR with $\Ld$ samples that approximates $A_{m,k}^n[l]$, such that
 \begin{equations}

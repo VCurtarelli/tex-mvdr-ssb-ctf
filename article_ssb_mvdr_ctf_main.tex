@@ -82,55 +82,7 @@
 
 %=================================================================
 % Full title of the paper (Capitalized)
-\Title{On the Single-Sideband Transform for MPDR Beamformers}
-
-% MDPI internal command: Title for citation in the left column
-\TitleCitation{On the Single-Sideband Transform for MPDR Beamformers}
-
-% Author Orchid ID: enter ID or remove command
-\newcommand{\orcidauthorA}{0009-0009-3996-5452} % Add \orcidA{} behind the author's name
-\newcommand\autAFN{Vitor Probst}
-\newcommand\autALN{Curtarelli}
-\newcommand\autAfn{V. P.}
-\newcommand{\orcidauthorB}{0000-0002-2556-3972} % Add \orcidB{} behind the author's name
-\newcommand\autBFN{Israel}
-\newcommand\autBLN{Cohen}
-\newcommand\autBfn{I.}
-
-% Authors, for the paper (add full first names)
-\Author{\autAFN{} \autALN $^{1,\ast}$\orcidA{}, \autBFN{} \autBLN $^{1}$\orcidB{}}
-
-%\longauthorlist{yes}
-
-% MDPI internal command: Authors, for metadata in PDF
-\AuthorNames{\autAFN{} \autALN, \autBFN{} \autBLN}
-
-% MDPI internal command: Authors, for citation in the left column
-\AuthorCitation{\autALN, \autAfn; \autBLN, \autBfn}
-% If this is a Chicago style journal: Lastname, Firstname, Firstname Lastname, and Firstname Lastname.
-
-% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
-\address{%\\
-$^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineering, Technion--Israel Institute of Technology, Technion City, Haifa 3200003, Israel
-}
-
-% Contact information of the corresponding author
-\corres{Correspondence: vitor.c@campus.technion.ac.il%; Tel.: (optional; include country code; if there are multiple corresponding authors, add author initials) +xx-xxxx-xxx-xxxx (F.L.)%
-}
-
-% Current address and/or shared authorship
-%\firstnote{These authors contributed equally to this work.}
-% The commands \thirdnote{} till \eighthnote{} are available for further notes
-
-% Abstract (Do not insert blank lines, i.e. \\) 
-\abstract{%
-	% In order to explore different beamforming applicaitons, this paper investigates the application of the Single-Sideband Transform (SSBT) for constructing a Minimum-Power Distortionless-Response (MVDR) beamformer in the context of the convolutive transfer function (CTF) model for short-window time-frequency transforms by making use of filter-banks and their properties. Our study aims to optimize the appropriate utilization of SSBT in this endeavor, by examining its characteristics and traits. We address a reverberant scenario with multiple noise sources, aiming to minimize both undesired interference and reverberation in the output. Through simulations reflecting real-life scenarios, we show that employing the SSBT correctly leads to a beamformer that outperforms the one obtained when via the Short-Time Fourier Transform (STFT), while exploiting the SSBT's property of it being real-valued. Two approaches were developed with the SSBT, one naive and one refined, with the later being able to ensure the desired distortionless behavior, which is not achieved by the former.
-%
-    In this paper, we implement an MPDR beamformer within an echoic environment and a device that contains both interference and the sensor array. This is novelly done by employing a real-valued time-frequency transform based on the Short-Time Fourier Transform to achieve the beamformer. For such, we properly define this transform while also exploring its properties and how those can influence any real-life applications. We show that, while the feature of having real coefficients could be advantageous from an application standpoint, it also makes basic properties such as the convolution theorem much more challenging to deal with, such that each frequency is also influenced by its conjugate counterpart, which is not the case with the STFT up to a reasonable degree of approximation. This hinders basic beamforming premises, such as properly maintaining the desired signal. We also show that any real-valued transform is more prone to errors and more sensible to mismatch and modeling noise, including estimating relative frequency responses from the observed desired signals. Through simulations emulating real-life-like scenarios, the practical results corroborate the theoretical claims, showing that the real-valued transform is marginally worse than its complex-valued counterpart in an ideal scenario where the mismatch is not present, and drastically worse in a case with estimated frequency responses. The only scenario where the estimation approaches the perfect scenario for the real-valued transform is for many samples per window, a case where window-to-window interference is dismissible, and mismatch is minimized.
-}
-
-% Keywords
-\keyword{Single-sideband transform; MPDR beamformer; Filter-banks; Array signal processing; Signal enhancement.} 
+\input{parts/0.Info.tex}
 
 % The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
 %\PACS{J0101}
