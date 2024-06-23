@@ -1,32 +1,30 @@
 \section{Signal Model and Beamforming}
 \label{sec:signal_model}
 
-Let a device consist of $M$ sensors and a loudspeaker in a reverberant environment, with a desired source also present. We also assume the presence of undesired uncorrelated noise at each sensor of the device. For simplicity, we assume that the environment and sources are spatially stationary, although this condition can be easily removed.
-
-$y_m[n]$ is the observed signal at the $m$-th sensor, given by
+Let a device in a reverberant environment consist of $M$ sensors and a loudspeaker. We assume the presence of a desired source and undesired uncorrelated noise at each sensor of the device. For simplicity, we assume that the environment and sources are spatially stationary, although this condition can be relaxed. Let $y_m[n]$ be the observed signal at the $m$-th sensor, given by
 \begin{equation}
     \label{eq:sec3:system_time_domain_base}
     y_m[n] = x_m[n] + s_m[n] + r_m[n]
 \end{equation}
-where $x_m[n]$ is a desired component, $s_m[n]$ is the undesired interfering signal (from the loudspeaker) captured by the sensors, and $r_m[n]$ is uncorrelated noise present in the sensors. $m$ is the sensor index ($1 \leq m \leq M$). Supposing the environment as an LTI system, then
+where $x_m[n]$ is a desired component, $s_m[n]$ is the undesired interfering signal (from the loudspeaker) captured by the sensors, and $r_m[n]$ is uncorrelated noise present in the sensors. The index $m$ ($1 \leq m \leq M$) refers to the different sensors. Regarding the environment as an LTI system, then
 \begin{equations}{eq:sec3:xmn_fr_rfr_forms}
     x_m[n]
     & = h_m[n] \ast x[n] \\
     & = a_m[n] \ast x_1[n]
 \end{equations}
-with $h_m[n]$ being the frequency response between the desired source and the $m$-th sensor and $x[n]$ the desired signal at source; and $a_m[n]$ being the RFR between the reference (assumed to be $m=1$) and the $m$-th sensors. On the time-frequency domain, \cref{eq:sec3:system_time_domain_base} becomes
+with $h_m[n]$ being the frequency response between the desired source $x[n]$ and the $m$-th sensor, and $a_m[n]$ is the relative impulse response between the reference (assumed to be $m=1$) and the $m$-th sensors. In the time-frequency domain, \cref{eq:sec3:system_time_domain_base} becomes
 \begin{equation}
 	\label{eq:sec3:system_time-freq_domain_base}
-	Y_{m,k}[l] = X_{m,k}[l] + S_{m,k}[l] + R_{m,k}[l]
+	Y_{m,k}[l] = X_{m,k}[l] + S_{m,k}[l] + R_{m,k}[l].
 \end{equation}
-The notation from now on will be different than previously to ease reading and emphasize the frame index $l$.
+From now on, the notation will be different than it was previously to ease reading and emphasize the frame index $l$.
 
 From \cref{eq:sec3:xmn_fr_rfr_forms}, using \cref{eq:sec2:system_ctf_ssbt_output} and assuming the CTF model we can write $X_{m,k}[l]$ as
 \begin{equation}
 	\label{eq:sec3:def_ctf_ssbt}
 	X_{m,k}[l] \approx A_{m,k}'[l] \ast X_{1,k}'[l] + A_{m,k}''[l] \ast X_{1,k}''[l]
 \end{equation}
-with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$, and $A^n_{m,k}[l]$ being the RFRs between each sensor and the reference for same- and conjugate-frequencies. Note that $A_{m,k}^n[l]$ isn't strictly causal, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, a Kronecker delta at $l=0$.
+with $X_{1,k}'[l] = X_{1,k}[l]$ and $X_{1,k}''[l] = X_{1,K-k}[l]$, and $A^n_{m,k}[l]$ being the RFRs between each sensor and the reference for same- and conjugate-frequencies. Note that $A_{m,k}^n[l]$ is not strictly causal, depending on the direction of arrival and features of the reverberant environment, as well as relative delays between the sources at each sensor. It is trivial to see that, for \cref{eq:sec3:def_ctf_ssbt} to be respected, $A_{1,k}'[l] = A_{1,k}''[l] = \delta_{0,l}$, which is a Kronecker delta at $l=0$.
 
 By approximating $A_{m,k}^n[l]$ through a truncated RFR $D_{m,k}^n[l]$ with $\Ld$ samples, we get
 \begin{equations}{eq:sec3:approx_Anmkl_Dnmkl}
@@ -37,7 +35,7 @@ By approximating $A_{m,k}^n[l]$ through a truncated RFR $D_{m,k}^n[l]$ with $\Ld
 in which $D_{m,k}^n[l]$ has $\Delta$ non-causal and $\Lambda$ causal samples, with $\Ld = \Delta + \Lambda + 1$. By defining $\sz{\Ld}{1}$ vectors $\bvx{1,k}^n[l]$ and $\bvd{m,k}^n$
 \begin{subgather}
 	\bvx{1,k}^n[l] = \tr{\tup{ X_{1,k}^n[l+\Delta] ,, X_{1,k}^n[l] ,, X_{1,k}^n[l-\Lambda] }} \\
-	\bvd{m,k}^n = \tr{\tup{ A_{m,k}^n[-\Delta] ,, A_{m,k}^n[0] ,, A_{m,k}^n[\Lambda] }} \label{eqs:vector-form_x1k_dmk:subeq2}
+	\bvd{m,k}^n = \tr{\tup{ A_{m,k}^n[-\Delta] ,, A_{m,k}^n[0] ,, A_{m,k}^n[\Lambda] }} , \label{eqs:vector-form_x1k_dmk:subeq2}
 \end{subgather}
 we can rewrite the convolution of \cref{eq:sec3:approx_Anmkl_Dnmkl} as a vector multiplication, given by
 \begin{equation}
@@ -45,16 +43,16 @@ we can rewrite the convolution of \cref{eq:sec3:approx_Anmkl_Dnmkl} as a vector 
 \end{equation}
 with $\tr{(\cdot)}$ being the transpose operator. Then, our observed signal $Y_{m,k}[l]$ becomes
 \begin{equation}
-	Y_{m,k}[l] \approx \tr*{\bvd{m,k}'} \bvx{1,k}'[l] + \tr*{\bvd{m,k}''} \bvx{1,k}''[l] + S_{m,k}[l] + R_{m,k}[l]
+	Y_{m,k}[l] \approx \tr*{\bvd{m,k}'} \bvx{1,k}'[l] + \tr*{\bvd{m,k}''} \bvx{1,k}''[l] + S_{m,k}[l] + R_{m,k}[l].
 \end{equation}
 
-The signal vectors $\bvx{1,k}'[l]$ and $\bvx{1,k}''[l]$ are still frame-dependent, while the RFR vectors $\bvd{m,k}'$ and $\bvd{m,k}''$ are not due to the assumption of spatial stationarity. Taking the $\Ly$ most recent samples of $Y_{m,k}[l]$ raises
+The signal vectors $\bvx{1,k}'[l]$ and $\bvx{1,k}''[l]$ are still frame-dependent, while the RFR vectors $\bvd{m,k}'$ and $\bvd{m,k}''$ are not due to the assumption of spatial stationarity. Taking the $\Ly$ most recent samples of $Y_{m,k}[l]$ implies
 \begin{equations}
 	\bvY{m,k}[l]
 	& = \tr{\tup{ Y_{m,k}[l] , Y_{m,k}[l-1] ,, Y_{m,k}[l-\Ly+1] }} \\
 	& = \bvD[b]{m,k}' \bvx[b]{1,k}'[l] + \bvD[b]{m,k}' \bvx[b]{1,k}''[l] + \bvS{m,k}[l] + \bvR{m,k}[l]
 \end{equations}
-in which $\bvD[b]{m,k}^n$ is a $\sz{\Ly}{L}$ Toeplitz matrix with $L = \Ld + \Ly - 1$, and $\bvx[b]{1,k}^n[l]$ is a $\sz{L}{1}$ vector of our desired signal
+in which $\bvD[b]{m,k}^n$ is an $\sz{\Ly}{L}$ Toeplitz matrix with $L = \Ld + \Ly - 1$, and $\bvx[b]{1,k}^n[l]$ is an $\sz{L}{1}$ vector of our desired signal
 \begin{subgather}{eq:sec3:sample-stacking_bvDb_bvxb}
 	\bvD[b]{m,k}^n = \begin{bmatrix}
 		\tr*{\bvd{m,k}^n} & 0 & \cdots & 0 \\
@@ -62,10 +60,9 @@ in which $\bvD[b]{m,k}^n$ is a $\sz{\Ly}{L}$ Toeplitz matrix with $L = \Ld + \Ly
 		\vdots & \vdots & \ddots & \vdots \\
 		0 & 0 & \cdots & \tr*{\bvd{m,k}^n}
 	\end{bmatrix}  \label{eq:sec3:sample-stacking_bvDb_bvxb:subeq1} \\
-	\bvx[b]{1,k}^n[l] = \tr{\tup{ X_{1,k}^n[l+\Delta] ,, X_{1,k}^n[l] ,, X_{1,k}^n[l-(\Ly + \Lambda -1)] }} \label{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}
+	\bvx[b]{1,k}^n[l] = \tr{\tup{ X_{1,k}^n[l+\Delta] ,, X_{1,k}^n[l] ,, X_{1,k}^n[l-(\Ly + \Lambda -1)] }} .\label{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}
 \end{subgather}
-
-Concatenating the observed signals sensor-wise leads us to $\bvy{k}[l]$, defined by
+Concatenating the observed signals sensor-wise yields $\bvy{k}[l]$, defined by
 \begin{subalign}{eq:sec3:def_bvy_sensor-stacking}
 	\bvy{k}[l]
 	& = \tr{ \tup{ \tr{\bvY{1,k}} ,, \tr{\bvY{M,k}} } } \label{eq:sec3:definition_bvyk-l:subeq1}\\
@@ -76,11 +73,11 @@ and
 	\label{eq:sec3:def_bvDk_n}
 	\bvD{k}^n = \vtup{\bvD[b]{1,k}^n ,, \bvD[b]{M,k}^n }
 \end{equation}
-where $\bvy{k}[l]$ is a $\sz{(M\Ly)}{1}$ vector, and $\bvD{k}^n$ is a $\sz{(M\Ly)}{L}$ matrix. $\bvs{k}[l]$ and $\bvr{k}[l]$ are defined similarly to \cref{eq:sec3:definition_bvyk-l:subeq1}.
+where $\bvy{k}[l]$ is an $\sz{(M\Ly)}{1}$ vector, and $\bvD{k}^n$ is an $\sz{(M\Ly)}{L}$ matrix. $\bvs{k}[l]$ and $\bvr{k}[l]$ are defined similarly to \cref{eq:sec3:definition_bvyk-l:subeq1}.
 
 \subsection{Filtering and the MPDR beamformer}
 
-Our objective is to recover the desired signal at the reference sensor $X_{1,k}[l]$ without any distortion, while minimizing the output signal's power. For this, a linear filter $\bvf{k}[l]$ will be employed yielding an estimate $Z_{k}[l]$ of our desired signal,
+Our objective is to recover the desired signal at the reference sensor $X_{1,k}[l]$ without any distortion while minimizing the output signal's power. For this, a linear filter $\bvf{k}[l]$ will be employed yielding an estimate $Z_{k}[l]$ of our desired signal,
 \begin{equations}{eq:sec3:def_filtering_process}
 	Z^n_{k}[l]
 	& \approx X_{1,k}[l] \\
@@ -93,7 +90,6 @@ with $\he{(\cdot)}$ being the transposed-complex-conjugate operator. %This proce
 % 	& = \sum_{m} F_{m,k}^*[l] \ast Y_{m,k}[l]
 % \end{equations}
 % where $\bvF{m,k}[l]$ are $\sz{L}{1}$ vectors that comprise $\bvf{k}[l]$, each filtering the $m$-th sensor, and $F_{m,k}[l]$ is its signal-form counterpart (similar to \cref{eqs:vector-form_x1k_dmk:subeq2}). In this sense, the filtering process can be interpreted as the sum across all sensors of the convolution between the signal and the observations, which explains the name \textit{convolutive} filter.
-
 Using \cref{eq:sec3:definition_bvyk-l:subeq2} in \cref{eq:sec3:def_filtering_process} yields
 \begin{equations}
 	Z_{k}[l] 
@@ -110,12 +106,12 @@ where each component of the desired signal is exposed. The distortionless constr
 	\label{eq:sec3:hard_distortionless_constriant}
 	X_{f,k}[l] = X_{1,k}[l]
 \end{equation}
-which is equivalent to requiring that each component of $X_{1,k}[l]$ to be distortionlessly recovered. This means maintaining the same-frequency component, while nulling the cross-frequency parcel that appears on \cref{eq:sec3:sep_Xfk_desired_signals}. From \cref{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}, we have that the desired signal for the current index $l$ is the $(\Delta+1)$-th element of $\bvx[b]{1,k}^n[l]$, and thus the constraints are
+which is equivalent to requiring that each component of $X_{1,k}[l]$ will be perfectlly recovered. This means maintaining the same-frequency component while nulling the cross-frequency parcel that appears in \cref{eq:sec3:sep_Xfk_desired_signals}. From \cref{eq:sec3:sample-stacking_bvDb_bvxb:subeq2}, we have that the desired signal for the current index $l$ is the $(\Delta+1)$-th element of $\bvx[b]{1,k}^n[l]$, and thus the constraints are
 \begin{subgather}{eq:sec3:hard_distortionless_constraint_separate}
 	\he{\bvf{k}}[l] \bvD{k}' = \tr{\bvi{\Delta}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq1} \\
 	\he{\bvf{k}}[l] \bvD{k}'' = \tr{\bv{0}} \label{eq:sec3:hard_distortionless_constraint_separate:subeq2}
 \end{subgather}
-where $\bvi{\Delta}$ is a $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is a $1$, and $\bv{0}$ is a $\sz{L}{1}$ vector of zeros. For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered since $\bvD{k}''$ is identically zero by definition, and therefore the second condition is trivially satisfied. With this, we write our constraint matrix as
+where $\bvi{\Delta}$ is an $\sz{L}{1}$ vector of zeros except for the $(\Delta+1)$-th entry, which is $1$, and $\bv{0}$ is an $\sz{L}{1}$ vector of zeros. For the STFT, only the first constraint of \cref{eq:sec3:hard_distortionless_constraint_separate} is considered since $\bvD{k}''$ is identically zero by definition, and therefore the second condition is trivially satisfied. With this, we write our constraint matrix as
 \begin{equation}
 	\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
 \end{equation}
@@ -123,33 +119,30 @@ where, for the STFT, $\bvC{k} = \bvD{k}'$ and $\bvi = \bvi{\Delta}$; and, for th
 	\bvi{\Delta} \\ \bv{0}
 \end{bmatrix}$.
 
-To minimize the output signal's power while obeying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer is used, defined by
+To minimize the output signal's power while satisfying the distortionless constraint, a Minimum-Power Distortionless Response (MPDR) beamformer is used, defined by
 \begin{equation}
 	\label{eq:sec3:minimization_problem_mpdr_hard}
 	\bvf{\mpdr;k}[l] = \min_{\bvf{k}[l]} \he{\bvf{k}}[l] \bvGa{\alpha;k}[l] \bvf{k}[l]~\text{s.t.}~\he{\bvf{k}}[l] \bvC{k} = \tr{\bvi}
 \end{equation}
-where $\bvGa{\alpha;k}[l] = (1-\alpha)\bvGa{\bvy{k}}[l] + \alpha \bv{I}$, with $\bvGa{\bvy{k}}[l]$ being the pseudo-correlation matrix of $\bvy{k}[l]$ and $\bv{I}$ the identity matrix, both of size $\sz{M\Ly}{M\Ly}$. $\alpha$ is a regularization parameter for white noise gain control \cite{li_robust_2011}. The solution to the minimization problem in \cref{eq:sec3:minimization_problem_mpdr_hard} is given by
+where $\bvGa{\alpha;k}[l] = (1-\alpha)\bvGa{\bvy{k}}[l] + \alpha \bv{I}$, with $\bvGa{\bvy{k}}[l]$ being the pseudo-correlation matrix of $\bvy{k}[l]$ and $\bv{I}$ is the identity matrix, both of size $\sz{M\Ly}{M\Ly}$. $\alpha$ is a regularization parameter for white noise gain control \cite{li_robust_2011}. The solution to the minimization problem in \cref{eq:sec3:minimization_problem_mpdr_hard} is given by
 \begin{equation}
 	\label{eq:sec3:solution_mpdr_beamformer_hard}
-	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi
+	\bvf{\mpdr;k}[l] = \iCorr{\bvy{k}}[l] \bvC{k} \inv{\bts{ \he{\bvC{k}} \iCorr{\bvy{k}}[l] \bvC{k} }} \bvi .
 \end{equation}
-
 All conjugate-transpose operations are replaced with simple transposes for the SSBT, as all signals and matrices are real-valued in this transform.
 
 \subsection{Conjugate-frequency filtering with the SSBT}
-It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that RFRs with the SSBT are an even function on frequency for the frequency-to-frequency portion, and odd for the conjugate-frequency. That is, $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$. Using this, from the constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have
+It is useful to bring \cref{prop:rtfs_are_even-odd_on_frequency} to light. From there, we have that RFRs with the SSBT are even functions of the frequency for the same-frequency portion, and odd for the conjugate-frequency. That is, $A_{m,k}'[l] = A_{m,(K-k)}'[l]$ and $A_{m,k}''[l] = -A_{m,(K-k)}''[l]$. Using this, from the constraint in \cref{eq:sec3:hard_distortionless_constraint_separate:subeq2} we have
 \begin{equations}{eq:sec3:conjugate-frequency_null_constraint_equivalence}
 	\he{\bvf{K-k}}[l] \bvD{K-k}''
 	& = \he{\bvf{K-k}}[l] \pts{-\bvD{k}''} \\
-	& = 0
+	& = 0.
 \end{equations}
-
-It is also easy to see that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$ (for the SSBT), given all the properties from \cref{app:properties_rft}. Therefore we have that $\bvf{k}[l]$: achieves the distortionless constraint for the bin $K-k$, given that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$; achieves the null of the conjugate-frequency portion, given the results from \cref{eq:sec3:conjugate-frequency_null_constraint_equivalence}; and also minimizes the power of the output signal, given that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$. Consequently, it is unnecessary to calculate $\bvf{K-k}[l]$, given that $\bvf{k}[l]$ fulfills the minimization problem from \cref{eq:sec3:minimization_problem_mpdr_hard} for the conjugate bin $K-k$ as well. Although with the STFT only half the spectrum is needed (given its complex-conjugate properties), with the SSBT the filter only needs to be calculated for half the spectrum (even though it needs to be applied to the whole spectrum), putting them on a similar footing in this regard.
+It is also easy to see that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$ (for the SSBT), given all the properties from \cref{app:properties_rft}. Therefore we have that $\bvf{k}[l]$ achieves the distortionless constraint for the bin $K-k$, given that $A_{m,k}'[l] = A_{m,(K-k)}'[l]$. It achieves the null of the conjugate-frequency portion, given the results from \cref{eq:sec3:conjugate-frequency_null_constraint_equivalence}, and also minimizes the power of the output signal, given that $\Corr{\bvy{k}}[l] = \Corr{\bvy{K-k}}[l]$. Consequently, it is unnecessary to calculate $\bvf{K-k}[l]$, given that $\bvf{k}[l]$ fulfills the minimization problem from \cref{eq:sec3:minimization_problem_mpdr_hard} for the conjugate bin $K-k$ as well. Although with the STFT, only half the spectrum is needed (given its complex-conjugate properties), with the SSBT, the filter only needs to be calculated for half the spectrum (even though it needs to be applied to the whole spectrum), putting them on a similar footing in this regard.
 
 \subsection{Theoretical disadvantages}
 
-There are two apparent weaknesses with the SSBT: the first is a byproduct of working with a real-valued transform, where each frequency is influenced by its conjugate when dealing with convolution. This is inherent to any time-frequency transform that operates on a real-valued frequency domain, assuming a correct model that doesn't disregard the phase. The need to work with two frequencies simultaneously implies that, for each constraint on the problem, two constraints are needed in the mathematical model, even in an ideal scenario. This adds further load to the minimization problem, limiting how much noise it can minimize.
+There are two apparent weaknesses with the SSBT: the first is a byproduct of working with a real-valued transform, where each frequency is influenced by its conjugate when dealing with convolution. This is inherent to any time-frequency transform that operates on a real-valued frequency domain, assuming a correct model that preserves the phase. The need to work with two frequencies simultaneously implies that, for each constraint in the problem, two constraints are needed in the mathematical model, even in an ideal scenario. This adds further load to the minimization problem, limiting how much noise it can minimize.
 
-The second disadvantage is a direct consequence of the first. As exposed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, the SSBT transform is less robust than the STFT in terms of RFR estimation errors, this being caused by correlation between conjugate frequencies on different frames (see \cref{subsec:sec2:rfr_estimation_time-freq_transforms}), having more error terms when compared to the STFT.
-
-While it is impossible to bypass the first one since it is a modeling obstacle, the second can be worked around as it is an outcome of non-ideal considerations. For example, by minimizing the impact different windows of the CTF model have on each other (or by using the MTF model), these effects are lessened.
+The second disadvantage is a direct consequence of the first. As explained in \cref{subsec:sec2:rfr_estimation_time-freq_transforms}, the SSBT transform is less robust than the STFT in terms of RFR estimation errors, this being caused by correlation between conjugate frequencies on different frames (see \cref{subsec:sec2:rfr_estimation_time-freq_transforms}), having more error terms when compared to the STFT.
+While it is impossible to bypass the first one since it is a modeling obstacle, the second can be worked around as it is an outcome of non-ideal considerations. For example, these effects are lessened by minimizing the impact different windows of the CTF model have on each other (or by using the MTF model).

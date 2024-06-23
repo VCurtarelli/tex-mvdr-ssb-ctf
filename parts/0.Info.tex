@@ -14,7 +14,7 @@
 \newcommand\autBfn{I.}
 
 % Authors, for the paper (add full first names)
-\Author{\autAFN{} \autALN $^{1,\ast}$\orcidA{}, \autBFN{} \autBLN $^{1}$\orcidB{}}
+\Author{\autAFN{} \autALN $^{\ast}$\orcidA{}, \autBFN{} \autBLN $^{\ast}$\orcidB{}}
 
 %\longauthorlist{yes}
 
@@ -26,15 +26,21 @@
 
 
 \address{%\\
-$^{1}$ \quad Andrew and Erna Viterbi Faculty of Electrical and Computer Engineering, Technion--Israel Institute of Technology, Technion City, Haifa 3200003, Israel
+Andrew and Erna Viterbi Faculty of Electrical and Computer Engineering, Technion--Israel Institute of Technology, Technion City, Haifa 3200003, Israel
 }
 
 % Contact information of the corresponding author
-\corres{Correspondence: vitor.c@campus.technion.ac.il
+\corres{Correspondence: 
+\href{mailto:vitor.c@campus.technion.ac.il}{vitor.c@campus.technion.ac.il} (V.P.C.); \href{mailto:icohen@ee.technion.ac.il}{icohen@ee.technion.ac.il} (I.C.)
 }
-\abstract{%
-    In this paper, we explore the application of the Single-Sideband Transform (SSBT) for convolutive beamformers, investigating the transform’s unique properties and their implications for beamformer design. Our study underscores the nuanced trade-offs of the SSBT in beamforming applications, providing insights into its strengths and limitations.  Despite its advantageous real coefficients, we find that the transform’s handling of convolution poses challenges which in turn impact fundamental beamforming premises.  Compared to the Short-Time Fourier Transform (STFT), the SSBT exhibits lower robustness, particularly in scenarios involving mismatch and modeling noise. Notably, we establish a direct equivalence between SSBT and STFT under identical transform parameters, allowing their seamless interchangeability and joint application in time-frequency signal enhancement. We validate our theoretical findings through realistic simulations using the Minimum-Power Distortionless Response beamformer. These simulations demonstrate that the SSBT performs marginally worse than the STFT under ideal conditions, and significantly worse in non-ideal scenarios.
+%\abstract{%
+%    In this paper, we explore the application of the Single-Sideband Transform (SSBT) for convolutive beamformers, investigating the transform’s unique properties and their implications for beamformer design. Our study underscores the nuanced tradeoffs of the SSBT in beamforming applications, providing insights into its strengths and limitations.  Despite its advantageous real-valued coefficients, we show that the transform’s handling of convolution poses challenges that, in turn, impact fundamental beamforming premises.  Compared to the Short-Time Fourier Transform (STFT), the SSBT exhibits lower robustness, particularly in scenarios involving mismatch and modeling noise. Notably, we establish a direct equivalence between SSBT and STFT under identical transform parameters, allowing their seamless interchangeability and joint application in time-frequency signal enhancement. We validate our theoretical findings through realistic simulations using the Minimum-Power Distortionless Response beamformer. These simulations demonstrate that the SSBT performs marginally worse than the STFT under ideal conditions and significantly worse in non-ideal scenarios.
+%}
+
+
+\abstract{
+In this paper, we examine the use of the Single-Sideband Transform (SSBT) for convolutive beamformers. We explore its unique properties and implications for beamformer design. Our study sheds light on the tradeoffs involved in using SSBT in beamforming applications, offering insights into both its strengths and limitations. Despite the advantage of having real-valued coefficients, we show that the convolution handling of the transform presents challenges that impact fundamental beamforming principles. When compared to the Short-Time Fourier Transform (STFT), SSBT displays lower robustness, especially in scenarios involving mismatch and modeling noise. Notably, we establish a direct equivalence between SSBT and STFT when using identical transform parameters, enabling their seamless interchangeability and joint use in time-frequency signal enhancement. We validate our theoretical findings through realistic simulations using the Minimum-Power Distortionless Response beamformer. These simulations illustrate that although the STFT performs marginally better than the SSBT under optimal conditions, it outperforms significantly in nonideal scenarios.
 }
 
 % Keywords
-\keyword{Single-sideband transform; Time-frequency transforms; Convolutive beamforming; Array signal processing; Signal enhancement.} 
+\keyword{Single-sideband transform; time-frequency transform;  beamforming; array signal processing; signal enhancement.} 

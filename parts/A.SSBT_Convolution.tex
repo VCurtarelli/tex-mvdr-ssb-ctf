@@ -9,9 +9,8 @@ The Fourier Transform (FT) is defined as
 with an inverse
 \begin{equation}
 	\label{eq:appA:def_inverse_fourier_transform}
-	x(t) = \int\limits_{-\infty}^{\infty} X_{\F}(f) e^{\j 2\pi f t} \dd t
+	x(t) = \int\limits_{-\infty}^{\infty} X_{\F}(f) e^{\j 2\pi f t} \dd t \,.
 \end{equation}
-
 The Real Fourier Transform (RFT) is defined as
 \begin{equation}
 	\label{eq:appA:def_real_fourier_transform}
@@ -20,10 +19,9 @@ The Real Fourier Transform (RFT) is defined as
 with an inverse
 \begin{equation}
 	\label{eq:appA:def_inverse_real_fourier_transform}
-	x(t) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}
+	x(t) = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} X_{\R}(f) e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f}\,.
 \end{equation}
-
-Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain signal.
+We assume that $x(t)$ is a real-valued time-domain signal unless stated otherwise.
 
 \begin{Property}{The FT and RFT are bijective transformations of one-another.}[\label{prop:FT_RFT_equivalence}]	
 	By manipulating \cref{eq:appA:def_real_fourier_transform} we can get
@@ -34,12 +32,12 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	\begin{equations}{eq:propI:equiv_FT_to_RFT}
 		X_{\R}(f)
 		& = \real{\pts{\Re{X}_{\F}(f) + \j\Im{X}_{\F}(f)} \cdot(-1 + \j)} \\
-		& = - \Re{X}_{\F}(f) - \Im{X}_{\F}(f)
+		& = - \Re{X}_{\F}(f) - \Im{X}_{\F}(f)\,.
 	\end{equations}
 	Likewise, using that the FT of a real signal is complex-conjugate, such that $X_{\F}(f) = X_{\F}^*(\-f)$, it is easy to see that
 	\begin{equation}
 		\label{eq:propI:equiv_FT_to_RFT_neg}
-		X_{\R}(\-f) = -\Re{X}_{\F}(f) + \Im{X}_{\F}(f)
+		X_{\R}(\-f) = -\Re{X}_{\F}(f) + \Im{X}_{\F}(f)\,.
 	\end{equation}
 	With this, we have that
 	\begin{equations}
@@ -50,15 +48,15 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	\begin{equations}
 		\frac{X_{\R}(f) e^{-\j\frac{3\pi}{4}} + X_{\R}(\-f) e^{\j\frac{3\pi}{4}}}{\Sqrt{2}}
 		& = \Re{X}_{\F}(f) + \j\Re{X}_{\F}(f) \\
-		& = X_{\F}(f)
+		& = X_{\F}(f)\,.
 	\end{equations}
 	Similarly, using \cref{eq:propI:propI:manip_Xrf} we have that
 	\begin{equation}
-		X_{\R}(f) = \Sqrt{2}\real{X_{\F}(f) e^{\j\frac{3\pi}{4}}}
+		X_{\R}(f) = \Sqrt{2}\real{X_{\F}(f) e^{\j\frac{3\pi}{4}}}\,.
 	\end{equation}
 	Using the property of complex numbers that $\real{a} = \tfrac{a+a^*}{2}$, then
 	\begin{equation}
-		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
+		X_{\R}(f) = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}\,.
 	\end{equation}
 	Since for each $X_{\F}(f)$, there exists one and only one $X_{\R}(f)$, and vice-versa, then they form a bijective relationship.
 \end{Property}
@@ -66,48 +64,48 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 \begin{Property}{The IRFT is the inverse of the RFT.}[\label{prop:RFT_IRFT_inverses}]
 	From \cref{prop:FT_RFT_equivalence}, we have that
 	\begin{equation}
-		\IRFT{X_{\R}(f)} = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}
+		\IRFT{X_{\R}(f)} = \frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}\,.
 	\end{equation}
 	Substituting this in \cref{eq:appA:def_inverse_real_fourier_transform}, we have
 	\begin{equations}
 		\IRFT{X_{\R}(f)}
 		& = \Sqrt{2} \real{\int\limits_{-\infty}^{\infty} \pts{\frac{X_{\F}(f) e^{\j\frac{3\pi}{4}} + X_{\F}(\-f) e^{-\j\frac{3\pi}{4}}}{\Sqrt{2}}} e^{\j 2\pi f t - \j\frac{3\pi}{4}} \dd f} \\
-		& = \real{\int\limits_{-\infty}^{\infty} \pts{X_{\F}(f) e^{\j 2\pi f t} + X_{\F}(\-f) e^{\j 2\pi f t - \j\frac{3\pi}{2}}} \dd f}
+		& = \real{\int\limits_{-\infty}^{\infty} \pts{X_{\F}(f) e^{\j 2\pi f t} + X_{\F}(\-f) e^{\j 2\pi f t - \j\frac{3\pi}{2}}} \dd f}\,.
 	\end{equations}
 	The first term expands to the inverse Fourier transform of $X_{\F}(f)$, which is trivially $x(t)$; the second term is the inverse Fourier transform of $X_{\F}(\-f)$, which is from the time reversal property is $x(-t)$. Therefore,
 	\begin{equations}
 		\IRFT{X_{\R}(f)}
 		& = \real{x(t) + x(\-t) e^{-\j\frac{3\pi}{2}}} \\
 		& = \real{x(t) + \j x(\-t)} \\
-		& = x(t)
+		& = x(t)\,.
 	\end{equations}
-    Note that the invertibility of the RFT is a direct consequence of $x(t)$ being a real signal. Assuming the contrary, then obviously $\IRFT{\RFT{x(t)}} \neq x(t)$, given that the inverse RFT involves taking the real-part of the inverse, and therefore it will map the original signal to a different one.
+    Note that the invertibility of the RFT is a direct consequence of $x(t)$ being a real signal. Assuming the contrary, then obviously $\IRFT{\RFT{x(t)}} \neq x(t)$, given that the inverse RFT involves taking the real part of the inverse, and therefore, it will map the original signal to a different one.
  
 \end{Property}
 
-\begin{Property}{The FT convolution theorem doesn't apply for the RFT.}[\label{prop:conv_theorem_RFT}]
+\begin{Property}{The FT convolution theorem does not apply for the RFT.}[\label{prop:conv_theorem_RFT}]
 	Let $h(t)$ be the impulse response of an LTI system, with input $x(t)$. It is trivial that the system's output, $y(t)$, is given by
 	\begin{equation}
 		y(t) = h(t) \ast x(t)
 	\end{equation}
 	with $\ast$ being the convolution operator. For the Fourier transform, through the convolution theorem, it is trivial that
 	\begin{equation}
-		Y_{\F}(f) = H_{\F}(f) X_{\F}(f)
+		Y_{\F}(f) = H_{\F}(f) X_{\F}(f)\,.
 	\end{equation}
 	Expanding these in terms of real and imaginary parts (omitting the frequency index for clarity),
 	\begin{equation}
 		\label{eq:propIII:YF_expanded_real_imag}
-		Y_{\F} = \Re{H_{\F}} \Re{X_{\F}} + \j \Re{H_{\F}} \Im{X_{\F}} + \j \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}}
+		Y_{\F} = \Re{H_{\F}} \Re{X_{\F}} + \j \Re{H_{\F}} \Im{X_{\F}} + \j \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}}\,.
 	\end{equation}
 	Now in the RFT domain, with \cref{eq:propI:equiv_FT_to_RFT} we have that
 	\begin{equations}
 		X_{\R}(f) & = -\Re{X_{\F}}(f) - \Im{X_{\F}}(f) \\
-		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f)
+		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f)\,.
 	\end{equations}
 	Assuming the convolution theorem is true for the RFT,
 	\begin{equation}
 		\label{eq:propIII:res_product_of_RFTs}
-		Y_{\R} = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}
+		Y_{\R} = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}}\,.
 	\end{equation}
 	Now, by applying \cref{eq:propI:equiv_FT_to_RFT} on \cref{eq:propIII:YF_expanded_real_imag}, we have
 	\begin{equation}
@@ -123,14 +121,14 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 		X_{\R}(f) & = -\Re{X_{\F}}(f) - \Im{X_{\F}}(f) \\
 		X_{\R}(\-f) & = -\Re{X_{\F}}(f) + \Im{X_{\F}}(f) \\
 		H_{\R}(f) & = -\Re{H_{\F}}(f) - \Im{H_{\F}}(f) \\
-		H_{\R}(\-f) & = -\Re{H_{\F}}(f) + \Im{H_{\F}}(f)
+		H_{\R}(\-f) & = -\Re{H_{\F}}(f) + \Im{H_{\F}}(f)\,.
 	\end{equations}
 	We will omit the frequency dependency in the FT values. Taking the possible combinations, we have
 	\begin{subalign}
 		X_{\R}(f) H_{\R}(f) 	& = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:++} \\
 		X_{\R}(f) H_{\R}(\-f) 	& = \Re{H_{\F}} \Re{X_{\F}} + \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:+-} \\
 		X_{\R}(\-f) H_{\R}(f) 	& = \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} + \Im{H_{\F}} \Re{X_{\F}} - \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:-+} \\
-		X_{\R}(\-f) H_{\R}(\-f) & = \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:--}
+		X_{\R}(\-f) H_{\R}(\-f) & = \Re{H_{\F}} \Re{X_{\F}} - \Re{H_{\F}} \Im{X_{\F}} - \Im{H_{\F}} \Re{X_{\F}} + \Im{H_{\F}} \Im{X_{\F}} \label{subeq:propIV:mult_XR_HR:--}\,.
 	\end{subalign}
 	Taking the difference between \cref{subeq:propIV:mult_XR_HR:++} and \cref{subeq:propIV:mult_XR_HR:--}, and the sum of \cref{subeq:propIV:mult_XR_HR:+-} and \cref{subeq:propIV:mult_XR_HR:-+}, we have
 	\begin{subalign}
@@ -141,7 +139,7 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	\begin{equations}
 		Y_{\R}(f)
 		& = \frac{- X_{\R}(f) H_{\R}(f) + X_{\R}(\-f) H_{\R}(\-f) - X_{\R}(f) H_{\R}(\-f) - X_{\R}(\-f) H_{\R}(f)}{2} \\
-		& = X_{\R}(f) \frac{-H_{\R}(f) - H_{\R}(\-f)}{2} + X_{\R}(\-f) \frac{-H_{\R}(f) + H_{\R}(\-f)}{2}
+		& = X_{\R}(f) \frac{-H_{\R}(f) - H_{\R}(\-f)}{2} + X_{\R}(\-f) \frac{-H_{\R}(f) + H_{\R}(\-f)}{2}\,.
 	\end{equations}
 	Finally, from \cref{eq:propIV:equiv_FT_to_RFT_posneg_XH}, we achieve
 	\begin{equation}
@@ -152,14 +150,14 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	\begin{equations}{eq:propIV:convolution_theorem_RFT_result_neg}
 		Y_{\R}(\-f)
 		& = X_{\R}(\-f) \Re{H_{\F}}(\-f) + X_{\R}(f) \Im{H_{\F}}(\-f) \\
-		& = X_{\R}(\-f) \Re{H_{\F}}(f) - X_{\R}(f) \Im{H_{\F}}(f)
+		& = X_{\R}(\-f) \Re{H_{\F}}(f) - X_{\R}(f) \Im{H_{\F}}(f)\,.
 	\end{equations}
 \end{Property}
 
 \begin{Property}{Frequencies in the RFT have the same variance as their FT counterpart.}[\label{prop:RFT_same-variance_FT}]
-	We now assume that $X_{\F}(f)$ is the transform of a random process, such that its real and imaginary parts are independent and identically distributed with zero mean. Taking the complex correlation of a given frequency in the FT domain,
+	We now assume that $X_{\F}(f)$ is the transform of a random process, such that its real and imaginary parts are independent and identically distributed with zero means. Taking the complex correlation of a given frequency in the FT domain,
 	\begin{equation}
-		\expec{X_{\F}(f) X_{\F}^*(f)} = \expec{\Re{X_{\F}}(f)^2 + \Im{X_{\F}}(f)^2}
+		\expec{X_{\F}(f) X_{\F}^*(f)} = \expec{\Re{X_{\F}}(f)^2 + \Im{X_{\F}}(f)^2}\,.
 	\end{equation}
 	Since they are identically distributed, we denote
 	\begin{equation}
@@ -168,16 +166,16 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	\end{equation}
 	and therefore
 	\begin{equation}
-		\expec{X_{\F}(f) X_{\F}^*(f)} = 2\sigma_f^2
+		\expec{X_{\F}(f) X_{\F}^*(f)} = 2\sigma_f^2\,.
 	\end{equation}
 	Now, in the RFT domain, we take the correlation of a given frequency \cref{eq:propI:equiv_FT_to_RFT},
 	\begin{equation}
-		\expec{X_{\R}(f)^2} = \expec{\Re{X_{\F}}(f)^2 + 2 \Re{X_{\F}}(f) \Im{X_{\F}}(f) + \Im{X_{\F}}(f)^2}
+		\expec{X_{\R}(f)^2} = \expec{\Re{X_{\F}}(f)^2 + 2 \Re{X_{\F}}(f) \Im{X_{\F}}(f) + \Im{X_{\F}}(f)^2}\,.
 	\end{equation}
 	Using that $\Re{X_{\F}}(f)$ and $\Im{X_{\F}}(f)$ are i.i.d. and zero-mean, the cross terms are zero, and thus
 	\begin{equations}
 		\expec{X_{\R}(f)^2} & = 2\sigma_f^2 \\
-		& = \expec{X_{\F}(f) X_{\F}^*(f)}
+		& = \expec{X_{\F}(f) X_{\F}^*(f)}\,.
 	\end{equations}
 	It is trivial to see that the same applies for $X_{\R}(\-f)$.
 \end{Property}
@@ -185,33 +183,33 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 \begin{Property}{Conjugate frequencies in the RFT domain are independent.}[\label{prop:conjugate-freqs_independent_RFT}]
 	We take the same assumptions as those in \cref{prop:RFT_same-variance_FT}. Taking the complex correlation between the two conjugate frequencies, 
 	\begin{equation}
-		\expec{X_{\F}(f) X_{\F}^*(\-f)} = \expec{\Re{X_{\F}}(f)^2 + 2 \j\Re{X_{\F}}(f) \Im{X_{\F}}(f) - \Im{X_{\F}}(f)^2}
+		\expec{X_{\F}(f) X_{\F}^*(\-f)} = \expec{\Re{X_{\F}}(f)^2 + 2 \j\Re{X_{\F}}(f) \Im{X_{\F}}(f) - \Im{X_{\F}}(f)^2}\,.
 	\end{equation}
 	Using that the $\Re{X_{\F}}(f)$ and $\Im{X_{\F}}(f)$ are independent and zero-mean, the cross terms are zero, and with \cref{eq:propV:same_variance_FT_RI} then
 	\begin{equation}
-		\expec{X_{\F}(f) X_{\F}^*(\-f)} = 0
+		\expec{X_{\F}(f) X_{\F}^*(\-f)} = 0\,.
 	\end{equation}
 	This result is known, but it is useful to show it since this same procedure will be used for the RFT.
 	
 	\noindent We now consider \cref{eq:propI:equiv_FT_to_RFT,eq:propI:equiv_FT_to_RFT_neg}. Taking the correlation between the two conjugate frequencies yields
 	\begin{equation}
-		\expec{X_{\R}(f) X_{\R}(\-f)} = \expec{\Re{X_{\F}}(f)^2 - \Im{X_{\F}}(f)^2}
+		\expec{X_{\R}(f) X_{\R}(\-f)} = \expec{\Re{X_{\F}}(f)^2 - \Im{X_{\F}}(f)^2}\,.
 	\end{equation}
 	Under the same assumptions that the real and imaginary parts of $X_{\F}(f)$ are identically distributed, we get the same result as before, where
 	\begin{equation}
-		\expec{X_{\R}(f) X_{\R}(\-f)} = 0
+		\expec{X_{\R}(f) X_{\R}(\-f)} = 0\,.
 	\end{equation}
-	Note that, with the RFT, we didn't use the complex correlation, since it is real-valued.
+	Note that, with the RFT, we didn't use the complex correlation since it is real-valued.
 	
 	\noindent Lastly, we take the correlation between conjugate frequencies of the output of a system according to \cref{eq:propIV:convolution_theorem_RFT_result,eq:propIV:convolution_theorem_RFT_result_neg},
 	\begin{equations}
 		\expec{Y_{\R}(f) Y_{\R}(\-f)} 
 		& = \Re{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)} - \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(f)^2} \\
-		& + \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(\-f)^2} + \Im{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)}
+		& + \Re{H_{\F}}(f) \Im{H_{\F}}(f) \expec{X_{\R}(\-f)^2} + \Im{H_{\F}}(f)^2 \expec{X_{\R}(f) X_{\R}(\-f)}\,.
 	\end{equations}
 	Since $X_{\R}(f)$ and $X_{\R}(\-f)$ are independent and zero-mean, the first and last terms are zero, and also the other two cancel each other out since $\expec{X_{\R}(f)^2} = \expec{X_{\R}(\-f)^2} = 2\sigma_f^2$. Therefore,
 	\begin{equation}
-		\expec{Y_{\R}(f) Y_{\R}(\-f)} = 0
+		\expec{Y_{\R}(f) Y_{\R}(\-f)} = 0\,.
 	\end{equation}
 \end{Property}
 
@@ -226,7 +224,7 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 		Y_{1}(\-f) = X(\-f) \Re{H_{1,\F}}(\-f) + X(f) \Im{H_{1,\F}}(\-f) \\
 		Y_{2}(\-f) = X(\-f) \Re{H_{2,\F}}(\-f) + X(f) \Im{H_{2,\F}}(\-f)
 	\end{equations}
-	where we are omitting the transform index when it is an RFT's domain value, for compactness. If we define $X_1'(f)$ and $X_1''(f)$ as
+	where we are omitting the transform index when it is an RFT's domain value for compactness. If we define $X_1'(f)$ and $X_1''(f)$ as
 	\begin{equations}
 		X_1'(f) = Y_1(f) \\
 		X_1''(f) = Y_1(\-f)
@@ -244,7 +242,7 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 	and, for their conjugate frequencies,
 	\begin{equations}
 		A_m'(\-f)  = \frac{H_1'(\-f)H_m'(\-f) + H_1''(\-f)H_m''(\-f)}{{H_1'}^2(\-f) + {H_1''}^2(\-f)} \\
-		A_m''(\-f) = \frac{H_1'(\-f)H_m''(\-f) - H_1''(\-f)H_m'(\-f)}{{H_1'}^2(\-f) + {H_1''}^2(\-f)}
+		A_m''(\-f) = \frac{H_1'(\-f)H_m''(\-f) - H_1''(\-f)H_m'(\-f)}{{H_1'}^2(\-f) + {H_1''}^2(\-f)}\,.
 	\end{equations}
 	Assuming that $h(t)$ is real-valued, then $H_{m,\F}(f) = H_{m,\F}^*(\-f)$, and therefore $H_m'(f) = H_m'(\-f)$, and $H_m''(f) = -H_m''(\-f)$. With this,
 	\begin{equations}
@@ -255,7 +253,7 @@ Unless stated otherwise, we assume that $x(t)$ is a real-valued time-domain sign
 		A_m''(\-f)
 		& = \frac{H_1'(f) \bts{-H_m''(f)} - \bts{-H_1''(f)}H_m'(f)}{{H_1'}^2(f) + \bts{-H_1''}^2(f)} \\
 		& = \frac{- H_1'(f)H_m''(f) + H_1''(f)H_m'(f)}{{H_1'}^2(f) + {H_1''}^2(f)} \\
-		& = -A_m''(f)
+		& = -A_m''(f)\,.
 	\end{equations}
 	Therefore, our frequency-to-frequency RFR $A_m'(f)$ is even, since $A_m'(f) = A_m'(\-f)$, and our conjugate-frequency RFR is odd, since $A_m''(f) = -A_m''(\-f)$.
 \end{Property}
