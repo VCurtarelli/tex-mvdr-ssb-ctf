@@ -132,7 +132,7 @@ The Short-Time Fourier Transform (STFT) \cite{kiymik_comparison_2005,pan_microph
 \end{equation}
 where $w[n]$ is an analysis window of length $K$, and $O$ is the hop size between successive windows of the transform, usually $O = \floor{\nicefrac{K}{2}}$.  $l$ is the frame index, and $k$ is the frequency bin index. The STFT is generally seen as a discretization of the FT, being applied over sequential time ``snippets''.
 
-The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983} is similarly defined, being the RFT's windowed-discrete-time equivalent. The SSBT of $x[n]$ is
+The Single-Sideband Transform (SSBT) \cite{crochiere_multirate_1983,britanak_cosine-sine-modulated_2018} is similarly defined, being the RFT's windowed-discrete-time equivalent. The SSBT of $x[n]$ is
 \begin{equation}
 	\label{eq:sec2:def_ssbt_xn}
 	X_{\sS}[l,k] = \Sqrt{2} \real{\sum_{n=0}^{K-1} w[n] x[n + l\cdot O] e^{-\j 2\pi k \frac{(n + l\cdot O)}{K} + \j\frac{3\pi}{4} } }.
@@ -156,7 +156,7 @@ or, with the CTF model,
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as cross-band interference \cite{avargel_system_2007} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. The conjugate frequency's presence is a byproduct distinct to the cross-band interference, the latter happening due to aliasing and the windowing processes, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
+in which this convolution is done over $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as cross-band interference \cite{avargel_system_2007,avargel_adaptive_2008} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. The conjugate frequency's presence is a byproduct distinct to the cross-band interference, the latter happening due to aliasing and the windowing processes, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
 
 Similarly to the relationship presented in \cref{eqs:sec2:equivalence_pair_ft_and_rft}, we have
 %
