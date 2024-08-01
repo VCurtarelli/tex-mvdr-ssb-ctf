@@ -57,7 +57,7 @@ We chose the gains in SER and SNR metrics rather than the more common ERLE and W
 
 \subsection{Comparison for different observed frames}
 
-In this simulation, we compare our filters for the accurate and estimated RFR for a range of considered observed frames $\Ly$, in which $\Ly = 1$ reduces to the MTF model.
+In this simulation, we compare our filters for the accurate and estimated RFR for a range of considered observed frames $\Ly$, in which $\Ly = 1$ reduces to the MTF model. The results are in \cref{fig:lineplot__iSER_n15__Ly_var}.
 \begin{figure}[!t]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
@@ -96,7 +96,7 @@ The best STFT-E results are obtained for $\Ly = 1$ in this scenario. With $\Ly =
 
 \subsection{Comparison for different number of samples per frame}
 
-We now compare the beamformers in a scenario with the MTF model and change the number of samples per window. This circumvents the problems addressed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} for both transforms since we do not consider a convolutive filter. By increasing the number of samples per window, we minimize the frequency aliasing effects caused by the windowing process of the time-frequency transform. This allows us to capture more of the desired signal on each window.
+We now compare the beamformers in a scenario with the MTF model and change the number of samples per window (\cref{fig:lineplot__N_var__iSER_n15__Ly_1}). This circumvents the problems addressed in \cref{subsec:sec2:rfr_estimation_time-freq_transforms} for both transforms since we do not consider a convolutive filter. By increasing the number of samples per window, we minimize the frequency aliasing effects caused by the windowing process of the time-frequency transform. This allows us to capture more of the desired signal on each window.
 \begin{figure}[!t]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
@@ -137,7 +137,7 @@ The first effect is that the desired signal's distortion for SSBT-E decreases as
 
 \subsection{Comparison for different iSER}
 
-We now compare our results for different values of input SER (iSER); that is, we change the signal's power in the source within the device, right next to the sensors.
+We now compare the beamformers for different values of input SER (iSER); that is, we change the signal's power in the source within the device, right next to the sensors. This simulation's results are presented in \cref{fig:lineplot__iSER_var__Ly_1}.
 \begin{figure}[!ht]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
@@ -145,6 +145,7 @@ We now compare our results for different values of input SER (iSER); that is, we
 		\input{figures/lineplot__DSRF__iSER_var__Ly_1.tex}
 		\caption{DSRF - $\Ly = 1$.}
 		\label{subfig:lineplot__DSRF__iSER_var__Ly_1}
+		%
 	\end{subfigure}\hfill
 	\begin{subfigure}{0.49\textwidth}
 		\centering
@@ -198,8 +199,8 @@ We now compare our results for different values of input SER (iSER); that is, we
 \end{figure}
 Overall, the accurate results for both transforms are comparable, with the SSBT-A again underperforming marginally except for high iSER and $\Ly = 1$. The same results as obtained previously are observed for the estimated RFR outputs. For $\Ly = 1$, the SSBT-E grossly underperforms compared to the STFT-E, and although their difference for $\Ly = 16$ is not as substantial, it is still relevant, except for higher iSER.
 
-We repeat these simulations, but instead of different $\Ly$, we now change the number of samples per frame to $N = 512$, with $\Ly = 1$. These results are presented in \cref{fig:lineplot__N_512__iSER_var__Ly_1}. This was chosen using the knowledge from \cref{subsec:sec2:rfr_estimation_time-freq_transforms} and \cref{fig:lineplot__N_var__iSER_n15__Ly_1}, where we had both theoretically and practically had that higher $N$ minimize the effects of estimation error.
-\begin{figure}[!ht]
+We repeat these simulations, but instead of different $\Ly$, we now change the number of samples per frame to $N = 512$ and set $\Ly = 1$, with results in \cref{fig:lineplot__N_512__iSER_var__Ly_1}. This was chosen using the knowledge from \cref{subsec:sec2:rfr_estimation_time-freq_transforms} and \cref{fig:lineplot__N_var__iSER_n15__Ly_1}, where we had both theoretically and practically had that higher $N$ minimize the effects of estimation error.
+\begin{figure}[!htp]
 	\centering
 	\begin{subfigure}{0.49\textwidth}
 		\centering

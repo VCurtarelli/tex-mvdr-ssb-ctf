@@ -35,7 +35,7 @@ Using that $x(t)$ is a real signal, then it is possible to achieve (\cref{prop:F
     X_{\R}(f) = \frac{1}{\Sqrt{2}} \pts{e^{\j\frac{3\pi}{4}} X_{\F}(f) + e^{-\j\frac{3\pi}{4}} X_{\F}(\-f) }\label{eq:sec2:equivalence_pair_ft_to_rft} \\
     X_{\F}(f) = \frac{1}{\Sqrt{2}} \pts{e^{-\j\frac{3\pi}{4}} X_{\R}(f) + e^{\j\frac{3\pi}{4}} X_{\R}(\-f) } .\label{eq:sec2:equivalence_pair_rft_to_ft}
 \end{subgather}
-This means that the RFT can be defined in terms of the FT and vice-versa, forming a bijective relationship between the two transforms. This is only true if the original time-domain signal is real-valued, which is a requirement for the RFT to be invertible in the first place.
+This means that the RFT can be defined in terms of the FT and vice-versa, forming a bijective relationship between the two transforms. This is only true if the original time-domain signal is real-valued, which is a requirement for the RFT to be invertible in the first place. A similar result was obtained previously (Eqs. (4) and (8) in \cite{okamoto_subband_2017}), where it was shown that the SSB representation depends on the complex-conjugate of the single-sideband modulated signal. Here, this complex-conjugate is represented by the negative frequency component, these being the same under the assumption of $x(t)$ being real-valued.
 
 \subsection{Convolution}
 \label{subsec:sec2:convolution}
@@ -156,7 +156,7 @@ or, with the CTF model,
 	\label{eq:sec2:convolution_on_ssbt_ctf}
 	h[n] \ast x[n] \hrel{\sS} X_{\sS}[l,k] \ast H_{\sS}'[l,k] + X_{\sS}[l,K-k] \ast H_{\sS}''[l,k]
 \end{equation}
-in which this convolution is done over $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as cross-band interference \cite{avargel_system_2007,avargel_adaptive_2008} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. The conjugate frequency's presence is a byproduct distinct to the cross-band interference, the latter happening due to aliasing and the windowing processes, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
+in which this convolution is done over $l$, with $H_{\sS}'[l,k] = \Re{H}_{\sF}[l,k]$ and $H_{\sS}''[l,k] = \Im{H}_{\sF}[l,k]$. Note that this is an approximation, as cross-band interference \cite{jayakumar_integrated_2018,lee_crossband_2014} is necessary to model the convolution perfectly; however, this effect was not considered here for either transform. The conjugate frequency's presence is a byproduct distinct to the cross-band interference, the latter happening due to aliasing and the windowing processes, and the former coming from the continuous-time convolution theorem for the SSBT (see \cref{subsec:sec2:convolution,prop:conv_theorem_RFT}).
 
 Similarly to the relationship presented in \cref{eqs:sec2:equivalence_pair_ft_and_rft}, we have
 %
